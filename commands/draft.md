@@ -24,12 +24,13 @@ Your goal: get their knowledge out of their head and into a draft they can revie
 
 Before asking the contributor anything, look at what already exists:
 
+- If the repo has an `llms.txt`, start there — it's a map of the docs set
 - Scan the repo's documentation directories for related content
-- Note how existing docs are organized (directory structure, naming conventions, frontmatter patterns)
+- Read frontmatter from several existing docs to identify conventions: what fields are used, what names they use (`tags` vs `keywords`, `type` vs `content-type`), and whether there are SSG-specific fields you'll need to preserve
 - Identify docs that cover related topics — these will need cross-references
 - Check for content that overlaps with what the contributor is about to describe
 
-This gives you context for the conversation and ensures the new doc fits into the existing set rather than landing in isolation.
+This gives you context for the conversation, ensures the new doc fits into the existing set, and tells you what frontmatter conventions to follow when you finalize.
 
 ### 2. Understand What They're Documenting
 

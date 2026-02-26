@@ -148,20 +148,44 @@ The audit command checks frontmatter as part of its review:
 
 ## Adapting to Existing Repos
 
-If a repo already has frontmatter conventions, the plugin adapts:
+Most repos already have some frontmatter.
+SSGs like Docusaurus, Hugo, Jekyll, and Astro each have their own conventions and required fields.
+The plugin must work with what's there, not fight it.
 
-- It reads existing docs to identify what fields are in use
-- It preserves all existing fields when editing docs
-- It adds its recommended fields alongside existing ones
-- It never removes or renames fields it didn't create
+### How the Plugin Detects Existing Conventions
 
-If the existing frontmatter uses different field names for the same concept (e.g., `type` instead of `content-type`, `tags` instead of `keywords`), the plugin matches the existing convention.
+During the survey step, the plugin reads frontmatter from multiple existing docs (not just one) to identify patterns:
+
+- What fields are consistently present?
+- What field names does the repo use? (`tags` vs `keywords`, `type` vs `content-type`, `category` vs `content-type`)
+- What values appear? (Are content types free-text or from a fixed set? Are audiences standardized?)
+- Are there SSG-specific fields? (`sidebar_position`, `slug`, `draft`, `weight`, `layout`, etc.)
+
+This survey produces a mental model of the repo's frontmatter conventions that the plugin uses for all subsequent work in the session.
+
+### Rules for Conflict Resolution
+
+1. **Never overwrite existing fields.** If a doc already has `title`, `description`, `tags` — they stay as they are. The contributor or SSG config put them there for a reason.
+2. **Match existing field names.** If the repo uses `tags`, the plugin uses `tags` — not `keywords`. If it uses `type`, the plugin uses `type` — not `content-type`. The repo's convention wins.
+3. **Preserve SSG-required fields.** Fields like `sidebar_position`, `slug`, `weight`, `layout`, and `draft` are there because the build system needs them. Never remove or reorder them.
+4. **Add missing fields alongside existing ones.** If a doc has `title` and `description` but no content type or keywords equivalent, the plugin adds those using the repo's naming convention (or its own defaults if no convention exists).
+5. **Don't duplicate semantics.** If the repo already has `tags` and the plugin would add `keywords`, it uses `tags`. One field per concept.
+
+### Documenting the Mapping
+
+If the repo uses non-standard field names, note the mapping in `llms.txt` so the next session (or a different AI tool) doesn't have to re-derive it.
+For example:
+
+```markdown
+> This repo uses `tags` for keywords, `type` for content type, and `category` for audience.
+> Frontmatter follows Hugo conventions with additional metadata fields.
+```
 
 ## Relationship to llms.txt
 
 The per-doc frontmatter and the repo-level `llms.txt` work together:
 
-- `llms.txt` is the map — it tells AI tools what docs exist and what they cover
+- `llms.txt` is the map — it tells AI tools what docs exist, what they cover, and what conventions the repo uses
 - Frontmatter is the detail — it tells AI tools about a specific doc without reading the body
 - The plugin updates both: when it writes a new doc, it adds frontmatter to the doc and adds an entry to `llms.txt`
 
