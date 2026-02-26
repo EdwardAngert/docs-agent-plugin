@@ -114,7 +114,8 @@ When the contributor is satisfied:
 
 - Write the file to the appropriate location (ask if unsure where it should live)
 - Suggest a filename that follows existing conventions in the repo
-- If the repo uses frontmatter, add appropriate metadata
+- Generate frontmatter following the schema in `frontmatter-spec.md`. At minimum include `title`, `description`, and `content-type`. Add `audience`, `keywords`, `prerequisites`, and `related` when you have the context — and after this conversation you almost certainly do. Match any existing frontmatter conventions in the repo.
+- If the repo has an `llms.txt`, add an entry for the new doc with a one-line description
 - Update related docs to cross-reference this new content (or make the edits and show the contributor what you changed)
 - Note any remaining follow-up work: images or diagrams that would help, docs that need a subject matter expert to verify the cross-reference, etc.
 

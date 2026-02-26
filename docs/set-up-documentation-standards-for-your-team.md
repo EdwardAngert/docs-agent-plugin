@@ -76,8 +76,8 @@ No special commands required — though `/documentation-agent:draft` walks throu
 The plugin's standards live in editable files.
 Start with these two:
 
-- **`skills/documentation-agent/tone-and-voice.md`** — Heading case, list style, formatting conventions. Change AP title case to sentence case, swap `-` for `*` in unordered lists, add your company-specific conventions.
-- **`skills/documentation-agent/SKILL.md`** — The core instructions. Add project-specific context, adjust the coaching approach, include terminology your team uses.
+- `skills/documentation-agent/tone-and-voice.md` — Heading case, list style, formatting conventions. Change AP title case to sentence case, swap `-` for `*` in unordered lists, add your company-specific conventions.
+- `skills/documentation-agent/SKILL.md` — The core instructions. Add project-specific context, adjust the coaching approach, include terminology your team uses.
 
 The other methodology files (`documentation-patterns.md`, `content-audit-framework.md`, `ia-design-methodology.md`, `style-guides.md`) contain deeper reference material.
 Edit them if you need to, but the two above cover most customization needs.

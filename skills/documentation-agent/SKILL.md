@@ -15,12 +15,12 @@ They should never need to worry about formatting, content types, heading case, o
 
 When someone asks for help with documentation:
 
-1. **Survey what exists.** Before writing anything, look at the existing documentation in the repo. Understand what's already documented, how it's organized, and where the new content fits. This isn't optional — every new doc should land in context, not in isolation.
+1. **Survey what exists.** Before writing anything, look at the existing documentation in the repo. If the repo has an `llms.txt`, start there — it's a map of what exists. Otherwise, scan doc directories and read frontmatter. Understand what's already documented, how it's organized, and where the new content fits. This isn't optional — every new doc should land in context, not in isolation.
 1. **Figure out what they know.** Ask about their topic, their audience, and what someone should be able to do after reading the doc. Follow up with questions that pull out prerequisites, gotchas, and decision points.
 1. **Pick the right structure.** Based on what they tell you, choose the content type that best serves the reader. You don't need to explain your choice unless they ask.
 1. **Write the draft.** Apply formatting standards, tone, and structure automatically. Produce something they can react to. Connect it to existing docs — add cross-references, update related pages, and flag where this content overlaps with or extends what's already there.
 1. **Ask them to check the substance.** Is it technically accurate? Is anything missing? Would it make sense to the intended reader?
-1. **Refine and deliver.** Incorporate feedback, finalize the doc, put it in the right place. If other docs need updating to reference this new content, do that too or flag it explicitly.
+1. **Refine and deliver.** Incorporate feedback, finalize the doc, put it in the right place. Generate frontmatter per `frontmatter-spec.md`. If the repo has an `llms.txt`, add an entry for the new doc. If other docs need updating to reference this new content, do that too or flag it explicitly.
 
 The contributor's job is to share what they know.
 Your job is to make it good documentation.
@@ -137,6 +137,7 @@ For systematic audits across a documentation set, see:
 This skill includes detailed methodology documents.
 For drafting and writing, you'll primarily use:
 
+- `frontmatter-spec.md` - Per-doc metadata schema and how the plugin uses it
 - `tone-and-voice.md` - Formatting and tone guidelines
 - `documentation-patterns.md` - Content types, patterns, and docs-as-code workflows
 

@@ -1,0 +1,32 @@
+# Documentation Agent
+
+> A Claude Code plugin that coaches subject matter experts through writing documentation. The plugin gives Claude Code documentation expertise — guiding contributors through knowledge extraction, picking the right content structure, applying writing standards, and connecting new docs to existing content.
+
+## Docs
+
+- [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): For docs leads and devrel — why to install, what changes for contributors, how to customize
+- [Write Docs With the Documentation Agent](docs/write-docs-with-the-documentation-agent.md): For individual contributors — what the plugin does, tips for getting the most out of it
+
+## Plugin Configuration
+
+- [SKILL.md](skills/documentation-agent/SKILL.md): Core instructions that shape how Claude Code behaves during documentation tasks
+- [Plugin manifest](.claude-plugin/plugin.json): Plugin metadata, version, registered commands
+
+## Commands
+
+- [/draft](commands/draft.md): Guided workflow for SMEs to contribute documentation — the primary interaction
+- [/audit](commands/audit.md): Systematic documentation audit for quality, gaps, and structure
+- [/make-examples](commands/make-examples.md): Add or improve code examples in existing docs
+
+## Standards and Methodology
+
+- [Frontmatter spec](skills/documentation-agent/frontmatter-spec.md): Schema for per-doc metadata — fields, tiers, and how the plugin uses them
+- [Tone and voice](skills/documentation-agent/tone-and-voice.md): Formatting rules, heading case, markdown style, voice guidelines
+- [Documentation patterns](skills/documentation-agent/documentation-patterns.md): Content types, antipatterns, examples, SEO, accessibility
+
+## Optional
+
+- [Content audit framework](skills/documentation-agent/content-audit-framework.md): Six-phase audit methodology for docs leads
+- [IA design methodology](skills/documentation-agent/ia-design-methodology.md): Information architecture research, design, and validation
+- [Style guides](skills/documentation-agent/style-guides.md): Style guide selection, components, and enforcement strategies
+- [Contributing](CONTRIBUTING.md): How to contribute to this plugin
