@@ -46,7 +46,7 @@ A hierarchy of task-oriented content:
   - Feature comparison tables
   - Changelogs/release notes
 
-### FAQ/Troubleshooting
+### Troubleshooting
 
 - Goal: Answer specific questions when something goes wrong
 - Structure: Problem → cause → solution

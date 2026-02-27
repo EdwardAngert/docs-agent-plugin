@@ -1,9 +1,16 @@
 # Documentation Agent
 
-A Claude Code plugin that applies professional technical writing standards to your documentation work.
-Provides methodologies for content audits, information architecture design, style enforcement, and docs-as-code workflows.
+A Claude Code plugin that coaches people through writing documentation.
 
-## Install the Plugin
+You have subject matter experts with knowledge in their heads — engineers who built the feature, support leads who know every edge case, PMs who understand the workflow.
+They don't need to be good at documentation.
+They just need to share what they know.
+
+This plugin is the documentation expertise layer.
+It extracts their knowledge, picks the right structure, applies writing standards, and produces a draft they can review.
+Think of it as having a technical writer in every Claude Code session — one who asks the right questions and handles the formatting so contributors can focus on what they know.
+
+## Install
 
 1. Open Claude Code:
 
@@ -11,7 +18,7 @@ Provides methodologies for content audits, information architecture design, styl
    claude
    ```
 
-1. Add this repository (or your fork) as a [plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces):
+1. Add this repository as a [plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces):
 
    ```bash
    /plugin marketplace add EdwardAngert/documentation-agent-skill
@@ -27,37 +34,58 @@ Provides methodologies for content audits, information architecture design, styl
 
 ## How It Works
 
-When you open Claude Code in a documentation project and ask for help, the plugin **automatically activates**.
-Claude becomes your subject matter expert for the codebase, applying all the standards and patterns from this skill.
+The plugin activates automatically when you ask for documentation help.
+You don't need to learn any special syntax or documentation theory.
 
-Example prompts that trigger the skill:
+**The simplest path**: Just tell Claude what you want to document.
+
+```text
+I need to document how to set up SSO for our enterprise customers.
+```
+
+Claude will ask you a few questions to understand the audience and scope, walk you through getting the details down, then produce a structured draft. You review for accuracy, Claude handles the rest.
+
+**Other prompts that work:**
 
 ```text
 Help me document feature X for issue #123
 ```
 
 ```text
-Review this README for clarity and completeness
+I just fixed a tricky bug — can we add troubleshooting docs so others don't hit it?
 ```
 
 ```text
-I need to document our API. What's the best structure?
+Review this README for clarity and completeness
 ```
 
-You don't need to do anything special — just ask for documentation help and the skill kicks in.
-
-## What It Does
-
-When the plugin is active, Claude automatically applies:
-
-- **Content type awareness**: Structures docs as concepts, docs, guides, tutorials, references, or troubleshooting
-- **Writing standards**: Consistent tone, formatting, and terminology
-- **User-focused approach**: Prioritizes what users need to do, not what products can do
-- **Safe examples**: Copy-paste ready code that won't break things
-- **Accessibility**: Guidance on images, diagrams, and alt text
-- **SEO**: Headings and content that help users find information
-
 ## Commands
+
+### `/documentation-agent:draft [topic]`
+
+The primary workflow.
+Guides you through contributing documentation — bring your expertise, the plugin handles the writing.
+
+Claude will:
+
+- Ask what you're documenting and who it's for
+- Pull out your knowledge through conversational prompts
+- Pick the right document structure automatically
+- Produce a formatted draft you can review for accuracy
+- Refine based on your feedback and write the final file
+
+### `/documentation-agent:plan [repo or description]`
+
+Plan a full documentation set for a project.
+Use when you need to document something from scratch or reorganize existing docs into a coherent structure.
+
+Claude will:
+
+- Read the codebase to understand the project
+- Ask about your users, their goals, and how deep to go
+- Map user journeys and identify what docs need to exist
+- Propose a prioritized plan with content types, audiences, and writing order
+- Execute the plan doc by doc once you approve it
 
 ### `/documentation-agent:audit [path]`
 
@@ -67,13 +95,8 @@ Run a documentation audit on a directory or file:
 /documentation-agent:audit docs/
 ```
 
-Outputs a structured report with:
-
-- Critical issues
-- Structural and content problems
-- Style violations
-- Orphaned images
-- Prioritized recommendations
+Evaluates content quality, structure, findability, and gaps.
+Produces a prioritized report with actionable recommendations.
 
 ### `/documentation-agent:make-examples [doc-path]`
 
@@ -83,20 +106,17 @@ Add or improve code examples in a documentation file:
 /documentation-agent:make-examples docs/setup.md
 ```
 
-Claude will:
+Identifies sections that need examples, creates safe copy-paste ready code, and asks before inserting.
 
-- Identify sections that need examples
-- Create safe, copy-paste ready code
-- Match existing example patterns in your docs
-- Ask before inserting
+## What's Inside
 
-## File Structure
-
-You can customize any of these files to match your team's standards:
+The plugin includes writing standards and methodologies that Claude applies automatically.
+You can customize any of these to match your team's conventions:
 
 ```text
 skills/documentation-agent/
-├── SKILL.md                    # Core instructions Claude follows
+├── SKILL.md                    # Core instructions and role definition
+├── frontmatter-spec.md         # Per-doc metadata schema and how the plugin uses it
 ├── tone-and-voice.md           # Formatting rules, heading case, markdown style
 ├── documentation-patterns.md   # Content types, examples, SEO, accessibility
 ├── content-audit-framework.md  # Audit methodology
@@ -104,36 +124,18 @@ skills/documentation-agent/
 └── style-guides.md             # Style guide selection and enforcement
 ```
 
-**What to tweak:**
+**What to customize first:**
 
-- `tone-and-voice.md` - Change heading case, list style, or add your company's conventions
-- `documentation-patterns.md` - Adjust content type definitions to match your taxonomy
-- `SKILL.md` - Modify the SME role or add project-specific instructions
-
-## Templates
-
-This plugin provides methodology and standards, not templates.
-For documentation templates, see the [Good Docs Project](https://thegooddocsproject.dev/), which offers templates for how-tos, tutorials, references, and more.
-
-## Included Methodologies
-
-The plugin includes detailed frameworks for:
-
-- **Content audits** - 6-phase systematic evaluation process
-- **Information architecture** - User research, IA design, and validation
-- **Style guide enforcement** - Automated and human review strategies
-- **Documentation patterns** - Content types, antipatterns, effective patterns
-- **Code examples** - Safety, consistency, and formatting rules
-- **Docs-as-code workflows** - Version control, CI/CD, static site generators
+- `tone-and-voice.md` — Change heading case, list style, or add your company's conventions
+- `SKILL.md` — Adjust the coaching approach or add project-specific instructions
 
 ## Background
 
-This plugin codifies methodologies from 10 years of technical writing experience, including:
+This plugin codifies methodologies from 10 years of technical writing experience — building doc practices from scratch for developer tools, managing documentation teams for enterprise platforms, API and SDK documentation, and docs-as-code workflows.
 
-- Building documentation practices from scratch for developer tools
-- Managing documentation teams for enterprise SaaS platforms
-- API and SDK documentation for developer-focused products
-- Docs-as-code workflows and CI/CD integration
+The core philosophy: I just want your knowledge, expertise, and steps.
+I'll deal with putting it in the right order, getting the words right, and making it all work together.
+This plugin brings that same approach to every Claude Code session.
 
 ## Contribute
 
@@ -141,4 +143,4 @@ See the [contributing guidelines](CONTRIBUTING.md).
 
 ## License
 
-Apache 2.0 - see [LICENSE](LICENSE) for details.
+Apache 2.0 — see [LICENSE](LICENSE) for details.

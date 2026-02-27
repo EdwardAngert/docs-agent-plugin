@@ -6,8 +6,8 @@
   "plugins": [
     {
       "name": "documentation-agent",
-      "version": "0.1.0",
-      "description": "Technical writing expertise and documentation best practices for Claude Code. Provides methodologies for content audits, information architecture, style enforcement, and docs-as-code workflows.",
+      "version": "0.2.0",
+      "description": "A documentation coach for Claude Code. Guides subject matter experts through contributing their knowledge — you bring the expertise, the plugin handles the writing. Also provides content audits, style enforcement, and docs-as-code workflows.",
       "author": {
         "name": "Edward Angert"
       },
