@@ -1,0 +1,9 @@
+extends: existence
+message: "Use link text that describes the destination instead of '%s'."
+link: https://developers.google.com/style/cross-references
+level: warning
+ignorecase: true
+tokens:
+  - click here
+  - clicking here
+  - click this link

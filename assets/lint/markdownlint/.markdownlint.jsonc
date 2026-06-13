@@ -1,0 +1,42 @@
+{
+  // Docs Assist markdownlint configuration.
+  // Scaffolded by `/docs-assist:setup-lint` from .docs-assist/config.yml.
+  // Encodes the structural markdown rules. Prose style (em dashes, headings,
+  // weasel words) is handled by the Vale DocsAssist style.
+
+  "default": true,
+
+  // One H1 per file. Ignore the frontmatter "title" field so docs can carry
+  // both a frontmatter title and a matching body H1 (the recommended convention).
+  "MD025": { "front_matter_title": "" },
+  "MD041": true,
+
+  // Heading levels increment by one.
+  "MD001": true,
+
+  // Blank lines around headings and lists.
+  "MD022": true,
+  "MD032": true,
+
+  // Fenced code blocks must declare a language.
+  "MD040": true,
+
+  // Unordered lists use "-" (from config.yml list_marker).
+  "MD004": { "style": "dash" },
+
+  // Ordered lists use a repeated "1." (from config.yml ordered_list_style).
+  "MD029": { "style": "one" },
+
+  // Allow "?" in headings; flag other trailing punctuation.
+  "MD026": { "punctuation": ".,;:!。，；：！" },
+
+  // No emphasis used in place of a heading; no bare URLs.
+  "MD036": true,
+  "MD034": true,
+
+  // Allow the same heading text under different parents (common in structured docs).
+  "MD024": { "siblings_only": true },
+
+  // One sentence per line means lines are intentionally long; do not enforce length.
+  "MD013": false
+}

@@ -1,0 +1,47 @@
+# Docs Assist project configuration.
+#
+# Machine-readable settings shared by the plugin and the linters it scaffolds.
+# One source of truth: the agent reads these when drafting and reviewing, and
+# `/docs-assist:setup-lint` generates Vale and markdownlint config from the same values.
+#
+# Prose conventions (voice, terminology, banned phrases) live next to this file in style.md.
+
+# Directory that holds documentation, relative to the repo root.
+# Used to scope audits, planning, and linting.
+docs_dir: docs
+
+# Heading case: title | sentence
+heading_case: title
+
+# Title-case style, used only when heading_case is title: ap | chicago
+title_case_style: ap
+
+# Require action-oriented headings (imperative verbs, not gerunds): true | false
+action_oriented_headings: true
+
+# Unordered list marker: "-" | "*" | "+"
+list_marker: "-"
+
+# Ordered list style: repeated-one (1. 1. 1.) | sequential (1. 2. 3.)
+ordered_list_style: repeated-one
+
+# Break lines after each sentence for cleaner diffs: true | false
+one_sentence_per_line: true
+
+# Disallow em dashes: true | false
+no_em_dashes: true
+
+# Frontmatter conventions. Match the field names the repo already uses so the
+# plugin extends existing frontmatter instead of fighting it.
+frontmatter:
+  keywords_field: keywords        # set to "tags" if the repo uses tags
+  content_type_field: content-type # set to "type" if the repo uses type
+  audience_field: audience
+  # Allowed content-type values. Defaults to the canonical Docs Assist set.
+  content_types: [doc, guide, tutorial, concept, reference, troubleshooting]
+
+# Linting. Written by `/docs-assist:setup-lint`. "none" until configured.
+lint:
+  tool: none        # none | vale | markdownlint | megalinter
+  spelling: false   # cspell
+  link_check: false

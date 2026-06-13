@@ -9,7 +9,7 @@ Perform a systematic documentation audit on the specified path: `$ARGUMENTS`
 
 ## Your Role
 
-Focus on **content and strategy** — the things that require judgment:
+Focus on **content and strategy**, the things that require judgment:
 
 - Is this the right content type for the user's goal?
 - Does the information architecture match how users think?
@@ -148,3 +148,4 @@ Focus on issues that are high-impact and low-effort first.
 - Be proportional: don't overwhelm with minor issues
 - Consider context: some "issues" may be intentional choices
 - For large repositories, ask how to handle the files list before outputting
+- For large documentation sets, fan out: launch the `doc-auditor` subagent in parallel across slices of the set, then consolidate the findings into one prioritized report

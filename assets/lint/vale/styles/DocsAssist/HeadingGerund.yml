@@ -1,0 +1,9 @@
+extends: existence
+message: "Use an imperative verb in headings, not a gerund (for example, 'Install the Plugin', not 'Installing the Plugin')."
+link: https://developers.google.com/style/headings
+level: warning
+scope: heading
+# Flags a heading that begins with an -ing word. Heuristic: it can match
+# legitimate nouns like "Engineering", so it is a warning, not an error.
+tokens:
+  - '^\s*\w+ing\b'

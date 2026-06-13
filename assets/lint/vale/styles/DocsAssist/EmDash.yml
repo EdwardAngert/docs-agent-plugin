@@ -1,0 +1,7 @@
+extends: existence
+message: "Avoid em dashes. Use a comma, a colon, parentheses, or rewrite the sentence."
+link: https://github.com/EdwardAngert/docs-agent-plugin
+level: error
+nonword: true
+tokens:
+  - '—'

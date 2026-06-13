@@ -1,0 +1,83 @@
+# Docs-assist documentation linting workflow.
+# Install as: .github/workflows/docs-lint.yml
+#
+# Assumes setup-lint has copied these per-tool configs to the repo root:
+#   .markdownlint.jsonc        (markdownlint-cli2)
+#   .vale.ini  + styles/       (Vale)
+#   cspell.json                (cspell)
+#   .markdown-link-check.json  (markdown-link-check)
+#
+# Each tool runs as a separate step so failures are easy to read. All Node
+# tooling runs via npx (no global installs). The job fails on lint errors.
+
+name: Docs Lint
+
+on:
+  push:
+    paths:
+      - "**/*.md"
+      - "**/*.mdx"
+      - "docs/**"
+  pull_request:
+    paths:
+      - "**/*.md"
+      - "**/*.mdx"
+      - "docs/**"
+
+permissions:
+  contents: read
+
+jobs:
+  docs-lint:
+    name: Lint documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Structural markdown rules. Scoped to .md; Vale handles .mdx prose.
+      - name: markdownlint
+        if: always()
+        run: npx --yes markdownlint-cli2 "**/*.md" "!**/node_modules/**"
+
+      # Prose style. Uses the official Vale action.
+      # NOTE: errata-ai was renamed to vale-cli; errata-ai/vale-action@v2 still
+      # resolves. Swap to vale-cli/vale-action@v2 if the redirect is ever dropped.
+      # npx fallback (no action): npx --yes @vvago/vale --glob='*.{md,mdx}' .
+      - name: Vale
+        if: always()
+        uses: errata-ai/vale-action@v2
+        with:
+          version: latest
+          files: .
+          reporter: github-pr-check
+          fail_on_error: true
+          filter_mode: nofilter
+          vale_flags: "--glob=*.{md,mdx}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Correct spelling.
+      - name: cspell
+        if: always()
+        run: npx --yes cspell --no-progress --config cspell.json "**/*.md" "**/*.mdx"
+
+      # Valid links.
+      - name: markdown-link-check
+        if: always()
+        run: |
+          shopt -s globstar nullglob
+          files=( **/*.md **/*.mdx )
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No Markdown files to check."
+            exit 0
+          fi
+          npx --yes markdown-link-check \
+            --config .markdown-link-check.json \
+            --quiet \
+            "${files[@]}"

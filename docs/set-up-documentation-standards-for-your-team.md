@@ -1,6 +1,6 @@
 ---
 title: "Set Up Documentation Standards for Your Team"
-description: "Install and configure the Documentation Agent plugin for your team — what changes for contributors, how to customize writing standards, and how to run your first audit."
+description: "Install and configure the Docs Assist plugin for your team: what changes for contributors, how to customize writing standards, and how to run your first audit."
 content-type: doc
 audience: docs-leads
 keywords:
@@ -17,7 +17,7 @@ Engineers who built the feature.
 Support leads who've seen every edge case.
 PMs who understand the workflow end to end.
 
-They're already writing documentation — ad hoc, in their own style, scattered across the repo.
+They're already writing documentation, ad hoc, in their own style, scattered across the repo.
 Each doc is fine on its own.
 But put them all together and there's no consistency, no cross-referencing, no connective tissue.
 
@@ -25,8 +25,8 @@ This plugin fixes that without hiring a dedicated technical writer.
 
 ## What the Plugin Does
 
-The Documentation Agent is a Claude Code plugin that gives every Claude Code session documentation expertise.
-When a contributor asks Claude Code for help writing docs, the plugin shapes how Claude Code responds — guiding the conversation, picking the right structure, applying formatting standards, and connecting the new content to what already exists.
+Docs Assist is a Claude Code plugin that gives every Claude Code session documentation expertise.
+When a contributor asks Claude Code for help writing docs, the plugin shapes how Claude Code responds, guiding the conversation, picking the right structure, applying formatting standards, and connecting the new content to what already exists.
 
 The contributor doesn't interact with the plugin directly.
 They just talk to Claude Code, and Claude Code acts like a documentation coach instead of a generic assistant.
@@ -34,13 +34,13 @@ They just talk to Claude Code, and Claude Code acts like a documentation coach i
 ## What Changes for Your Contributors
 
 **Before the plugin**, a contributor opens Claude Code and says "help me document how the deployment pipeline works."
-Claude Code produces something technically accurate but flat — a markdown file that describes what happens, with no particular structure, no connection to related docs, and formatting that doesn't match anything else in the repo.
+Claude Code produces something technically accurate but flat: a markdown file that describes what happens, with no particular structure, no connection to related docs, and formatting that doesn't match anything else in the repo.
 
 **With the plugin**, the same request triggers a different workflow.
 Claude Code first looks at the existing documentation to understand what's already there.
 Then it asks the contributor a few focused questions: who's the audience, what should they be able to do after reading this, what are the prerequisites.
 It pulls out gotchas and decision points the contributor mentions casually.
-It picks the right content type — a how-to doc, a conceptual explanation, a troubleshooting guide — without the contributor needing to know those categories.
+It picks the right content type (a how-to doc, a conceptual explanation, a troubleshooting guide) without the contributor needing to know those categories.
 It produces a draft that follows your team's formatting conventions, includes cross-references to related docs, and flags where existing content should link back to this new page.
 
 The contributor reviews for technical accuracy.
@@ -82,32 +82,36 @@ The plugin ships with defaults (AP title case, action-oriented headings, specifi
 
 Once installed, the plugin activates automatically whenever someone asks for documentation help.
 No special commands required.
-Two commands are worth knowing:
+A few commands are worth knowing:
 
-- `/documentation-agent:draft` — guided intake for a single document. Useful when a contributor wants a structured walkthrough: topic, audience, prerequisites, steps.
-- `/documentation-agent:plan` — for "we need docs for this project" moments. Reads the codebase, asks about users and goals, and produces a prioritized doc plan before writing anything. Start here when rolling out documentation for a new project or team.
+- `/docs-assist:draft`: guided intake for a single document. Useful when a contributor wants a structured walkthrough: topic, audience, prerequisites, steps.
+- `/docs-assist:plan`: for "we need docs for this project" moments. Reads the codebase, asks about users and goals, and produces a prioritized doc plan. Start here when rolling out documentation for a new project or team.
+- `/docs-assist:init`: scaffold your team's configuration so everyone writes to the same conventions. Run this first.
+- `/docs-assist:setup-lint`: add optional linting that checks the same rules the plugin writes by.
+- `/docs-assist:update`: update the docs affected by a code change.
 
 ## Customize for Your Team
 
-The plugin's standards live in editable files.
-Start with these two:
+The recommended way to customize is project-local config you commit to your repo.
+Run `/docs-assist:init` to scaffold a `.docs-assist/` directory:
 
-- `skills/documentation-agent/tone-and-voice.md` — Heading case, list style, formatting conventions. Change AP title case to sentence case, swap `-` for `*` in unordered lists, add your company-specific conventions.
-- `skills/documentation-agent/SKILL.md` — The core instructions. Add project-specific context, adjust the coaching approach, include terminology your team uses.
+- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tool). This file also drives the linters, so your rules stay in one place.
+- `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 
-The other methodology files (`documentation-patterns.md`, `content-audit-framework.md`, `ia-design-methodology.md`, `style-guides.md`) contain deeper reference material.
-Edit them if you need to, but the two above cover most customization needs.
+Because this config is committed, it survives plugin updates and is shared across your whole team.
+
+If you prefer, you can edit the plugin's own files directly: `skills/docs-assist/reference/tone-and-voice.md` for formatting and `skills/docs-assist/SKILL.md` for the coaching approach. Those edits do not survive a plugin update, so project-local config is the better default.
 
 ## Run a Documentation Audit
 
 If you want to assess the state of your existing docs, the plugin includes an audit command:
 
 ```bash
-/documentation-agent:audit docs/
+/docs-assist:audit docs/
 ```
 
 This produces a structured report covering content quality, structural issues, findability gaps, and prioritized recommendations.
-It's a good starting point before rolling the plugin out to your team — it shows you what needs attention and helps you prioritize.
+It's a good starting point before rolling the plugin out to your team. It shows you what needs attention and helps you prioritize.
 
 ## What This Doesn't Replace
 
