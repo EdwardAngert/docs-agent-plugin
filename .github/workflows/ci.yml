@@ -41,13 +41,15 @@ jobs:
           "README.md" "CHANGELOG.md" "docs/**/*.md"
 
       # Prose rules, using the Vale DocsAssist style this plugin ships.
+      # Lints all of the plugin's own markdown. The action's `files` input takes a
+      # single path, so scan the repo root and let .vale.ini scope to markdown.
       # Fails on error-level findings (em dashes). Warnings are reported, not fatal.
       - name: Vale (own docs)
         if: always()
         uses: errata-ai/vale-action@v2
         with:
           version: latest
-          files: "README.md CHANGELOG.md docs"
+          files: "."
           vale_flags: "--config=assets/lint/vale/.vale.ini"
           fail_on_error: true
           reporter: github-pr-check

@@ -1,5 +1,5 @@
 ---
-description: Draft a new document with guided help: bring your expertise, the plugin handles the writing
+description: "Draft a new document with guided help: bring your expertise, the plugin handles the writing"
 argument-hint: [topic or issue number]
 ---
 

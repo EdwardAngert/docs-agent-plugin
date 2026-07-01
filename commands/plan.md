@@ -1,5 +1,5 @@
 ---
-description: Plan a documentation set for a project: figure out what to write, for whom, and in what order
+description: "Plan a documentation set for a project: figure out what to write, for whom, and in what order"
 argument-hint: [repo path or description]
 ---
 
