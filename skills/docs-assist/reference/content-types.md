@@ -76,3 +76,13 @@ Doc, Guide, and Tutorial form a hierarchy of task-oriented content that scales w
 - A Tutorial is an ordered journey, often a set of guides, that builds competency.
 
 Start at the smallest type that fits. Split upward only when a single page tries to do too much (see the Everything Document antipattern in `documentation-patterns.md`).
+
+## Templates for a Starting Structure
+
+A content type says what shape a doc should take.
+A template gives the contributor that shape as a fillable skeleton, so they start from a proven structure instead of a blank page.
+
+When a project opts in, Docs Assist can suggest a template that matches the chosen content type and fetch it live.
+Templates supplement these content types; they do not replace them.
+`content-type` stays canonical, and an optional `template` field records which template seeded the doc.
+See `templates.md`.

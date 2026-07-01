@@ -72,6 +72,23 @@ if (existsSync(rel('docs'))) {
   }
 }
 
+// 4b. Template feature assets exist and the catalog looks well-formed.
+const catalogPath = 'assets/templates/gooddocs-catalog.yml';
+check(existsSync(rel(catalogPath)), `template catalog missing: ${catalogPath}`);
+check(existsSync(rel('assets/config/templates.yml')), 'template config scaffold missing: assets/config/templates.yml');
+check(existsSync(rel('skills/docs-assist/reference/templates.md')), 'templates reference missing');
+check(existsSync(rel('THIRD-PARTY-NOTICES.md')), 'THIRD-PARTY-NOTICES.md missing');
+if (existsSync(rel(catalogPath))) {
+  const catalog = readFileSync(rel(catalogPath), 'utf8');
+  // Every catalog entry needs a content_type and a fetch URL.
+  const ids = (catalog.match(/^\s*-\s*id:/gm) || []).length;
+  const contentTypes = (catalog.match(/^\s*content_type:/gm) || []).length;
+  const urls = (catalog.match(/^\s*template_url:\s*https:\/\//gm) || []).length;
+  check(ids > 0, 'template catalog has no entries');
+  check(ids === contentTypes, `template catalog: ${ids} entries but ${contentTypes} content_type fields`);
+  check(ids === urls, `template catalog: ${ids} entries but ${urls} template_url fields`);
+}
+
 // 5. llms.txt relative links resolve.
 if (existsSync(rel('llms.txt'))) {
   const llms = readFileSync(rel('llms.txt'), 'utf8');

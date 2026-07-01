@@ -10,8 +10,9 @@ A configured project has a `.docs-assist/` directory at its root:
 
 - `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tool). Shared with the linters.
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases) that need human judgment.
+- `.docs-assist/templates.yml`: optional. Settings for external documentation templates (auto-use flag, selection model, source, attribution). Absent does not disable suggestions: the assistant still offers a template when one fits and fetches only on the contributor's yes. See `templates.md`.
 
-`/docs-assist:init` scaffolds both, pre-filled from the repo's existing conventions.
+`/docs-assist:init` scaffolds `config.yml` and `style.md`, pre-filled from the repo's existing conventions. `/docs-assist:template` scaffolds `templates.yml` when a project opts into templates.
 
 ## Resolution Order
 

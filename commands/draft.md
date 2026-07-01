@@ -74,6 +74,8 @@ Choose the type using the canonical list in the docs-assist skill: `${CLAUDE_PLU
 It maps each situation to a content type and the frontmatter value to set.
 If it's ambiguous, default to a doc (task-oriented) and let the reviewer restructure if needed.
 
+Then offer a starting template. Suggesting one is free and offline, so do it whenever a catalog template fits, even if `.docs-assist/templates.yml` is absent. Name the template and why in a sentence, and let the contributor accept it, pick another, or decline. Only fetch the body if they accept: the yes is the consent. If they accept and the project has no `templates.yml`, offer to save `enabled: true` so the team is not asked every time. Follow `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. A template is a head start, not a requirement, so never block on it.
+
 ### 5. Produce the Draft
 
 Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md` automatically:
@@ -110,6 +112,7 @@ When the contributor is satisfied:
 - Write the file to the appropriate location (ask if unsure where it should live)
 - Suggest a filename that follows existing conventions in the repo
 - Generate frontmatter following the schema in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`. At minimum include `title`, `description`, and `content-type`. Add `audience`, `keywords`, `prerequisites`, and `related` when you have the context, and after this conversation you almost certainly do. Match any existing frontmatter conventions in the repo.
+- If you drafted on a template, set the optional `template` field to the catalog `id` and add the `attribution` line from `templates.yml` to the doc.
 - If the repo has an `llms.txt`, add an entry for the new doc with a one-line description
 - Update related docs to cross-reference this new content (or make the edits and show the contributor what you changed)
 - Note any remaining follow-up work: images or diagrams that would help, docs that need a subject matter expert to verify the cross-reference, etc.

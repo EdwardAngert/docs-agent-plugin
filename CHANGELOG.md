@@ -3,6 +3,26 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
+## 0.6.0 - 2026-07-01
+
+### Added
+
+- Documentation templates from The Good Docs Project, via a new `/docs-assist:template` command and `reference/templates.md`.
+  The plugin suggests a template from what the contributor is trying to write, then fetches the skeleton live so a support lead, engineer, or PM starts from a proven structure instead of a blank page.
+  Templates supplement the existing content types rather than replacing them: `content-type` stays canonical and a new optional `template` frontmatter field records the origin.
+  Suggesting a template is free and offline, so the assistant offers one whenever it fits; it fetches a body only when the contributor accepts, so nothing is pulled without a yes.
+  `.docs-assist/templates.yml` records auto-use and the selection model (content-type or seven-action). On a fetch failure the assistant prompts to retry, use the built-in structure, or cancel.
+  The Good Docs templates are MIT-0; `THIRD-PARTY-NOTICES.md` records the acknowledgement.
+- Template suggestions offered during `/docs-assist:draft` and `/docs-assist:plan`, and `/docs-assist:init` now offers to enable templates as part of setup.
+
+### Changed
+
+- Framed the skill as a single conversational assistant: contributors describe what they want and the right workflow runs, with the `/docs-assist:*` commands as optional shortcuts rather than a required interface. Setup (config, templates, linting) is offered inline.
+
+### Fixed
+
+- `frontmatter-spec.md` pointed `content-type` at `documentation-patterns.md`; it now points at the canonical `content-types.md`.
+
 ## 0.5.0 - 2026-07-01
 
 This release reorganizes the plugin around a single source of truth.

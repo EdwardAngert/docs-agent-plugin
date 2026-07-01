@@ -74,6 +74,8 @@ Review this README for clarity and completeness
 - `/docs-assist:plan [repo or description]`: plan a full documentation set.
   Reads the codebase, asks about users and goals, maps user journeys, and proposes a prioritized plan before writing anything.
 - `/docs-assist:make-examples [doc-path]`: add or improve copy-paste safe code examples in an existing doc.
+- `/docs-assist:template [problem or topic]`: start from a proven structure (The Good Docs Project) instead of a blank page.
+  Suggests a template from what you describe and fills the skeleton with what you know.
 
 ### Review and Maintain
 
@@ -113,6 +115,16 @@ That means one source of truth: the same settings drive how the agent writes and
 
 The command detects any linter you already use and extends it rather than replacing it.
 
+## Start From a Proven Template
+
+When you document something new, the plugin can start you from a proven structure instead of a blank page, using [The Good Docs Project](https://thegooddocsproject.dev/) templates.
+Describe the problem in plain words, for example "people keep opening tickets about a login loop," and it suggests a matching template, then fills the skeleton with what you know.
+
+Templates supplement the content types; they never replace them.
+Suggesting one is free and offline, so the assistant offers a template in any drafting conversation, and only fetches it when you accept.
+`/docs-assist:template` turns the feature on for a team or scaffolds a template directly.
+The Good Docs templates are MIT-0; see `THIRD-PARTY-NOTICES.md`.
+
 ## Keep Docs in Sync With Code
 
 When code changes, run `/docs-assist:update` with a git ref, a PR number, or a path.
@@ -123,7 +135,7 @@ Large changes fan out across the `doc-updater` subagent so many docs update in p
 
 ```text
 docs-assist/
-├── commands/                  # draft, plan, audit, make-examples, update, init, setup-lint, setup-hooks
+├── commands/                  # draft, plan, audit, make-examples, update, template, init, setup-lint, setup-hooks
 ├── agents/                    # doc-auditor, doc-updater subagents
 ├── skills/docs-assist/
 │   ├── SKILL.md               # core instructions and role definition
@@ -132,11 +144,13 @@ docs-assist/
 │       ├── tone-and-voice.md      # formatting, heading case, markdown style
 │       ├── frontmatter-spec.md    # per-doc metadata schema
 │       ├── config-resolution.md   # how project-local config overrides defaults
+│       ├── templates.md           # suggest and apply Good Docs templates
+│       ├── impact-analysis.md     # scope a change-based audit or update
 │       ├── documentation-patterns.md
 │       ├── audit-methodology.md
 │       ├── ia-methodology.md
 │       └── style-guides.md
-├── assets/                    # config templates, lint scaffolds, CI, hook recipes
+├── assets/                    # config templates, doc templates, lint scaffolds, CI, hook recipes
 └── scripts/validate.mjs       # repository validator (run in CI)
 ```
 

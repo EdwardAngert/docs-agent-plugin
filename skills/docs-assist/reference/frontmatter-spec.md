@@ -39,7 +39,7 @@ Write it the way you'd explain the doc to a coworker, not SEO filler, not market
 **`content-type`**
 The document's structural category.
 Use one of: `doc`, `guide`, `tutorial`, `concept`, `reference`, `troubleshooting`.
-These map to the content types defined in `documentation-patterns.md`.
+These map to the content types defined in `content-types.md`.
 
 ### Recommended Fields
 
@@ -103,6 +103,11 @@ languages:
 **`last-verified`**
 The date someone last confirmed the doc's technical accuracy.
 This is not the same as the file's last-modified date. A doc can be edited for formatting without being verified for accuracy.
+
+**`template`**
+The catalog id of the documentation template this doc was seeded from, when one was used.
+Set it alongside the canonical `content-type` so the origin is traceable.
+See `templates.md`.
 
 **`sdk`**
 The SDK or tool this doc relates to.

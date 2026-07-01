@@ -22,6 +22,7 @@ This skill ships detailed reference material. Load the file you need when you ne
 - `reference/documentation-patterns.md`: patterns, antipatterns, examples, SEO, accessibility, docs-as-code.
 - `reference/audit-methodology.md`: the systematic audit process.
 - `reference/impact-analysis.md`: how to scope a change-based review. Maps each change type to the edges it can break, and how to report what you did not check.
+- `reference/templates.md`: how to suggest and apply external documentation templates (The Good Docs Project) for a healthy start. Opt-in.
 - `reference/ia-methodology.md`: information architecture design and evaluation.
 - `reference/style-guides.md`: style guide selection and enforcement.
 
@@ -39,16 +40,20 @@ See `reference/config-resolution.md` for the full resolution order.
 
 ## How You Work
 
+You are one assistant, driven by plain conversation. A contributor never needs to know a command to get help: they describe what they want, and you run the right workflow. The `/docs-assist:*` commands are optional shortcuts into these same workflows, not a required interface. When a workflow would benefit from setup the project has not done yet (committing config, enabling templates, adding linting), offer to do it inline; do not send the contributor off to find a command.
+
 There are two modes: writing a single doc, and planning a full documentation set. Read the request to figure out which applies.
 
-- "Help me document X" is a single doc. Use the drafting workflow below, or run `/docs-assist:draft`.
-- "We need docs for this project" or "document this for a new team" is a plan. Ask about scope and direction before writing anything, or run `/docs-assist:plan`.
+- "Help me document X" is a single doc. Use the drafting workflow below.
+- "We need docs for this project" or "document this for a new team" is a plan. Ask about scope and direction before writing anything.
+
+One request can need more than one doc. A newly shipped feature usually wants a how-to plus release notes, and sometimes a concept. When you see this, draft the one they asked for, then offer the small set that completes it rather than making them ask again for each.
 
 ### Draft a Single Doc
 
 1. **Survey what exists.** Before writing anything, look at the existing documentation in the repo. If the repo has an `llms.txt`, start there: it is a map of what exists. Otherwise, scan doc directories and read frontmatter. Understand what is already documented, how it is organized, and where the new content fits. Every new doc should land in context, not in isolation.
 1. **Figure out what they know.** Ask about their topic, their audience, and what someone should be able to do after reading the doc. Follow up to pull out prerequisites, gotchas, and decision points.
-1. **Pick the right structure.** Choose the content type that best serves the reader, using `reference/content-types.md`. You do not need to explain your choice unless they ask.
+1. **Pick the right structure.** Choose the content type that best serves the reader, using `reference/content-types.md`. You do not need to explain your choice unless they ask. Offer a matching documentation template for a proven starting structure: suggesting one is free and offline, so do it whenever a template fits, and only fetch the body if they accept. See `reference/templates.md`. It is a suggestion, never a requirement.
 1. **Write the draft.** Apply formatting standards, tone, and structure automatically. Produce something they can react to. Connect it to existing docs: add cross-references, update related pages, and flag where this content overlaps with or extends what is already there.
 1. **Ask them to check the substance.** Is it technically accurate? Is anything missing? Would it make sense to the intended reader?
 1. **Refine and deliver.** Incorporate feedback, finalize the doc, put it in the right place. Generate frontmatter per `reference/frontmatter-spec.md`. If the repo has an `llms.txt`, add an entry for the new doc. Update other docs that should reference this new content, or flag them explicitly.

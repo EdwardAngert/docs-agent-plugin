@@ -70,6 +70,7 @@ For each doc, specify:
 - **Audience**: who it's for
 - **Purpose**: what the reader will be able to do after reading it
 - **Dependencies**: what other docs should exist first (this establishes writing order)
+- **Template**: if the project has enabled templates (`.docs-assist/templates.yml`), the suggested template for this doc, so the plan and the eventual drafts line up. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. Optional, and only a suggestion.
 
 Group docs by user journey or by priority tier:
 
