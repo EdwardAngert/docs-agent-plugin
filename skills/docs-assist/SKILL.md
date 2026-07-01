@@ -1,6 +1,6 @@
 ---
 name: docs-assist
-description: Invoke when writing, reviewing, or planning technical documentation. Coaches subject matter experts through contributing their knowledge, and applies professional technical writing standards automatically.
+description: Invoke when writing, planning, reviewing, or gathering material for technical documentation, including any request to document a feature, write docs, explain how something works, or turn notes, tickets, or a pile of material into docs. Leads with a knowledge dump, coaches subject matter experts through contributing what they know, and applies professional technical writing standards automatically.
 ---
 
 # Docs Assist
@@ -15,6 +15,7 @@ They should never need to worry about formatting, content types, heading case, o
 
 This skill ships detailed reference material. Load the file you need when you need it, rather than holding all of it in context.
 
+- `reference/intake.md`: how to gather knowledge before structuring. The dump-first intake loop for one doc, and the corpus content-inventory method for from-scratch work.
 - `reference/content-types.md`: the canonical content types and their frontmatter values. The single source of truth.
 - `reference/tone-and-voice.md`: formatting, heading case, markdown, and voice rules.
 - `reference/config-resolution.md`: how to read a project's committed configuration and apply it over the defaults.
@@ -51,16 +52,20 @@ One request can need more than one doc. A newly shipped feature usually wants a 
 
 ### Draft a Single Doc
 
-1. **Survey what exists.** Before writing anything, look at the existing documentation in the repo. If the repo has an `llms.txt`, start there: it is a map of what exists. Otherwise, scan doc directories and read frontmatter. Understand what is already documented, how it is organized, and where the new content fits. Every new doc should land in context, not in isolation.
-1. **Figure out what they know.** Ask about their topic, their audience, and what someone should be able to do after reading the doc. Follow up to pull out prerequisites, gotchas, and decision points.
-1. **Pick the right structure.** Choose the content type that best serves the reader, using `reference/content-types.md`. You do not need to explain your choice unless they ask. Offer a matching documentation template for a proven starting structure: suggesting one is free and offline, so do it whenever a template fits, and only fetch the body if they accept. See `reference/templates.md`. It is a suggestion, never a requirement.
-1. **Write the draft.** Apply formatting standards, tone, and structure automatically. Produce something they can react to. Connect it to existing docs: add cross-references, update related pages, and flag where this content overlaps with or extends what is already there.
-1. **Ask them to check the substance.** Is it technically accurate? Is anything missing? Would it make sense to the intended reader?
-1. **Refine and deliver.** Incorporate feedback, finalize the doc, put it in the right place. Generate frontmatter per `reference/frontmatter-spec.md`. If the repo has an `llms.txt`, add an entry for the new doc. Update other docs that should reference this new content, or flag them explicitly.
+Gather before you structure. The full method is in `reference/intake.md`; this is the shape of it.
+
+1. **Survey what exists, quietly.** Read `llms.txt` if present, then scan doc directories and frontmatter for related content, and note light feature signals from the repo. This is so your questions land, not a full read of everything.
+1. **Ask for the dump.** Open with "tell me everything you know about this, don't worry about order or polish, dump it and I'll organize it." Take it however it arrives.
+1. **Reflect it back.** Summarize what you heard and invite correction. It shows them they were heard and jogs more out of them.
+1. **Situate it.** Say out loud what it overlaps with, what feature it belongs to, and who reaches it and when, using the survey.
+1. **Dig at the gaps.** Now ask the sharp questions, two or three at a time: prerequisites, decision points, failure modes, audience and outcome, verification.
+1. **Shape it.** Pick the content type with `reference/content-types.md`. If the dump is really several docs, say so and propose the small set. Offer a template where one fits (suggesting is free and offline; fetch only on their yes, see `reference/templates.md`).
+1. **Write, review, deliver.** Apply standards automatically, connect it to existing docs, and ask them to check accuracy and completeness, not formatting. Finalize with frontmatter per `reference/frontmatter-spec.md`, an `llms.txt` entry, and cross-references.
 
 ### Plan a Documentation Set
 
 1. **Understand the project.** Read the codebase, existing docs, README, and issues. Get enough context to ask good questions.
+1. **Take inventory of any raw material.** If there is a pile (tickets, a PRD, notes, old docs), synthesize it into a content inventory before planning: clusters by topic and content type, gaps, duplication, and stale material. Send a large pile to the `doc-intake` subagent so it stays out of this conversation, and persist the inventory to `.docs-assist/intake/`. See `reference/intake.md`.
 1. **Ask about scope and direction.** Who are the users? What are they trying to accomplish? How deep should we go? What is the priority? The answers shape everything.
 1. **Map user journeys.** Identify the core paths: getting started, key tasks, failure modes, beginner to proficient.
 1. **Propose a plan.** A prioritized list of docs to write, organized by user journey, with content types, audiences, and dependencies.
@@ -74,12 +79,17 @@ The contributor's job is to share what they know. Your job is to make it good do
 
 ## Guiding Principles
 
-- **Extract, do not interrogate.** Keep the conversation natural. If they give you a messy brain dump, work with it: organize it, then ask about gaps.
+Work like a seasoned writer sitting beside the contributor, not a form they fill out.
+
+- **Gather before you structure.** Lead with the dump. Get everything out first, then shape it. A narrow question asked too early buries the good material.
+- **Reflect, so they know they were heard.** Play back what you heard before you dig. It builds trust and surfaces more.
+- **Situate everything.** Connect new knowledge to the existing docs, the product, and how people use it. Nothing lands in isolation.
+- **Dig at the gaps, not the basics.** Once you have the dump, aim your questions at prerequisites, decision points, and failure modes.
+- **Know when one is many.** A dump is often several docs. Say so and propose the set rather than forcing one page.
+- **Keep the pile.** Do not lose knowledge that did not make it into this doc. Note it or persist the synthesis.
 - **Never make them feel like they are doing it wrong.** There is no wrong way to share knowledge.
-- **User-first.** Documentation exists to help readers accomplish goals, not to describe features.
-- **Task-oriented.** Focus on what users need to do, not on what the product can do.
-- **Maintainable.** Structure content for easy updates and single sources of truth.
-- **Findable.** Users should locate information through navigation, search, or cross-references.
+- **User-first and task-oriented.** Documentation helps readers accomplish goals. Focus on what they need to do, not on what the product can do.
+- **Maintainable and findable.** Single-source content, and make sure readers can reach it through navigation, search, or cross-references.
 
 ## Choose a Content Type
 

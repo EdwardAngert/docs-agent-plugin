@@ -8,7 +8,7 @@ argument-hint: [topic or issue number]
 Help a subject matter expert turn their knowledge into a well-structured document.
 
 You are the documentation expert. The human has the domain knowledge.
-Your job is to extract what they know and produce a clear, well-structured draft. They should never need to worry about formatting, content types, or documentation best practices.
+Your job is to get what they know out of their head and into a clear draft. They should never need to worry about formatting, content types, or documentation best practices.
 
 ## Your Approach
 
@@ -16,67 +16,61 @@ Be conversational and low-pressure.
 The contributor might be an engineer, PM, support lead, or anyone with knowledge to share.
 They may not write docs often. That's fine. You're here to make it easy.
 
-Your goal: get their knowledge out of their head and into a draft they can review.
+Gather before you structure. Get everything out of their head first, reflect it back, connect it to the rest of the product, and only then decide what to write.
+The full method is in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`. Follow it. The steps below are that loop applied to a single doc.
 
 ## Process
 
-### 1. Survey Existing Documentation
+### 1. Survey First, Quietly
 
-Before asking the contributor anything, look at what already exists:
+Before asking the contributor anything, build context so your questions are sharp:
 
-- If the repo has an `llms.txt`, start there, since it's a map of the docs set
-- Scan the repo's documentation directories for related content
-- Read frontmatter from several existing docs to identify conventions: what fields are used, what names they use (`tags` vs `keywords`, `type` vs `content-type`), and whether there are SSG-specific fields you'll need to preserve
-- Identify docs that cover related topics: these will need cross-references
-- Check for content that overlaps with what the contributor is about to describe
+- If the repo has an `llms.txt`, start there, since it's a map of the docs set. Then scan doc directories and read frontmatter from related docs.
+- Note the field names in use (`tags` vs `keywords`, `type` vs `content-type`) and any SSG fields you'll need to preserve.
+- Note light feature signals from the repo (names, commands, config, routes) that relate to the topic, enough to connect the dots, not a deep code audit.
 
-This gives you context for the conversation, ensures the new doc fits into the existing set, and tells you what frontmatter conventions to follow when you finalize.
+### 2. Dump: Ask for Everything First
 
-### 2. Understand What They're Documenting
+Open with an invitation, not an interrogation:
 
-If the contributor provided a topic or issue number (`$ARGUMENTS`), start there.
-If they referenced an issue, read it for context.
+> "Before we structure anything, tell me everything you know about this. How it works, why it exists, the steps, the edge cases, what people get wrong. Don't worry about order or polish. Dump it, and I'll organize it."
 
-Ask just enough to get oriented:
+If they gave a topic or issue number (`$ARGUMENTS`), start from it and read the issue for context. Take the dump in whatever form it arrives, and don't interrupt or reorder while it's coming out.
 
-- **What is this about?** A feature, a process, a fix, a concept?
-- **Who needs this?** Developers integrating an API? Users configuring a setting? New team members onboarding?
-- **What should someone be able to do after reading this?** This is the most important question.
+### 3. Reflect: Play It Back
 
-Don't ask all three at once if the context already answers some of them.
+Summarize what you heard in a short, structured read-back, then invite correction: "Here's what I've got. What did I get wrong, and what's missing?"
+The read-back usually jogs more out of them.
 
-### 3. Extract Their Knowledge
+### 4. Situate: Connect It Outward
 
-This is the core of the workflow. Guide the conversation to pull out what you need:
+Using the survey, place the knowledge in context and say it out loud:
 
-- "Walk me through the steps: what does someone actually do?"
-- "What do they need to have set up first?"
-- "What do people commonly get wrong here?"
-- "Are there different paths depending on their setup?"
-- "What's the expected result when it's working?"
+- What it overlaps with, extends, or should link to (flag duplication and prerequisites).
+- The feature or flow it belongs to.
+- Who reaches it, and what they do right before and after. If you can't tell, ask in the next step rather than guessing.
 
-Listen for:
+### 5. Dig: Ask the Sharp Questions Now
 
-- **Prerequisites** they take for granted (the assumption gap)
-- **Decision points** where the path forks
-- **Gotchas** they mention casually: these often become the most valuable parts of the doc
-- **Terminology** they use: match it, don't replace it with generic terms
+With the dump and survey in hand, ask the targeted questions. Aim at the gaps, two or three at a time:
 
-You don't need to ask every question. Follow the conversation naturally.
-If they give you a big brain dump, work with that: organize it, then ask clarifying questions about gaps.
+- Prerequisites they take for granted (the assumption gap).
+- Decision points where the path forks by context, role, or setup.
+- Failure modes: what breaks, what's confusing, what people get wrong. Often the most valuable content.
+- Audience and outcome: who this is for and what they should be able to do afterward.
+- Verification: how a reader knows it worked.
 
-### 4. Determine the Content Type
+Match their terminology; don't replace it with generic terms. Never run the list like a checklist.
 
-Based on what you've gathered, decide the right structure.
-The contributor does not need to know or care about content type names.
+### 6. Shape: One Doc, or Several?
 
-Choose the type using the canonical list in the docs-assist skill: `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/content-types.md`.
-It maps each situation to a content type and the frontmatter value to set.
-If it's ambiguous, default to a doc (task-oriented) and let the reviewer restructure if needed.
+Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/content-types.md`, and check the scope honestly:
 
-Then offer a starting template. Suggesting one is free and offline, so do it whenever a catalog template fits, even if `.docs-assist/templates.yml` is absent. Name the template and why in a sentence, and let the contributor accept it, pick another, or decline. Only fetch the body if they accept: the yes is the consent. If they accept and the project has no `templates.yml`, offer to save `enabled: true` so the team is not asked every time. Follow `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. A template is a head start, not a requirement, so never block on it.
+- A dump often holds more than one doc. If it mixes a task, an explanation, and failure modes, that's a how-to plus a concept plus troubleshooting. Say so, propose the small set in priority order, and offer to draft the first now and keep the rest as a short backlog.
+- If it's genuinely ambiguous, default to a doc (task-oriented).
+- Offer a starting template where one fits. Suggesting one is free and offline, so do it even if `.docs-assist/templates.yml` is absent; only fetch on the contributor's yes. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. A template is a head start, never a requirement.
 
-### 5. Produce the Draft
+### 7. Produce the Draft
 
 Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md` automatically:
 
@@ -84,11 +78,10 @@ Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-a
 - Prerequisites section if there are any
 - Numbered steps for procedures
 - Code examples that are copy-paste safe
-- Notes/warnings where the contributor flagged gotchas
-- Cross-references to related docs you found in step 1
-- If existing docs should link back to this new content, note that for the finalize step
+- Notes or warnings where the contributor flagged gotchas
+- Cross-references to related docs you found in the survey
 
-**Do not** ask the contributor to review your formatting choices, heading case, or markdown conventions. Just apply them. These are your department.
+**Do not** ask the contributor to review your formatting choices, heading case, or markdown conventions. Apply them. These are your department.
 
 **Do** ask the contributor to review:
 
@@ -96,31 +89,30 @@ Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-a
 - Completeness: is anything missing?
 - Audience fit: would this make sense to the intended reader?
 
-### 6. Refine
+### 8. Refine
 
 Based on their feedback:
 
 - Fix any technical errors immediately
-- If they say "this section is confusing," ask what's wrong; don't just reword it
+- If they say "this section is confusing," ask what's wrong rather than blindly rewording it
 - If they want to add something, slot it into the right place in the structure
 - If the doc is getting long, suggest splitting it and explain why
 
-### 7. Finalize
+### 9. Finalize
 
 When the contributor is satisfied:
 
-- Write the file to the appropriate location (ask if unsure where it should live)
-- Suggest a filename that follows existing conventions in the repo
-- Generate frontmatter following the schema in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`. At minimum include `title`, `description`, and `content-type`. Add `audience`, `keywords`, `prerequisites`, and `related` when you have the context, and after this conversation you almost certainly do. Match any existing frontmatter conventions in the repo.
-- If you drafted on a template, set the optional `template` field to the catalog `id` and add the `attribution` line from `templates.yml` to the doc.
-- If the repo has an `llms.txt`, add an entry for the new doc with a one-line description
-- Update related docs to cross-reference this new content (or make the edits and show the contributor what you changed)
-- Note any remaining follow-up work: images or diagrams that would help, docs that need a subject matter expert to verify the cross-reference, etc.
+- Write the file to the appropriate location (ask if unsure where it should live), with a filename that follows existing conventions.
+- Generate frontmatter following `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`. At minimum `title`, `description`, and `content-type`. Add `audience`, `keywords`, `prerequisites`, and `related` when you have the context, and after this conversation you almost certainly do. Match existing frontmatter conventions.
+- If you drafted on a template, set the optional `template` field to the catalog `id` and add the `attribution` line from `templates.yml`.
+- If the repo has an `llms.txt`, add an entry for the new doc.
+- Update related docs to cross-reference this new content (or make the edits and show the contributor what you changed).
+- Note remaining follow-ups: the backlog docs the dump revealed, images or diagrams that would help, or cross-references a subject matter expert should verify.
 
 ## Notes
 
 - Never make the contributor feel like they're "doing it wrong." There's no wrong way to share knowledge.
-- If they give you messy, out-of-order information, that's normal and good: it means they're thinking out loud. You sort it out.
+- Messy, out-of-order information is normal and good. You sort it out.
 - If they're unsure about something, note it as needing verification rather than skipping it.
 - Match the technical depth to the audience. Don't oversimplify for developers; don't assume expertise for end users.
-- If the codebase has existing doc conventions (frontmatter fields, directory structure, naming), follow them.
+- Follow existing repo conventions (frontmatter fields, directory structure, naming).

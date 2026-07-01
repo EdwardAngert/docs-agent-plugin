@@ -29,9 +29,11 @@
 
 - [doc-auditor](agents/doc-auditor.md): Audits a single doc or slice and returns structured findings. Used to fan out large audits in parallel.
 - [doc-updater](agents/doc-updater.md): Updates a single doc to match a code change. Used to fan out update-on-change across many files.
+- [doc-intake](agents/doc-intake.md): Reads a pile of raw source material in isolation and returns a compact content inventory. Used to fan out corpus intake without loading the pile into the main conversation.
 
 ## Standards and Methodology
 
+- [Knowledge intake](skills/docs-assist/reference/intake.md): Gather before you structure. The dump-first intake loop for one doc, and the corpus content-inventory method for from-scratch work.
 - [Content types](skills/docs-assist/reference/content-types.md): The canonical content types and their frontmatter values. The single source of truth.
 - [Frontmatter spec](skills/docs-assist/reference/frontmatter-spec.md): Schema for per-doc metadata: fields, tiers, and how the plugin uses them.
 - [Tone and voice](skills/docs-assist/reference/tone-and-voice.md): Formatting rules, heading case, markdown style, and voice guidelines.

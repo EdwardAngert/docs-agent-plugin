@@ -3,6 +3,21 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
+## 0.7.0 - 2026-07-01
+
+### Added
+
+- An intake-led workflow, in a new `reference/intake.md`.
+  Documenting something new now leads with a knowledge dump ("tell me everything you know") instead of narrow questions, then reflects it back, situates it against the existing docs and the product, digs at the gaps, and only then shapes the doc.
+  It works like a technical writer at the contributor's side, gathering before structuring.
+- From-scratch corpus support: a `doc-intake` subagent reads a pile of raw material (tickets, a PRD, notes, old docs) in an isolated context and returns a compact content inventory (clusters, gaps, duplication, staleness), which feeds the planning workflow.
+  The raw pile never bloats the main conversation, and the synthesized inventory is persisted outside the published docs tree.
+
+### Changed
+
+- Rebuilt `/docs-assist:draft` around the intake loop (survey, dump, reflect, situate, dig, shape, draft), and added a leading corpus-inventory step to `/docs-assist:plan`.
+- Reframed the skill's guiding principles around gathering first, reflecting, situating, and recognizing when one request is really several docs.
+
 ## 0.6.0 - 2026-07-01
 
 ### Added

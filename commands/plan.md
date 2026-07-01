@@ -31,7 +31,18 @@ If the contributor provided a repo path or description (`$ARGUMENTS`), start the
 
 Don't try to understand everything. Get enough context to ask good questions.
 
-### 2. Ask About Scope and Direction
+### 2. Take Inventory of Any Raw Material
+
+If the contributor has a pile of raw source material (tickets, a PRD, Slack threads, interview notes, old docs), gather and synthesize it before planning. Follow the corpus method in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`.
+
+- Read the pile where you can: a folder in the repo, pasted content, or links you can fetch.
+- For a large pile, fan out the `doc-intake` subagent across slices so the raw material stays out of this conversation. It returns a compact inventory; consolidate the slices.
+- Produce a **content inventory**: clusters by topic (each with a likely content type), gaps, duplication and conflict, and stale material.
+- Persist the inventory to `.docs-assist/intake/`, outside the published docs tree, so a site build never picks it up. Do not persist raw material from sensitive sources without asking.
+
+The inventory feeds the plan: clusters become candidate docs, gaps become priorities. If there is no pile, skip this step.
+
+### 3. Ask About Scope and Direction
 
 These are the questions that shape the entire plan.
 Don't skip them or assume the answers.
@@ -45,7 +56,7 @@ Don't skip them or assume the answers.
 Adapt the questions to what you already know.
 If the codebase makes the user base obvious, don't ask who the users are; confirm your assumption and move on.
 
-### 3. Identify User Journeys
+### 4. Identify User Journeys
 
 Based on what you've learned, map the core user journeys:
 
@@ -59,7 +70,7 @@ Each journey suggests a set of docs.
 A "get started" journey might need an installation doc, a quickstart, and a concepts overview.
 A "configure for production" journey might need a configuration reference and a deployment guide.
 
-### 4. Propose a Docs Plan
+### 5. Propose a Docs Plan
 
 Write the plan to a file, `docs/plan.md` by default, or wherever the contributor prefers.
 Present it as a structured list of docs to write, organized by priority.
@@ -84,7 +95,7 @@ Also propose:
 - An `llms.txt` if the repo doesn't have one
 - A frontmatter convention (or note the existing one)
 
-### 5. Get Buy-In
+### 6. Get Buy-In
 
 Present the plan and ask:
 
@@ -96,7 +107,7 @@ Present the plan and ask:
 Don't start writing until the human agrees on the plan.
 Adjusting a plan is cheap. Rewriting docs is expensive.
 
-### 6. Execute
+### 7. Execute
 
 Once the plan is approved, work through it doc by doc.
 Each doc follows the `/draft` workflow:

@@ -47,7 +47,7 @@ The simplest path is to tell Claude what you want to document:
 I need to document how to set up SSO for our enterprise customers.
 ```
 
-Claude asks a few questions to understand the audience and scope, walks you through getting the details down, then produces a structured draft.
+Claude starts by asking you to share everything you know, dumped in any order, then reflects it back, connects it to your existing docs and product, and digs into the gaps before producing a structured draft.
 You review for accuracy, Claude handles the rest.
 
 Other prompts that work:
@@ -63,6 +63,15 @@ I just fixed a tricky bug, can we add troubleshooting docs so others don't hit i
 ```text
 Review this README for clarity and completeness
 ```
+
+## Gather Before You Structure
+
+The plugin works the way a technical writer does: it gathers before it structures.
+When you document something new, it opens with "tell me everything you know" and takes your brain dump in any order.
+Then it reflects it back, situates it against your existing docs and how people use the product, and digs into the gaps before it shapes anything.
+
+Starting from scratch with a pile of raw material, like tickets, a PRD, notes, or old docs?
+It reads the pile in an isolated pass and hands back a content inventory (clusters, gaps, duplication), then turns that into a documentation plan.
 
 ## Commands
 
@@ -136,10 +145,11 @@ Large changes fan out across the `doc-updater` subagent so many docs update in p
 ```text
 docs-assist/
 ├── commands/                  # draft, plan, audit, make-examples, update, template, init, setup-lint, setup-hooks
-├── agents/                    # doc-auditor, doc-updater subagents
+├── agents/                    # doc-auditor, doc-updater, doc-intake subagents
 ├── skills/docs-assist/
 │   ├── SKILL.md               # core instructions and role definition
 │   └── reference/
+│       ├── intake.md              # gather-first intake loop and corpus inventory
 │       ├── content-types.md       # canonical content types and frontmatter values
 │       ├── tone-and-voice.md      # formatting, heading case, markdown style
 │       ├── frontmatter-spec.md    # per-doc metadata schema
