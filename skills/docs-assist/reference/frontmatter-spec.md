@@ -106,7 +106,7 @@ This is not the same as the file's last-modified date. A doc can be edited for f
 
 **`template`**
 The catalog id of the documentation template this doc was seeded from, when one was used.
-Set it alongside the canonical `content-type` so the origin is traceable and an audit can check the doc against the template's shape.
+Set it alongside the canonical `content-type` so the origin is traceable.
 See `templates.md`.
 
 **`sdk`**

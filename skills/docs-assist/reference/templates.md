@@ -99,7 +99,7 @@ A missing template is never a reason to stop.
 ## Record the Template in Frontmatter
 
 `content-type` stays canonical: one of the six values in `content-types.md`.
-When a doc was seeded from a template, also set the optional `template` field to the catalog `id`, so the origin is traceable and an audit can check the doc against the template's shape.
+When a doc was seeded from a template, also set the optional `template` field to the catalog `id`, so the origin is traceable.
 
 ```yaml
 content-type: troubleshooting

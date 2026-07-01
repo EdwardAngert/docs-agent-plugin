@@ -3,7 +3,7 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
-## Unreleased
+## 0.6.0 - 2026-07-01
 
 ### Added
 
