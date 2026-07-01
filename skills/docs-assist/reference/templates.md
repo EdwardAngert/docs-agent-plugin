@@ -54,7 +54,7 @@ When several entries share a content type (for example `reference` covers refere
 ### Seven-Action Model
 
 When `selection_model: seven-action`, lead with what the reader needs to do rather than the content type.
-This is Fabrizio Ferri Benedetti's seven-action model.
+This is [Fabrizio Ferri Benedetti's seven-action model](https://passo.uno/seven-action-model/).
 Ask what the reader is trying to accomplish, map the answer to an action, then suggest the templates for that action.
 
 | Action | The reader wants to | Typical templates |
