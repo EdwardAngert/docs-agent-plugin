@@ -10,9 +10,21 @@ This plugin is the documentation expertise layer.
 It extracts their knowledge, picks the right structure, applies writing standards, and produces a draft they can review.
 Think of it as having a technical writer in every Claude Code session, one who asks the right questions and handles the formatting so contributors can focus on what they know.
 
-> **Renamed**: this plugin was `documentation-agent`.
-> It is now `docs-assist`, and commands are invoked as `/docs-assist:...`.
-> Update any saved references.
+## What It Looks Like
+
+This section came out of one such session. Documenting this very plugin, it went like this:
+
+**You:**
+
+> Help me update the README with great docs about this plugin. Where do I start?
+
+**Docs Assist:**
+
+> Let me read it back first. The README is solid, but it tells more than it shows, it opens with a rename note that only old users care about, and the file tree has drifted from the code (it's missing two files). Start with one thing: a short "What it looks like" example near the top, because that's what turns a scroller into someone who tries it. Then move the rename note down and fix the tree. I'll ship those three now.
+
+It added this section, moved the rename note, and corrected the tree.
+Its own linter caught a formatting slip in the draft and flagged it, so it fixed that too.
+You review for accuracy. The formatting is already handled.
 
 ## Install
 
@@ -112,7 +124,7 @@ Commit a `.docs-assist/` directory and the whole team writes to the same convent
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, so examples stay consistent across docs. The plugin maintains it.
 
-Run `/docs-assist:init` to generate both, pre-filled from what your docs already do.
+Run `/docs-assist:init` to generate them, pre-filled from what your docs already do.
 Because this config is committed to your repo, it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
 
 ## Lint With the Same Rules You Write By
@@ -150,13 +162,14 @@ Large changes fan out across the `doc-updater` subagent so many docs update in p
 ```text
 docs-assist/
 ├── commands/                  # draft, plan, audit, make-examples, update, template, init, setup-lint, setup-hooks
-├── agents/                    # doc-auditor, doc-updater, doc-intake subagents
+├── agents/                    # doc-auditor, doc-updater, doc-intake, doc-recon subagents
 ├── skills/docs-assist/
 │   ├── SKILL.md               # core instructions and role definition
 │   └── reference/
 │       ├── intake.md              # gather-first intake loop and corpus inventory
 │       ├── content-types.md       # canonical content types and frontmatter values
 │       ├── tone-and-voice.md      # formatting, heading case, markdown style
+│       ├── code-examples.md       # safe, consistent code samples and the variables registry
 │       ├── frontmatter-spec.md    # per-doc metadata schema
 │       ├── config-resolution.md   # how project-local config overrides defaults
 │       ├── templates.md           # suggest and apply Good Docs templates
@@ -179,6 +192,12 @@ This plugin codifies methodologies from 10 years of technical writing experience
 The core philosophy: I just want your knowledge, expertise, and steps.
 I'll deal with putting it in the right order, getting the words right, and making it all work together.
 This plugin brings that same approach to every Claude Code session.
+
+## Renamed From documentation-agent
+
+This plugin was `documentation-agent`.
+It is now `docs-assist`, and commands are invoked as `/docs-assist:...`.
+Update any saved references or aliases.
 
 ## Contribute
 
