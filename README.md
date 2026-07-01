@@ -1,5 +1,7 @@
 # Docs Assist
 
+> Turn what your team knows into documentation. No one has to become a technical writer.
+
 A Claude Code plugin that coaches people through writing documentation.
 
 You have subject matter experts with knowledge in their heads: engineers who built the feature, support leads who know every edge case, PMs who understand the workflow.
@@ -9,6 +11,8 @@ They just need to share what they know.
 This plugin is the documentation expertise layer.
 It extracts their knowledge, picks the right structure, applies writing standards, and produces a draft they can review.
 Think of it as having a technical writer in every Claude Code session, one who asks the right questions and handles the formatting so contributors can focus on what they know.
+
+**Who it's for:** engineers, support leads, PMs, and repo owners who have knowledge to share but don't want to become documentation experts.
 
 ## What It Looks Like
 
@@ -59,8 +63,9 @@ The simplest path is to tell Claude what you want to document:
 I need to document how to set up SSO for our enterprise customers.
 ```
 
-Claude starts by asking you to share everything you know, dumped in any order, then reflects it back, connects it to your existing docs and product, and digs into the gaps before producing a structured draft.
+Claude gathers what you know, connects it to your existing docs, and produces a structured draft.
 You review for accuracy, Claude handles the rest.
+The full rhythm is in [Gather Before You Structure](#gather-before-you-structure) below.
 
 Other prompts that work:
 

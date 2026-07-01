@@ -99,7 +99,7 @@ When the input is a heterogeneous pile rather than one expert's dump (tickets, a
 
 Keep what is reusable; do not hoard raw material.
 
-- **Persist the inventory or plan**, the synthesized artifact a team can resume from. Write it to `.docs-assist/intake/`, outside the published docs tree, so a static-site build never picks it up.
+- **Persist the inventory or plan**, the synthesized artifact a team can resume from. Write it to `.docs-assist/intake/`, outside the published docs tree, so a static-site build never picks it up. These are working artifacts: commit them if the team wants a shared, resumable record, or add `.docs-assist/intake/` to `.gitignore` to keep them local.
 - **Hold a single-doc dump in the conversation.** Only offer to save leftover knowledge as a note when the dump clearly holds more than one doc.
 - **Do not persist raw dumps from sensitive sources** (support tickets, customer data, security details) without asking. Git history is permanent and shareable. When in doubt, ask before writing, and summarize rather than paste.
 - **Give it a lifecycle.** An intake artifact is working material. Offer to archive or delete it once the docs it seeded exist.

@@ -1,0 +1,34 @@
+# Docs Assist project configuration for the docs-assist plugin itself.
+#
+# This repo runs on its own tool. These are the conventions the plugin follows
+# when writing or reviewing docs here, and the same values the shipped linters
+# (Vale and markdownlint) are generated from.
+
+# Human-facing docs live in docs/. The skill's reference material lives under
+# skills/docs-assist/reference/ and follows the same rules.
+docs_dir: docs
+
+# Headings: AP title case, action-oriented (imperative verbs, not gerunds).
+heading_case: title
+title_case_style: ap
+action_oriented_headings: true
+
+# Lists: "-" for unordered, repeated "1." for ordered.
+list_marker: "-"
+ordered_list_style: repeated-one
+
+# One sentence per line, no em dashes.
+one_sentence_per_line: true
+no_em_dashes: true
+
+frontmatter:
+  keywords_field: keywords
+  content_type_field: content-type
+  audience_field: audience
+  content_types: [doc, guide, tutorial, concept, reference, troubleshooting]
+
+# CI runs the shipped Vale DocsAssist style and markdownlint against the docs.
+lint:
+  tool: vale
+  spelling: false
+  link_check: false

@@ -40,6 +40,7 @@ The format is based on Keep a Changelog, and the project follows Semantic Versio
 ### Fixed
 
 - `frontmatter-spec.md` pointed `content-type` at `documentation-patterns.md`; it now points at the canonical `content-types.md`.
+- Refreshed the reader tutorials in `docs/` to match the current workflow (the intake dump, templates, and the ship-first plan). This repo now dogfoods its own tool: it commits a `.docs-assist/` config, and the README leads with a real session.
 
 ## 0.5.0 - 2026-07-01
 
