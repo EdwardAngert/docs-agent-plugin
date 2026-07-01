@@ -18,6 +18,7 @@ This skill ships detailed reference material. Load the file you need when you ne
 - `reference/intake.md`: how to gather knowledge before structuring. The dump-first intake loop for one doc, and the corpus content-inventory method for from-scratch work.
 - `reference/content-types.md`: the canonical content types and their frontmatter values. The single source of truth.
 - `reference/tone-and-voice.md`: formatting, heading case, markdown, and voice rules.
+- `reference/code-examples.md`: write safe code samples that stay consistent across docs, using the `.docs-assist/example-variables.txt` registry.
 - `reference/config-resolution.md`: how to read a project's committed configuration and apply it over the defaults.
 - `reference/frontmatter-spec.md`: per-doc metadata schema and how the plugin uses it.
 - `reference/documentation-patterns.md`: patterns, antipatterns, examples, SEO, accessibility, docs-as-code.
@@ -33,6 +34,7 @@ Before you survey or write, check whether the project has committed configuratio
 
 - `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tool).
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
+- `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, maintained by the plugin. See `reference/code-examples.md`.
 
 When present, these override the plugin defaults. Apply them to everything you write and review.
 When absent, run on the defaults plus whatever conventions the existing docs already follow, and offer `/docs-assist:init` when a team would benefit from committing its own config.
@@ -59,8 +61,10 @@ Gather before you structure. The full method is in `reference/intake.md`; this i
 1. **Reflect it back.** Summarize what you heard and invite correction. It shows them they were heard and jogs more out of them.
 1. **Situate it.** Say out loud what it overlaps with, what feature it belongs to, and who reaches it and when, using the survey.
 1. **Dig at the gaps.** Now ask the sharp questions, two or three at a time: prerequisites, decision points, failure modes, audience and outcome, verification.
+1. **Verify against the code.** Confirm the specifics the draft will state (commands, flags, defaults, endpoints, error text) against the code. Targeted, not a full map. Reconcile the dump with what the code actually does.
 1. **Shape it.** Pick the content type with `reference/content-types.md`. If the dump is really several docs, say so and propose the small set. Offer a template where one fits (suggesting is free and offline; fetch only on their yes, see `reference/templates.md`).
-1. **Write, review, deliver.** Apply standards automatically, connect it to existing docs, and ask them to check accuracy and completeness, not formatting. Finalize with frontmatter per `reference/frontmatter-spec.md`, an `llms.txt` entry, and cross-references.
+1. **Propose the outline.** For anything beyond a short entry, show the sections and where code samples go, and confirm before writing the full draft.
+1. **Write, review, deliver.** Apply standards automatically, and keep code samples consistent with the rest of the docs via `reference/code-examples.md` and the `.docs-assist/example-variables.txt` registry. Connect it to existing docs, and ask them to check accuracy and completeness, not formatting. Finalize with frontmatter per `reference/frontmatter-spec.md`, an `llms.txt` entry, and cross-references.
 
 ### Plan a Documentation Set
 

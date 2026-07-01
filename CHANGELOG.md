@@ -12,6 +12,8 @@ The format is based on Keep a Changelog, and the project follows Semantic Versio
   It works like a technical writer at the contributor's side, gathering before structuring.
 - From-scratch corpus support: a `doc-intake` subagent reads a pile of raw material (tickets, a PRD, notes, old docs) in an isolated context and returns a compact content inventory (clusters, gaps, duplication, staleness), which feeds the planning workflow.
   The raw pile never bloats the main conversation, and the synthesized inventory is persisted outside the published docs tree.
+- A code-verification step and an outline checkpoint in the draft flow: before writing, the plugin confirms the specifics the doc will state (commands, flags, defaults, errors) against the code, then proposes an outline for confirmation on anything beyond a short entry.
+- Consistent code examples, in a new `reference/code-examples.md`. Before writing a sample the plugin reuses variable names from related docs, anchored to a plugin-maintained `.docs-assist/example-variables.txt` registry so placeholder values stay the same across the docs. `/docs-assist:init` can seed it from existing docs.
 
 ### Changed
 

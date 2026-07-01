@@ -62,7 +62,15 @@ With the dump and survey in hand, ask the targeted questions. Aim at the gaps, t
 
 Match their terminology; don't replace it with generic terms. Never run the list like a checklist.
 
-### 6. Shape: One Doc, or Several?
+### 6. Verify Against the Code
+
+Confirm the details the draft will state, so it's accurate. This is targeted verification, not a full codebase map.
+
+- Read the specific code behind what you're documenting: the exact command names, flags, defaults, config keys, endpoints, and error messages the doc will mention.
+- Reconcile the dump with the code. Where the contributor's memory and the code disagree, surface it and ask rather than guessing.
+- Pull real values (defaults, limits, error strings) so the draft and its examples are correct.
+
+### 7. Shape: One Doc, or Several?
 
 Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/content-types.md`, and check the scope honestly:
 
@@ -70,14 +78,22 @@ Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/co
 - If it's genuinely ambiguous, default to a doc (task-oriented).
 - Offer a starting template where one fits. Suggesting one is free and offline, so do it even if `.docs-assist/templates.yml` is absent; only fetch on the contributor's yes. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. A template is a head start, never a requirement.
 
-### 7. Produce the Draft
+### 8. Propose the Outline
+
+For anything beyond a short entry, show the outline before writing the full draft. Changing an outline is cheap; rewriting a draft is not.
+
+- Present the sections and headings, a line each on what goes in them, and where code samples will go.
+- Confirm scope and order, and adjust before drafting.
+- Skip it for a very short doc (a single troubleshooting entry). Offer it rather than forcing it.
+
+### 9. Produce the Draft
 
 Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md` automatically:
 
 - Clear, action-oriented headings
 - Prerequisites section if there are any
 - Numbered steps for procedures
-- Code examples that are copy-paste safe
+- Code examples that are copy-paste safe and consistent with the rest of the docs. Follow `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md`: reuse variable names from related docs and the `.docs-assist/example-variables.txt` registry, and offer to create and maintain that registry.
 - Notes or warnings where the contributor flagged gotchas
 - Cross-references to related docs you found in the survey
 
@@ -89,7 +105,7 @@ Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-a
 - Completeness: is anything missing?
 - Audience fit: would this make sense to the intended reader?
 
-### 8. Refine
+### 10. Refine
 
 Based on their feedback:
 
@@ -98,7 +114,7 @@ Based on their feedback:
 - If they want to add something, slot it into the right place in the structure
 - If the doc is getting long, suggest splitting it and explain why
 
-### 9. Finalize
+### 11. Finalize
 
 When the contributor is satisfied:
 

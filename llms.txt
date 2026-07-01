@@ -37,6 +37,7 @@
 - [Content types](skills/docs-assist/reference/content-types.md): The canonical content types and their frontmatter values. The single source of truth.
 - [Frontmatter spec](skills/docs-assist/reference/frontmatter-spec.md): Schema for per-doc metadata: fields, tiers, and how the plugin uses them.
 - [Tone and voice](skills/docs-assist/reference/tone-and-voice.md): Formatting rules, heading case, markdown style, and voice guidelines.
+- [Code examples](skills/docs-assist/reference/code-examples.md): Write safe code samples that stay consistent across docs, using a plugin-maintained example-variables registry.
 - [Config resolution](skills/docs-assist/reference/config-resolution.md): How a project's committed `.docs-assist/` configuration overrides the defaults and feeds the linters.
 - [Documentation patterns](skills/docs-assist/reference/documentation-patterns.md): Patterns, antipatterns, examples, SEO, and accessibility.
 - [Templates](skills/docs-assist/reference/templates.md): Suggest and apply external documentation templates (The Good Docs Project) for a healthy start. Opt-in, with content-type and seven-action selection.

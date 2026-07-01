@@ -1,0 +1,14 @@
+# Docs Assist example variables.
+#
+# Canonical placeholder values for code samples. Docs Assist reads these and
+# reuses them so examples stay consistent across the docs, and maintains the
+# file: when it introduces a new placeholder, it adds it here.
+#
+# Format: key = value, with # comments. Keep values copy-paste safe: reserved
+# example domains, documentation IP ranges, and fake credentials that cannot work.
+# Edit freely; the plugin respects what you set.
+
+base_url   = https://api.example.com
+api_key    = sk_test_EXAMPLE0123456789    # fake, never a real key
+project_id = proj_example_42
+region     = us-east-1
