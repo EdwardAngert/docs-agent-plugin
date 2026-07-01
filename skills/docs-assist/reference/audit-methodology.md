@@ -5,6 +5,10 @@ This file is the deeper reference behind the `/docs-assist:audit` command.
 
 The first half is what you do in a session. The second half is research that needs real users, which you cannot run yourself: recommend it to the docs lead when the scope warrants it.
 
+## Match the Audit to the Target
+
+A full set, a directory, a few changed files, and a diff are different jobs. For a full set, work through the steps below. For changed files or a diff, audit the change and its blast radius: the edit scope is small, but the impact scope follows dependency edges out from it. See `impact-analysis.md` for the change-type-to-edge map, the traversal budget, and how to report residual risk.
+
 ## What You Do in a Session
 
 ### 1. Take Inventory

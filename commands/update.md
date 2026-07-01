@@ -61,8 +61,9 @@ For every update:
 ### 6. Review and Finalize
 
 - Show the user the result as a diff (`git diff` on the docs) so they review the substance, not the formatting.
-- Update `llms.txt` and cross-references if a doc was added, renamed, or split.
-- List remaining follow-ups: docs that need an SME to confirm, screenshots that went stale, or new docs the change calls for that do not exist yet.
+- Trace the ripple of your own edits. If you renamed a heading, moved a file, re-cased a term, or changed a value that other docs repeat, follow the edges in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/impact-analysis.md` and fix or flag what they reach.
+- Check for an `llms.txt`. If the repo has one and your edits added, removed, renamed, or re-described a doc it lists, update its entries so the map matches the docs. Update cross-references the same way.
+- List remaining follow-ups: docs that need an SME to confirm, screenshots that went stale, edges you did not follow, or new docs the change calls for that do not exist yet.
 
 ## Notes
 

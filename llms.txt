@@ -1,6 +1,7 @@
 # Docs Assist
 
-> A Claude Code plugin that coaches subject matter experts through writing documentation. It gives Claude Code documentation expertise: guiding contributors through knowledge extraction, picking the right content structure, applying writing standards, and connecting new docs to existing content.
+> A Claude Code plugin that coaches subject matter experts through writing documentation.
+> It gives Claude Code documentation expertise: guiding contributors through knowledge extraction, picking the right content structure, applying writing standards, and connecting new docs to existing content.
 
 ## Docs
 
@@ -39,6 +40,7 @@
 ## Optional
 
 - [Audit methodology](skills/docs-assist/reference/audit-methodology.md): Systematic audit process for docs leads.
+- [Impact analysis](skills/docs-assist/reference/impact-analysis.md): Scope a change-based audit or update. Maps each change type to the edges it can break, with a traversal budget and residual-risk reporting.
 - [IA methodology](skills/docs-assist/reference/ia-methodology.md): Information architecture research, design, and validation.
 - [Style guides](skills/docs-assist/reference/style-guides.md): Style guide selection, components, and enforcement strategies.
 - [Contributing](CONTRIBUTING.md): How to contribute to this plugin.

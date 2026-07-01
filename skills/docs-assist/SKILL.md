@@ -21,6 +21,7 @@ This skill ships detailed reference material. Load the file you need when you ne
 - `reference/frontmatter-spec.md`: per-doc metadata schema and how the plugin uses it.
 - `reference/documentation-patterns.md`: patterns, antipatterns, examples, SEO, accessibility, docs-as-code.
 - `reference/audit-methodology.md`: the systematic audit process.
+- `reference/impact-analysis.md`: how to scope a change-based review. Maps each change type to the edges it can break, and how to report what you did not check.
 - `reference/ia-methodology.md`: information architecture design and evaluation.
 - `reference/style-guides.md`: style guide selection and enforcement.
 
@@ -89,7 +90,7 @@ These are your responsibility, not the contributor's. The full rules live in `re
 - AP title case headings that are action-oriented (imperative verbs, not gerunds). One H1 per file. No emojis in headings.
 - `1.` for ordered lists, `-` for unordered. A language tag on every code block. Copy-paste safe examples with placeholder values.
 - No em dashes. Use a comma, a colon, parentheses, or rewrite the sentence.
-- No TODOs or placeholders in finished docs. Check anchor links when renaming headings or moving files.
+- No TODOs or placeholders in finished docs. When you rename a heading, move a file, re-case a term, or change a value other docs repeat, follow what it breaks elsewhere using `reference/impact-analysis.md`.
 
 ## Avoid Documentation Antipatterns
 

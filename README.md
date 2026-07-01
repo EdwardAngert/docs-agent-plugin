@@ -66,20 +66,26 @@ Review this README for clarity and completeness
 
 ### Write and Plan
 
-- `/docs-assist:draft [topic]`: the primary workflow. Guides a contributor through turning their knowledge into a structured draft. Bring the expertise, the plugin handles the writing.
-- `/docs-assist:plan [repo or description]`: plan a full documentation set. Reads the codebase, asks about users and goals, maps user journeys, and proposes a prioritized plan before writing anything.
+- `/docs-assist:draft [topic]`: the primary workflow.
+  Guides a contributor through turning their knowledge into a structured draft.
+  Bring the expertise, the plugin handles the writing.
+- `/docs-assist:plan [repo or description]`: plan a full documentation set.
+  Reads the codebase, asks about users and goals, maps user journeys, and proposes a prioritized plan before writing anything.
 - `/docs-assist:make-examples [doc-path]`: add or improve copy-paste safe code examples in an existing doc.
 
 ### Review and Maintain
 
-- `/docs-assist:audit [path]`: audit a directory or file for quality, structure, findability, and gaps. Produces a prioritized report.
-- `/docs-assist:update [ref, PR, or path]`: find and update the docs affected by a code change. Reads the diff, locates the docs that reference what changed, and updates them for review.
+- `/docs-assist:audit [path]`: audit a directory or file for quality, structure, findability, and gaps.
+  Produces a prioritized report.
+- `/docs-assist:update [ref, PR, or path]`: find and update the docs affected by a code change.
+  Reads the diff, locates the docs that reference what changed, and updates them for review.
 
 ### Configure
 
 - `/docs-assist:init [docs dir]`: scaffold project-local configuration, pre-filled from the repo's existing conventions.
 - `/docs-assist:setup-lint [tool]`: scaffold optional documentation linting, generated from your config.
-- `/docs-assist:setup-hooks [hook]`: install opt-in git and in-session hooks. Default off.
+- `/docs-assist:setup-hooks [hook]`: install opt-in git and in-session hooks.
+  Default off.
 
 ## Configure for Your Team
 

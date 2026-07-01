@@ -23,9 +23,15 @@ You can note obvious style issues, but your primary value is understanding the d
 
 ## Audit Process
 
+Match the depth of the audit to the target. A full documentation set, a single directory, a handful of changed files, and a diff are different jobs. Do not run whole-set steps against a few files.
+
+When the target is a set of changed files or a diff, audit the change and its blast radius rather than the files in isolation. The edit scope is small, but the impact scope follows dependency edges out from it: classify each change, follow the edges it implicates, and report what you checked. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/impact-analysis.md`.
+
 ### 1. Take Inventory
 
-First, explore the documentation structure:
+Scale this step to the target. For a full set or a directory, take the full inventory below. For a few files or a diff, skip the whole-set inventory and work from the edit scope plus the edges in `impact-analysis.md`.
+
+For a full set, explore the documentation structure:
 
 - List all documentation files (`*.md`, `*.mdx`, `*.rst`, etc.)
 - Identify documentation directories
@@ -65,6 +71,7 @@ For each document, evaluate:
 - Missing navigation entries
 - Poor link text ("click here")
 - No cross-references to related content
+- Stale or missing `llms.txt`: if the repo has one, check that its entries match the current docs (titles, descriptions, paths), and note a missing one when the docs would benefit
 
 ### 3. Assess Information Architecture
 
@@ -116,6 +123,10 @@ These may be intentionally linked from external sources or may be unused.
 - `path/to/image1.png`
 - `path/to/image2.svg`
 
+## Residual Risk
+
+[For a scoped or change-based audit, state what you did not check: the change types found and the edges followed for each, plus the edges you did not follow and why. Omit this section for a full-set audit that covered everything.]
+
 ## Recommendations
 
 [Prioritized list of suggested improvements]
@@ -146,6 +157,9 @@ Focus on issues that are high-impact and low-effort first.
 - Be specific: cite file paths and line numbers
 - Be actionable: explain how to fix each issue
 - Be proportional: don't overwhelm with minor issues
+- Report clean sections as clean: do not invent a finding to fill a heading. An empty section is a valid result
+- For a change-based target, follow `impact-analysis.md` and report residual risk rather than auditing the changed files in isolation
+- An audit reports; it does not edit. When `llms.txt` is stale or missing, flag it as a finding and recommend `/docs-assist:update` to apply the fix
 - Consider context: some "issues" may be intentional choices
 - For large repositories, ask how to handle the files list before outputting
 - For large documentation sets, fan out: launch the `doc-auditor` subagent in parallel across slices of the set, then consolidate the findings into one prioritized report
