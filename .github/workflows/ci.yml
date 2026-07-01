@@ -6,6 +6,7 @@ name: CI
 
 on:
   push:
+    branches: [main]
   pull_request:
 
 permissions:
@@ -43,14 +44,16 @@ jobs:
       # Prose rules, using the Vale DocsAssist style this plugin ships.
       # Lints all of the plugin's own markdown. The action's `files` input takes a
       # single path, so scan the repo root and let .vale.ini scope to markdown.
-      # Fails on error-level findings (em dashes). Warnings are reported, not fatal.
+      # `--minAlertLevel=error` makes Vale emit only error-level findings (em
+      # dashes), so the job fails on those and not on warnings. reviewdog reports
+      # at info level and would otherwise fail the PR on any warning in the diff.
       - name: Vale (own docs)
         if: always()
         uses: errata-ai/vale-action@v2
         with:
           version: latest
           files: "."
-          vale_flags: "--config=assets/lint/vale/.vale.ini"
+          vale_flags: "--config=assets/lint/vale/.vale.ini --minAlertLevel=error"
           fail_on_error: true
           reporter: github-pr-check
         env:
