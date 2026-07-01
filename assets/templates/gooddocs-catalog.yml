@@ -1,0 +1,186 @@
+# Docs Assist template catalog: The Good Docs Project.
+#
+# This is an index, not the templates themselves. It lets the plugin suggest a
+# template from what the contributor is trying to write, then fetch the body
+# live only when they pick one. Bodies are never vendored here.
+#
+# Source: The Good Docs Project templates, https://gitlab.com/tgdp/templates
+# License: MIT No Attribution (MIT-0). See THIRD-PARTY-NOTICES.md.
+# Verified against ref `main` on 2026-07-01.
+#
+# Each entry maps a Good Docs template to:
+#   content_type  one of the canonical Docs Assist types (the default decision axis)
+#   seven_action  the user need it serves (Ferri Benedetti's seven-action model)
+#   signals       phrases in a request that hint at this template, used to suggest it
+#   template_url  the fillable skeleton fetched when the contributor picks it
+#   guide_url     the Good Docs guide on how to fill that skeleton, read for coaching
+
+source:
+  name: The Good Docs Project
+  repo: https://gitlab.com/tgdp/templates
+  ref: main
+  license: MIT-0
+  attribution: "Based on a template from The Good Docs Project (https://thegooddocsproject.dev/)."
+
+templates:
+  - id: troubleshooting
+    title: Troubleshooting
+    description: "Diagnose and resolve a specific problem, one entry per failure mode."
+    content_type: troubleshooting
+    seven_action: troubleshoot
+    signals:
+      - "people keep opening tickets about"
+      - "same error keeps coming up"
+      - "how do I fix"
+      - "this keeps breaking"
+      - "recurring issue"
+    template_url: https://gitlab.com/tgdp/templates/-/raw/main/troubleshooting/template_troubleshooting.md
+    guide_url: https://gitlab.com/tgdp/templates/-/raw/main/troubleshooting/guide_troubleshooting.md
+
+  - id: how-to
+    title: How-to
+    description: "Steps to complete one well-defined task."
+    content_type: doc
+    seven_action: practice
+    signals:
+      - "how to"
+      - "steps to"
+      - "walk through"
+      - "set up"
+    template_url: https://gitlab.com/tgdp/templates/-/raw/main/how-to/template_how-to.md
+    guide_url: https://gitlab.com/tgdp/templates/-/raw/main/how-to/guide_how-to.md
+
+  - id: tutorial
+    title: Tutorial
+    description: "A guided learning journey from zero to competent."
+    content_type: tutorial
+    seven_action: practice
+    signals:
+      - "learn"
+      - "from scratch"
+      - "onboarding"
+      - "getting started end to end"
+    template_url: https://gitlab.com/tgdp/templates/-/raw/main/tutorial/template_tutorial.md
+    guide_url: https://gitlab.com/tgdp/templates/-/raw/main/tutorial/guide_tutorial.md
+
+  - id: quickstart
+    title: Quickstart
+    description: "The fastest path to a first success."
+    content_type: tutorial
+    seven_action: explore
+    signals:
+      - "quickstart"
+      - "try it fast"
+      - "first five minutes"
+    template_url: https://gitlab.com/tgdp/templates/-/raw/main/quickstart/template_quickstart.md
+    guide_url: https://gitlab.com/tgdp/templates/-/raw/main/quickstart/guide_quickstart.md
+
+  - id: concept
+    title: Concept
+    description: "Explain how or why something works before the tasks make sense."
+    content_type: concept
+    seven_action: understand
+    signals:
+      - "understand"
+      - "how does it work"
+      - "what is"
+      - "architecture"
+    template_url: https://gitlab.com/tgdp/templates/-/raw/main/concept/template_concept.md
+    guide_url: https://gitlab.com/tgdp/templates/-/raw/main/concept/guide_concept.md
+
+  - id: reference
+    title: Reference
+    description: "Complete, scannable details to look up."
+    content_type: reference
+    seven_action: remember
+    signals:
+      - "reference"
+      - "list of options"
+      - "all the settings"
+      - "look up"
+    template_url: https://gitlab.com/tgdp/templates/-/raw/main/reference/template_reference.md
+    guide_url: https://gitlab.com/tgdp/templates/-/raw/main/reference/guide_reference.md
+
+  - id: api-reference
+    title: API reference
+    description: "Endpoint-by-endpoint details for an API."
+    content_type: reference
+    seven_action: remember
+    signals:
+      - "api reference"
+      - "endpoints"
+      - "request and response"
+    template_url: https://gitlab.com/tgdp/templates/-/raw/main/api-reference/template_api-reference.md
+    guide_url: https://gitlab.com/tgdp/templates/-/raw/main/api-reference/guide_api-reference.md
+
+  - id: api-getting-started
+    title: API getting started
+    description: "First calls against an API, from key to response."
+    content_type: tutorial
+    seven_action: explore
+    signals:
+      - "get started with the api"
+      - "first api call"
+      - "authenticate and call"
+    template_url: https://gitlab.com/tgdp/templates/-/raw/main/api-getting-started/template_api-getting-started.md
+    guide_url: https://gitlab.com/tgdp/templates/-/raw/main/api-getting-started/guide_api-getting-started.md
+
+  - id: installation-guide
+    title: Installation guide
+    description: "Install and set up the product."
+    content_type: doc
+    seven_action: practice
+    signals:
+      - "install"
+      - "setup"
+      - "requirements"
+    template_url: https://gitlab.com/tgdp/templates/-/raw/main/installation-guide/template_installation-guide.md
+    guide_url: https://gitlab.com/tgdp/templates/-/raw/main/installation-guide/guide_installation-guide.md
+
+  - id: release-notes
+    title: Release notes
+    description: "What changed in a release, for the people affected by it."
+    content_type: reference
+    seven_action: appraise
+    signals:
+      - "release notes"
+      - "what changed"
+      - "new in version"
+    template_url: https://gitlab.com/tgdp/templates/-/raw/main/release-notes/template_release-notes.md
+    guide_url: https://gitlab.com/tgdp/templates/-/raw/main/release-notes/guide_release-notes.md
+
+  - id: readme
+    title: README
+    description: "The project front door: what it is, why it matters, how to start."
+    content_type: reference
+    seven_action: appraise
+    signals:
+      - "readme"
+      - "project front page"
+      - "what is this repo"
+    template_url: https://gitlab.com/tgdp/templates/-/raw/main/readme/template_readme.md
+    guide_url: https://gitlab.com/tgdp/templates/-/raw/main/readme/guide_readme.md
+
+  - id: glossary
+    title: Glossary
+    description: "Define the terms a reader needs to follow the docs."
+    content_type: reference
+    seven_action: understand
+    signals:
+      - "glossary"
+      - "definitions"
+      - "terminology"
+    template_url: https://gitlab.com/tgdp/templates/-/raw/main/glossary/template_glossary.md
+    guide_url: https://gitlab.com/tgdp/templates/-/raw/main/glossary/guide_glossary.md
+
+  - id: contact-support
+    title: Contact support
+    description: "How a reader gets help when the docs run out."
+    content_type: reference
+    seven_action: troubleshoot
+    signals:
+      - "how to get help"
+      - "contact support"
+      - "open a ticket"
+    template_url: https://gitlab.com/tgdp/templates/-/raw/main/contact-support/template_contact-support.md
+    guide_url: https://gitlab.com/tgdp/templates/-/raw/main/contact-support/guide_contact-support.md

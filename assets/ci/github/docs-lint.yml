@@ -49,6 +49,9 @@ jobs:
       # NOTE: errata-ai was renamed to vale-cli; errata-ai/vale-action@v2 still
       # resolves. Swap to vale-cli/vale-action@v2 if the redirect is ever dropped.
       # npx fallback (no action): npx --yes @vvago/vale --glob='*.{md,mdx}' .
+      # --minAlertLevel=error makes Vale emit only error-level findings, so the
+      # job fails on those and not on warnings. reviewdog reports at info level
+      # and would otherwise fail the build on any warning-level prose finding.
       - name: Vale
         if: always()
         uses: errata-ai/vale-action@v2
@@ -58,7 +61,7 @@ jobs:
           reporter: github-pr-check
           fail_on_error: true
           filter_mode: nofilter
-          vale_flags: "--glob=*.{md,mdx}"
+          vale_flags: "--glob=*.{md,mdx} --minAlertLevel=error"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

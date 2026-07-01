@@ -17,7 +17,8 @@
     "./commands/init.md",
     "./commands/setup-lint.md",
     "./commands/setup-hooks.md",
-    "./commands/update.md"
+    "./commands/update.md",
+    "./commands/template.md"
   ],
   "agents": [
     "./agents/doc-auditor.md",

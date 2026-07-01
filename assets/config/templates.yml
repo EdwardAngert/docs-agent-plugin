@@ -1,0 +1,28 @@
+# Docs Assist template settings.
+#
+# Opt-in. When enabled, the plugin can suggest a documentation template and
+# fetch its skeleton while you draft or plan. Nothing is fetched unless you
+# turn this on. Lives beside config.yml and style.md in .docs-assist/.
+
+# Turn the feature on. Default off.
+enabled: false
+
+# How the plugin decides which template to suggest:
+#   content-type  suggest from the content type you are writing (the default axis)
+#   seven-action  ask what the reader is trying to do (Ferri Benedetti's
+#                 seven-action model), then suggest a template for that need
+selection_model: content-type
+
+# Where templates come from.
+source:
+  # Built-in catalog ships with the plugin (The Good Docs Project, MIT-0).
+  # Point at your own catalog file to use a different template set.
+  catalog: builtin        # builtin | path/to/your-catalog.yml
+  # Fetch template bodies live from the catalog's URLs when you pick one.
+  # off disables fetching; the plugin then falls back to its built-in structure.
+  fetch: live             # live | off
+
+# Line added to a doc that was seeded from a fetched template.
+# Required attribution depends on the source license; the default source is MIT-0
+# (no attribution required), and this acknowledges it anyway.
+attribution: "Based on a template from The Good Docs Project (https://thegooddocsproject.dev/)."

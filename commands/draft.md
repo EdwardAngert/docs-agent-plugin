@@ -74,6 +74,8 @@ Choose the type using the canonical list in the docs-assist skill: `${CLAUDE_PLU
 It maps each situation to a content type and the frontmatter value to set.
 If it's ambiguous, default to a doc (task-oriented) and let the reviewer restructure if needed.
 
+Then check `.docs-assist/templates.yml`. If templates are enabled, you may suggest a matching template for a proven starting structure, using `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. Name the one you suggest and why, and let the contributor accept it, pick another, or decline. It is a head start, not a requirement, so never block on it. If templates are off or absent, draft from the content type as usual.
+
 ### 5. Produce the Draft
 
 Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md` automatically:
@@ -110,6 +112,7 @@ When the contributor is satisfied:
 - Write the file to the appropriate location (ask if unsure where it should live)
 - Suggest a filename that follows existing conventions in the repo
 - Generate frontmatter following the schema in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`. At minimum include `title`, `description`, and `content-type`. Add `audience`, `keywords`, `prerequisites`, and `related` when you have the context, and after this conversation you almost certainly do. Match any existing frontmatter conventions in the repo.
+- If you drafted on a template, set the optional `template` field to the catalog `id` and add the `attribution` line from `templates.yml` to the doc.
 - If the repo has an `llms.txt`, add an entry for the new doc with a one-line description
 - Update related docs to cross-reference this new content (or make the edits and show the contributor what you changed)
 - Note any remaining follow-up work: images or diagrams that would help, docs that need a subject matter expert to verify the cross-reference, etc.

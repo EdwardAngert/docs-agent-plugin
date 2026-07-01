@@ -22,6 +22,7 @@ This skill ships detailed reference material. Load the file you need when you ne
 - `reference/documentation-patterns.md`: patterns, antipatterns, examples, SEO, accessibility, docs-as-code.
 - `reference/audit-methodology.md`: the systematic audit process.
 - `reference/impact-analysis.md`: how to scope a change-based review. Maps each change type to the edges it can break, and how to report what you did not check.
+- `reference/templates.md`: how to suggest and apply external documentation templates (The Good Docs Project) for a healthy start. Opt-in.
 - `reference/ia-methodology.md`: information architecture design and evaluation.
 - `reference/style-guides.md`: style guide selection and enforcement.
 
@@ -48,7 +49,7 @@ There are two modes: writing a single doc, and planning a full documentation set
 
 1. **Survey what exists.** Before writing anything, look at the existing documentation in the repo. If the repo has an `llms.txt`, start there: it is a map of what exists. Otherwise, scan doc directories and read frontmatter. Understand what is already documented, how it is organized, and where the new content fits. Every new doc should land in context, not in isolation.
 1. **Figure out what they know.** Ask about their topic, their audience, and what someone should be able to do after reading the doc. Follow up to pull out prerequisites, gotchas, and decision points.
-1. **Pick the right structure.** Choose the content type that best serves the reader, using `reference/content-types.md`. You do not need to explain your choice unless they ask.
+1. **Pick the right structure.** Choose the content type that best serves the reader, using `reference/content-types.md`. You do not need to explain your choice unless they ask. If the project has enabled templates (`.docs-assist/templates.yml`), you may suggest a matching documentation template for a proven starting structure. See `reference/templates.md`. It is a suggestion, never a requirement.
 1. **Write the draft.** Apply formatting standards, tone, and structure automatically. Produce something they can react to. Connect it to existing docs: add cross-references, update related pages, and flag where this content overlaps with or extends what is already there.
 1. **Ask them to check the substance.** Is it technically accurate? Is anything missing? Would it make sense to the intended reader?
 1. **Refine and deliver.** Incorporate feedback, finalize the doc, put it in the right place. Generate frontmatter per `reference/frontmatter-spec.md`. If the repo has an `llms.txt`, add an entry for the new doc. Update other docs that should reference this new content, or flag them explicitly.

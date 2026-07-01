@@ -3,6 +3,21 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
+## Unreleased
+
+### Added
+
+- Documentation templates from The Good Docs Project, via a new `/docs-assist:template` command and `reference/templates.md`.
+  The plugin suggests a template from what the contributor is trying to write, then fetches the skeleton live so a support lead, engineer, or PM starts from a proven structure instead of a blank page.
+  Templates supplement the existing content types rather than replacing them: `content-type` stays canonical and a new optional `template` frontmatter field records the origin.
+  The feature is opt-in through `.docs-assist/templates.yml`, offers a content-type or seven-action selection model, and prompts the user (retry, use the built-in structure, or cancel) when a fetch fails.
+  The Good Docs templates are MIT-0; `THIRD-PARTY-NOTICES.md` records the acknowledgement.
+- Template suggestions in `/docs-assist:draft` and `/docs-assist:plan` when the feature is enabled.
+
+### Fixed
+
+- `frontmatter-spec.md` pointed `content-type` at `documentation-patterns.md`; it now points at the canonical `content-types.md`.
+
 ## 0.5.0 - 2026-07-01
 
 This release reorganizes the plugin around a single source of truth.
