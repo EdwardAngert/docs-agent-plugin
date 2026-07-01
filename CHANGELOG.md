@@ -3,9 +3,9 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
-## 1.0.0 - 2026-07-01
+## 0.5.0 - 2026-07-01
 
-The 1.0 release reorganizes the plugin around a single source of truth.
+This release reorganizes the plugin around a single source of truth.
 It adds a project-local config system, optional linting, an update-on-change workflow, change-based review scoping, subagents, and opt-in hooks.
 
 ### Added

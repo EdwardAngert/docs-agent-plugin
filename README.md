@@ -10,7 +10,9 @@ This plugin is the documentation expertise layer.
 It extracts their knowledge, picks the right structure, applies writing standards, and produces a draft they can review.
 Think of it as having a technical writer in every Claude Code session, one who asks the right questions and handles the formatting so contributors can focus on what they know.
 
-> **Renamed in 1.0**: this plugin was `documentation-agent`. It is now `docs-assist`, and commands are invoked as `/docs-assist:...`. Update any saved references.
+> **Renamed**: this plugin was `documentation-agent`.
+> It is now `docs-assist`, and commands are invoked as `/docs-assist:...`.
+> Update any saved references.
 
 ## Install
 
