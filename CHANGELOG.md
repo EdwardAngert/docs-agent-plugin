@@ -3,6 +3,27 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
+## 0.7.0 - 2026-07-01
+
+### Added
+
+- An intake-led workflow, in a new `reference/intake.md`.
+  Documenting something new now leads with a knowledge dump ("tell me everything you know") instead of narrow questions, then reflects it back, situates it against the existing docs and the product, digs at the gaps, and only then shapes the doc.
+  It works like a technical writer at the contributor's side, gathering before structuring.
+- From-scratch corpus support: a `doc-intake` subagent reads a pile of raw material (tickets, a PRD, notes, old docs) in an isolated context and returns a compact content inventory (clusters, gaps, duplication, staleness), which feeds the planning workflow.
+  The raw pile never bloats the main conversation, and the synthesized inventory is persisted outside the published docs tree.
+- A code-verification step and an outline checkpoint in the draft flow: before writing, the plugin confirms the specifics the doc will state (commands, flags, defaults, errors) against the code, then proposes an outline for confirmation on anything beyond a short entry.
+- Consistent code examples, in a new `reference/code-examples.md`. Before writing a sample the plugin reuses variable names from related docs, anchored to a plugin-maintained `.docs-assist/example-variables.txt` registry so placeholder values stay the same across the docs. `/docs-assist:init` can seed it from existing docs.
+- A consolidated command reference (`docs/command-reference.md`) covering all nine commands with their arguments and examples.
+- A ship-first path for "document this whole repo, where do I start?": `/docs-assist:plan` now orients before it quizzes (reads the project back and recommends a single first doc to draft now), stages the plan into ship-now, next-iteration, and later, and plans the next iteration from what readers hit. A new `doc-recon` subagent reads a large codebase in isolation and returns a compact project map, so orientation does not flood the main conversation.
+
+### Changed
+
+- Rebuilt `/docs-assist:draft` around the intake loop (survey, dump, reflect, situate, dig, shape, draft), and added a leading corpus-inventory step to `/docs-assist:plan`.
+- Reframed the skill's guiding principles around gathering first, reflecting, situating, and recognizing when one request is really several docs.
+- `config.yml`'s `lint.tool` is now `lint.tools`, a list, so a project can declare several linters at once (this repo runs Vale and markdownlint).
+- `/docs-assist:audit` now flags code-sample values that drift from the `.docs-assist/example-variables.txt` registry or from each other.
+
 ## 0.6.0 - 2026-07-01
 
 ### Added
@@ -22,6 +43,8 @@ The format is based on Keep a Changelog, and the project follows Semantic Versio
 ### Fixed
 
 - `frontmatter-spec.md` pointed `content-type` at `documentation-patterns.md`; it now points at the canonical `content-types.md`.
+- Refreshed the reader tutorials in `docs/` to match the current workflow (the intake dump, templates, and the ship-first plan). This repo now dogfoods its own tool: it commits a `.docs-assist/` config, and the README leads with a real session.
+- Reconciled the templates docs with the shipped behavior. Suggesting a template is always available and offline, and only fetching one needs the contributor's yes; some copy still described the feature as off by default.
 
 ## 0.5.0 - 2026-07-01
 

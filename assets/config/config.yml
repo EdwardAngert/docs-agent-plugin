@@ -40,8 +40,10 @@ frontmatter:
   # Allowed content-type values. Defaults to the canonical Docs Assist set.
   content_types: [doc, guide, tutorial, concept, reference, troubleshooting]
 
-# Linting. Written by `/docs-assist:setup-lint`. "none" until configured.
+# Linting. Written by `/docs-assist:setup-lint`. Empty until configured.
 lint:
-  tool: none        # none | vale | markdownlint | megalinter
+  # Which linters the project runs. A project can run several (for example
+  # Vale for prose and markdownlint for structure).
+  tools: []         # any of: vale, markdownlint, megalinter
   spelling: false   # cspell
   link_check: false

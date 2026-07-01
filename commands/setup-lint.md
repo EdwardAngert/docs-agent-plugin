@@ -52,7 +52,7 @@ Write configs to the repo root unless the repo keeps tool configs elsewhere. Nev
 ### 5. Wire CI and Record the Choice
 
 - If the user wanted CI, copy `${CLAUDE_PLUGIN_ROOT}/assets/ci/github/docs-lint.yml` to `.github/workflows/docs-lint.yml`, keeping only the steps for the chosen tools.
-- Update `.docs-assist/config.yml`: set `lint.tool` to the chosen tool, and `lint.spelling` / `lint.link_check` to match. This tells the agent which checks the linter now owns, so it stops re-flagging them in reviews.
+- Update `.docs-assist/config.yml`: add the chosen linters to `lint.tools` (a list), and set `lint.spelling` / `lint.link_check` to match. This tells the agent which checks the linters now own, so it stops re-flagging them in reviews.
 
 ### 6. Show How to Run It
 

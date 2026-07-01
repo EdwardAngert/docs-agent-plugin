@@ -7,6 +7,7 @@
 
 - [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): For docs leads and devrel. Why to install, what changes for contributors, and how to customize.
 - [Write Docs With Docs Assist](docs/write-docs-with-docs-assist.md): For individual contributors. What the plugin does, and tips for getting the most out of it.
+- [Docs Assist Command Reference](docs/command-reference.md): Every command with its argument and an example.
 
 ## Plugin Configuration
 
@@ -29,12 +30,16 @@
 
 - [doc-auditor](agents/doc-auditor.md): Audits a single doc or slice and returns structured findings. Used to fan out large audits in parallel.
 - [doc-updater](agents/doc-updater.md): Updates a single doc to match a code change. Used to fan out update-on-change across many files.
+- [doc-intake](agents/doc-intake.md): Reads a pile of raw source material in isolation and returns a compact content inventory. Used to fan out corpus intake without loading the pile into the main conversation.
+- [doc-recon](agents/doc-recon.md): Reads a codebase in isolation and returns a compact project map (what it does, features, entry points, audiences, candidate docs). Used to orient a from-scratch docs effort without reading the whole repo in the main conversation.
 
 ## Standards and Methodology
 
+- [Knowledge intake](skills/docs-assist/reference/intake.md): Gather before you structure. The dump-first intake loop for one doc, and the corpus content-inventory method for from-scratch work.
 - [Content types](skills/docs-assist/reference/content-types.md): The canonical content types and their frontmatter values. The single source of truth.
 - [Frontmatter spec](skills/docs-assist/reference/frontmatter-spec.md): Schema for per-doc metadata: fields, tiers, and how the plugin uses them.
 - [Tone and voice](skills/docs-assist/reference/tone-and-voice.md): Formatting rules, heading case, markdown style, and voice guidelines.
+- [Code examples](skills/docs-assist/reference/code-examples.md): Write safe code samples that stay consistent across docs, using a plugin-maintained example-variables registry.
 - [Config resolution](skills/docs-assist/reference/config-resolution.md): How a project's committed `.docs-assist/` configuration overrides the defaults and feeds the linters.
 - [Documentation patterns](skills/docs-assist/reference/documentation-patterns.md): Patterns, antipatterns, examples, SEO, and accessibility.
 - [Templates](skills/docs-assist/reference/templates.md): Suggest and apply external documentation templates (The Good Docs Project) for a healthy start. Opt-in, with content-type and seven-action selection.

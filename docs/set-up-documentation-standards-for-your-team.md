@@ -29,7 +29,7 @@ Docs Assist is a Claude Code plugin that gives every Claude Code session documen
 When a contributor asks Claude Code for help writing docs, the plugin shapes how Claude Code responds, guiding the conversation, picking the right structure, applying formatting standards, and connecting the new content to what already exists.
 
 The contributor doesn't interact with the plugin directly.
-They just talk to Claude Code, and Claude Code acts like a documentation coach instead of a generic assistant.
+They talk to Claude Code, and it acts like a documentation coach instead of a generic assistant.
 
 ## What Changes for Your Contributors
 
@@ -38,10 +38,10 @@ Claude Code produces something technically accurate but flat: a markdown file th
 
 **With the plugin**, the same request triggers a different workflow.
 Claude Code first looks at the existing documentation to understand what's already there.
-Then it asks the contributor a few focused questions: who's the audience, what should they be able to do after reading this, what are the prerequisites.
-It pulls out gotchas and decision points the contributor mentions casually.
-It picks the right content type (a how-to doc, a conceptual explanation, a troubleshooting guide) without the contributor needing to know those categories.
-It produces a draft that follows your team's formatting conventions, includes cross-references to related docs, and flags where existing content should link back to this new page.
+Then it asks the contributor to share everything they know, reflects it back, and connects it to the existing docs and how people use the product before digging into the gaps.
+It pulls out the prerequisites, gotchas, and decision points the contributor mentions casually, and confirms an outline before writing.
+It picks the right content type (a how-to, a concept, a troubleshooting guide) without the contributor needing to know those categories, and can start from a proven template.
+It produces a draft that follows your team's formatting conventions, keeps code examples consistent, includes cross-references to related docs, and flags where existing content should link back to this new page.
 
 The contributor reviews for technical accuracy.
 Claude Code handles everything else.
@@ -84,8 +84,9 @@ Once installed, the plugin activates automatically whenever someone asks for doc
 No special commands required.
 A few commands are worth knowing:
 
-- `/docs-assist:draft`: guided intake for a single document. Useful when a contributor wants a structured walkthrough: topic, audience, prerequisites, steps.
-- `/docs-assist:plan`: for "we need docs for this project" moments. Reads the codebase, asks about users and goals, and produces a prioritized doc plan. Start here when rolling out documentation for a new project or team.
+- `/docs-assist:draft`: guided intake for a single document. It opens by asking the contributor to share everything they know, then shapes it into a draft.
+- `/docs-assist:plan`: for "we need docs for this project" moments. Reads the codebase, tells you what it found and where to start, and produces a plan built to ship the useful docs first and iterate. Start here when rolling out documentation for a new project or team.
+- `/docs-assist:template`: start a doc from a proven structure (The Good Docs Project) instead of a blank page.
 - `/docs-assist:init`: scaffold your team's configuration so everyone writes to the same conventions. Run this first.
 - `/docs-assist:setup-lint`: add optional linting that checks the same rules the plugin writes by.
 - `/docs-assist:update`: update the docs affected by a code change.
@@ -95,10 +96,13 @@ A few commands are worth knowing:
 The recommended way to customize is project-local config you commit to your repo.
 Run `/docs-assist:init` to scaffold a `.docs-assist/` directory:
 
-- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tool). This file also drives the linters, so your rules stay in one place.
+- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools). This file also drives the linters, so your rules stay in one place.
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
+- `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
+- `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, maintained by the plugin.
 
 Because this config is committed, it survives plugin updates and is shared across your whole team.
+This repo runs on the same setup: see its committed `.docs-assist/` for a real example.
 
 If you prefer, you can edit the plugin's own files directly: `skills/docs-assist/reference/tone-and-voice.md` for formatting and `skills/docs-assist/SKILL.md` for the coaching approach. Those edits do not survive a plugin update, so project-local config is the better default.
 

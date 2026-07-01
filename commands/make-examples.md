@@ -7,6 +7,8 @@ argument-hint: [doc-path]
 
 Review the documentation file at `$ARGUMENTS` and add or improve code examples.
 
+Follow `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md` for the method: examples that are safe and consistent with the rest of the docs, anchored to the `.docs-assist/example-variables.txt` registry.
+
 ## Process
 
 ### 1. Analyze the Document
@@ -40,6 +42,7 @@ Follow these rules:
 
 - Match the style of existing examples in the codebase
 - Use the same variable names, paths, and patterns as other docs
+- Read `.docs-assist/example-variables.txt` and use its values. If it's absent, offer to create it seeded from values already used across the docs, and add any new placeholder you introduce. The plugin maintains this file. See `code-examples.md`.
 - If the repo has example conventions, follow them
 
 #### Formatting

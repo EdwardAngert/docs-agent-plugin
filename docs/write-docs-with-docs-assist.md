@@ -1,6 +1,6 @@
 ---
 title: "Write Docs With Docs Assist"
-description: "How to use the Docs Assist plugin as a contributor: starting a draft, giving useful input, reviewing for accuracy, and using the /draft, /plan, and /make-examples commands."
+description: "How to use the Docs Assist plugin as a contributor: sharing what you know, starting from a template, reviewing for accuracy, and using the draft, plan, and make-examples commands."
 content-type: guide
 audience: contributors
 keywords:
@@ -15,16 +15,18 @@ keywords:
 
 If the Docs Assist plugin is installed in your Claude Code setup, Claude Code has documentation expertise built in.
 You don't need to learn any special syntax or documentation theory.
-Just ask for help writing docs the way you normally would, and Claude Code will guide you through it.
+Ask for help writing docs the way you normally would, and Claude Code guides you through it.
 
 ## What the Plugin Does Behind the Scenes
 
 When you ask Claude Code to help with documentation, the plugin:
 
 - Looks at your repo's existing docs to understand what's already there
-- Asks you targeted questions to pull out what you know
-- Picks the right document structure (how-to, conceptual explanation, troubleshooting guide, etc.) based on your answers
-- Applies formatting standards (heading case, markdown conventions, code block formatting) so you don't have to think about them
+- Asks you to share everything you know, in any order, then reflects it back so you can correct it
+- Connects what you told it to your existing docs and how people use the product, and checks the details against the code
+- Proposes an outline for anything beyond a short doc, so you approve the shape before it writes
+- Picks the right document structure (how-to, concept, troubleshooting, and so on), and can start you from a proven template
+- Applies formatting standards so you don't have to think about them, and keeps code examples consistent with the rest of the docs
 - Adds cross-references to related docs and flags where existing content should link to the new page
 
 You focus on the content.
@@ -32,10 +34,10 @@ The plugin handles the structure and polish.
 
 ## Get the Most Out of It
 
-### Just Start Talking
+### Start Talking
 
 You don't need to know what "content type" your doc should be, or whether it's a "guide" or a "tutorial."
-Just tell Claude Code what you want to document:
+Tell Claude Code what you want to document, and it opens by asking you to share everything you know:
 
 ```text
 I need to document how to set up SSO for enterprise customers.
@@ -61,7 +63,7 @@ The plugin is designed to work with how people actually share knowledge, not how
 
 ### Mention What Goes Wrong
 
-When Claude Code asks you about a process, don't just describe the happy path.
+When Claude Code asks you about a process, don't only describe the happy path.
 The most valuable parts of documentation are often the gotchas: what breaks, what's confusing, what everyone gets wrong the first time.
 
 If Claude Code asks "what do people commonly get wrong here?", that's the plugin prompting you.
@@ -79,6 +81,12 @@ Focus on:
 - Is anything missing?
 - Would this make sense to the intended reader?
 
+### Start From a Proven Template
+
+For a new doc, Claude Code can start from a proven structure instead of a blank page, using The Good Docs Project templates.
+Describe the problem in plain words, like "people keep opening tickets about a login loop," and it suggests a matching template and fills it with what you know.
+Take the suggestion, pick another, or decline. It's a head start, not a requirement.
+
 ### Use the Draft Command for Guided Walkthroughs
 
 If you want a more structured experience, use the `/draft` command:
@@ -92,7 +100,7 @@ It's useful when you're starting from scratch on a topic rather than improving s
 
 ### Plan a Full Documentation Set
 
-If you need to document a whole project, not just one page, use the plan command:
+If you need to document a whole project, not only one page, use the plan command:
 
 ```text
 /docs-assist:plan
@@ -116,6 +124,7 @@ If a doc already exists but is missing code examples, use:
 ```
 
 Claude Code will identify sections that need examples, write safe copy-paste ready code, and ask before inserting them.
+It reuses the variable names already in your docs so examples stay consistent.
 
 ## What It Won't Do
 

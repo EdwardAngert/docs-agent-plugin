@@ -1,0 +1,9 @@
+# Docs Assist example variables for this repo.
+#
+# Canonical placeholder values for code samples, so examples stay consistent
+# across the docs. The plugin reads these and maintains the file. Keep values
+# copy-paste safe: reserved example domains, documentation IP ranges, and fake
+# credentials that cannot work.
+
+base_url = https://api.example.com
+api_key  = sk_test_EXAMPLE0123456789   # fake, never a real key
