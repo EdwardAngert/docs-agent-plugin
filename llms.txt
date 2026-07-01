@@ -7,6 +7,7 @@
 
 - [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): For docs leads and devrel. Why to install, what changes for contributors, and how to customize.
 - [Write Docs With Docs Assist](docs/write-docs-with-docs-assist.md): For individual contributors. What the plugin does, and tips for getting the most out of it.
+- [Docs Assist Command Reference](docs/command-reference.md): Every command with its argument and an example.
 
 ## Plugin Configuration
 

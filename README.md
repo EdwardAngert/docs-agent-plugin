@@ -96,6 +96,9 @@ It plans to ship first and iterate, not to boil the ocean.
 
 ## Commands
 
+You rarely need these: the plugin activates from plain conversation, and the commands are optional shortcuts.
+For every command's argument and an example, see the [command reference](docs/command-reference.md).
+
 ### Write and Plan
 
 - `/docs-assist:draft [topic]`: the primary workflow.

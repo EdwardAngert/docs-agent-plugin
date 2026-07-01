@@ -14,6 +14,7 @@ The format is based on Keep a Changelog, and the project follows Semantic Versio
   The raw pile never bloats the main conversation, and the synthesized inventory is persisted outside the published docs tree.
 - A code-verification step and an outline checkpoint in the draft flow: before writing, the plugin confirms the specifics the doc will state (commands, flags, defaults, errors) against the code, then proposes an outline for confirmation on anything beyond a short entry.
 - Consistent code examples, in a new `reference/code-examples.md`. Before writing a sample the plugin reuses variable names from related docs, anchored to a plugin-maintained `.docs-assist/example-variables.txt` registry so placeholder values stay the same across the docs. `/docs-assist:init` can seed it from existing docs.
+- A consolidated command reference (`docs/command-reference.md`) covering all nine commands with their arguments and examples.
 - A ship-first path for "document this whole repo, where do I start?": `/docs-assist:plan` now orients before it quizzes (reads the project back and recommends a single first doc to draft now), stages the plan into ship-now, next-iteration, and later, and plans the next iteration from what readers hit. A new `doc-recon` subagent reads a large codebase in isolation and returns a compact project map, so orientation does not flood the main conversation.
 
 ### Changed
