@@ -4,7 +4,11 @@
 # fetch its skeleton while you draft or plan. Nothing is fetched unless you
 # turn this on. Lives beside config.yml and style.md in .docs-assist/.
 
-# Turn the feature on. Default off.
+# Use templates automatically as part of drafting. Default false.
+#   false  the assistant still offers a template when one fits, and fetches a
+#          body only if you accept. Suggesting is free and offline.
+#   true   templates are a standard part of drafting; no extra confirmation
+#          before fetching an accepted template.
 enabled: false
 
 # How the plugin decides which template to suggest:

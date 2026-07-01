@@ -10,9 +10,14 @@ The format is based on Keep a Changelog, and the project follows Semantic Versio
 - Documentation templates from The Good Docs Project, via a new `/docs-assist:template` command and `reference/templates.md`.
   The plugin suggests a template from what the contributor is trying to write, then fetches the skeleton live so a support lead, engineer, or PM starts from a proven structure instead of a blank page.
   Templates supplement the existing content types rather than replacing them: `content-type` stays canonical and a new optional `template` frontmatter field records the origin.
-  The feature is opt-in through `.docs-assist/templates.yml`, offers a content-type or seven-action selection model, and prompts the user (retry, use the built-in structure, or cancel) when a fetch fails.
+  Suggesting a template is free and offline, so the assistant offers one whenever it fits; it fetches a body only when the contributor accepts, so nothing is pulled without a yes.
+  `.docs-assist/templates.yml` records auto-use and the selection model (content-type or seven-action). On a fetch failure the assistant prompts to retry, use the built-in structure, or cancel.
   The Good Docs templates are MIT-0; `THIRD-PARTY-NOTICES.md` records the acknowledgement.
-- Template suggestions in `/docs-assist:draft` and `/docs-assist:plan` when the feature is enabled.
+- Template suggestions offered during `/docs-assist:draft` and `/docs-assist:plan`, and `/docs-assist:init` now offers to enable templates as part of setup.
+
+### Changed
+
+- Framed the skill as a single conversational assistant: contributors describe what they want and the right workflow runs, with the `/docs-assist:*` commands as optional shortcuts rather than a required interface. Setup (config, templates, linting) is offered inline.
 
 ### Fixed
 

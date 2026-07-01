@@ -38,12 +38,18 @@ When the user approves:
 - Write `.docs-assist/style.md` from `${CLAUDE_PLUGIN_ROOT}/assets/config/style.md`, pre-filling the voice and terminology sections with anything you can infer from existing docs (leave clear placeholders for what you cannot).
 - Never overwrite an existing `.docs-assist/` file without showing the diff and confirming.
 
-### 4. Point to Next Steps
+### 4. Offer Templates and Linting
+
+Set the team up in one pass instead of leaving them to find commands:
+
+- Offer to turn on documentation templates: a proven starting structure from The Good Docs Project, suggested during drafting. If they want it, scaffold `.docs-assist/templates.yml` from `${CLAUDE_PLUGIN_ROOT}/assets/config/templates.yml` with `enabled: true`. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. If they decline, do nothing: the assistant still offers a template when one fits and fetches only on their yes.
+- Offer to generate matching linters from `config.yml` (the same workflow as `/docs-assist:setup-lint`).
+
+### 5. Point to Next Steps
 
 After writing, tell the user:
 
 - How the config changes the plugin's behavior (it now follows these settings; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/config-resolution.md`).
-- That `/docs-assist:setup-lint` will generate linter config from `config.yml`.
 - To commit `.docs-assist/` so the whole team shares the same conventions.
 
 ## Notes

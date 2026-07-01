@@ -74,7 +74,7 @@ Choose the type using the canonical list in the docs-assist skill: `${CLAUDE_PLU
 It maps each situation to a content type and the frontmatter value to set.
 If it's ambiguous, default to a doc (task-oriented) and let the reviewer restructure if needed.
 
-Then check `.docs-assist/templates.yml`. If templates are enabled, you may suggest a matching template for a proven starting structure, using `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. Name the one you suggest and why, and let the contributor accept it, pick another, or decline. It is a head start, not a requirement, so never block on it. If templates are off or absent, draft from the content type as usual.
+Then offer a starting template. Suggesting one is free and offline, so do it whenever a catalog template fits, even if `.docs-assist/templates.yml` is absent. Name the template and why in a sentence, and let the contributor accept it, pick another, or decline. Only fetch the body if they accept: the yes is the consent. If they accept and the project has no `templates.yml`, offer to save `enabled: true` so the team is not asked every time. Follow `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. A template is a head start, not a requirement, so never block on it.
 
 ### 5. Produce the Draft
 

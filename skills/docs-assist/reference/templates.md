@@ -24,14 +24,22 @@ The plugin ships a catalog, not the templates.
 The catalog is what lets you suggest a template without holding every template in context.
 The live fetch is what keeps the body current without vendoring a copy that goes stale.
 
-## Check Whether the Feature Is On
+## Suggest Freely, Fetch on Yes
 
-Read `.docs-assist/templates.yml` at the start of a draft or plan.
+Suggesting a template and fetching one are two different acts with two different costs.
 
-- If the file is absent or `enabled: false`, do not fetch anything. Work from `content-types.md` as usual. You may mention that templates are available and can be turned on with `/docs-assist:template`.
-- If `enabled: true`, use the selection model below.
+- **Suggesting is free and offline.** The catalog ships with the plugin, so you can always name a fitting template as part of a normal drafting conversation. No configuration is required to offer one.
+- **Fetching needs the contributor's yes.** Pulling a body is a network call, so it only happens when they accept the suggestion. Their acceptance is the consent.
 
-The full schema lives in `config-resolution.md`.
+This is how the feature stays discoverable without ever fetching something the contributor did not ask for.
+
+Read `.docs-assist/templates.yml` to decide how forward to be:
+
+- **Absent or `enabled: false`:** still offer a template once when it fits, because offering is free. If they accept, fetch it (the yes is consent), then offer to save `enabled: true` so the team is not asked every time.
+- **`enabled: true`:** treat templates as a normal part of drafting. Suggest and fetch on acceptance without a separate confirmation step.
+- **`fetch: off`:** never pull a body. You may still describe the template's shape from the catalog and draft from `content-types.md`.
+
+Never fetch without an explicit yes. The full schema lives in `config-resolution.md`.
 
 ## Select a Template
 
