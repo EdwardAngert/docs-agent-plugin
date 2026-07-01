@@ -1,13 +1,13 @@
 {
-  "name": "documentation-agent-marketplace",
+  "name": "docs-assist-marketplace",
   "owner": {
     "name": "Edward Angert"
   },
   "plugins": [
     {
-      "name": "documentation-agent",
-      "version": "0.2.0",
-      "description": "A documentation coach for Claude Code. Guides subject matter experts through contributing their knowledge — you bring the expertise, the plugin handles the writing. Also provides content audits, style enforcement, and docs-as-code workflows.",
+      "name": "docs-assist",
+      "version": "0.5.0",
+      "description": "A documentation coach for Claude Code. Guides subject matter experts through contributing their knowledge: you bring the expertise, the plugin handles the writing. Also provides content audits, style enforcement, and docs-as-code workflows.",
       "author": {
         "name": "Edward Angert"
       },

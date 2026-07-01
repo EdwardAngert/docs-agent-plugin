@@ -1,0 +1,13 @@
+extends: existence
+message: "'%s' weakens the instruction. Remove it or be specific about what to do."
+link: https://developers.google.com/style/tone
+level: warning
+ignorecase: true
+tokens:
+  - simply
+  - just
+  - easily
+  - obviously
+  - basically
+  - of course
+  - as you can see

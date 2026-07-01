@@ -1,0 +1,33 @@
+{
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "version": "0.2",
+  "language": "en",
+  "enableFiletypes": ["markdown", "mdx"],
+  "ignorePaths": [
+    "node_modules/**",
+    ".git/**",
+    "**/*.min.*",
+    "**/package-lock.json",
+    "**/pnpm-lock.yaml",
+    "**/yarn.lock"
+  ],
+  "ignoreRegExpList": [
+    "Urls",
+    "Email",
+    "HexValues",
+    "/`{3}[\\s\\S]*?`{3}/g",
+    "/`[^`\\n]+`/g"
+  ],
+  "words": [
+    "docs-assist",
+    "frontmatter",
+    "llms",
+    "markdownlint",
+    "MegaLinter",
+    "cspell",
+    "npx",
+    "mdx",
+    "Astro",
+    "Docusaurus"
+  ]
+}

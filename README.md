@@ -1,14 +1,18 @@
-# Documentation Agent
+# Docs Assist
 
 A Claude Code plugin that coaches people through writing documentation.
 
-You have subject matter experts with knowledge in their heads — engineers who built the feature, support leads who know every edge case, PMs who understand the workflow.
+You have subject matter experts with knowledge in their heads: engineers who built the feature, support leads who know every edge case, PMs who understand the workflow.
 They don't need to be good at documentation.
 They just need to share what they know.
 
 This plugin is the documentation expertise layer.
 It extracts their knowledge, picks the right structure, applies writing standards, and produces a draft they can review.
-Think of it as having a technical writer in every Claude Code session — one who asks the right questions and handles the formatting so contributors can focus on what they know.
+Think of it as having a technical writer in every Claude Code session, one who asks the right questions and handles the formatting so contributors can focus on what they know.
+
+> **Renamed**: this plugin was `documentation-agent`.
+> It is now `docs-assist`, and commands are invoked as `/docs-assist:...`.
+> Update any saved references.
 
 ## Install
 
@@ -27,7 +31,7 @@ Think of it as having a technical writer in every Claude Code session — one wh
 1. Install the plugin:
 
    ```bash
-   /plugin install EdwardAngert/docs-agent-plugin
+   /plugin install docs-assist@docs-assist-marketplace
    ```
 
 1. Restart Claude Code.
@@ -37,22 +41,23 @@ Think of it as having a technical writer in every Claude Code session — one wh
 The plugin activates automatically when you ask for documentation help.
 You don't need to learn any special syntax or documentation theory.
 
-**The simplest path**: Just tell Claude what you want to document.
+The simplest path is to tell Claude what you want to document:
 
 ```text
 I need to document how to set up SSO for our enterprise customers.
 ```
 
-Claude will ask you a few questions to understand the audience and scope, walk you through getting the details down, then produce a structured draft. You review for accuracy, Claude handles the rest.
+Claude asks a few questions to understand the audience and scope, walks you through getting the details down, then produces a structured draft.
+You review for accuracy, Claude handles the rest.
 
-**Other prompts that work:**
+Other prompts that work:
 
 ```text
 Help me document feature X for issue #123
 ```
 
 ```text
-I just fixed a tricky bug — can we add troubleshooting docs so others don't hit it?
+I just fixed a tricky bug, can we add troubleshooting docs so others don't hit it?
 ```
 
 ```text
@@ -61,77 +66,86 @@ Review this README for clarity and completeness
 
 ## Commands
 
-### `/documentation-agent:draft [topic]`
+### Write and Plan
 
-The primary workflow.
-Guides you through contributing documentation — bring your expertise, the plugin handles the writing.
+- `/docs-assist:draft [topic]`: the primary workflow.
+  Guides a contributor through turning their knowledge into a structured draft.
+  Bring the expertise, the plugin handles the writing.
+- `/docs-assist:plan [repo or description]`: plan a full documentation set.
+  Reads the codebase, asks about users and goals, maps user journeys, and proposes a prioritized plan before writing anything.
+- `/docs-assist:make-examples [doc-path]`: add or improve copy-paste safe code examples in an existing doc.
 
-Claude will:
+### Review and Maintain
 
-- Ask what you're documenting and who it's for
-- Pull out your knowledge through conversational prompts
-- Pick the right document structure automatically
-- Produce a formatted draft you can review for accuracy
-- Refine based on your feedback and write the final file
+- `/docs-assist:audit [path]`: audit a directory or file for quality, structure, findability, and gaps.
+  Produces a prioritized report.
+- `/docs-assist:update [ref, PR, or path]`: find and update the docs affected by a code change.
+  Reads the diff, locates the docs that reference what changed, and updates them for review.
 
-### `/documentation-agent:plan [repo or description]`
+### Configure
 
-Plan a full documentation set for a project.
-Use when you need to document something from scratch or reorganize existing docs into a coherent structure.
+- `/docs-assist:init [docs dir]`: scaffold project-local configuration, pre-filled from the repo's existing conventions.
+- `/docs-assist:setup-lint [tool]`: scaffold optional documentation linting, generated from your config.
+- `/docs-assist:setup-hooks [hook]`: install opt-in git and in-session hooks.
+  Default off.
 
-Claude will:
+## Configure for Your Team
 
-- Read the codebase to understand the project
-- Ask about your users, their goals, and how deep to go
-- Map user journeys and identify what docs need to exist
-- Propose a prioritized plan with content types, audiences, and writing order
-- Execute the plan doc by doc once you approve it
+Commit a `.docs-assist/` directory and the whole team writes to the same conventions:
 
-### `/documentation-agent:audit [path]`
+- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tool).
+- `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 
-Run a documentation audit on a directory or file:
+Run `/docs-assist:init` to generate both, pre-filled from what your docs already do.
+Because this config is committed to your repo, it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
 
-```bash
-/documentation-agent:audit docs/
-```
+## Lint With the Same Rules You Write By
 
-Evaluates content quality, structure, findability, and gaps.
-Produces a prioritized report with actionable recommendations.
+Linting is optional and never bundled.
+Run `/docs-assist:setup-lint` to scaffold it, and the plugin generates the linter config from your `.docs-assist/config.yml`.
+That means one source of truth: the same settings drive how the agent writes and how the linter checks, so they never drift.
 
-### `/documentation-agent:make-examples [doc-path]`
+- A Vale custom style encodes the prose rules (no em dashes, action-oriented headings, descriptive link text, banned weasel words).
+- markdownlint covers the structural rules.
+- cspell and a link checker cover spelling and links.
+- MegaLinter is offered for teams that want one aggregated tool.
+- An optional GitHub Actions workflow runs the checks on pull requests.
 
-Add or improve code examples in a documentation file:
+The command detects any linter you already use and extends it rather than replacing it.
 
-```bash
-/documentation-agent:make-examples docs/setup.md
-```
+## Keep Docs in Sync With Code
 
-Identifies sections that need examples, creates safe copy-paste ready code, and asks before inserting.
+When code changes, run `/docs-assist:update` with a git ref, a PR number, or a path.
+The plugin reads the diff, summarizes what changed, finds the docs that reference it, and updates them for your review.
+Large changes fan out across the `doc-updater` subagent so many docs update in parallel.
 
 ## What's Inside
 
-The plugin includes writing standards and methodologies that Claude applies automatically.
-You can customize any of these to match your team's conventions:
-
 ```text
-skills/documentation-agent/
-├── SKILL.md                    # Core instructions and role definition
-├── frontmatter-spec.md         # Per-doc metadata schema and how the plugin uses it
-├── tone-and-voice.md           # Formatting rules, heading case, markdown style
-├── documentation-patterns.md   # Content types, examples, SEO, accessibility
-├── content-audit-framework.md  # Audit methodology
-├── ia-design-methodology.md    # Information architecture design
-└── style-guides.md             # Style guide selection and enforcement
+docs-assist/
+├── commands/                  # draft, plan, audit, make-examples, update, init, setup-lint, setup-hooks
+├── agents/                    # doc-auditor, doc-updater subagents
+├── skills/docs-assist/
+│   ├── SKILL.md               # core instructions and role definition
+│   └── reference/
+│       ├── content-types.md       # canonical content types and frontmatter values
+│       ├── tone-and-voice.md      # formatting, heading case, markdown style
+│       ├── frontmatter-spec.md    # per-doc metadata schema
+│       ├── config-resolution.md   # how project-local config overrides defaults
+│       ├── documentation-patterns.md
+│       ├── audit-methodology.md
+│       ├── ia-methodology.md
+│       └── style-guides.md
+├── assets/                    # config templates, lint scaffolds, CI, hook recipes
+└── scripts/validate.mjs       # repository validator (run in CI)
 ```
 
-**What to customize first:**
-
-- `tone-and-voice.md` — Change heading case, list style, or add your company's conventions
-- `SKILL.md` — Adjust the coaching approach or add project-specific instructions
+To customize without committing project config, edit `skills/docs-assist/reference/tone-and-voice.md` and `SKILL.md` directly.
+For team-wide, update-safe customization, prefer `/docs-assist:init`.
 
 ## Background
 
-This plugin codifies methodologies from 10 years of technical writing experience — building doc practices from scratch for developer tools, managing documentation teams for enterprise platforms, API and SDK documentation, and docs-as-code workflows.
+This plugin codifies methodologies from 10 years of technical writing experience: building doc practices from scratch for developer tools, managing documentation teams for enterprise platforms, API and SDK documentation, and docs-as-code workflows.
 
 The core philosophy: I just want your knowledge, expertise, and steps.
 I'll deal with putting it in the right order, getting the words right, and making it all work together.
@@ -143,4 +157,4 @@ See the [contributing guidelines](CONTRIBUTING.md).
 
 ## License
 
-Apache 2.0 — see [LICENSE](LICENSE) for details.
+Apache 2.0. See [LICENSE](LICENSE) for details.

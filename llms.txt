@@ -1,33 +1,46 @@
-# Documentation Agent
+# Docs Assist
 
-> A Claude Code plugin that coaches subject matter experts through writing documentation. The plugin gives Claude Code documentation expertise — guiding contributors through knowledge extraction, picking the right content structure, applying writing standards, and connecting new docs to existing content.
+> A Claude Code plugin that coaches subject matter experts through writing documentation.
+> It gives Claude Code documentation expertise: guiding contributors through knowledge extraction, picking the right content structure, applying writing standards, and connecting new docs to existing content.
 
 ## Docs
 
-- [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): For docs leads and devrel — why to install, what changes for contributors, how to customize
-- [Write Docs With the Documentation Agent](docs/write-docs-with-the-documentation-agent.md): For individual contributors — what the plugin does, tips for getting the most out of it
+- [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): For docs leads and devrel. Why to install, what changes for contributors, and how to customize.
+- [Write Docs With Docs Assist](docs/write-docs-with-docs-assist.md): For individual contributors. What the plugin does, and tips for getting the most out of it.
 
 ## Plugin Configuration
 
-- [SKILL.md](skills/documentation-agent/SKILL.md): Core instructions that shape how Claude Code behaves during documentation tasks
-- [Plugin manifest](.claude-plugin/plugin.json): Plugin metadata, version, registered commands
+- [SKILL.md](skills/docs-assist/SKILL.md): Core instructions that shape how Claude Code behaves during documentation tasks.
+- [Plugin manifest](.claude-plugin/plugin.json): Plugin metadata, version, and registered commands.
 
 ## Commands
 
-- [/draft](commands/draft.md): Guided workflow for SMEs to contribute a single document
-- [/plan](commands/plan.md): Plan a full documentation set — user journeys, content types, priorities, and writing order
-- [/audit](commands/audit.md): Systematic documentation audit for quality, gaps, and structure
-- [/make-examples](commands/make-examples.md): Add or improve code examples in existing docs
+- [/docs-assist:draft](commands/draft.md): Guided workflow for SMEs to contribute a single document.
+- [/docs-assist:plan](commands/plan.md): Plan a full documentation set: user journeys, content types, priorities, and writing order.
+- [/docs-assist:audit](commands/audit.md): Systematic documentation audit for quality, gaps, and structure.
+- [/docs-assist:make-examples](commands/make-examples.md): Add or improve code examples in existing docs.
+- [/docs-assist:init](commands/init.md): Scaffold project-local configuration so the plugin and the linters share one source of truth.
+- [/docs-assist:setup-lint](commands/setup-lint.md): Scaffold optional documentation linting (Vale, markdownlint, MegaLinter, cspell, link check), generated from the project config and respecting any existing linter.
+- [/docs-assist:setup-hooks](commands/setup-hooks.md): Install opt-in documentation hooks (git pre-commit lint, in-session doc lint). Default off.
+- [/docs-assist:update](commands/update.md): Find and update the docs affected by a code change (a diff, a PR, or changed files).
+
+## Agents
+
+- [doc-auditor](agents/doc-auditor.md): Audits a single doc or slice and returns structured findings. Used to fan out large audits in parallel.
+- [doc-updater](agents/doc-updater.md): Updates a single doc to match a code change. Used to fan out update-on-change across many files.
 
 ## Standards and Methodology
 
-- [Frontmatter spec](skills/documentation-agent/frontmatter-spec.md): Schema for per-doc metadata — fields, tiers, and how the plugin uses them
-- [Tone and voice](skills/documentation-agent/tone-and-voice.md): Formatting rules, heading case, markdown style, voice guidelines
-- [Documentation patterns](skills/documentation-agent/documentation-patterns.md): Content types, antipatterns, examples, SEO, accessibility
+- [Content types](skills/docs-assist/reference/content-types.md): The canonical content types and their frontmatter values. The single source of truth.
+- [Frontmatter spec](skills/docs-assist/reference/frontmatter-spec.md): Schema for per-doc metadata: fields, tiers, and how the plugin uses them.
+- [Tone and voice](skills/docs-assist/reference/tone-and-voice.md): Formatting rules, heading case, markdown style, and voice guidelines.
+- [Config resolution](skills/docs-assist/reference/config-resolution.md): How a project's committed `.docs-assist/` configuration overrides the defaults and feeds the linters.
+- [Documentation patterns](skills/docs-assist/reference/documentation-patterns.md): Patterns, antipatterns, examples, SEO, and accessibility.
 
 ## Optional
 
-- [Content audit framework](skills/documentation-agent/content-audit-framework.md): Six-phase audit methodology for docs leads
-- [IA design methodology](skills/documentation-agent/ia-design-methodology.md): Information architecture research, design, and validation
-- [Style guides](skills/documentation-agent/style-guides.md): Style guide selection, components, and enforcement strategies
-- [Contributing](CONTRIBUTING.md): How to contribute to this plugin
+- [Audit methodology](skills/docs-assist/reference/audit-methodology.md): Systematic audit process for docs leads.
+- [Impact analysis](skills/docs-assist/reference/impact-analysis.md): Scope a change-based audit or update. Maps each change type to the edges it can break, with a traversal budget and residual-risk reporting.
+- [IA methodology](skills/docs-assist/reference/ia-methodology.md): Information architecture research, design, and validation.
+- [Style guides](skills/docs-assist/reference/style-guides.md): Style guide selection, components, and enforcement strategies.
+- [Contributing](CONTRIBUTING.md): How to contribute to this plugin.

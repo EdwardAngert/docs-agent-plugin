@@ -1,0 +1,19 @@
+{
+  "ignorePatterns": [
+    { "pattern": "^https?://localhost" },
+    { "pattern": "^https?://127\\.0\\.0\\.1" },
+    { "pattern": "^https?://0\\.0\\.0\\.0" },
+    { "pattern": "^https?://\\[::1\\]" },
+    { "pattern": "^https?://([a-z0-9-]+\\.)*example\\.(com|org|net)" },
+    { "pattern": "^https?://([a-z0-9-]+\\.)*example\\.test" },
+    { "pattern": "^https?://([a-z0-9-]+\\.)*localhost" },
+    { "pattern": "^https?://192\\.0\\.2\\." },
+    { "pattern": "^https?://198\\.51\\.100\\." },
+    { "pattern": "^https?://203\\.0\\.113\\." }
+  ],
+  "timeout": "20s",
+  "retryOn429": true,
+  "retryCount": 3,
+  "fallbackRetryDelay": "30s",
+  "aliveStatusCodes": [200, 206, 999]
+}

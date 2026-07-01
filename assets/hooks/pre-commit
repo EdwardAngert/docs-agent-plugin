@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+# Docs Assist pre-commit hook.
+#
+# Installed by `/docs-assist:setup-hooks`. Two jobs:
+#   1. Lint staged Markdown docs with whatever the repo has configured (via npx).
+#   2. Remind you to sync docs when source files change but docs do not.
+#
+# The lint check fails the commit on errors. The reminder never blocks.
+# Bypass any time with `git commit --no-verify`.
+
+set -eu
+
+staged_all=$(git diff --cached --name-only --diff-filter=ACM || true)
+staged_md=$(printf '%s\n' "$staged_all" | grep -E '\.mdx?$' || true)
+staged_src=$(printf '%s\n' "$staged_all" | grep -vE '\.mdx?$' \
+  | grep -E '\.(js|ts|jsx|tsx|py|go|rs|java|rb|sh|json|ya?ml|toml)$' || true)
+
+# 1. Lint staged Markdown.
+if [ -n "$staged_md" ]; then
+  echo "docs-assist: linting staged Markdown..."
+  if [ -f .markdownlint.jsonc ] || [ -f .markdownlint.json ]; then
+    printf '%s\n' "$staged_md" | xargs npx --yes markdownlint-cli2 || {
+      echo "docs-assist: markdownlint found issues. Fix them, or commit with --no-verify." >&2
+      exit 1
+    }
+  fi
+  # Vale is a standalone binary; only run it when installed.
+  if [ -f .vale.ini ] && command -v vale >/dev/null 2>&1; then
+    printf '%s\n' "$staged_md" | xargs vale || {
+      echo "docs-assist: Vale found issues. Fix them, or commit with --no-verify." >&2
+      exit 1
+    }
+  fi
+fi
+
+# 2. Nudge when source changed but no docs did.
+if [ -n "$staged_src" ] && [ -z "$staged_md" ]; then
+  echo "docs-assist: source files changed but no docs."
+  echo "docs-assist: if this affects documented behavior, run /docs-assist:update."
+fi
+
+exit 0

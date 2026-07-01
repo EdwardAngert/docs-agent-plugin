@@ -68,6 +68,6 @@ Ask if the user wants you to insert them directly or review first.
 
 ## Notes
 
-- Don't over-example — add examples where they genuinely help
+- Don't over-example: add examples where they genuinely help
 - Match the technical level of the document's audience
 - If you're unsure about syntax or behavior, say so and ask

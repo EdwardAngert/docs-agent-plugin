@@ -1,0 +1,40 @@
+# MegaLinter configuration (v8)
+# Docs-assist all-in-one aggregator option. Scoped to Markdown documentation only.
+# Reference: https://megalinter.io/latest/configuration/
+#
+# This config enables ONLY documentation-relevant linters and disables every
+# language/codebase linter so source code is never touched.
+
+# Only run the explicitly listed linters. Anything not in this list is skipped.
+ENABLE_LINTERS:
+  - MARKDOWN_MARKDOWNLINT # structural markdown (owns the house rule structural set)
+  - MARKDOWN_MARKDOWN_LINK_CHECK # valid links
+  - SPELL_CSPELL # correct spelling
+  - SPELL_VALE # prose style (MegaLinter ships a Vale descriptor: SPELL_VALE)
+
+# Belt-and-suspenders: also explicitly disable the descriptors most likely to
+# fire on a docs repo that happens to contain code or config files.
+DISABLE:
+  - REPOSITORY # secret/dependency/IaC scanners, not doc linting
+  - COPYPASTE # duplicate-code detection, not relevant to prose
+  - SPELL_PROSELINT
+  - SPELL_LYCHEE
+
+# Restrict ALL linters to Markdown documentation files.
+FILTER_REGEX_INCLUDE: '(\.md|\.mdx)$'
+
+# Never auto-modify files; report only. Flip per-linter if you want fixes.
+APPLY_FIXES: none
+
+# Fail the run (and CI) when any enabled linter reports an error.
+DISABLE_ERRORS: false
+
+# Point each tool at the per-tool config that setup-lint copies to the repo root.
+MARKDOWN_MARKDOWNLINT_CONFIG_FILE: .markdownlint.jsonc
+MARKDOWN_MARKDOWN_LINK_CHECK_CONFIG_FILE: .markdown-link-check.json
+SPELL_CSPELL_CONFIG_FILE: cspell.json
+SPELL_VALE_CONFIG_FILE: .vale.ini
+
+# Keep the console report; drop CI bloat.
+SHOW_ELAPSED_TIME: true
+FLAVOR_SUGGESTIONS: false

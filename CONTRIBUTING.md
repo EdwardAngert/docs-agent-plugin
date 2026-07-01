@@ -1,4 +1,4 @@
-# Contribute to Documentation Agent
+# Contribute to Docs Assist
 
 Thanks for your interest in contributing.
 
@@ -42,6 +42,19 @@ claude plugin install /path/to/docs-agent-plugin
 ```
 
 Test commands and skill behavior before submitting.
+
+Run the repository checks before opening a pull request:
+
+```bash
+node scripts/validate.mjs
+```
+
+This validates the manifests, the files they reference, and frontmatter.
+CI also dogfoods the shipped linters against the plugin's own docs, so if you changed any docs, run them locally too:
+
+```bash
+npx --yes markdownlint-cli2 --config assets/lint/markdownlint/.markdownlint.jsonc "README.md" "docs/**/*.md"
+```
 
 ## License
 

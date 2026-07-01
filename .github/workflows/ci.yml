@@ -1,0 +1,60 @@
+# Docs Assist CI.
+# Validates the plugin's structure and dogfoods the linters it ships against its
+# own documentation. If the plugin cannot pass its own rules, the build fails.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate plugin structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Validate manifests, references, and frontmatter
+        run: node scripts/validate.mjs
+
+  dogfood:
+    name: Lint own docs with shipped config
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Structural rules, using the markdownlint config this plugin ships.
+      - name: markdownlint (own docs)
+        if: always()
+        run: >
+          npx --yes markdownlint-cli2
+          --config assets/lint/markdownlint/.markdownlint.jsonc
+          "README.md" "CHANGELOG.md" "docs/**/*.md"
+
+      # Prose rules, using the Vale DocsAssist style this plugin ships.
+      # Lints all of the plugin's own markdown. The action's `files` input takes a
+      # single path, so scan the repo root and let .vale.ini scope to markdown.
+      # `--minAlertLevel=error` makes Vale emit only error-level findings (em
+      # dashes), so the job fails on those and not on warnings. reviewdog reports
+      # at info level and would otherwise fail the PR on any warning in the diff.
+      - name: Vale (own docs)
+        if: always()
+        uses: errata-ai/vale-action@v2
+        with:
+          version: latest
+          files: "."
+          vale_flags: "--config=assets/lint/vale/.vale.ini --minAlertLevel=error"
+          fail_on_error: true
+          reporter: github-pr-check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

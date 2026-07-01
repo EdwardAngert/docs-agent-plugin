@@ -1,18 +1,26 @@
 {
-  "name": "documentation-agent",
-  "version": "0.2.0",
-  "description": "A documentation coach for Claude Code. Guides subject matter experts through contributing their knowledge — you bring the expertise, the plugin handles the writing. Also provides content audits, style enforcement, and docs-as-code workflows.",
+  "name": "docs-assist",
+  "version": "0.5.0",
+  "description": "A documentation coach for Claude Code. Guides subject matter experts through contributing their knowledge: you bring the expertise, the plugin handles the writing. Also provides content audits, style enforcement, and docs-as-code workflows.",
   "author": {
     "name": "Edward Angert"
   },
   "repository": "https://github.com/EdwardAngert/docs-agent-plugin",
   "skills": [
-    "./skills/documentation-agent"
+    "./skills/docs-assist"
   ],
   "commands": [
     "./commands/draft.md",
     "./commands/plan.md",
     "./commands/audit.md",
-    "./commands/make-examples.md"
+    "./commands/make-examples.md",
+    "./commands/init.md",
+    "./commands/setup-lint.md",
+    "./commands/setup-hooks.md",
+    "./commands/update.md"
+  ],
+  "agents": [
+    "./agents/doc-auditor.md",
+    "./agents/doc-updater.md"
   ]
 }

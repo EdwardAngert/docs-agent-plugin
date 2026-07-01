@@ -1,58 +1,7 @@
-# Common Documentation Patterns
+# Documentation Patterns
 
-## Content Types
-
-### Concept
-
-- Goal: Teach a skill or develop understanding
-- Structure: Explanation with examples, diagrams, analogies
-- Outcome: User understands the "what" and "why"
-- Example: "Understand Workspace Architecture"
-
-### Procedural Documentation
-
-A hierarchy of task-oriented content:
-
-#### Doc (Single Page)
-
-- Goal: Walk reader through steps to complete one task
-- Structure: Prerequisites → steps → verification
-- Outcome: User completes a specific task
-- Example: "Configure SSO with Okta"
-
-#### Guide (Set of Docs)
-
-- Goal: Bring user through a series of steps with possible divergent paths
-- Structure: Multiple docs, branching based on user context
-- Outcome: User accomplishes a larger goal
-- Example: "Set Up Your Development Environment" (with paths for macOS/Windows/Linux)
-
-#### Tutorial (Set of Guides)
-
-- Goal: Onboard new users through concepts and implementation in sequence
-- Structure: Ordered guides that build on each other
-- Outcome: User gains competency with the product
-- Example: "Get Started with Coder" (spans account setup through first workspace)
-
-### Reference
-
-- Goal: Provide accurate, complete technical details
-- Structure: Systematic, scannable, searchable
-- Outcome: User finds specific information quickly
-- Types:
-  - API/CLI reference
-  - Configuration options
-  - Plans and pricing
-  - Feature comparison tables
-  - Changelogs/release notes
-
-### Troubleshooting
-
-- Goal: Answer specific questions when something goes wrong
-- Structure: Problem → cause → solution
-- Outcome: User resolves their issue
-- Placement: Standalone pages or sections within other docs
-- Example: "Connection Timeout Errors"
+Content types live in their own canonical file. See `content-types.md` for the full list, when to use each, and the frontmatter value to set.
+This file covers the patterns, antipatterns, examples, and practices that apply across all content types.
 
 ## Documentation Antipatterns
 
@@ -93,12 +42,12 @@ A hierarchy of task-oriented content:
 - Use the same examples throughout documentation so users can follow any doc in any order
 - Don't make users match up disparate examples across different pages
 - Use designated documentation IP ranges where appropriate (e.g., 192.0.2.0/24, 198.51.100.0/24, 203.0.113.0/24)
-- Warn during audits if examples are inconsistent — this creates maintenance burden
+- Warn during audits if examples are inconsistent: this creates maintenance burden
 
 ### Code Block Safety
 
 - All examples must be copy-paste ready
-- Assume users will copy without reading — make it safe
+- Assume users will copy without reading; make it safe
 - Never use dangerous commands without safeguards:
   - Bad: `rm -rf *`
   - Better: `rm -rfi *` (interactive flag)
@@ -114,7 +63,7 @@ A hierarchy of task-oriented content:
 
 ## SEO and Findability
 
-SEO isn't just about ranking on Google — it serves users directly:
+SEO isn't just about ranking on Google, it serves users directly:
 
 - Users search within your docs site
 - Users search from Google/other engines
@@ -134,7 +83,7 @@ SEO isn't just about ranking on Google — it serves users directly:
 
 - Only include images when they clarify something text cannot
 - Every image needs meaningful alt text
-- Screenshots become outdated quickly — use sparingly
+- Screenshots become outdated quickly; use sparingly
 
 ### Prefer Text-Based Diagrams
 

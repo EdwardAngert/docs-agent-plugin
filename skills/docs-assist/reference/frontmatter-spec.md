@@ -1,7 +1,7 @@
 # Frontmatter Spec
 
-This document defines the frontmatter schema the Documentation Agent generates when writing docs.
-The schema is opinionated — it defines recommended fields and what they mean — but not strict.
+This document defines the frontmatter schema Docs Assist generates when writing docs.
+The schema is opinionated (it defines recommended fields and what they mean) but not strict.
 Missing fields don't break anything.
 The plugin works with whatever frontmatter exists and fills in what's missing when it writes new docs.
 
@@ -34,7 +34,7 @@ Should match the H1 heading in the body.
 
 **`description`**
 One or two sentences summarizing what the doc covers and what the reader will be able to do after reading it.
-Write it the way you'd explain the doc to a coworker — not SEO filler, not marketing copy.
+Write it the way you'd explain the doc to a coworker, not SEO filler, not marketing copy.
 
 **`content-type`**
 The document's structural category.
@@ -68,7 +68,7 @@ related:
 **`audience`**
 Who this doc is for.
 Use terms that match how your team talks about users: `developers`, `admins`, `end-users`, `new-hires`, etc.
-This isn't a controlled vocabulary — use what makes sense for your project.
+This isn't a controlled vocabulary. Use what makes sense for your project.
 
 **`keywords`**
 Terms someone would use when looking for this content.
@@ -102,7 +102,7 @@ languages:
 
 **`last-verified`**
 The date someone last confirmed the doc's technical accuracy.
-This is not the same as the file's last-modified date — a doc can be edited for formatting without being verified for accuracy.
+This is not the same as the file's last-modified date. A doc can be edited for formatting without being verified for accuracy.
 
 **`sdk`**
 The SDK or tool this doc relates to.
@@ -121,8 +121,8 @@ In step 7 (Finalize), the plugin generates frontmatter for the new doc:
 - `title` and `description` come from the content
 - `content-type` was determined in step 4
 - `audience` comes from the intake conversation (step 2)
-- `keywords` are extracted from the doc's content — terms the plugin identifies as significant
-- `prerequisites` and `related` come from the survey step (step 1) — the plugin already knows what other docs exist
+- `keywords` are extracted from the doc's content, the terms the plugin identifies as significant
+- `prerequisites` and `related` come from the survey step (step 1): the plugin already knows what other docs exist
 
 ### Survey Existing Docs
 
@@ -165,8 +165,8 @@ This survey produces a mental model of the repo's frontmatter conventions that t
 
 ### Rules for Conflict Resolution
 
-1. **Never overwrite existing fields.** If a doc already has `title`, `description`, `tags` — they stay as they are. The contributor or SSG config put them there for a reason.
-2. **Match existing field names.** If the repo uses `tags`, the plugin uses `tags` — not `keywords`. If it uses `type`, the plugin uses `type` — not `content-type`. The repo's convention wins.
+1. **Never overwrite existing fields.** If a doc already has `title`, `description`, or `tags`, they stay as they are. The contributor or SSG config put them there for a reason.
+2. **Match existing field names.** If the repo uses `tags`, the plugin uses `tags`, not `keywords`. If it uses `type`, the plugin uses `type`, not `content-type`. The repo's convention wins.
 3. **Preserve SSG-required fields.** Fields like the following are there because the build system needs them. Never remove or reorder them.
    - Docusaurus: `sidebar_position`, `sidebar_label`, `slug`
    - Hugo: `weight`, `layout`, `draft`
@@ -189,8 +189,8 @@ For example:
 
 The per-doc frontmatter and the repo-level `llms.txt` work together:
 
-- `llms.txt` is the map — it tells AI tools what docs exist, what they cover, and what conventions the repo uses
-- Frontmatter is the detail — it tells AI tools about a specific doc without reading the body
+- `llms.txt` is the map: it tells AI tools what docs exist, what they cover, and what conventions the repo uses
+- Frontmatter is the detail: it tells AI tools about a specific doc without reading the body
 - The plugin updates both: when it writes a new doc, it adds frontmatter to the doc and adds an entry to `llms.txt`
 
 See the repo's `llms.txt` for the manifest format.

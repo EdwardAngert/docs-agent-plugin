@@ -1,11 +1,11 @@
 ---
-description: Plan a documentation set for a project — figure out what to write, for whom, and in what order
+description: "Plan a documentation set for a project: figure out what to write, for whom, and in what order"
 argument-hint: [repo path or description]
 ---
 
 # Plan a Documentation Set
 
-Help someone plan what documentation a project needs — before writing any of it.
+Help someone plan what documentation a project needs, before writing any of it.
 
 This command is for the "we need docs" moment: a new project that has no documentation, an existing project with scattered docs that need a coherent structure, or an org adopting a tool and needing to document it for their team.
 
@@ -25,7 +25,7 @@ Ask before assuming.
 If the contributor provided a repo path or description (`$ARGUMENTS`), start there.
 
 - Read the codebase to understand what the project does, its architecture, and its key concepts
-- Check for any existing documentation — README, inline comments, doc directories, wiki, etc.
+- Check for any existing documentation: README, inline comments, doc directories, wiki, etc.
 - If an `llms.txt` exists, read it
 - Look at issue trackers, changelogs, or release notes for context on what users care about
 
@@ -37,13 +37,13 @@ These are the questions that shape the entire plan.
 Don't skip them or assume the answers.
 
 - **Who are the primary users?** Developers integrating the tool? Ops teams deploying it? End users? Internal team members onboarding?
-- **What are they trying to accomplish?** What are the core user journeys — the 2-3 things someone needs to do with this project?
+- **What are they trying to accomplish?** What are the core user journeys: the 2-3 things someone needs to do with this project?
 - **How deep should we go?** A quickstart and API reference? A full docs site with tutorials, guides, and conceptual docs? Something in between?
 - **What already exists?** Are there READMEs, wikis, Notion pages, Slack threads, or tribal knowledge that should be captured?
 - **What's the priority?** If we can only write 3 docs, which ones unblock the most people?
 
 Adapt the questions to what you already know.
-If the codebase makes the user base obvious, don't ask who the users are — confirm your assumption and move on.
+If the codebase makes the user base obvious, don't ask who the users are; confirm your assumption and move on.
 
 ### 3. Identify User Journeys
 
@@ -61,15 +61,15 @@ A "configure for production" journey might need a configuration reference and a 
 
 ### 4. Propose a Docs Plan
 
-Write the plan to a file — `docs/plan.md` by default, or wherever the contributor prefers.
+Write the plan to a file, `docs/plan.md` by default, or wherever the contributor prefers.
 Present it as a structured list of docs to write, organized by priority.
 For each doc, specify:
 
-- **Title** — what the doc will be called
-- **Content type** — doc, guide, tutorial, concept, reference, or troubleshooting
-- **Audience** — who it's for
-- **Purpose** — what the reader will be able to do after reading it
-- **Dependencies** — what other docs should exist first (this establishes writing order)
+- **Title**: what the doc will be called
+- **Content type**: doc, guide, tutorial, concept, reference, or troubleshooting
+- **Audience**: who it's for
+- **Purpose**: what the reader will be able to do after reading it
+- **Dependencies**: what other docs should exist first (this establishes writing order)
 
 Group docs by user journey or by priority tier:
 
@@ -109,13 +109,13 @@ Each doc follows the `/draft` workflow:
 As you write each doc, update the plan file:
 
 - Mark completed docs
-- Note new docs that emerged during writing (this is normal — writing one doc often reveals the need for another)
+- Note new docs that emerged during writing (this is normal: writing one doc often reveals the need for another)
 - Adjust priorities based on what you've learned
 
 ## Notes
 
 - The plan is a living document, not a contract. It will change as you learn more.
 - Don't over-plan. A plan with 30 docs is overwhelming. Start with 5-8 and expand.
-- The human may not know all the user journeys. That's fine — propose what you see in the codebase and ask if you're missing any.
+- The human may not know all the user journeys. That's fine. Propose what you see in the codebase and ask if you're missing any.
 - If the project is large, suggest starting with one user journey end-to-end rather than writing all concepts first, then all how-tos. Complete journeys are more useful than complete categories.
-- Reference `ia-design-methodology.md` for deeper information architecture decisions if the scope warrants it.
+- Reference `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/ia-methodology.md` for deeper information architecture decisions if the scope warrants it.
