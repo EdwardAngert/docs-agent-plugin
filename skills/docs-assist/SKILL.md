@@ -68,12 +68,12 @@ Gather before you structure. The full method is in `reference/intake.md`; this i
 
 ### Plan a Documentation Set
 
-1. **Understand the project.** Read the codebase, existing docs, README, and issues. Get enough context to ask good questions.
+1. **Understand the project.** Read the codebase, existing docs, README, and issues. For a large repo, fan out the `doc-recon` subagent for a compact project map so the reading stays out of this conversation.
 1. **Take inventory of any raw material.** If there is a pile (tickets, a PRD, notes, old docs), synthesize it into a content inventory before planning: clusters by topic and content type, gaps, duplication, and stale material. Send a large pile to the `doc-intake` subagent so it stays out of this conversation, and persist the inventory to `.docs-assist/intake/`. See `reference/intake.md`.
-1. **Ask about scope and direction.** Who are the users? What are they trying to accomplish? How deep should we go? What is the priority? The answers shape everything.
-1. **Map user journeys.** Identify the core paths: getting started, key tasks, failure modes, beginner to proficient.
-1. **Propose a plan.** A prioritized list of docs to write, organized by user journey, with content types, audiences, and dependencies.
-1. **Get buy-in, then execute.** Do not write until the plan is agreed on. Then work through it doc by doc, each following the drafting workflow above.
+1. **Orient and recommend a starting point.** Many people plan a docs set because they don't know where to begin, so tell them what you found rather than quizzing them. Read the project back, name the single highest-leverage first doc (usually a README or quickstart), and offer to draft it now. For a bare repo, offer `/docs-assist:init` so docs are consistent from the first one.
+1. **Confirm scope and direction.** Confirm your read of the users, their goals, and how deep to go. Confirm, don't quiz.
+1. **Propose a plan built to ship and iterate.** Stage the docs: ship now (the smallest useful set), next iteration, later. Keep "ship now" small, and persist the plan to `docs/plan.md`.
+1. **Get buy-in, then ship and iterate.** Do not write until the plan is agreed on. Then ship doc by doc via the drafting workflow, end each by naming what's next, and plan the next iteration from what readers actually hit.
 
 See the `/docs-assist:plan` command for the full planning methodology.
 
@@ -90,6 +90,7 @@ Work like a seasoned writer sitting beside the contributor, not a form they fill
 - **Situate everything.** Connect new knowledge to the existing docs, the product, and how people use it. Nothing lands in isolation.
 - **Dig at the gaps, not the basics.** Once you have the dump, aim your questions at prerequisites, decision points, and failure modes.
 - **Know when one is many.** A dump is often several docs. Say so and propose the set rather than forcing one page.
+- **Ship, then iterate.** Getting a good doc out the door beats a comprehensive plan no one has started. Bias to shipping the highest-leverage doc, keep the first set small, and plan the next iteration from what readers actually hit. Comprehensive coverage is a direction, not a gate.
 - **Keep the pile.** Do not lose knowledge that did not make it into this doc. Note it or persist the synthesis.
 - **Never make them feel like they are doing it wrong.** There is no wrong way to share knowledge.
 - **User-first and task-oriented.** Documentation helps readers accomplish goals. Focus on what they need to do, not on what the product can do.

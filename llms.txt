@@ -30,6 +30,7 @@
 - [doc-auditor](agents/doc-auditor.md): Audits a single doc or slice and returns structured findings. Used to fan out large audits in parallel.
 - [doc-updater](agents/doc-updater.md): Updates a single doc to match a code change. Used to fan out update-on-change across many files.
 - [doc-intake](agents/doc-intake.md): Reads a pile of raw source material in isolation and returns a compact content inventory. Used to fan out corpus intake without loading the pile into the main conversation.
+- [doc-recon](agents/doc-recon.md): Reads a codebase in isolation and returns a compact project map (what it does, features, entry points, audiences, candidate docs). Used to orient a from-scratch docs effort without reading the whole repo in the main conversation.
 
 ## Standards and Methodology
 

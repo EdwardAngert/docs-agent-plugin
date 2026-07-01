@@ -23,6 +23,7 @@
   "agents": [
     "./agents/doc-auditor.md",
     "./agents/doc-updater.md",
-    "./agents/doc-intake.md"
+    "./agents/doc-intake.md",
+    "./agents/doc-recon.md"
   ]
 }

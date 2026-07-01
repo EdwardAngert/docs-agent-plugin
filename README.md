@@ -73,6 +73,10 @@ Then it reflects it back, situates it against your existing docs and how people 
 Starting from scratch with a pile of raw material, like tickets, a PRD, notes, or old docs?
 It reads the pile in an isolated pass and hands back a content inventory (clusters, gaps, duplication), then turns that into a documentation plan.
 
+Documenting a whole repo and not sure where to start?
+It reads the codebase, tells you what it found and where it would start, and gets one good doc out the door (usually a README or quickstart) before planning the rest.
+It plans to ship first and iterate, not to boil the ocean.
+
 ## Commands
 
 ### Write and Plan
