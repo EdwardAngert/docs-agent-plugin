@@ -29,6 +29,6 @@ frontmatter:
 
 # CI runs the shipped Vale DocsAssist style and markdownlint against the docs.
 lint:
-  tool: vale
+  tools: [vale, markdownlint]
   spelling: false
   link_check: false

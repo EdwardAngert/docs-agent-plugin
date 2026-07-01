@@ -26,7 +26,7 @@ Do not ask the user what they could observe yourself. Survey the repo first:
 Show the user the `config.yml` you intend to write, pre-filled from what you detected, and explain the values you inferred. Use the template at `${CLAUDE_PLUGIN_ROOT}/assets/config/config.yml` as the base and adjust:
 
 - Set `docs_dir`, `heading_case`, `list_marker`, and the `frontmatter` field names to match the repo.
-- Set `lint.tool` to any linter you found, otherwise leave it `none`.
+- Set `lint.tools` to the linters you found (a list; a project can run several), otherwise leave it empty.
 
 Confirm before writing. If a value is ambiguous, ask a focused question rather than guessing.
 

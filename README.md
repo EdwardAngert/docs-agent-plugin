@@ -128,7 +128,7 @@ For every command's argument and an example, see the [command reference](docs/co
 
 Commit a `.docs-assist/` directory and the whole team writes to the same conventions:
 
-- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tool).
+- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools).
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, so examples stay consistent across docs. The plugin maintains it.
 

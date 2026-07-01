@@ -4,7 +4,7 @@ This reference explains how Docs Assist suggests and applies external documentat
 
 The built-in catalog is The Good Docs Project, a widely used, openly licensed template set.
 Templates supplement the canonical content types in `content-types.md`; they do not replace them.
-The feature is opt-in and off by default.
+Suggesting a template is always available and offline; fetching one happens only when the contributor accepts.
 
 ## The Core Idea: Suggest, Do Not Impose
 

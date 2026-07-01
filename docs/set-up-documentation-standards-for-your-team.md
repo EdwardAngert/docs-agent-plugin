@@ -96,7 +96,7 @@ A few commands are worth knowing:
 The recommended way to customize is project-local config you commit to your repo.
 Run `/docs-assist:init` to scaffold a `.docs-assist/` directory:
 
-- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tool). This file also drives the linters, so your rules stay in one place.
+- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools). This file also drives the linters, so your rules stay in one place.
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
 - `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, maintained by the plugin.

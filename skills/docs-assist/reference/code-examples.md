@@ -35,6 +35,8 @@ project_id = proj_example_42
 region     = us-east-1
 ```
 
+An audit checks this too: `/docs-assist:audit` flags code samples whose values drift from the registry or from each other.
+
 ## Keep Every Example Safe
 
 Whether or not a registry exists, examples must be copy-paste safe.

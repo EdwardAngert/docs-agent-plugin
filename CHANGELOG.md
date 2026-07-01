@@ -21,6 +21,8 @@ The format is based on Keep a Changelog, and the project follows Semantic Versio
 
 - Rebuilt `/docs-assist:draft` around the intake loop (survey, dump, reflect, situate, dig, shape, draft), and added a leading corpus-inventory step to `/docs-assist:plan`.
 - Reframed the skill's guiding principles around gathering first, reflecting, situating, and recognizing when one request is really several docs.
+- `config.yml`'s `lint.tool` is now `lint.tools`, a list, so a project can declare several linters at once (this repo runs Vale and markdownlint).
+- `/docs-assist:audit` now flags code-sample values that drift from the `.docs-assist/example-variables.txt` registry or from each other.
 
 ## 0.6.0 - 2026-07-01
 
@@ -42,6 +44,7 @@ The format is based on Keep a Changelog, and the project follows Semantic Versio
 
 - `frontmatter-spec.md` pointed `content-type` at `documentation-patterns.md`; it now points at the canonical `content-types.md`.
 - Refreshed the reader tutorials in `docs/` to match the current workflow (the intake dump, templates, and the ship-first plan). This repo now dogfoods its own tool: it commits a `.docs-assist/` config, and the README leads with a real session.
+- Reconciled the templates docs with the shipped behavior. Suggesting a template is always available and offline, and only fetching one needs the contributor's yes; some copy still described the feature as off by default.
 
 ## 0.5.0 - 2026-07-01
 

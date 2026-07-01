@@ -58,6 +58,7 @@ For each document, evaluate:
 - Broken internal links
 - Missing alt text on images
 - TODOs or placeholders
+- Inconsistent example values: code samples that use different placeholder values for the same thing across docs, or values that do not match `.docs-assist/example-variables.txt` when it exists. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md`
 
 #### Content Issues
 

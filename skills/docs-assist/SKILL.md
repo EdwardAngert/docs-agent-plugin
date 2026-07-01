@@ -24,7 +24,7 @@ This skill ships detailed reference material. Load the file you need when you ne
 - `reference/documentation-patterns.md`: patterns, antipatterns, examples, SEO, accessibility, docs-as-code.
 - `reference/audit-methodology.md`: the systematic audit process.
 - `reference/impact-analysis.md`: how to scope a change-based review. Maps each change type to the edges it can break, and how to report what you did not check.
-- `reference/templates.md`: how to suggest and apply external documentation templates (The Good Docs Project) for a healthy start. Opt-in.
+- `reference/templates.md`: how to suggest and apply external documentation templates (The Good Docs Project) for a healthy start. Suggesting is free; fetching is on the contributor's yes.
 - `reference/ia-methodology.md`: information architecture design and evaluation.
 - `reference/style-guides.md`: style guide selection and enforcement.
 
@@ -32,8 +32,9 @@ This skill ships detailed reference material. Load the file you need when you ne
 
 Before you survey or write, check whether the project has committed configuration in a `.docs-assist/` directory:
 
-- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tool).
+- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools).
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
+- `.docs-assist/templates.yml`: optional settings for documentation templates. See `reference/templates.md`.
 - `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, maintained by the plugin. See `reference/code-examples.md`.
 
 When present, these override the plugin defaults. Apply them to everything you write and review.
