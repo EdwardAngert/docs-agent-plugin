@@ -75,7 +75,7 @@ The plugin ships with defaults (AP title case, action-oriented headings, specifi
 1. Install the plugin:
 
    ```bash
-   /plugin install EdwardAngert/docs-agent-plugin
+   /plugin install docs-assist@docs-assist-marketplace
    ```
 
 1. Restart Claude Code.
