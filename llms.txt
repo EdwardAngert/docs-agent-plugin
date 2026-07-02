@@ -13,6 +13,7 @@
 
 - [SKILL.md](skills/docs-assist/SKILL.md): Core instructions that shape how Claude Code behaves during documentation tasks.
 - [Plugin manifest](.claude-plugin/plugin.json): Plugin metadata, version, and registered commands.
+- [Marketplace manifest](.claude-plugin/marketplace.json): Marketplace metadata used to install the plugin.
 
 ## Commands
 

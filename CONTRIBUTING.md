@@ -35,11 +35,14 @@ Good contributions:
 
 ## Test Locally
 
-Install your local version:
+Add your working copy as a marketplace, then install the plugin from it:
 
 ```bash
-claude plugin install /path/to/docs-agent-plugin
+claude plugin marketplace add /path/to/docs-agent-plugin
+claude plugin install docs-assist@docs-assist-marketplace
 ```
+
+To check the manifests without installing, run `claude plugin validate /path/to/docs-agent-plugin`.
 
 Test commands and skill behavior before submitting.
 

@@ -27,6 +27,7 @@ This section came out of one such session. Documenting this very plugin, it went
 > Let me read it back first. The README is solid, but it tells more than it shows, it opens with a rename note that only old users care about, and the file tree has drifted from the code (it's missing two files). Start with one thing: a short "What it looks like" example near the top, because that's what turns a scroller into someone who tries it. Then move the rename note down and fix the tree. I'll ship those three now.
 
 It added this section, moved the rename note, and corrected the tree.
+The rest of this README is the result.
 Its own linter caught a formatting slip in the draft and flagged it, so it fixed that too.
 You review for accuracy. The formatting is already handled.
 
@@ -51,6 +52,12 @@ You review for accuracy. The formatting is already handled.
    ```
 
 1. Restart Claude Code.
+
+## Documentation
+
+- [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): for docs leads and devrel. Why to install, what changes for contributors, and how to customize.
+- [Write Docs With Docs Assist](docs/write-docs-with-docs-assist.md): for individual contributors. What the plugin does, and how to get the most out of it.
+- [Command reference](docs/command-reference.md): every command with its argument and an example.
 
 ## How It Works
 
@@ -130,6 +137,7 @@ Commit a `.docs-assist/` directory and the whole team writes to the same convent
 
 - `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools).
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
+- `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
 - `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, so examples stay consistent across docs. The plugin maintains it.
 
 Run `/docs-assist:init` to generate them, pre-filled from what your docs already do.
