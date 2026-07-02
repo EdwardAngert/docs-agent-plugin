@@ -47,7 +47,7 @@ You review for accuracy. The formatting is already handled.
 1. Install the plugin:
 
    ```bash
-   /plugin install documentation-agent@documentation-agent-marketplace
+   /plugin install docs-assist@docs-assist-marketplace
    ```
 
 1. Restart Claude Code.
