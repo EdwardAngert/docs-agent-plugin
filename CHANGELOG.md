@@ -31,9 +31,10 @@ The staged plan behind this release is committed at `docs/plan.md`.
 - `reference/llms-txt.md`: the llms.txt format (per the llms.txt convention, including the reserved `Optional` section), reader-priority ordering, description rules, the frontmatter mapping note, the `llms-full.txt` companion, and the maintenance contract naming which workflow holds up which part.
   `/docs-assist:agent-ready`, the audit, and the frontmatter spec now point at it instead of describing the format piecemeal.
 - The staged 1.0 product plan, committed at `docs/plan.md` per the plugin's own persist-the-plan convention, with shipped items marked and the deferred list (CI auto-update, docs-impact noise knobs, more generators) recorded.
-- A fact-check gate in the intake loop: the new reconcile move checks the dump against the code and the existing docs before anything is shaped.
-  Confirmed claims are read back, contradictions are asked about rather than assumed (a wrong memory and a found bug look identical, and the plugin offers to record the bug when it is the code that is wrong), and unverifiable claims enter the doc's new `sme-attested` frontmatter ledger: specific claims a reviewer verifies and deletes, instead of a doc-wide review request.
-  The gate guards every door: `doc-intake` reports code conflicts in its inventory, so corpus piles and returned intake packets arrive pre-reconciled, `doc-drafter` records attested claims in the ledger, and audits surface docs whose ledgers are large or old.
+- An opt-in fact-check in the intake loop: the new reconcile move offers to check the dump against the code and the existing docs, before anything is shaped and always as the contributor's choice.
+  When accepted, confirmed claims are read back and contradictions are asked about rather than assumed (a wrong memory and a found bug look identical, and the plugin offers to record the bug when it is the code that is wrong).
+  Afterward, a second, separate offer: record unverifiable claims in a new `sme-attested` frontmatter ledger, specific claims a reviewer verifies and deletes instead of a doc-wide review request. The field is never added without the yes, because strict frontmatter schemas can reject unknown fields; declined, the list lives in the review notes.
+  The check guards every door: `doc-intake` reports code conflicts in its inventory, so corpus piles and returned intake packets arrive pre-reconciled, `doc-drafter` records attested claims in the ledger only when the project approved the field, and audits surface docs whose ledgers are large or old.
 
 ### Changed
 

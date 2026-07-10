@@ -23,7 +23,7 @@ The full method is in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake
 
 ### 1-6. Run the Intake Loop
 
-Run the first six intake moves as `intake.md` defines them: survey quietly, ask for the dump, reflect it back, situate it, reconcile it against the code and existing docs (the preflight gate: nothing is shaped from an unreconciled dump), then dig at the gaps.
+Run the first six intake moves as `intake.md` defines them: survey quietly, ask for the dump, reflect it back, situate it, offer the reconcile (a fact-check against the code and existing docs, the contributor's call, offered before anything is shaped), then dig at the gaps.
 
 Draft-specific notes for those moves:
 
@@ -91,7 +91,7 @@ When the contributor is satisfied:
 - Write the file to the appropriate location (ask if unsure where it should live), with a filename that follows existing conventions.
 - Generate frontmatter following `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`. At minimum `title`, `description`, and `content-type`. Add `audience`, `keywords`, `prerequisites`, and `related` when you have the context, and after this conversation you almost certainly do. Match existing frontmatter conventions.
 - If you drafted on a template, set the optional `template` field to the catalog `id` and add the `attribution` line from `templates.yml`.
-- If any claims made it in on the expert's word alone (marked SME-attested during the reconcile), record them in the `sme-attested` frontmatter ledger so a future reviewer verifies specific claims, not the whole doc.
+- If any claims made it in on the expert's word alone (marked SME-attested during the reconcile), offer to record them in the `sme-attested` frontmatter ledger so a future reviewer verifies specific claims, not the whole doc. A separate yes: not every pipeline accepts unapproved frontmatter fields. If declined, keep the list in the review notes instead.
 - If the repo has an `llms.txt`, add an entry for the new doc.
 - Update related docs to cross-reference this new content (or make the edits and show the contributor what you changed).
 - In a git repo, when the work touched several files (the new doc plus cross-reference updates), offer to put the change set on a docs branch rather than leaving it on the default branch. Never commit to the default branch unless asked.

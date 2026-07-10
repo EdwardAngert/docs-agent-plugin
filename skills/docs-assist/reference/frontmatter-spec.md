@@ -111,6 +111,7 @@ See `templates.md`.
 
 **`sme-attested`**
 The verification ledger: claims that entered the doc on a subject matter expert's word alone, because they could not be checked against the code or existing docs during the intake reconcile.
+**Opt-in, always.** The plugin never adds this field without the contributor's explicit yes: build pipelines with strict frontmatter schemas can reject unknown fields, and some teams require approval for new metadata. When declined, the attested-claims list lives in the review notes instead.
 Each entry names the section the claim lives in, the claim itself in a short line, and optionally who attested it.
 
 ```yaml

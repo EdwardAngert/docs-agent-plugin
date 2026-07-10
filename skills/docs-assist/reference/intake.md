@@ -16,7 +16,7 @@ The same eight moves serve one doc or a whole set. Later moves lean on earlier o
 1. **Dump**: invite everything they know, unstructured.
 1. **Reflect** it back so they know they were heard.
 1. **Situate** it against the existing docs, the product, and how people use it.
-1. **Reconcile**: fact-check the dump against the code and the existing docs. This is the preflight gate: nothing is shaped from an unreconciled dump.
+1. **Reconcile**: offer to fact-check the dump against the code and the existing docs. This is the preflight checkpoint: the offer is always made before anything is shaped, and the contributor decides.
 1. **Dig** at the gaps the dump left.
 1. **Shape**: pick the content type, and notice when it is really several docs.
 1. **Draft**, review, finalize.
@@ -65,7 +65,11 @@ Say the connections out loud. "This overlaps with your Webhooks doc, it is a pre
 
 Expert memory is honest and unreliable at the same time: defaults change, behavior shifts between releases, and secondhand knowledge arrives with the same confidence as firsthand.
 Reconcile before you dig, so your questions build on what is true.
-This is a preflight gate: do not shape or draft from a dump that has not been reconciled.
+
+The fact-check is the contributor's choice, offered before it starts.
+Make the offer once the dump is in hand ("want me to check this against the code before we go further?"), say what it costs (a short read of the relevant source), and respect a no.
+The preflight rule is about the offer, not the outcome: do not shape or draft until the contributor has accepted or declined.
+When they decline, proceed normally, note in the final review that the dump's claims were taken as given, and let the draft flow's verify step still confirm the specifics the doc states.
 
 Sort the dump's claims into three buckets, and treat each differently:
 
@@ -80,7 +84,9 @@ Deliver the reconciliation as a short read-back, folded into the dig when that f
 When the dump and the code disagree, **ask, never assume**. The contributor misremembering and the contributor having just found a bug look identical from here.
 If they say the code is wrong, offer to record it (a `gh issue` when the repo uses GitHub, a follow-up note otherwise), and write the doc to the intended behavior with the discrepancy flagged.
 
-Claims that survive into a doc on the expert's word alone go into the doc's `sme-attested` frontmatter ledger (see `frontmatter-spec.md`), so a future reviewer verifies specific claims instead of re-reviewing everything.
+After the reconcile runs, offer the ledger: claims that survive into a doc on the expert's word alone can be recorded in the doc's `sme-attested` frontmatter (see `frontmatter-spec.md`), so a future reviewer verifies specific claims instead of re-reviewing everything.
+This is a separate yes: not every pipeline accepts unapproved frontmatter fields, and a strict SSG schema can reject a build over one.
+When they decline, keep the attested-claims list in the conversation's review notes (or the saved report) instead of the frontmatter.
 
 This move guards every door, not only the conversational dump: `doc-intake` reports code conflicts in its inventory, so corpus piles and returned intake packets arrive pre-reconciled, and the consolidator resolves what they flag.
 
