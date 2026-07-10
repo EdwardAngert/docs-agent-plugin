@@ -25,6 +25,7 @@
 - [/docs-assist:init](commands/init.md): Scaffold project-local configuration so the plugin and the linters share one source of truth.
 - [/docs-assist:setup-lint](commands/setup-lint.md): Scaffold optional documentation linting (Vale, markdownlint, MegaLinter, cspell, link check), generated from the project config and respecting any existing linter.
 - [/docs-assist:setup-hooks](commands/setup-hooks.md): Install opt-in documentation hooks (git pre-commit lint, in-session doc lint, CI docs-impact check). Default off.
+- [/docs-assist:setup-site](commands/setup-site.md): Generate site navigation from the docs' metadata (llms.txt order becomes sidebar order), scaffolding minimal Docusaurus or MkDocs when no site exists.
 - [/docs-assist:update](commands/update.md): Find and update the docs affected by a code change (a diff, a PR, or changed files).
 - [/docs-assist:release-notes](commands/release-notes.md): Turn a release's worth of changes into reader-facing release notes, leading with breaking changes and upgrade steps.
 - [/docs-assist:agent-ready](commands/agent-ready.md): Make the docs legible to AI tools: create or repair llms.txt, complete frontmatter, record conventions.
@@ -36,6 +37,7 @@
 - [doc-updater](agents/doc-updater.md): Updates a single doc to match a code change. Used to fan out update-on-change across many files.
 - [doc-intake](agents/doc-intake.md): Reads a pile of raw source material in isolation and returns a compact content inventory. Used to fan out corpus intake without loading the pile into the main conversation.
 - [doc-recon](agents/doc-recon.md): Reads a codebase in isolation and returns a compact project map (what it does, features, entry points, audiences, candidate docs). Used to orient a from-scratch docs effort without reading the whole repo in the main conversation.
+- [doc-drafter](agents/doc-drafter.md): Drafts one planned doc from a plan entry and existing source material, flagging what needs SME verification. Used to fan out drafting across an approved plan stage in parallel.
 
 ## Standards and Methodology
 
@@ -45,6 +47,7 @@
 - [Tone and voice](skills/docs-assist/reference/tone-and-voice.md): Formatting rules, heading case, markdown style, and voice guidelines.
 - [Code examples](skills/docs-assist/reference/code-examples.md): Write safe code samples that stay consistent across docs, using a plugin-maintained example-variables registry.
 - [Terminology](skills/docs-assist/reference/terminology.md): Keep product terms consistent across docs, using a plugin-maintained terms registry that audits check for drift.
+- [llms.txt](skills/docs-assist/reference/llms-txt.md): The llms.txt format, entry ordering, and the maintenance contract every workflow follows. Surfacing docs for AI readers is core functionality.
 - [Config resolution](skills/docs-assist/reference/config-resolution.md): How a project's committed `.docs-assist/` configuration overrides the defaults and feeds the linters.
 - [Documentation patterns](skills/docs-assist/reference/documentation-patterns.md): Patterns, antipatterns, examples, SEO, and accessibility.
 - [Templates](skills/docs-assist/reference/templates.md): Suggest and apply external documentation templates (The Good Docs Project) for a healthy start. Opt-in, with content-type and seven-action selection.
@@ -57,3 +60,4 @@
 - [Style guides](skills/docs-assist/reference/style-guides.md): Style guide selection, components, and enforcement strategies.
 - [Contributing](CONTRIBUTING.md): How to contribute to this plugin.
 - [0.8.0 product review findings](docs/reviews/0.8.0-findings.md): The prioritized findings behind the 0.8.0 release, with the remaining recommendations.
+- [Docs Assist 1.0 plan](docs/plan.md): The staged product plan toward 1.0, with what has shipped and what remains.

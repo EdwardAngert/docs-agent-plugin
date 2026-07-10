@@ -198,4 +198,4 @@ The per-doc frontmatter and the repo-level `llms.txt` work together:
 - Frontmatter is the detail: it tells AI tools about a specific doc without reading the body
 - The plugin updates both: when it writes a new doc, it adds frontmatter to the doc and adds an entry to `llms.txt`
 
-See the repo's `llms.txt` for the manifest format.
+The llms.txt format, entry ordering, and maintenance contract are defined in `llms-txt.md`.
