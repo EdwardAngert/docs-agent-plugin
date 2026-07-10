@@ -22,11 +22,12 @@ The optional argument (`$ARGUMENTS`) is the docs directory. Detect it if not giv
 
 ### 2. Create or Repair llms.txt
 
-`llms.txt` is the map an AI tool reads first.
+`llms.txt` is the map an AI tool reads first. The format, ordering, and maintenance contract are single-sourced in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/llms-txt.md`; follow it exactly.
 
-- **Missing**: generate one. Lead with a one-line project summary and a blockquote of what the project does, then list every doc with a link and a one-line description of what it covers and who it serves. Group by purpose when the set is large.
-- **Present**: reconcile it against the docs. Add missing entries, remove entries whose files are gone, and fix titles, descriptions, and paths that drifted.
-- Order entries by reader priority (start-here first), not alphabetically.
+- **Missing**: generate one to that spec: the H1 project name, the blockquote summary, then sections of `- [title](path): description` entries in reader-priority order.
+- **Present**: reconcile it against the docs. Add missing entries, remove entries whose files are gone, fix titles, descriptions, and paths that drifted, and restore reader-priority order where it decayed.
+- Reserve a section named `Optional` for genuinely skippable depth (the convention gives that name meaning to AI readers); use descriptive names for everything else.
+- For a small set, offer the `llms-full.txt` companion per the reference.
 
 ### 3. Complete the Frontmatter
 

@@ -95,6 +95,17 @@ When the input is a heterogeneous pile rather than one expert's dump (tickets, a
   - Staleness: material that looks out of date.
 - **Hand off to the plan.** The inventory feeds `plan.md`: the clusters become candidate docs, the gaps become priorities.
 
+## Capture Knowledge Asynchronously
+
+The knowledge often lives with someone who is not in the session: the engineer who built it, the support lead who fields the tickets.
+Do not make the writer choose between waiting and guessing. Send the questions to the knowledge instead.
+
+- **Generate an intake packet**: a Markdown file of targeted questions the expert can answer in minutes, in any order, as messily as they like. It is the dig step, made portable.
+- **Pre-load it from the survey and the code**, so the questions are sharp, not generic: "The retry default is 3; when should someone change it, and to what?" beats "describe the retry behavior." Include what you already know so the expert corrects instead of dictating.
+- **Write it to `.docs-assist/intake/packets/<topic>.md`** and hand it to the writer to send over whatever channel they use. The packet states, at the top, that order and polish do not matter.
+- **Ingest the returned answers** as a pile slice: `doc-intake` reads them into the inventory, and drafting proceeds from there, conversationally or via the fan-out.
+- **Never block on a packet.** Draft what the material already supports and flag the rest; fold the answers in when they arrive.
+
 ## Persist the Synthesis, Not the Raw Pile
 
 Keep what is reusable; do not hoard raw material.
