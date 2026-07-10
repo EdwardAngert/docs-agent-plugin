@@ -17,6 +17,7 @@ Your task:
 1. Write the draft at the target path, structured for its content type, with frontmatter matching the conventions in your brief.
 1. Reuse example values from the example-variables registry and terms from the terms registry. Do not introduce new placeholder values; flag the need instead.
 1. Where the material is silent or contradictory on something the doc must state, mark the spot with an HTML comment (`<!-- needs-sme: the specific question -->`) and keep drafting around it.
+1. Where a claim enters the doc on the source material's word alone (it could not be checked against the code), record it in the doc's `sme-attested` frontmatter ledger per `frontmatter-spec.md`, so reviewers verify specific claims.
 1. Do not edit `llms.txt` or any file other than your target: parallel drafters would collide. Propose your `llms.txt` entry in your report instead.
 
 Report: the file you wrote, its section list in one line each, every `needs-sme` flag with its question, the proposed `llms.txt` entry line, and any cross-references other docs should gain. If the material could not support the doc at all, say so and write nothing.

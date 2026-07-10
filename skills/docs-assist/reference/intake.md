@@ -10,12 +10,13 @@ Load this whenever someone asks to document something new, whether it is one top
 
 ## The Intake Loop
 
-The same seven moves serve one doc or a whole set. Later moves lean on earlier ones, so do not skip ahead.
+The same eight moves serve one doc or a whole set. Later moves lean on earlier ones, so do not skip ahead.
 
 1. **Survey** what already exists, quietly.
 1. **Dump**: invite everything they know, unstructured.
 1. **Reflect** it back so they know they were heard.
 1. **Situate** it against the existing docs, the product, and how people use it.
+1. **Reconcile**: fact-check the dump against the code and the existing docs. This is the preflight gate: nothing is shaped from an unreconciled dump.
 1. **Dig** at the gaps the dump left.
 1. **Shape**: pick the content type, and notice when it is really several docs.
 1. **Draft**, review, finalize.
@@ -60,7 +61,30 @@ Place the knowledge in the product, using the survey. This is where a writer ear
 
 Say the connections out loud. "This overlaps with your Webhooks doc, it is a prerequisite for Scheduled Exports, and users usually hit it right after first setup." It orients the contributor and confirms your model.
 
-## 5. Dig: Ask the Sharp Questions Now
+## 5. Reconcile: Fact-Check the Dump
+
+Expert memory is honest and unreliable at the same time: defaults change, behavior shifts between releases, and secondhand knowledge arrives with the same confidence as firsthand.
+Reconcile before you dig, so your questions build on what is true.
+This is a preflight gate: do not shape or draft from a dump that has not been reconciled.
+
+Sort the dump's claims into three buckets, and treat each differently:
+
+- **Checkable against the code** (commands, flags, defaults, error text, behavior): check them. The scope is tiered: every claim the eventual doc will state gets hard verification (the draft flow deepens this later); the rest of the dump gets a scan for contradictions, not an exhaustive audit.
+- **Checkable against the existing docs**: flag where the dump contradicts something already published. One of them is wrong, and it matters which.
+- **Unverifiable** (intent, history, tribal knowledge, external systems): mark as SME-attested and move on. These are often the most valuable content. Never demand proof for a gotcha; record who attested it instead (see the ledger below).
+
+Deliver the reconciliation as a short read-back, folded into the dig when that flows better:
+
+> "Confirmed against the code: X and Y. One conflict: you said the retry default is 3, but `config.ts` sets 5. Which is right?"
+
+When the dump and the code disagree, **ask, never assume**. The contributor misremembering and the contributor having just found a bug look identical from here.
+If they say the code is wrong, offer to record it (a `gh issue` when the repo uses GitHub, a follow-up note otherwise), and write the doc to the intended behavior with the discrepancy flagged.
+
+Claims that survive into a doc on the expert's word alone go into the doc's `sme-attested` frontmatter ledger (see `frontmatter-spec.md`), so a future reviewer verifies specific claims instead of re-reviewing everything.
+
+This move guards every door, not only the conversational dump: `doc-intake` reports code conflicts in its inventory, so corpus piles and returned intake packets arrive pre-reconciled, and the consolidator resolves what they flag.
+
+## 6. Dig: Ask the Sharp Questions Now
 
 Only now, with the dump and the survey in hand, ask the targeted questions. They land because they are specific. Aim at the gaps, not the basics.
 
@@ -72,7 +96,7 @@ Only now, with the dump and the survey in hand, ask the targeted questions. They
 
 Ask two or three at a time, conversationally. Never run down the list like a checklist.
 
-## 6. Shape: One Doc, or Several?
+## 7. Shape: One Doc, or Several?
 
 Decide the structure using `content-types.md`, and check the scope honestly.
 

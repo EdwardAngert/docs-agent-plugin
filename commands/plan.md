@@ -126,7 +126,7 @@ Adjusting a plan is cheap. Rewriting docs is expensive.
 
 ### 8. Execute and Iterate
 
-Once the plan is approved, ship doc by doc, or fan the stage out in parallel. Each doc follows the `/draft` workflow (survey, dump, reflect, situate, dig, verify, shape, outline, draft, review, finalize).
+Once the plan is approved, ship doc by doc, or fan the stage out in parallel. Each doc follows the `/draft` workflow (survey, dump, reflect, situate, reconcile, dig, verify, shape, outline, draft, review, finalize).
 
 **Fan out the ship-now stage when the material already exists.** Split the stage honestly:
 

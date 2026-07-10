@@ -68,6 +68,7 @@ For each document, evaluate:
 #### Content Issues
 
 - Outdated information (check dates, version references)
+- Unverified claims: docs whose `sme-attested` frontmatter ledger is large or old. Surface the specific claims so a reviewer can verify and delete entries (the ledger exists to shrink; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`)
 - Incomplete instructions (missing steps)
 - Assumption gaps (undefined terms, missing prerequisites)
 - Duplicated content

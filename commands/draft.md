@@ -21,9 +21,9 @@ The full method is in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake
 
 ## Process
 
-### 1-5. Run the Intake Loop
+### 1-6. Run the Intake Loop
 
-Run the first five intake moves as `intake.md` defines them: survey quietly, ask for the dump, reflect it back, situate it, then dig at the gaps.
+Run the first six intake moves as `intake.md` defines them: survey quietly, ask for the dump, reflect it back, situate it, reconcile it against the code and existing docs (the preflight gate: nothing is shaped from an unreconciled dump), then dig at the gaps.
 
 Draft-specific notes for those moves:
 
@@ -32,7 +32,7 @@ Draft-specific notes for those moves:
 - **Dig**: this is also the natural moment to learn the contributor's context (writing for themselves, or setting standards others will follow) when it isn't already clear. Calibrate offers accordingly, per the skill's calibration guidance.
 - **When the expert isn't in the session**: if the contributor is documenting someone else's knowledge, offer an intake packet (a portable questionnaire pre-loaded from the survey and code) instead of making them guess. See the async section of `intake.md`. Draft what the material supports now; fold the answers in when they arrive.
 
-### 6. Verify Against the Code
+### 7. Verify Against the Code
 
 Confirm the details the draft will state, so it's accurate. This is targeted verification, not a full codebase map.
 
@@ -40,7 +40,7 @@ Confirm the details the draft will state, so it's accurate. This is targeted ver
 - Reconcile the dump with the code. Where the contributor's memory and the code disagree, surface it and ask rather than guessing.
 - Pull real values (defaults, limits, error strings) so the draft and its examples are correct.
 
-### 7. Shape: One Doc, or Several?
+### 8. Shape: One Doc, or Several?
 
 Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/content-types.md`, and check the scope honestly:
 
@@ -48,7 +48,7 @@ Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/co
 - If it's genuinely ambiguous, default to a doc (task-oriented).
 - Offer a starting template where one fits. Suggesting one is free and offline, so do it even if `.docs-assist/templates.yml` is absent; only fetch on the contributor's yes. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. A template is a head start, never a requirement.
 
-### 8. Propose the Outline
+### 9. Propose the Outline
 
 For anything beyond a short entry, show the outline before writing the full draft. Changing an outline is cheap; rewriting a draft is not.
 
@@ -56,7 +56,7 @@ For anything beyond a short entry, show the outline before writing the full draf
 - Confirm scope and order, and adjust before drafting.
 - Skip it for a very short doc (a single troubleshooting entry). Offer it rather than forcing it.
 
-### 9. Produce the Draft
+### 10. Produce the Draft
 
 Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md` automatically:
 
@@ -75,7 +75,7 @@ Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-a
 - Completeness: is anything missing?
 - Audience fit: would this make sense to the intended reader?
 
-### 10. Refine
+### 11. Refine
 
 Based on their feedback:
 
@@ -84,13 +84,14 @@ Based on their feedback:
 - If they want to add something, slot it into the right place in the structure
 - If the doc is getting long, suggest splitting it and explain why
 
-### 11. Finalize
+### 12. Finalize
 
 When the contributor is satisfied:
 
 - Write the file to the appropriate location (ask if unsure where it should live), with a filename that follows existing conventions.
 - Generate frontmatter following `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`. At minimum `title`, `description`, and `content-type`. Add `audience`, `keywords`, `prerequisites`, and `related` when you have the context, and after this conversation you almost certainly do. Match existing frontmatter conventions.
 - If you drafted on a template, set the optional `template` field to the catalog `id` and add the `attribution` line from `templates.yml`.
+- If any claims made it in on the expert's word alone (marked SME-attested during the reconcile), record them in the `sme-attested` frontmatter ledger so a future reviewer verifies specific claims, not the whole doc.
 - If the repo has an `llms.txt`, add an entry for the new doc.
 - Update related docs to cross-reference this new content (or make the edits and show the contributor what you changed).
 - In a git repo, when the work touched several files (the new doc plus cross-reference updates), offer to put the change set on a docs branch rather than leaving it on the default branch. Never commit to the default branch unless asked.

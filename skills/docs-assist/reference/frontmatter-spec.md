@@ -109,6 +109,21 @@ The catalog id of the documentation template this doc was seeded from, when one 
 Set it alongside the canonical `content-type` so the origin is traceable.
 See `templates.md`.
 
+**`sme-attested`**
+The verification ledger: claims that entered the doc on a subject matter expert's word alone, because they could not be checked against the code or existing docs during the intake reconcile.
+Each entry names the section the claim lives in, the claim itself in a short line, and optionally who attested it.
+
+```yaml
+sme-attested:
+  - section: "Recover From a Split Brain"
+    claim: "Rejoining nodes replay from the last checkpoint, not from zero"
+    source: "j.doe, intake 2026-07-10"
+```
+
+The ledger exists to shrink: a reviewer (human or AI) verifies a claim and deletes its entry, and when the ledger empties, remove the field and bump `last-verified`.
+Audits surface docs whose ledgers are large or old.
+This gives reviewers specific claims to check instead of a doc-wide request for review.
+
 **`sdk`**
 The SDK or tool this doc relates to.
 Use when a doc is specific to one SDK in a multi-SDK project.
