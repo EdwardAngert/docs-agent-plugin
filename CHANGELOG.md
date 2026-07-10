@@ -3,6 +3,45 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
+## 0.8.0 - 2026-07-10
+
+One plugin, every team size.
+A full product review (`docs/reviews/0.8.0-findings.md`) found that team framing had leaked into paths that should serve a solo maintainer equally, that the core intake loop was duplicated across three files, and that the plugin wrote docs straight to whatever branch the user was on while teaching branch-based review as the docs-as-code workflow.
+This release fixes all three: the plugin now calibrates to the contributor's context inside the conversation instead of assuming a team, a cold command invocation defaults to a solo writer held to full-documentation-team rigor, and docs work is offered on a branch by default.
+The review's remaining recommendations are preserved in the findings report.
+
+<details>
+<summary>All changes in 0.8.0</summary>
+
+### Added
+
+- A "Calibrate to the Contributor's Context" section in `SKILL.md`: the plugin learns whether it is serving one maintainer or a team during existing discovery moments (never via a flag or mode), and calibrates what it offers.
+  When a command runs cold, with no `.docs-assist/` config and no prior conversation, it defaults to acting as a solo writer held to the rigor of a full documentation team, using the docs set's own internal consistency as the standard.
+- A "Deliver on a Branch" convention in `SKILL.md`, applied in `/docs-assist:draft` and `/docs-assist:update`: in a git repository, multi-file docs work is offered on a docs branch, and the plugin never commits to the default branch unless asked.
+- A root `NOTICE` file, so attribution to the author travels with every copy and derivative under Apache 2.0 section 4(d).
+- The 0.8.0 product review findings, committed at `docs/reviews/0.8.0-findings.md`, including the prioritized recommendations that did not ship in this release (a terminology registry, a release-notes workflow, audit-file consolidation).
+
+### Changed
+
+- `/docs-assist:draft` no longer restates the intake loop.
+  It defers the shared moves (survey, dump, reflect, situate, dig) to `reference/intake.md`, the single source of truth, and keeps only what is specific to drafting one doc.
+- `/docs-assist:audit` fan-outs now pass the resolved project conventions into every `doc-auditor` subagent brief, and the agent reads `.docs-assist/config.yml` and `style.md` when present, so no slice of a parallel audit flags style the project explicitly allows.
+- `/docs-assist:init` and the README now present committed config as valuable at every team size: shared conventions for a team, a consistency-holding second reader for a solo maintainer.
+- The shipped markdownlint config allows the `details` and `summary` HTML elements, so long changelogs and reference sections can collapse detail behind a summary.
+  This changelog entry is the first use.
+- The changelog format itself: each release now leads with a plain-language summary of what changed and why, with the itemized changes collapsed below it.
+
+### Fixed
+
+- `reference/frontmatter-spec.md` referenced `/draft` step numbers that the 0.7.0 rebuild had renumbered (finalize was "step 7", now step 11).
+  It now references steps by name, which survives renumbering.
+- `reference/documentation-patterns.md` duplicated the example-safety and consistency rules that `reference/code-examples.md` owns.
+  It now points at the canonical file.
+- `scripts/validate.mjs` only checked frontmatter on files directly in `docs/`, so docs in subdirectories escaped validation.
+  The check now recurses.
+
+</details>
+
 ## 0.7.0 - 2026-07-01
 
 ### Added
