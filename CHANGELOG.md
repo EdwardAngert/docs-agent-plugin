@@ -3,6 +3,41 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
+## 0.9.5 - 2026-07-10
+
+One person now operates like a docs team.
+Drafting was the last workflow that scaled linearly: a fifteen-doc plan meant fifteen sequential conversations, while audits and updates already ran in parallel.
+This release closes that gap and the ones around it.
+Approved plan stages now fan out across a new `doc-drafter` subagent, turning the writer into a reviewer of a draft queue.
+Experts who are not in the session get intake packets: portable questionnaires pre-loaded from the code, whose answers flow back into drafting.
+Feedback now lands where it lives instead of dying with the conversation: change-scoped results go to a sticky pull-request comment, repo-scoped reports to dated files that the next run compares against.
+A new `/docs-assist:setup-site` turns the metadata the plugin already maintains into site navigation.
+And because surfacing docs for AI readers is core functionality, the llms.txt rules are now single-sourced in their own reference, with every workflow holding up a named part of the maintenance contract.
+The staged plan behind this release is committed at `docs/plan.md`.
+
+<details>
+<summary>All changes in 0.9.5</summary>
+
+### Added
+
+- A `doc-drafter` subagent and a fan-out path in `/docs-assist:plan`: docs whose material already exists (intake inventory, code, existing docs) draft in parallel, each flagging what needs subject matter expert verification (`needs-sme` markers) instead of inventing it.
+  Docs needing fresh human knowledge stay conversational.
+  Subagents never edit `llms.txt`; they propose entries and the main conversation writes them, so parallel drafts cannot collide on the map.
+- Intake packets, in the intake reference and offered from `/docs-assist:draft` and `/docs-assist:plan`: a portable questionnaire pre-loaded with what the survey and code already reveal, written to `.docs-assist/intake/packets/`, sent to the expert over any channel, and ingested back through `doc-intake`.
+- A feedback-delivery principle in `SKILL.md`, applied across the workflows: change-scoped results offer a sticky, upserted PR comment (summary first, detail collapsed); repo-scoped results offer a dated report file under `.docs-assist/reports/`; the conversation is for triage, and every workflow ends with the persist offer.
+  The CI docs-impact check now posts its report as a sticky PR comment (one comment, updated in place on every push), `/docs-assist:health` compares against the previous saved scorecard and reports the trend, and `/docs-assist:update` offers a summary comment when its target was a PR.
+- `/docs-assist:setup-site [docusaurus | mkdocs]`: generates site navigation from the docs' own metadata (`llms.txt` reader-priority order becomes sidebar order, frontmatter titles become labels), scaffolds a minimal generator setup when none exists, and never silently overwrites curated navigation.
+  Deliberately not a site builder.
+- `reference/llms-txt.md`: the llms.txt format (per the llms.txt convention, including the reserved `Optional` section), reader-priority ordering, description rules, the frontmatter mapping note, the `llms-full.txt` companion, and the maintenance contract naming which workflow holds up which part.
+  `/docs-assist:agent-ready`, the audit, and the frontmatter spec now point at it instead of describing the format piecemeal.
+- The staged 1.0 product plan, committed at `docs/plan.md` per the plugin's own persist-the-plan convention, with shipped items marked and the deferred list (CI auto-update, docs-impact noise knobs, more generators) recorded.
+
+### Changed
+
+- Both manifests to 0.9.5. The 1.0.0 bump is reserved for the maintainer.
+
+</details>
+
 ## 0.9.0 - 2026-07-10
 
 This release makes the plugin guide, watch, and speak agent.
