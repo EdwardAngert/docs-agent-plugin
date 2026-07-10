@@ -232,6 +232,21 @@ docs-assist/
 To customize without committing project config, edit `skills/docs-assist/reference/tone-and-voice.md` and `SKILL.md` directly.
 For team-wide, update-safe customization, prefer `/docs-assist:init`.
 
+## What Would Improve It Most
+
+An honest self-assessment, kept in the open on purpose.
+
+The plugin encodes a real documentation methodology, and CI verifies its own structure on every change.
+But structure is not behavior: most of what this plugin does is instructions to a model, instructions can be followed imperfectly under context pressure, and only parts of it have been exercised as an installed plugin.
+The claims above should be read with that asterisk, and the list below is the roadmap for removing it, in priority order:
+
+1. **An eval suite.** Claude Code ships a plugin eval harness (`claude plugin eval`), and the load-bearing behaviors deserve cases: does a cold audit catch planted example drift, does the drafter flag gaps instead of inventing facts, does a healthy docs set get told it is healthy?
+1. **Live runs on messy repos.** Fan-out drafting, intake packets, template fetching, and the CI comment flow have not yet run in anger, and this repo is too well-groomed to be a fair test.
+1. **Real users.** A few solo maintainers running `/docs-assist:health`, a plan, and a fan-out, then reporting where it fell down, would outweigh any amount of self-assessment.
+1. **The deferred backlog.** Docs-impact noise knobs, more site generators, and CI auto-update, tracked in [the plan](docs/plan.md).
+
+If you try it and something falls short, [an issue](https://github.com/EdwardAngert/docs-agent-plugin/issues) with what you expected and what happened is the most valuable contribution this project can receive.
+
 ## Background
 
 This plugin codifies methodologies from 10 years of technical writing experience: building doc practices from scratch for developer tools, managing documentation teams for enterprise platforms, API and SDK documentation, and docs-as-code workflows.
