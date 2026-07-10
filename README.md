@@ -123,6 +123,8 @@ For every command's argument and an example, see the [command reference](docs/co
   Produces a prioritized report.
 - `/docs-assist:update [ref, PR, or path]`: find and update the docs affected by a code change.
   Reads the diff, locates the docs that reference what changed, and updates them for review.
+- `/docs-assist:release-notes [range, tag, or version]`: turn a release's worth of changes into reader-facing release notes.
+  Reads the commits and PRs, asks you for the why, and writes notes that lead with what readers must know.
 
 ### Configure
 
@@ -139,6 +141,7 @@ Commit a `.docs-assist/` directory and the whole team writes to the same convent
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
 - `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, so examples stay consistent across docs. The plugin maintains it.
+- `.docs-assist/terms.txt`: canonical product terms and the variants to avoid, so the same concept never appears under different names. The plugin maintains it, and audits flag drift against it.
 
 Run `/docs-assist:init` to generate them, pre-filled from what your docs already do.
 Because this config is committed to your repo, it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
@@ -179,7 +182,7 @@ Large changes fan out across the `doc-updater` subagent so many docs update in p
 
 ```text
 docs-assist/
-├── commands/                  # draft, plan, audit, make-examples, update, template, init, setup-lint, setup-hooks
+├── commands/                  # draft, plan, audit, make-examples, update, release-notes, template, init, setup-lint, setup-hooks
 ├── agents/                    # doc-auditor, doc-updater, doc-intake, doc-recon subagents
 ├── skills/docs-assist/
 │   ├── SKILL.md               # core instructions and role definition
@@ -188,6 +191,7 @@ docs-assist/
 │       ├── content-types.md       # canonical content types and frontmatter values
 │       ├── tone-and-voice.md      # formatting, heading case, markdown style
 │       ├── code-examples.md       # safe, consistent code samples and the variables registry
+│       ├── terminology.md         # consistent product terms and the terms registry
 │       ├── frontmatter-spec.md    # per-doc metadata schema
 │       ├── config-resolution.md   # how project-local config overrides defaults
 │       ├── templates.md           # suggest and apply Good Docs templates

@@ -19,6 +19,7 @@ This skill ships detailed reference material. Load the file you need when you ne
 - `reference/content-types.md`: the canonical content types and their frontmatter values. The single source of truth.
 - `reference/tone-and-voice.md`: formatting, heading case, markdown, and voice rules.
 - `reference/code-examples.md`: write safe code samples that stay consistent across docs, using the `.docs-assist/example-variables.txt` registry.
+- `reference/terminology.md`: keep product terms consistent across docs, using the `.docs-assist/terms.txt` registry.
 - `reference/config-resolution.md`: how to read a project's committed configuration and apply it over the defaults.
 - `reference/frontmatter-spec.md`: per-doc metadata schema and how the plugin uses it.
 - `reference/documentation-patterns.md`: patterns, antipatterns, examples, SEO, accessibility, docs-as-code.
@@ -36,6 +37,7 @@ Before you survey or write, check whether the project has committed configuratio
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/templates.yml`: optional settings for documentation templates. See `reference/templates.md`.
 - `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, maintained by the plugin. See `reference/code-examples.md`.
+- `.docs-assist/terms.txt`: canonical product terms and the variants to avoid, maintained by the plugin. See `reference/terminology.md`.
 
 When present, these override the plugin defaults. Apply them to everything you write and review.
 When absent, run on the defaults plus whatever conventions the existing docs already follow, and offer `/docs-assist:init` when committed config would help: a team adopting shared standards, or a solo maintainer who wants the plugin to hold their docs to a consistent line.
@@ -118,7 +120,7 @@ When it is ambiguous, default to a doc (task-oriented) and let the reviewer rest
 
 These are your responsibility, not the contributor's. The full rules live in `reference/tone-and-voice.md`. The essentials:
 
-- Direct, clear, instructional tone. Active voice. Match the contributor's terminology rather than replacing it with generic words.
+- Direct, clear, instructional tone. Active voice. Match the contributor's terminology rather than replacing it with generic words, and keep product terms consistent with the `.docs-assist/terms.txt` registry when one exists (`reference/terminology.md`).
 - AP title case headings that are action-oriented (imperative verbs, not gerunds). One H1 per file. No emojis in headings.
 - `1.` for ordered lists, `-` for unordered. A language tag on every code block. Copy-paste safe examples with placeholder values.
 - No em dashes. Use a comma, a colon, parentheses, or rewrite the sentence.
