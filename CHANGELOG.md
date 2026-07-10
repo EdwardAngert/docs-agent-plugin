@@ -5,16 +5,20 @@ The format is based on Keep a Changelog, and the project follows Semantic Versio
 
 ## 0.9.0 - 2026-07-10
 
-The reviewer gets a vocabulary, and the release gets a writer.
-0.8.0 established that a cold invocation acts as a solo writer held to full-documentation-team rigor; 0.9.0 ships the two highest-ranked recommendations from that release's review.
-A terminology registry (`.docs-assist/terms.txt`) gives that reviewer a canonical vocabulary to check prose against, the same fix example-variables applied to code samples, because the same concept under different names is the drift a solo writer can least afford and least often catches.
-And a new `/docs-assist:release-notes` command closes the docs-as-code loop: the plugin that keeps docs in sync with code changes can now write the reader-facing notes for the release itself.
+This release gives the plugin a front door, a vocabulary, and a release writer.
+The front door is `/docs-assist:health`: install the plugin, run one command, and get a thirty-second scorecard of your docs (coverage, freshness, consistency, findability) plus the single highest-leverage fix and an offer to make it now.
+Before this, the plugin's value was invisible until someone thought to ask for documentation help; now it can prove itself on your repo in the first five minutes.
+The vocabulary is a terminology registry (`.docs-assist/terms.txt`) that gives the 0.8.0 solo-with-team-rigor reviewer a canonical term list to check prose against, the same fix example-variables applied to code samples.
+And `/docs-assist:release-notes` closes the docs-as-code loop: the plugin that keeps docs in sync with code changes can now write the reader-facing notes for the release itself.
 
 <details>
 <summary>All changes in 0.9.0</summary>
 
 ### Added
 
+- `/docs-assist:health [docs directory]`: the orientation command and recommended first run.
+  It samples the repo (fanning out `doc-recon` on large ones), scores coverage, freshness, consistency, and findability with evidence for each rating, names the one fix to start with, and offers to make it in the same session.
+  It reports honestly: a healthy set is told it is healthy, and a repo with no docs gets a starting point, not a failing grade.
 - A terminology registry, in a new `reference/terminology.md` and `.docs-assist/terms.txt`: canonical product terms and the variants to avoid, in the same human-editable format as the example-variables registry.
   The plugin writes with the canonical terms, `/docs-assist:audit` and the `doc-auditor` subagent flag prose that drifts from them (and the same concept under different names even without a registry), `/docs-assist:init` offers to seed the file from the terms the docs already use, and the term-rename edge in `reference/impact-analysis.md` now includes it.
   This repo dogfoods one at `.docs-assist/terms.txt`.

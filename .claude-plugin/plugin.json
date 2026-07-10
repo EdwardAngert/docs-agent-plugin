@@ -10,6 +10,7 @@
     "./skills/docs-assist"
   ],
   "commands": [
+    "./commands/health.md",
     "./commands/draft.md",
     "./commands/plan.md",
     "./commands/audit.md",

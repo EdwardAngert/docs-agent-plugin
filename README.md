@@ -53,6 +53,14 @@ You review for accuracy. The formatting is already handled.
 
 1. Restart Claude Code.
 
+1. See where your docs stand:
+
+   ```text
+   /docs-assist:health
+   ```
+
+   You get a thirty-second scorecard (coverage, freshness, consistency, findability), the single highest-leverage fix, and an offer to make it now.
+
 ## Documentation
 
 - [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): for docs leads and devrel. Why to install, what changes for contributors, and how to customize.
@@ -119,6 +127,8 @@ For every command's argument and an example, see the [command reference](docs/co
 
 ### Review and Maintain
 
+- `/docs-assist:health [docs dir]`: a fast docs health check, and the best first command to run.
+  Scores coverage, freshness, consistency, and findability, names the highest-leverage fix, and offers to make it.
 - `/docs-assist:audit [path]`: audit a directory or file for quality, structure, findability, and gaps.
   Produces a prioritized report.
 - `/docs-assist:update [ref, PR, or path]`: find and update the docs affected by a code change.
@@ -182,7 +192,7 @@ Large changes fan out across the `doc-updater` subagent so many docs update in p
 
 ```text
 docs-assist/
-├── commands/                  # draft, plan, audit, make-examples, update, release-notes, template, init, setup-lint, setup-hooks
+├── commands/                  # health, draft, plan, audit, make-examples, update, release-notes, template, init, setup-lint, setup-hooks
 ├── agents/                    # doc-auditor, doc-updater, doc-intake, doc-recon subagents
 ├── skills/docs-assist/
 │   ├── SKILL.md               # core instructions and role definition

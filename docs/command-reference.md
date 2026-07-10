@@ -1,6 +1,6 @@
 ---
 title: "Docs Assist Command Reference"
-description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers draft, plan, template, make-examples, audit, update, release-notes, init, setup-lint, and setup-hooks."
+description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, plan, template, make-examples, audit, update, release-notes, init, setup-lint, and setup-hooks."
 content-type: reference
 audience: users
 keywords:
@@ -26,6 +26,7 @@ Every command also works with no argument: it asks for what it needs.
 | `/docs-assist:plan`          | Plan a documentation set, built to ship first | `[repo path or description]`         |
 | `/docs-assist:template`      | Start a doc from a proven template            | `[problem, topic, or template name]` |
 | `/docs-assist:make-examples` | Add or improve code examples in a doc         | `[doc-path]`                         |
+| `/docs-assist:health`        | Fast docs health scorecard and first fix      | `[docs directory]`                   |
 | `/docs-assist:audit`         | Audit docs for quality, gaps, and structure   | `[path]`                             |
 | `/docs-assist:update`        | Update the docs affected by a code change     | `[git ref, PR number, or path]`      |
 | `/docs-assist:release-notes` | Write reader-facing notes for a release       | `[range, tag, or version]`           |
@@ -84,6 +85,18 @@ Use it when a doc is missing examples or its examples have drifted.
 ```
 
 ## Review and Maintain
+
+### /docs-assist:health
+
+`/docs-assist:health [docs directory]`
+
+Check documentation health in one command: a thirty-second scorecard across coverage, freshness, consistency, and findability, the single highest-leverage fix, and an offer to make that fix now.
+The best first command after installing the plugin, and the periodic pulse check afterward.
+Use `/docs-assist:audit` when you want the full findings list instead of a scorecard.
+
+```text
+/docs-assist:health
+```
 
 ### /docs-assist:audit
 
