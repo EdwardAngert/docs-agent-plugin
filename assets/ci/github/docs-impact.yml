@@ -1,0 +1,35 @@
+# Docs Assist docs-impact check.
+#
+# Installed by /docs-assist:setup-hooks (ci). Runs the deterministic
+# docs-impact detector on every pull request: it classifies the diff against
+# the change types that ripple into documentation (moved docs, changed
+# headings, changed code terms the docs mention, large silent source changes)
+# and writes the result to the job summary.
+#
+# Cheap by design: no agent, no network, no tokens. It tells reviewers when
+# to run /docs-assist:update; it does not run it. Set DOCS_IMPACT_STRICT: "1"
+# to fail the check instead of only reporting.
+
+name: Docs impact
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  docs-impact:
+    name: Detect documentation impact
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Detect docs impact
+        run: node scripts/docs-impact.mjs "origin/${{ github.base_ref }}"
+        env:
+          DOCS_IMPACT_STRICT: "0"
