@@ -24,9 +24,10 @@
 - [/docs-assist:make-examples](commands/make-examples.md): Add or improve code examples in existing docs.
 - [/docs-assist:init](commands/init.md): Scaffold project-local configuration so the plugin and the linters share one source of truth.
 - [/docs-assist:setup-lint](commands/setup-lint.md): Scaffold optional documentation linting (Vale, markdownlint, MegaLinter, cspell, link check), generated from the project config and respecting any existing linter.
-- [/docs-assist:setup-hooks](commands/setup-hooks.md): Install opt-in documentation hooks (git pre-commit lint, in-session doc lint). Default off.
+- [/docs-assist:setup-hooks](commands/setup-hooks.md): Install opt-in documentation hooks (git pre-commit lint, in-session doc lint, CI docs-impact check). Default off.
 - [/docs-assist:update](commands/update.md): Find and update the docs affected by a code change (a diff, a PR, or changed files).
 - [/docs-assist:release-notes](commands/release-notes.md): Turn a release's worth of changes into reader-facing release notes, leading with breaking changes and upgrade steps.
+- [/docs-assist:agent-ready](commands/agent-ready.md): Make the docs legible to AI tools: create or repair llms.txt, complete frontmatter, record conventions.
 - [/docs-assist:template](commands/template.md): Suggest and scaffold a documentation template (The Good Docs Project) for a healthy start. Opt-in.
 
 ## Agents

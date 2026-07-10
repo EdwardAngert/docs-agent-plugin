@@ -135,12 +135,14 @@ For every command's argument and an example, see the [command reference](docs/co
   Reads the diff, locates the docs that reference what changed, and updates them for review.
 - `/docs-assist:release-notes [range, tag, or version]`: turn a release's worth of changes into reader-facing release notes.
   Reads the commits and PRs, asks you for the why, and writes notes that lead with what readers must know.
+- `/docs-assist:agent-ready [docs dir]`: make the docs legible to AI tools.
+  Creates or repairs `llms.txt`, completes per-doc frontmatter, and records the repo's conventions where the next tool will find them.
 
 ### Configure
 
 - `/docs-assist:init [docs dir]`: scaffold project-local configuration, pre-filled from the repo's existing conventions.
 - `/docs-assist:setup-lint [tool]`: scaffold optional documentation linting, generated from your config.
-- `/docs-assist:setup-hooks [hook]`: install opt-in git and in-session hooks.
+- `/docs-assist:setup-hooks [hook]`: install opt-in git, in-session, and CI hooks, including the pull-request docs-impact check.
   Default off.
 
 ## Configure for Your Team
@@ -188,11 +190,21 @@ When code changes, run `/docs-assist:update` with a git ref, a PR number, or a p
 The plugin reads the diff, summarizes what changed, finds the docs that reference it, and updates them for your review.
 Large changes fan out across the `doc-updater` subagent so many docs update in parallel.
 
+You can also put the watching on autopilot.
+`/docs-assist:setup-hooks ci` installs a docs-impact check that runs on every pull request: a deterministic, token-free detector that flags diffs riding the change types that break docs (moved files, changed headings, changed code terms the docs mention, large silent source changes) and tells reviewers exactly which `/docs-assist:update` range to run.
+Cheap detection in CI, expensive updating only when it is warranted.
+
+## Make Your Docs Agent-Ready
+
+Your docs' readers now include AI tools: coding agents, docs assistants, and search systems that read structure before prose.
+Run `/docs-assist:agent-ready` to retrofit the docs set for them: it creates or repairs `llms.txt` (the map an AI tool reads first), completes per-doc frontmatter using your repo's own field names, and records your conventions where the next tool will find them.
+The plugin then maintains all of it as part of its normal drafting and updating work.
+
 ## What's Inside
 
 ```text
 docs-assist/
-├── commands/                  # health, draft, plan, audit, make-examples, update, release-notes, template, init, setup-lint, setup-hooks
+├── commands/                  # health, draft, plan, audit, make-examples, update, release-notes, agent-ready, template, init, setup-lint, setup-hooks
 ├── agents/                    # doc-auditor, doc-updater, doc-intake, doc-recon subagents
 ├── skills/docs-assist/
 │   ├── SKILL.md               # core instructions and role definition

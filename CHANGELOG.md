@@ -5,11 +5,11 @@ The format is based on Keep a Changelog, and the project follows Semantic Versio
 
 ## 0.9.0 - 2026-07-10
 
-This release gives the plugin a front door, a vocabulary, and a release writer.
-The front door is `/docs-assist:health`: install the plugin, run one command, and get a thirty-second scorecard of your docs (coverage, freshness, consistency, findability) plus the single highest-leverage fix and an offer to make it now.
-Before this, the plugin's value was invisible until someone thought to ask for documentation help; now it can prove itself on your repo in the first five minutes.
-The vocabulary is a terminology registry (`.docs-assist/terms.txt`) that gives the 0.8.0 solo-with-team-rigor reviewer a canonical term list to check prose against, the same fix example-variables applied to code samples.
-And `/docs-assist:release-notes` closes the docs-as-code loop: the plugin that keeps docs in sync with code changes can now write the reader-facing notes for the release itself.
+This release makes the plugin guide, watch, and speak agent.
+Guide: `/docs-assist:health` is the new front door (install, run one command, get a thirty-second scorecard and the single highest-leverage fix), and a new skill principle, guide-never-gate, means a contributor never needs to know a command name: vague requests route through the health check, and every workflow ends by offering the next step.
+Watch: an opt-in CI docs-impact check runs a deterministic, token-free detector on every pull request and flags the diffs that ripple into docs (moved files, changed headings, changed code terms the docs mention, large silent source changes), so `/docs-assist:update` runs when it is warranted instead of when someone remembers.
+Speak agent: `/docs-assist:agent-ready` retrofits a docs set for AI readers with an `llms.txt` map, complete frontmatter, and recorded conventions.
+Rounding out the release: a terminology registry (`.docs-assist/terms.txt`) gives the 0.8.0 solo-with-team-rigor reviewer a canonical vocabulary to check prose against, and `/docs-assist:release-notes` writes the reader-facing notes for a release from its diff.
 
 <details>
 <summary>All changes in 0.9.0</summary>
@@ -19,6 +19,12 @@ And `/docs-assist:release-notes` closes the docs-as-code loop: the plugin that k
 - `/docs-assist:health [docs directory]`: the orientation command and recommended first run.
   It samples the repo (fanning out `doc-recon` on large ones), scores coverage, freshness, consistency, and findability with evidence for each rating, names the one fix to start with, and offers to make it in the same session.
   It reports honestly: a healthy set is told it is healthy, and a repo with no docs gets a starting point, not a failing grade.
+- `/docs-assist:agent-ready [docs directory]`: make the docs legible to AI tools.
+  Creates or repairs `llms.txt` (reconciling entries against the real docs), completes per-doc frontmatter using the repo's own field names without overwriting anything, and records nonstandard conventions where the next tool will find them.
+- A CI docs-impact check, installable via `/docs-assist:setup-hooks ci`: a dependency-free detector (`assets/ci/docs-impact.mjs` plus a GitHub Actions workflow) that classifies every pull request's diff against the impact-analysis change types and reports which docs are implicated, with the exact `/docs-assist:update` range to run.
+  Deterministic and token-free by design: cheap detection on every PR, expensive updating only when the detector trips.
+  Tunable via `DOCS_IMPACT_LINE_THRESHOLD`, `DOCS_IMPACT_STRICT`, and `DOCS_DIR`.
+- A guide-never-gate principle in `SKILL.md`: vague requests ("our docs are a mess") route through the health check instead of failing to parse, every workflow ends by naming and offering the next step, and a lost contributor gets the plugin's doors in plain words, never command names.
 - A terminology registry, in a new `reference/terminology.md` and `.docs-assist/terms.txt`: canonical product terms and the variants to avoid, in the same human-editable format as the example-variables registry.
   The plugin writes with the canonical terms, `/docs-assist:audit` and the `doc-auditor` subagent flag prose that drifts from them (and the same concept under different names even without a registry), `/docs-assist:init` offers to seed the file from the terms the docs already use, and the term-rename edge in `reference/impact-analysis.md` now includes it.
   This repo dogfoods one at `.docs-assist/terms.txt`.

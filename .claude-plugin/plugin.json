@@ -20,6 +20,7 @@
     "./commands/setup-hooks.md",
     "./commands/update.md",
     "./commands/release-notes.md",
+    "./commands/agent-ready.md",
     "./commands/template.md"
   ],
   "agents": [

@@ -1,6 +1,6 @@
 ---
 title: "Docs Assist Command Reference"
-description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, plan, template, make-examples, audit, update, release-notes, init, setup-lint, and setup-hooks."
+description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, plan, template, make-examples, audit, update, release-notes, agent-ready, init, setup-lint, and setup-hooks."
 content-type: reference
 audience: users
 keywords:
@@ -30,6 +30,7 @@ Every command also works with no argument: it asks for what it needs.
 | `/docs-assist:audit`         | Audit docs for quality, gaps, and structure   | `[path]`                             |
 | `/docs-assist:update`        | Update the docs affected by a code change     | `[git ref, PR number, or path]`      |
 | `/docs-assist:release-notes` | Write reader-facing notes for a release       | `[range, tag, or version]`           |
+| `/docs-assist:agent-ready`   | Make the docs legible to AI tools             | `[docs directory]`                   |
 | `/docs-assist:init`          | Scaffold project-local configuration          | `[docs directory]`                   |
 | `/docs-assist:setup-lint`    | Scaffold optional documentation linting       | `[tool]`                             |
 | `/docs-assist:setup-hooks`   | Install opt-in git and in-session hooks       | `[hook]`                             |
@@ -134,6 +135,18 @@ Use it when cutting a release, so the notes describe outcomes readers care about
 /docs-assist:release-notes v0.8.0..HEAD
 ```
 
+### /docs-assist:agent-ready
+
+`/docs-assist:agent-ready [docs directory]`
+
+Make the docs legible to AI tools.
+It creates or repairs `llms.txt`, completes per-doc frontmatter using the repo's own field names (never overwriting what exists), and records nonstandard conventions where the next tool will find them.
+Use it once to retrofit a docs set, and after large changes; day-to-day maintenance happens through the normal drafting and update workflows.
+
+```text
+/docs-assist:agent-ready docs
+```
+
 ## Configure Your Project
 
 ### /docs-assist:init
@@ -165,8 +178,8 @@ The argument names a tool: `vale`, `markdownlint`, `megalinter`, or `all`.
 `/docs-assist:setup-hooks [hook]`
 
 Install opt-in documentation hooks. Default off: nothing is installed without your choice.
-It offers a git pre-commit doc linter and an in-session lint hook that runs after Claude edits a Markdown file.
-The argument names a hook: `pre-commit`, `claude-code`, or `all`.
+It offers a git pre-commit doc linter, an in-session lint hook that runs after Claude edits a Markdown file, and a CI docs-impact check that flags pull requests whose changes ripple into the docs.
+The argument names a hook: `pre-commit`, `claude-code`, `ci`, or `all`.
 
 ```text
 /docs-assist:setup-hooks pre-commit
