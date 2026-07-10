@@ -37,29 +37,9 @@ This file covers the patterns, antipatterns, examples, and practices that apply 
 
 ## Examples and Code Blocks
 
-### Example Consistency
-
-- Use the same examples throughout documentation so users can follow any doc in any order
-- Don't make users match up disparate examples across different pages
-- Use designated documentation IP ranges where appropriate (e.g., 192.0.2.0/24, 198.51.100.0/24, 203.0.113.0/24)
-- Warn during audits if examples are inconsistent: this creates maintenance burden
-
-### Code Block Safety
-
-- All examples must be copy-paste ready
-- Assume users will copy without reading; make it safe
-- Never use dangerous commands without safeguards:
-  - Bad: `rm -rf *`
-  - Better: `rm -rfi *` (interactive flag)
-  - Best: Use a clearly fake path that would fail
-- If demonstrating a destructive operation, make the example fail safely
-
-### Code Block Formatting
-
-- Combine related shell commands: `sudo apt update && sudo apt upgrade`
-- Don't use a single fenced code block for multiple commands separated by line breaks
-- Exception: Commands continued with `\` can be in one block
-- Each distinct command should be in its own block unless chained with `&&` or `||`
+The full rules for safe, consistent code examples are single-sourced in `code-examples.md`: reuse before you invent, the `.docs-assist/example-variables.txt` registry, copy-paste safety, and formatting.
+One pattern worth restating here because it spans docs rather than living in any one of them: use the same example values throughout the documentation set, so users can follow any doc in any order without translating between disparate examples.
+Inconsistent examples are a maintenance burden and an audit finding.
 
 ## SEO and Findability
 

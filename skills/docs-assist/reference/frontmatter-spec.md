@@ -121,17 +121,17 @@ Helps AI tools and search filter by language.
 
 ### Write Docs with `/draft`
 
-In step 7 (Finalize), the plugin generates frontmatter for the new doc:
+In the finalize step, the plugin generates frontmatter for the new doc:
 
 - `title` and `description` come from the content
-- `content-type` was determined in step 4
-- `audience` comes from the intake conversation (step 2)
+- `content-type` was determined in the shape step
+- `audience` comes from the intake conversation (the dump and the dig)
 - `keywords` are extracted from the doc's content, the terms the plugin identifies as significant
-- `prerequisites` and `related` come from the survey step (step 1): the plugin already knows what other docs exist
+- `prerequisites` and `related` come from the survey step: the plugin already knows what other docs exist
 
 ### Survey Existing Docs
 
-In step 1 of any workflow, the plugin scans existing docs.
+During the survey step of any workflow, the plugin scans existing docs.
 If docs have frontmatter, the plugin reads it instead of reading full doc bodies.
 This is faster, uses fewer tokens, and gives the plugin a structured understanding of the docs landscape.
 
@@ -171,14 +171,14 @@ This survey produces a mental model of the repo's frontmatter conventions that t
 ### Rules for Conflict Resolution
 
 1. **Never overwrite existing fields.** If a doc already has `title`, `description`, or `tags`, they stay as they are. The contributor or SSG config put them there for a reason.
-2. **Match existing field names.** If the repo uses `tags`, the plugin uses `tags`, not `keywords`. If it uses `type`, the plugin uses `type`, not `content-type`. The repo's convention wins.
-3. **Preserve SSG-required fields.** Fields like the following are there because the build system needs them. Never remove or reorder them.
+1. **Match existing field names.** If the repo uses `tags`, the plugin uses `tags`, not `keywords`. If it uses `type`, the plugin uses `type`, not `content-type`. The repo's convention wins.
+1. **Preserve SSG-required fields.** Fields like the following are there because the build system needs them. Never remove or reorder them.
    - Docusaurus: `sidebar_position`, `sidebar_label`, `slug`
    - Hugo: `weight`, `layout`, `draft`
    - Jekyll: `layout`, `permalink`, `published`, `categories`
    - Astro: `draft`, `pubDate`, `heroImage`
-4. **Add missing fields alongside existing ones.** If a doc has `title` and `description` but no content type or keywords equivalent, the plugin adds those using the repo's naming convention (or its own defaults if no convention exists).
-5. **Don't duplicate semantics.** If the repo already has `tags` and the plugin would add `keywords`, it uses `tags`. One field per concept.
+1. **Add missing fields alongside existing ones.** If a doc has `title` and `description` but no content type or keywords equivalent, the plugin adds those using the repo's naming convention (or its own defaults if no convention exists).
+1. **Don't duplicate semantics.** If the repo already has `tags` and the plugin would add `keywords`, it uses `tags`. One field per concept.
 
 ### Document the Mapping
 

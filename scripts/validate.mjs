@@ -61,13 +61,22 @@ for (const s of plugin.skills || []) {
   check(hasKey(fm, 'name') && hasKey(fm, 'description'), `SKILL.md missing name/description frontmatter: ${s}`);
 }
 
-// 4. docs/ frontmatter.
+// 4. docs/ frontmatter, including subdirectories.
+function mdFilesUnder(dir) {
+  const out = [];
+  for (const entry of readdirSync(rel(dir), { withFileTypes: true })) {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...mdFilesUnder(path));
+    else if (entry.name.endsWith('.md')) out.push(path);
+  }
+  return out;
+}
 if (existsSync(rel('docs'))) {
-  for (const f of readdirSync(rel('docs')).filter((f) => f.endsWith('.md'))) {
-    const fm = frontmatter(join('docs', f));
-    check(!!fm, `docs/${f} missing frontmatter`);
+  for (const f of mdFilesUnder('docs')) {
+    const fm = frontmatter(f);
+    check(!!fm, `${f} missing frontmatter`);
     for (const key of ['title', 'description', 'content-type']) {
-      check(hasKey(fm, key), `docs/${f} missing frontmatter field: ${key}`);
+      check(hasKey(fm, key), `${f} missing frontmatter field: ${key}`);
     }
   }
 }
