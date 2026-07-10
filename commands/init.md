@@ -5,7 +5,8 @@ argument-hint: [docs directory]
 
 # Initialize Project Configuration
 
-Set up a committed `.docs-assist/` configuration for this project so Docs Assist matches the team's house style, and so the linters share the same settings.
+Set up a committed `.docs-assist/` configuration for this project so Docs Assist matches the project's house style, and so the linters share the same settings.
+This earns its keep at every team size: for a team it makes every contributor write to the same conventions, and for a solo maintainer it gives the plugin a consistent line to hold their docs to, like a second reader.
 
 The optional argument (`$ARGUMENTS`) is the docs directory to use. Detect it if not given.
 
@@ -45,6 +46,7 @@ Set the team up in one pass instead of leaving them to find commands:
 - Offer to turn on documentation templates: a proven starting structure from The Good Docs Project, suggested during drafting. If they want it, scaffold `.docs-assist/templates.yml` from `${CLAUDE_PLUGIN_ROOT}/assets/config/templates.yml` with `enabled: true`. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. If they decline, do nothing: the assistant still offers a template when one fits and fetches only on their yes.
 - Offer to generate matching linters from `config.yml` (the same workflow as `/docs-assist:setup-lint`).
 - Offer to seed `.docs-assist/example-variables.txt` from `${CLAUDE_PLUGIN_ROOT}/assets/config/example-variables.txt`, pre-filled with any placeholder values already used across the docs, so code samples stay consistent. The plugin maintains it from then on. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md`.
+- Offer to seed `.docs-assist/terms.txt` from `${CLAUDE_PLUGIN_ROOT}/assets/config/terms.txt`, pre-filled with the product terms the existing docs already use (and any drift you noticed while surveying, resolved to the dominant usage). The plugin maintains it from then on. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/terminology.md`.
 
 ### 5. Point to Next Steps
 

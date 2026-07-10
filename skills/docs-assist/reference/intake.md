@@ -10,12 +10,13 @@ Load this whenever someone asks to document something new, whether it is one top
 
 ## The Intake Loop
 
-The same seven moves serve one doc or a whole set. Later moves lean on earlier ones, so do not skip ahead.
+The same eight moves serve one doc or a whole set. Later moves lean on earlier ones, so do not skip ahead.
 
 1. **Survey** what already exists, quietly.
 1. **Dump**: invite everything they know, unstructured.
 1. **Reflect** it back so they know they were heard.
 1. **Situate** it against the existing docs, the product, and how people use it.
+1. **Reconcile**: offer to fact-check the dump against the code and the existing docs. This is the preflight checkpoint: the offer is always made before anything is shaped, and the contributor decides.
 1. **Dig** at the gaps the dump left.
 1. **Shape**: pick the content type, and notice when it is really several docs.
 1. **Draft**, review, finalize.
@@ -60,7 +61,36 @@ Place the knowledge in the product, using the survey. This is where a writer ear
 
 Say the connections out loud. "This overlaps with your Webhooks doc, it is a prerequisite for Scheduled Exports, and users usually hit it right after first setup." It orients the contributor and confirms your model.
 
-## 5. Dig: Ask the Sharp Questions Now
+## 5. Reconcile: Fact-Check the Dump
+
+Expert memory is honest and unreliable at the same time: defaults change, behavior shifts between releases, and secondhand knowledge arrives with the same confidence as firsthand.
+Reconcile before you dig, so your questions build on what is true.
+
+The fact-check is the contributor's choice, offered before it starts.
+Make the offer once the dump is in hand ("want me to check this against the code before we go further?"), say what it costs (a short read of the relevant source), and respect a no.
+The preflight rule is about the offer, not the outcome: do not shape or draft until the contributor has accepted or declined.
+When they decline, proceed normally, note in the final review that the dump's claims were taken as given, and let the draft flow's verify step still confirm the specifics the doc states.
+
+Sort the dump's claims into three buckets, and treat each differently:
+
+- **Checkable against the code** (commands, flags, defaults, error text, behavior): check them. The scope is tiered: every claim the eventual doc will state gets hard verification (the draft flow deepens this later); the rest of the dump gets a scan for contradictions, not an exhaustive audit.
+- **Checkable against the existing docs**: flag where the dump contradicts something already published. One of them is wrong, and it matters which.
+- **Unverifiable** (intent, history, tribal knowledge, external systems): mark as SME-attested and move on. These are often the most valuable content. Never demand proof for a gotcha; record who attested it instead (see the ledger below).
+
+Deliver the reconciliation as a short read-back, folded into the dig when that flows better:
+
+> "Confirmed against the code: X and Y. One conflict: you said the retry default is 3, but `config.ts` sets 5. Which is right?"
+
+When the dump and the code disagree, **ask, never assume**. The contributor misremembering and the contributor having just found a bug look identical from here.
+If they say the code is wrong, offer to record it (a `gh issue` when the repo uses GitHub, a follow-up note otherwise), and write the doc to the intended behavior with the discrepancy flagged.
+
+After the reconcile runs, offer the ledger: claims that survive into a doc on the expert's word alone can be recorded in the doc's `sme-attested` frontmatter (see `frontmatter-spec.md`), so a future reviewer verifies specific claims instead of re-reviewing everything.
+This is a separate yes: not every pipeline accepts unapproved frontmatter fields, and a strict SSG schema can reject a build over one.
+When they decline, keep the attested-claims list in the conversation's review notes (or the saved report) instead of the frontmatter.
+
+This move guards every door, not only the conversational dump: `doc-intake` reports code conflicts in its inventory, so corpus piles and returned intake packets arrive pre-reconciled, and the consolidator resolves what they flag.
+
+## 6. Dig: Ask the Sharp Questions Now
 
 Only now, with the dump and the survey in hand, ask the targeted questions. They land because they are specific. Aim at the gaps, not the basics.
 
@@ -72,7 +102,7 @@ Only now, with the dump and the survey in hand, ask the targeted questions. They
 
 Ask two or three at a time, conversationally. Never run down the list like a checklist.
 
-## 6. Shape: One Doc, or Several?
+## 7. Shape: One Doc, or Several?
 
 Decide the structure using `content-types.md`, and check the scope honestly.
 
@@ -94,6 +124,17 @@ When the input is a heterogeneous pile rather than one expert's dump (tickets, a
   - Duplication and conflict: the same thing said several ways.
   - Staleness: material that looks out of date.
 - **Hand off to the plan.** The inventory feeds `plan.md`: the clusters become candidate docs, the gaps become priorities.
+
+## Capture Knowledge Asynchronously
+
+The knowledge often lives with someone who is not in the session: the engineer who built it, the support lead who fields the tickets.
+Do not make the writer choose between waiting and guessing. Send the questions to the knowledge instead.
+
+- **Generate an intake packet**: a Markdown file of targeted questions the expert can answer in minutes, in any order, as messily as they like. It is the dig step, made portable.
+- **Pre-load it from the survey and the code**, so the questions are sharp, not generic: "The retry default is 3; when should someone change it, and to what?" beats "describe the retry behavior." Include what you already know so the expert corrects instead of dictating.
+- **Write it to `.docs-assist/intake/packets/<topic>.md`** and hand it to the writer to send over whatever channel they use. The packet states, at the top, that order and polish do not matter.
+- **Ingest the returned answers** as a pile slice: `doc-intake` reads them into the inventory, and drafting proceeds from there, conversationally or via the fan-out.
+- **Never block on a packet.** Draft what the material already supports and flag the rest; fold the answers in when they arrive.
 
 ## Persist the Synthesis, Not the Raw Pile
 

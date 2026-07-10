@@ -21,6 +21,10 @@ Focus on **content and strategy**, the things that require judgment:
 Leave mechanical checks to linters (Vale, markdownlint, cspell).
 You can note obvious style issues, but your primary value is understanding the documentation holistically and identifying opportunities to better serve users.
 
+Resolve `.docs-assist/config.yml` and `style.md` first if they exist, and audit against them.
+When they do not exist, do not stop to ask about conventions: the docs set's own internal consistency is the standard.
+Hold the set to the rigor of a full documentation team reviewing a solo writer's work: example values that drift between docs, the same concept under different terms, stale cross-references, and structural inconsistencies between sibling docs.
+
 ## Audit Process
 
 Match the depth of the audit to the target. A full documentation set, a single directory, a handful of changed files, and a diff are different jobs. Do not run whole-set steps against a few files.
@@ -59,10 +63,12 @@ For each document, evaluate:
 - Missing alt text on images
 - TODOs or placeholders
 - Inconsistent example values: code samples that use different placeholder values for the same thing across docs, or values that do not match `.docs-assist/example-variables.txt` when it exists. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md`
+- Terminology drift: prose that uses a variant listed in `.docs-assist/terms.txt` instead of the canonical term, or the same concept under different terms across docs when no registry exists (flag the outliers against the dominant usage, and offer to record the winner). See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/terminology.md`
 
 #### Content Issues
 
 - Outdated information (check dates, version references)
+- Unverified claims: docs whose `sme-attested` frontmatter ledger is large or old. Surface the specific claims so a reviewer can verify and delete entries (the ledger exists to shrink; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`)
 - Incomplete instructions (missing steps)
 - Assumption gaps (undefined terms, missing prerequisites)
 - Duplicated content
@@ -72,7 +78,7 @@ For each document, evaluate:
 - Missing navigation entries
 - Poor link text ("click here")
 - No cross-references to related content
-- Stale or missing `llms.txt`: if the repo has one, check that its entries match the current docs (titles, descriptions, paths), and note a missing one when the docs would benefit
+- Stale or missing `llms.txt`: if the repo has one, check its entries against the current docs (titles, descriptions, paths, and reader-priority order) per the contract in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/llms-txt.md`, and note a missing one when the docs would benefit
 
 ### 3. Assess Information Architecture
 
@@ -153,6 +159,14 @@ Rank all issues by:
 
 Focus on issues that are high-impact and low-effort first.
 
+### 6. Deliver the Report by Scope
+
+The conversation is for triage; end with a persist offer, per the skill's feedback guidance.
+
+- A change-based audit of a PR: offer to post the report as a sticky PR comment (`gh pr comment`), summary first with detail collapsed in a `details` element. Update the existing comment on a re-run rather than adding another.
+- A full-set or directory audit: offer to save it to `.docs-assist/reports/audit-<date>.md`, so the next audit can be compared against it.
+- Either way, present the findings here first and let the user choose. Never persist without the offer.
+
 ## Notes
 
 - Be specific: cite file paths and line numbers
@@ -163,4 +177,4 @@ Focus on issues that are high-impact and low-effort first.
 - An audit reports; it does not edit. When `llms.txt` is stale or missing, flag it as a finding and recommend `/docs-assist:update` to apply the fix
 - Consider context: some "issues" may be intentional choices
 - For large repositories, ask how to handle the files list before outputting
-- For large documentation sets, fan out: launch the `doc-auditor` subagent in parallel across slices of the set, then consolidate the findings into one prioritized report
+- For large documentation sets, fan out: launch the `doc-auditor` subagent in parallel across slices of the set, then consolidate the findings into one prioritized report. Include the resolved conventions in each subagent's brief (the relevant `.docs-assist/config.yml` settings and `style.md` rules, or the inferred conventions when no config exists), so every slice audits against the same standard

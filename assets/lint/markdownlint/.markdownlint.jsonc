@@ -34,6 +34,11 @@
   "MD036": true,
   "MD034": true,
 
+  // Allow the HTML disclosure elements, so long changelogs and reference
+  // sections can collapse detail behind a summary. All other inline HTML
+  // is still flagged.
+  "MD033": { "allowed_elements": ["details", "summary"] },
+
   // Allow the same heading text under different parents (common in structured docs).
   "MD024": { "siblings_only": true },
 

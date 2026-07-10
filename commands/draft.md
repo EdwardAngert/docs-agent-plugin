@@ -17,52 +17,22 @@ The contributor might be an engineer, PM, support lead, or anyone with knowledge
 They may not write docs often. That's fine. You're here to make it easy.
 
 Gather before you structure. Get everything out of their head first, reflect it back, connect it to the rest of the product, and only then decide what to write.
-The full method is in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`. Follow it. The steps below are that loop applied to a single doc.
+The full method is in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`. Read it and follow it; this file adds only what is specific to drafting one doc.
 
 ## Process
 
-### 1. Survey First, Quietly
+### 1-6. Run the Intake Loop
 
-Before asking the contributor anything, build context so your questions are sharp:
+Run the first six intake moves as `intake.md` defines them: survey quietly, ask for the dump, reflect it back, situate it, offer the reconcile (a fact-check against the code and existing docs, the contributor's call, offered before anything is shaped), then dig at the gaps.
 
-- If the repo has an `llms.txt`, start there, since it's a map of the docs set. Then scan doc directories and read frontmatter from related docs.
-- Note the field names in use (`tags` vs `keywords`, `type` vs `content-type`) and any SSG fields you'll need to preserve.
-- Note light feature signals from the repo (names, commands, config, routes) that relate to the topic, enough to connect the dots, not a deep code audit.
+Draft-specific notes for those moves:
 
-### 2. Dump: Ask for Everything First
+- **Survey**: note the frontmatter field names in use (`tags` vs `keywords`, `type` vs `content-type`) and any SSG fields you'll need to preserve, since this doc will carry frontmatter that matches.
+- **Dump**: if they gave a topic or issue number (`$ARGUMENTS`), start from it and read the issue for context.
+- **Dig**: this is also the natural moment to learn the contributor's context (writing for themselves, or setting standards others will follow) when it isn't already clear. Calibrate offers accordingly, per the skill's calibration guidance.
+- **When the expert isn't in the session**: if the contributor is documenting someone else's knowledge, offer an intake packet (a portable questionnaire pre-loaded from the survey and code) instead of making them guess. See the async section of `intake.md`. Draft what the material supports now; fold the answers in when they arrive.
 
-Open with an invitation, not an interrogation:
-
-> "Before we structure anything, tell me everything you know about this. How it works, why it exists, the steps, the edge cases, what people get wrong. Don't worry about order or polish. Dump it, and I'll organize it."
-
-If they gave a topic or issue number (`$ARGUMENTS`), start from it and read the issue for context. Take the dump in whatever form it arrives, and don't interrupt or reorder while it's coming out.
-
-### 3. Reflect: Play It Back
-
-Summarize what you heard in a short, structured read-back, then invite correction: "Here's what I've got. What did I get wrong, and what's missing?"
-The read-back usually jogs more out of them.
-
-### 4. Situate: Connect It Outward
-
-Using the survey, place the knowledge in context and say it out loud:
-
-- What it overlaps with, extends, or should link to (flag duplication and prerequisites).
-- The feature or flow it belongs to.
-- Who reaches it, and what they do right before and after. If you can't tell, ask in the next step rather than guessing.
-
-### 5. Dig: Ask the Sharp Questions Now
-
-With the dump and survey in hand, ask the targeted questions. Aim at the gaps, two or three at a time:
-
-- Prerequisites they take for granted (the assumption gap).
-- Decision points where the path forks by context, role, or setup.
-- Failure modes: what breaks, what's confusing, what people get wrong. Often the most valuable content.
-- Audience and outcome: who this is for and what they should be able to do afterward.
-- Verification: how a reader knows it worked.
-
-Match their terminology; don't replace it with generic terms. Never run the list like a checklist.
-
-### 6. Verify Against the Code
+### 7. Verify Against the Code
 
 Confirm the details the draft will state, so it's accurate. This is targeted verification, not a full codebase map.
 
@@ -70,7 +40,7 @@ Confirm the details the draft will state, so it's accurate. This is targeted ver
 - Reconcile the dump with the code. Where the contributor's memory and the code disagree, surface it and ask rather than guessing.
 - Pull real values (defaults, limits, error strings) so the draft and its examples are correct.
 
-### 7. Shape: One Doc, or Several?
+### 8. Shape: One Doc, or Several?
 
 Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/content-types.md`, and check the scope honestly:
 
@@ -78,7 +48,7 @@ Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/co
 - If it's genuinely ambiguous, default to a doc (task-oriented).
 - Offer a starting template where one fits. Suggesting one is free and offline, so do it even if `.docs-assist/templates.yml` is absent; only fetch on the contributor's yes. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. A template is a head start, never a requirement.
 
-### 8. Propose the Outline
+### 9. Propose the Outline
 
 For anything beyond a short entry, show the outline before writing the full draft. Changing an outline is cheap; rewriting a draft is not.
 
@@ -86,7 +56,7 @@ For anything beyond a short entry, show the outline before writing the full draf
 - Confirm scope and order, and adjust before drafting.
 - Skip it for a very short doc (a single troubleshooting entry). Offer it rather than forcing it.
 
-### 9. Produce the Draft
+### 10. Produce the Draft
 
 Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md` automatically:
 
@@ -105,7 +75,7 @@ Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-a
 - Completeness: is anything missing?
 - Audience fit: would this make sense to the intended reader?
 
-### 10. Refine
+### 11. Refine
 
 Based on their feedback:
 
@@ -114,15 +84,17 @@ Based on their feedback:
 - If they want to add something, slot it into the right place in the structure
 - If the doc is getting long, suggest splitting it and explain why
 
-### 11. Finalize
+### 12. Finalize
 
 When the contributor is satisfied:
 
 - Write the file to the appropriate location (ask if unsure where it should live), with a filename that follows existing conventions.
 - Generate frontmatter following `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`. At minimum `title`, `description`, and `content-type`. Add `audience`, `keywords`, `prerequisites`, and `related` when you have the context, and after this conversation you almost certainly do. Match existing frontmatter conventions.
 - If you drafted on a template, set the optional `template` field to the catalog `id` and add the `attribution` line from `templates.yml`.
+- If any claims made it in on the expert's word alone (marked SME-attested during the reconcile), offer to record them in the `sme-attested` frontmatter ledger so a future reviewer verifies specific claims, not the whole doc. A separate yes: not every pipeline accepts unapproved frontmatter fields. If declined, keep the list in the review notes instead.
 - If the repo has an `llms.txt`, add an entry for the new doc.
 - Update related docs to cross-reference this new content (or make the edits and show the contributor what you changed).
+- In a git repo, when the work touched several files (the new doc plus cross-reference updates), offer to put the change set on a docs branch rather than leaving it on the default branch. Never commit to the default branch unless asked.
 - Note remaining follow-ups: the backlog docs the dump revealed, images or diagrams that would help, or cross-references a subject matter expert should verify.
 
 ## Notes

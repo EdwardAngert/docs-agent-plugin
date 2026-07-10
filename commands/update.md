@@ -47,6 +47,8 @@ Separate confident matches (a doc documents a flag you renamed) from weak matche
 
 ### 5. Update the Docs
 
+Before editing, check the branch. If the working tree is on the default branch and the update will touch more than a file or two, offer to do the pass on a docs branch so the result arrives as a reviewable change set. Never commit to the default branch unless asked. The contributor's existing workflow (they may already be on a feature branch) wins.
+
 For a small number of affected docs, edit them directly, applying the standard drafting rules.
 
 For a larger set, fan out: launch the `doc-updater` subagent once per affected doc, in parallel, each with the change summary and one doc path. Each subagent edits its doc in the working tree and reports what it changed. This keeps large updates fast and consistent.
@@ -64,6 +66,7 @@ For every update:
 - Trace the ripple of your own edits. If you renamed a heading, moved a file, re-cased a term, or changed a value that other docs repeat, follow the edges in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/impact-analysis.md` and fix or flag what they reach.
 - Check for an `llms.txt`. If the repo has one and your edits added, removed, renamed, or re-described a doc it lists, update its entries so the map matches the docs. Update cross-references the same way.
 - List remaining follow-ups: docs that need an SME to confirm, screenshots that went stale, edges you did not follow, or new docs the change calls for that do not exist yet.
+- When the target was a PR, offer to post the what-changed summary as a comment on it (`gh pr comment`), so the docs update is visible where the change is reviewed. Start the comment with an HTML marker (`<!-- docs-assist:update -->`) and update the marked comment on a re-run rather than stacking a new one.
 
 ## Notes
 

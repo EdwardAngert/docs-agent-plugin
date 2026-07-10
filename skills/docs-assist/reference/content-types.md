@@ -10,7 +10,7 @@ When the right type is genuinely ambiguous, default to `doc` (task-oriented) and
 ## How to Choose
 
 | If the contributor is | Use | `content-type` value |
-|---|---|---|
+| --- | --- | --- |
 | Listing the steps to complete one task | Doc | `doc` |
 | Walking through a larger goal with paths that branch by context | Guide | `guide` |
 | Onboarding someone from zero to competent, in sequence | Tutorial | `tutorial` |

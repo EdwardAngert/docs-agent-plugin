@@ -16,6 +16,7 @@ Read the slice you were given, then return an inventory with these parts:
 - **Clusters**: group the material by topic. For each cluster, give a short name, a one-line summary, the sources it came from, and the likely content type (`doc`, `guide`, `tutorial`, `concept`, `reference`, `troubleshooting`).
 - **Gaps**: what a reader would need that the material does not cover.
 - **Duplication and conflict**: the same thing said in several places, and any places the sources disagree.
+- **Conflicts with the code**: claims in the material that the code contradicts (a stated default, flag, command, or behavior that does not match the source). Check the specific claims you can check cheaply; cite the file that disagrees. Do not decide who is right; report the conflict for the consolidator to resolve with the expert.
 - **Staleness**: material that looks out of date (old versions, superseded steps, stale dates).
 
 Rules:

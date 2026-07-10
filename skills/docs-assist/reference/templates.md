@@ -58,7 +58,7 @@ This is [Fabrizio Ferri Benedetti's seven-action model](https://passo.uno/seven-
 Ask what the reader is trying to accomplish, map the answer to an action, then suggest the templates for that action.
 
 | Action | The reader wants to | Typical templates |
-|---|---|---|
+| --- | --- | --- |
 | Appraise | Judge whether the product fits | readme, release-notes |
 | Understand | Grasp how or why it works | concept, glossary |
 | Explore | Try it with a low barrier | quickstart, api-getting-started |

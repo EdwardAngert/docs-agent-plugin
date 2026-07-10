@@ -109,6 +109,22 @@ The catalog id of the documentation template this doc was seeded from, when one 
 Set it alongside the canonical `content-type` so the origin is traceable.
 See `templates.md`.
 
+**`sme-attested`**
+The verification ledger: claims that entered the doc on a subject matter expert's word alone, because they could not be checked against the code or existing docs during the intake reconcile.
+**Opt-in, always.** The plugin never adds this field without the contributor's explicit yes: build pipelines with strict frontmatter schemas can reject unknown fields, and some teams require approval for new metadata. When declined, the attested-claims list lives in the review notes instead.
+Each entry names the section the claim lives in, the claim itself in a short line, and optionally who attested it.
+
+```yaml
+sme-attested:
+  - section: "Recover From a Split Brain"
+    claim: "Rejoining nodes replay from the last checkpoint, not from zero"
+    source: "j.doe, intake 2026-07-10"
+```
+
+The ledger exists to shrink: a reviewer (human or AI) verifies a claim and deletes its entry, and when the ledger empties, remove the field and bump `last-verified`.
+Audits surface docs whose ledgers are large or old.
+This gives reviewers specific claims to check instead of a doc-wide request for review.
+
 **`sdk`**
 The SDK or tool this doc relates to.
 Use when a doc is specific to one SDK in a multi-SDK project.
@@ -121,17 +137,17 @@ Helps AI tools and search filter by language.
 
 ### Write Docs with `/draft`
 
-In step 7 (Finalize), the plugin generates frontmatter for the new doc:
+In the finalize step, the plugin generates frontmatter for the new doc:
 
 - `title` and `description` come from the content
-- `content-type` was determined in step 4
-- `audience` comes from the intake conversation (step 2)
+- `content-type` was determined in the shape step
+- `audience` comes from the intake conversation (the dump and the dig)
 - `keywords` are extracted from the doc's content, the terms the plugin identifies as significant
-- `prerequisites` and `related` come from the survey step (step 1): the plugin already knows what other docs exist
+- `prerequisites` and `related` come from the survey step: the plugin already knows what other docs exist
 
 ### Survey Existing Docs
 
-In step 1 of any workflow, the plugin scans existing docs.
+During the survey step of any workflow, the plugin scans existing docs.
 If docs have frontmatter, the plugin reads it instead of reading full doc bodies.
 This is faster, uses fewer tokens, and gives the plugin a structured understanding of the docs landscape.
 
@@ -171,14 +187,14 @@ This survey produces a mental model of the repo's frontmatter conventions that t
 ### Rules for Conflict Resolution
 
 1. **Never overwrite existing fields.** If a doc already has `title`, `description`, or `tags`, they stay as they are. The contributor or SSG config put them there for a reason.
-2. **Match existing field names.** If the repo uses `tags`, the plugin uses `tags`, not `keywords`. If it uses `type`, the plugin uses `type`, not `content-type`. The repo's convention wins.
-3. **Preserve SSG-required fields.** Fields like the following are there because the build system needs them. Never remove or reorder them.
+1. **Match existing field names.** If the repo uses `tags`, the plugin uses `tags`, not `keywords`. If it uses `type`, the plugin uses `type`, not `content-type`. The repo's convention wins.
+1. **Preserve SSG-required fields.** Fields like the following are there because the build system needs them. Never remove or reorder them.
    - Docusaurus: `sidebar_position`, `sidebar_label`, `slug`
    - Hugo: `weight`, `layout`, `draft`
    - Jekyll: `layout`, `permalink`, `published`, `categories`
    - Astro: `draft`, `pubDate`, `heroImage`
-4. **Add missing fields alongside existing ones.** If a doc has `title` and `description` but no content type or keywords equivalent, the plugin adds those using the repo's naming convention (or its own defaults if no convention exists).
-5. **Don't duplicate semantics.** If the repo already has `tags` and the plugin would add `keywords`, it uses `tags`. One field per concept.
+1. **Add missing fields alongside existing ones.** If a doc has `title` and `description` but no content type or keywords equivalent, the plugin adds those using the repo's naming convention (or its own defaults if no convention exists).
+1. **Don't duplicate semantics.** If the repo already has `tags` and the plugin would add `keywords`, it uses `tags`. One field per concept.
 
 ### Document the Mapping
 
@@ -198,4 +214,4 @@ The per-doc frontmatter and the repo-level `llms.txt` work together:
 - Frontmatter is the detail: it tells AI tools about a specific doc without reading the body
 - The plugin updates both: when it writes a new doc, it adds frontmatter to the doc and adds an entry to `llms.txt`
 
-See the repo's `llms.txt` for the manifest format.
+The llms.txt format, entry ordering, and maintenance contract are defined in `llms-txt.md`.

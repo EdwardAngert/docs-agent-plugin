@@ -1,6 +1,6 @@
 {
   "name": "docs-assist",
-  "version": "0.7.0",
+  "version": "0.9.5",
   "description": "A documentation coach for Claude Code. Guides subject matter experts through contributing their knowledge: you bring the expertise, the plugin handles the writing. Also provides content audits, style enforcement, and docs-as-code workflows.",
   "author": {
     "name": "Edward Angert"
@@ -10,6 +10,7 @@
     "./skills/docs-assist"
   ],
   "commands": [
+    "./commands/health.md",
     "./commands/draft.md",
     "./commands/plan.md",
     "./commands/audit.md",
@@ -17,13 +18,17 @@
     "./commands/init.md",
     "./commands/setup-lint.md",
     "./commands/setup-hooks.md",
+    "./commands/setup-site.md",
     "./commands/update.md",
+    "./commands/release-notes.md",
+    "./commands/agent-ready.md",
     "./commands/template.md"
   ],
   "agents": [
     "./agents/doc-auditor.md",
     "./agents/doc-updater.md",
     "./agents/doc-intake.md",
-    "./agents/doc-recon.md"
+    "./agents/doc-recon.md",
+    "./agents/doc-drafter.md"
   ]
 }
