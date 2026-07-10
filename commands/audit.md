@@ -63,6 +63,7 @@ For each document, evaluate:
 - Missing alt text on images
 - TODOs or placeholders
 - Inconsistent example values: code samples that use different placeholder values for the same thing across docs, or values that do not match `.docs-assist/example-variables.txt` when it exists. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md`
+- Terminology drift: prose that uses a variant listed in `.docs-assist/terms.txt` instead of the canonical term, or the same concept under different terms across docs when no registry exists (flag the outliers against the dominant usage, and offer to record the winner). See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/terminology.md`
 
 #### Content Issues
 
@@ -76,7 +77,7 @@ For each document, evaluate:
 - Missing navigation entries
 - Poor link text ("click here")
 - No cross-references to related content
-- Stale or missing `llms.txt`: if the repo has one, check that its entries match the current docs (titles, descriptions, paths), and note a missing one when the docs would benefit
+- Stale or missing `llms.txt`: if the repo has one, check its entries against the current docs (titles, descriptions, paths, and reader-priority order) per the contract in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/llms-txt.md`, and note a missing one when the docs would benefit
 
 ### 3. Assess Information Architecture
 
@@ -147,7 +148,15 @@ Options:
 4. **Skip**: Omit this section entirely
 ```
 
-### 5. Prioritize Issues
+### 5. Deliver the Report by Scope
+
+The conversation is for triage; end with a persist offer, per the skill's feedback guidance.
+
+- A change-based audit of a PR: offer to post the report as a sticky PR comment (`gh pr comment`), summary first with detail collapsed in a `details` element. Update the existing comment on a re-run rather than adding another.
+- A full-set or directory audit: offer to save it to `.docs-assist/reports/audit-<date>.md`, so the next audit can be compared against it.
+- Either way, present the findings here first and let the user choose. Never persist without the offer.
+
+### 6. Prioritize Issues
 
 Rank all issues by:
 

@@ -100,6 +100,7 @@ Run `/docs-assist:init` to scaffold a `.docs-assist/` directory:
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
 - `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, maintained by the plugin.
+- `.docs-assist/terms.txt`: canonical product terms and the variants to avoid, maintained by the plugin. Audits flag prose that drifts from it.
 
 Because this config is committed, it survives plugin updates and is shared across your whole team.
 This repo runs on the same setup: see its committed `.docs-assist/` for a real example.

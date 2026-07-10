@@ -58,8 +58,7 @@
 The separator `---` is for identifying YAML frontmatter only.
 Do not use it to separate sections.
 
-Per rule MD022: "Headings should be surrounded by blank lines"
-And MD032: "Lists should be surrounded by blank lines"
+Surround headings and lists with blank lines (markdownlint rules MD022 and MD032).
 
 ### Links
 
@@ -80,10 +79,9 @@ And MD032: "Lists should be surrounded by blank lines"
 
 ## Terminology Consistency
 
-Refer to:
-
-- [Google style guide](https://developers.google.com/style/)
-- [GitLab doc style](https://docs.gitlab.com/ee/development/documentation/styleguide/)
+Use the same term for the same concept in every doc.
+When the project has a `.docs-assist/terms.txt` registry, its canonical terms are authoritative; see `terminology.md`.
+For general style questions beyond this file, `style-guides.md` covers choosing and applying an external guide such as the [Google developer documentation style guide](https://developers.google.com/style/).
 
 ## Document Hygiene
 

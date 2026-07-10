@@ -53,6 +53,14 @@ You review for accuracy. The formatting is already handled.
 
 1. Restart Claude Code.
 
+1. See where your docs stand:
+
+   ```text
+   /docs-assist:health
+   ```
+
+   You get a thirty-second scorecard (coverage, freshness, consistency, findability), the single highest-leverage fix, and an offer to make it now.
+
 ## Documentation
 
 - [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): for docs leads and devrel. Why to install, what changes for contributors, and how to customize.
@@ -113,23 +121,31 @@ For every command's argument and an example, see the [command reference](docs/co
   Bring the expertise, the plugin handles the writing.
 - `/docs-assist:plan [repo or description]`: plan a full documentation set.
   Reads the codebase, asks about users and goals, maps user journeys, and proposes a prioritized plan before writing anything.
+  Once the plan is approved, docs whose material already exists draft in parallel across the `doc-drafter` subagent, and you review the queue instead of co-writing each one.
 - `/docs-assist:make-examples [doc-path]`: add or improve copy-paste safe code examples in an existing doc.
 - `/docs-assist:template [problem or topic]`: start from a proven structure (The Good Docs Project) instead of a blank page.
   Suggests a template from what you describe and fills the skeleton with what you know.
 
 ### Review and Maintain
 
+- `/docs-assist:health [docs dir]`: a fast docs health check, and the best first command to run.
+  Scores coverage, freshness, consistency, and findability, names the highest-leverage fix, and offers to make it.
 - `/docs-assist:audit [path]`: audit a directory or file for quality, structure, findability, and gaps.
   Produces a prioritized report.
 - `/docs-assist:update [ref, PR, or path]`: find and update the docs affected by a code change.
   Reads the diff, locates the docs that reference what changed, and updates them for review.
+- `/docs-assist:release-notes [range, tag, or version]`: turn a release's worth of changes into reader-facing release notes.
+  Reads the commits and PRs, asks you for the why, and writes notes that lead with what readers must know.
+- `/docs-assist:agent-ready [docs dir]`: make the docs legible to AI tools.
+  Creates or repairs `llms.txt`, completes per-doc frontmatter, and records the repo's conventions where the next tool will find them.
 
 ### Configure
 
 - `/docs-assist:init [docs dir]`: scaffold project-local configuration, pre-filled from the repo's existing conventions.
 - `/docs-assist:setup-lint [tool]`: scaffold optional documentation linting, generated from your config.
-- `/docs-assist:setup-hooks [hook]`: install opt-in git and in-session hooks.
+- `/docs-assist:setup-hooks [hook]`: install opt-in git, in-session, and CI hooks, including the pull-request docs-impact check.
   Default off.
+- `/docs-assist:setup-site [ssg]`: generate site navigation from the docs' own metadata (`llms.txt` order becomes sidebar order), scaffolding a minimal Docusaurus or MkDocs setup when no site exists.
 
 ## Configure for Your Team
 
@@ -139,6 +155,7 @@ Commit a `.docs-assist/` directory and the whole team writes to the same convent
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
 - `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, so examples stay consistent across docs. The plugin maintains it.
+- `.docs-assist/terms.txt`: canonical product terms and the variants to avoid, so the same concept never appears under different names. The plugin maintains it, and audits flag drift against it.
 
 Run `/docs-assist:init` to generate them, pre-filled from what your docs already do.
 Because this config is committed to your repo, it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
@@ -175,12 +192,22 @@ When code changes, run `/docs-assist:update` with a git ref, a PR number, or a p
 The plugin reads the diff, summarizes what changed, finds the docs that reference it, and updates them for your review.
 Large changes fan out across the `doc-updater` subagent so many docs update in parallel.
 
+You can also put the watching on autopilot.
+`/docs-assist:setup-hooks ci` installs a docs-impact check that runs on every pull request: a deterministic, token-free detector that flags diffs riding the change types that break docs (moved files, changed headings, changed code terms the docs mention, large silent source changes) and tells reviewers exactly which `/docs-assist:update` range to run.
+Cheap detection in CI, expensive updating only when it is warranted.
+
+## Make Your Docs Agent-Ready
+
+Your docs' readers now include AI tools: coding agents, docs assistants, and search systems that read structure before prose.
+Run `/docs-assist:agent-ready` to retrofit the docs set for them: it creates or repairs `llms.txt` (the map an AI tool reads first), completes per-doc frontmatter using your repo's own field names, and records your conventions where the next tool will find them.
+The plugin then maintains all of it as part of its normal drafting and updating work.
+
 ## What's Inside
 
 ```text
 docs-assist/
-├── commands/                  # draft, plan, audit, make-examples, update, template, init, setup-lint, setup-hooks
-├── agents/                    # doc-auditor, doc-updater, doc-intake, doc-recon subagents
+├── commands/                  # health, draft, plan, audit, make-examples, update, release-notes, agent-ready, template, init, setup-lint, setup-hooks, setup-site
+├── agents/                    # doc-auditor, doc-updater, doc-intake, doc-recon, doc-drafter subagents
 ├── skills/docs-assist/
 │   ├── SKILL.md               # core instructions and role definition
 │   └── reference/
@@ -188,6 +215,8 @@ docs-assist/
 │       ├── content-types.md       # canonical content types and frontmatter values
 │       ├── tone-and-voice.md      # formatting, heading case, markdown style
 │       ├── code-examples.md       # safe, consistent code samples and the variables registry
+│       ├── terminology.md         # consistent product terms and the terms registry
+│       ├── llms-txt.md            # the llms.txt format and maintenance contract
 │       ├── frontmatter-spec.md    # per-doc metadata schema
 │       ├── config-resolution.md   # how project-local config overrides defaults
 │       ├── templates.md           # suggest and apply Good Docs templates
