@@ -17,50 +17,19 @@ The contributor might be an engineer, PM, support lead, or anyone with knowledge
 They may not write docs often. That's fine. You're here to make it easy.
 
 Gather before you structure. Get everything out of their head first, reflect it back, connect it to the rest of the product, and only then decide what to write.
-The full method is in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`. Follow it. The steps below are that loop applied to a single doc.
+The full method is in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`. Read it and follow it; this file adds only what is specific to drafting one doc.
 
 ## Process
 
-### 1. Survey First, Quietly
+### 1 Through 5: Run the Intake Loop
 
-Before asking the contributor anything, build context so your questions are sharp:
+Run the first five intake moves as `intake.md` defines them: survey quietly, ask for the dump, reflect it back, situate it, then dig at the gaps.
 
-- If the repo has an `llms.txt`, start there, since it's a map of the docs set. Then scan doc directories and read frontmatter from related docs.
-- Note the field names in use (`tags` vs `keywords`, `type` vs `content-type`) and any SSG fields you'll need to preserve.
-- Note light feature signals from the repo (names, commands, config, routes) that relate to the topic, enough to connect the dots, not a deep code audit.
+Draft-specific notes for those moves:
 
-### 2. Dump: Ask for Everything First
-
-Open with an invitation, not an interrogation:
-
-> "Before we structure anything, tell me everything you know about this. How it works, why it exists, the steps, the edge cases, what people get wrong. Don't worry about order or polish. Dump it, and I'll organize it."
-
-If they gave a topic or issue number (`$ARGUMENTS`), start from it and read the issue for context. Take the dump in whatever form it arrives, and don't interrupt or reorder while it's coming out.
-
-### 3. Reflect: Play It Back
-
-Summarize what you heard in a short, structured read-back, then invite correction: "Here's what I've got. What did I get wrong, and what's missing?"
-The read-back usually jogs more out of them.
-
-### 4. Situate: Connect It Outward
-
-Using the survey, place the knowledge in context and say it out loud:
-
-- What it overlaps with, extends, or should link to (flag duplication and prerequisites).
-- The feature or flow it belongs to.
-- Who reaches it, and what they do right before and after. If you can't tell, ask in the next step rather than guessing.
-
-### 5. Dig: Ask the Sharp Questions Now
-
-With the dump and survey in hand, ask the targeted questions. Aim at the gaps, two or three at a time:
-
-- Prerequisites they take for granted (the assumption gap).
-- Decision points where the path forks by context, role, or setup.
-- Failure modes: what breaks, what's confusing, what people get wrong. Often the most valuable content.
-- Audience and outcome: who this is for and what they should be able to do afterward.
-- Verification: how a reader knows it worked.
-
-Match their terminology; don't replace it with generic terms. Never run the list like a checklist.
+- **Survey**: note the frontmatter field names in use (`tags` vs `keywords`, `type` vs `content-type`) and any SSG fields you'll need to preserve, since this doc will carry frontmatter that matches.
+- **Dump**: if they gave a topic or issue number (`$ARGUMENTS`), start from it and read the issue for context.
+- **Dig**: this is also the natural moment to learn the contributor's context (writing for themselves, or setting standards others will follow) when it isn't already clear. Calibrate offers accordingly, per the skill's calibration guidance.
 
 ### 6. Verify Against the Code
 
@@ -123,6 +92,7 @@ When the contributor is satisfied:
 - If you drafted on a template, set the optional `template` field to the catalog `id` and add the `attribution` line from `templates.yml`.
 - If the repo has an `llms.txt`, add an entry for the new doc.
 - Update related docs to cross-reference this new content (or make the edits and show the contributor what you changed).
+- In a git repo, when the work touched several files (the new doc plus cross-reference updates), offer to put the change set on a docs branch rather than leaving it on the default branch. Never commit to the default branch unless asked.
 - Note remaining follow-ups: the backlog docs the dump revealed, images or diagrams that would help, or cross-references a subject matter expert should verify.
 
 ## Notes

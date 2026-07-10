@@ -21,6 +21,10 @@ Focus on **content and strategy**, the things that require judgment:
 Leave mechanical checks to linters (Vale, markdownlint, cspell).
 You can note obvious style issues, but your primary value is understanding the documentation holistically and identifying opportunities to better serve users.
 
+Resolve `.docs-assist/config.yml` and `style.md` first if they exist, and audit against them.
+When they do not exist, do not stop to ask about conventions: the docs set's own internal consistency is the standard.
+Hold the set to the rigor of a full documentation team reviewing a solo writer's work: example values that drift between docs, the same concept under different terms, stale cross-references, and structural inconsistencies between sibling docs.
+
 ## Audit Process
 
 Match the depth of the audit to the target. A full documentation set, a single directory, a handful of changed files, and a diff are different jobs. Do not run whole-set steps against a few files.
@@ -163,4 +167,4 @@ Focus on issues that are high-impact and low-effort first.
 - An audit reports; it does not edit. When `llms.txt` is stale or missing, flag it as a finding and recommend `/docs-assist:update` to apply the fix
 - Consider context: some "issues" may be intentional choices
 - For large repositories, ask how to handle the files list before outputting
-- For large documentation sets, fan out: launch the `doc-auditor` subagent in parallel across slices of the set, then consolidate the findings into one prioritized report
+- For large documentation sets, fan out: launch the `doc-auditor` subagent in parallel across slices of the set, then consolidate the findings into one prioritized report. Include the resolved conventions in each subagent's brief (the relevant `.docs-assist/config.yml` settings and `style.md` rules, or the inferred conventions when no config exists), so every slice audits against the same standard

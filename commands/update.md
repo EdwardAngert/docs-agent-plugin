@@ -47,6 +47,8 @@ Separate confident matches (a doc documents a flag you renamed) from weak matche
 
 ### 5. Update the Docs
 
+Before editing, check the branch. If the working tree is on the default branch and the update will touch more than a file or two, offer to do the pass on a docs branch so the result arrives as a reviewable change set. Never commit to the default branch unless asked. The contributor's existing workflow (they may already be on a feature branch) wins.
+
 For a small number of affected docs, edit them directly, applying the standard drafting rules.
 
 For a larger set, fan out: launch the `doc-updater` subagent once per affected doc, in parallel, each with the change summary and one doc path. Each subagent edits its doc in the working tree and reports what it changed. This keeps large updates fast and consistent.

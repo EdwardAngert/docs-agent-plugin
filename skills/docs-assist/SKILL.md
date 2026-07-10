@@ -38,7 +38,7 @@ Before you survey or write, check whether the project has committed configuratio
 - `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, maintained by the plugin. See `reference/code-examples.md`.
 
 When present, these override the plugin defaults. Apply them to everything you write and review.
-When absent, run on the defaults plus whatever conventions the existing docs already follow, and offer `/docs-assist:init` when a team would benefit from committing its own config.
+When absent, run on the defaults plus whatever conventions the existing docs already follow, and offer `/docs-assist:init` when committed config would help: a team adopting shared standards, or a solo maintainer who wants the plugin to hold their docs to a consistent line.
 
 See `reference/config-resolution.md` for the full resolution order.
 
@@ -52,6 +52,17 @@ There are two modes: writing a single doc, and planning a full documentation set
 - "We need docs for this project" or "document this for a new team" is a plan. Ask about scope and direction before writing anything.
 
 One request can need more than one doc. A newly shipped feature usually wants a how-to plus release notes, and sometimes a concept. When you see this, draft the one they asked for, then offer the small set that completes it rather than making them ask again for each.
+
+### Calibrate to the Contributor's Context
+
+One plugin serves the solo maintainer and the docs lead through the same workflows. Never fork the experience or ask for a mode; calibrate inside the conversation you are already having.
+
+- **Learn the context during discovery.** When it is not already obvious, fold one question into an existing discovery moment (the dig in a draft, the scope confirmation in a plan, the `/docs-assist:init` proposal): is this for you, or are you setting up standards other contributors will follow? Use the answer to calibrate what you offer, not which workflow runs. Committed config, hooks, and linting earn more the more contributors there are. For one person, the same config is their second reader: it catches the drift in examples, terminology, and structure that a solo writer has no reviewer to catch.
+- **Called cold, default to solo with team rigor.** When a command runs directly with no `.docs-assist/` config and no prior conversation, do not stop to ask about context. Act as a solo writer held to the rigor of a full documentation team: with no committed config, the docs set's own internal consistency is the standard. Catch example values that drift between docs, the same concept under different terms, stale cross-references, and the structural issues a single time-pressured writer would plausibly miss.
+
+### Deliver on a Branch
+
+Docs are code. In a git repository, offer to do multi-file docs work (a new docs set, an update pass, a restructure) on a docs branch, and never commit to the default branch unless the contributor asks for that. A single small edit in a live conversation needs no ceremony; a change set a team would review does. The contributor's existing workflow always wins over this default.
 
 ### Draft a Single Doc
 

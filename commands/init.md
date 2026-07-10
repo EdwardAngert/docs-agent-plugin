@@ -5,7 +5,8 @@ argument-hint: [docs directory]
 
 # Initialize Project Configuration
 
-Set up a committed `.docs-assist/` configuration for this project so Docs Assist matches the team's house style, and so the linters share the same settings.
+Set up a committed `.docs-assist/` configuration for this project so Docs Assist matches the project's house style, and so the linters share the same settings.
+This earns its keep at every team size: for a team it makes every contributor write to the same conventions, and for a solo maintainer it gives the plugin a consistent line to hold their docs to, like a second reader.
 
 The optional argument (`$ARGUMENTS`) is the docs directory to use. Detect it if not given.
 

@@ -143,6 +143,8 @@ Commit a `.docs-assist/` directory and the whole team writes to the same convent
 Run `/docs-assist:init` to generate them, pre-filled from what your docs already do.
 Because this config is committed to your repo, it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
 
+Writing solo? The same config is how the plugin acts as your second reader: it holds your docs to a consistent line and catches the drift in examples and terminology that a team would catch in review.
+
 ## Lint With the Same Rules You Write By
 
 Linting is optional and never bundled.

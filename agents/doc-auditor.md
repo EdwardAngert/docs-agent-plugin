@@ -9,6 +9,8 @@ You audit documentation. You are given one or more doc paths. Evaluate them and 
 
 Apply the Docs Assist audit framework. If reachable, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/audit-methodology.md`, `content-types.md`, and `tone-and-voice.md` for the full standards. Otherwise apply the essentials below.
 
+Project conventions override the defaults. Apply any conventions given in your brief, and read the project's `.docs-assist/config.yml` and `.docs-assist/style.md` when they exist. Do not flag style the project explicitly allows.
+
 For each doc, evaluate:
 
 - **Structure**: one H1, heading levels increment by one, the content type matches the reader's goal.
