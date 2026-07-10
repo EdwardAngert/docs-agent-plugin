@@ -3,6 +3,31 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
+## 0.9.0 - 2026-07-10
+
+The reviewer gets a vocabulary, and the release gets a writer.
+0.8.0 established that a cold invocation acts as a solo writer held to full-documentation-team rigor; 0.9.0 ships the two highest-ranked recommendations from that release's review.
+A terminology registry (`.docs-assist/terms.txt`) gives that reviewer a canonical vocabulary to check prose against, the same fix example-variables applied to code samples, because the same concept under different names is the drift a solo writer can least afford and least often catches.
+And a new `/docs-assist:release-notes` command closes the docs-as-code loop: the plugin that keeps docs in sync with code changes can now write the reader-facing notes for the release itself.
+
+<details>
+<summary>All changes in 0.9.0</summary>
+
+### Added
+
+- A terminology registry, in a new `reference/terminology.md` and `.docs-assist/terms.txt`: canonical product terms and the variants to avoid, in the same human-editable format as the example-variables registry.
+  The plugin writes with the canonical terms, `/docs-assist:audit` and the `doc-auditor` subagent flag prose that drifts from them (and the same concept under different names even without a registry), `/docs-assist:init` offers to seed the file from the terms the docs already use, and the term-rename edge in `reference/impact-analysis.md` now includes it.
+  This repo dogfoods one at `.docs-assist/terms.txt`.
+- `/docs-assist:release-notes [range, tag, or version]`: turn a release's worth of changes into reader-facing release notes.
+  It resolves the range, reads commits and merged PRs for what a reader can observe, asks the contributor for the why, and writes notes that lead with breaking changes and upgrade steps, matching the project's changelog convention (or offering the Good Docs release-notes template when starting fresh).
+
+### Changed
+
+- `reference/tone-and-voice.md`: folded a stray markdownlint citation into the rule it supports, and the terminology section now points at the terms registry and `style-guides.md` instead of two bare external links.
+- `llms.txt`: the "Optional" section is now "For Docs Leads", naming who those references serve.
+
+</details>
+
 ## 0.8.0 - 2026-07-10
 
 One plugin, every team size.
