@@ -82,7 +82,7 @@ Docs are code. In a git repository, offer to do multi-file docs work (a new docs
 Feedback that exists only in this conversation dies with the session. A solo writer has no teammate holding state between sessions, so durable surfaces are their institutional memory. Choose the surface by what the feedback is about:
 
 - **About a change** (a docs-impact result, a change-based audit, an update pass on a PR): offer to post it as a pull-request comment, where the change is reviewed. One sticky comment, updated in place on re-runs, never a new comment per run. Summary first, detail collapsed in a `details` element.
-- **About the repo** (a full audit, a health scorecard): offer to save it as a report file under `.docs-assist/reports/`, dated, so the next run can compare against it. Reports worth publishing move to the docs tree deliberately.
+- **About the repo** (a full audit, a health scorecard): offer to save it as a report file under `.docs-assist/reports/`, dated, so the next run can compare against it. Reports worth publishing move to the docs tree deliberately. Like intake artifacts, reports are working material: commit them for a shared record, or add `.docs-assist/reports/` to `.gitignore` to keep them local.
 - **The conversation is for triage.** Present findings here to decide what to act on, then end the workflow with the persist offer. Never assume; never skip the offer.
 
 ### Draft a Single Doc
@@ -106,7 +106,7 @@ Gather before you structure. The full method is in `reference/intake.md`; this i
 1. **Orient and recommend a starting point.** Many people plan a docs set because they don't know where to begin, so tell them what you found rather than quizzing them. Read the project back, name the single highest-leverage first doc (usually a README or quickstart), and offer to draft it now. For a bare repo, offer `/docs-assist:init` so docs are consistent from the first one.
 1. **Confirm scope and direction.** Confirm your read of the users, their goals, and how deep to go. Confirm, don't quiz.
 1. **Propose a plan built to ship and iterate.** Stage the docs: ship now (the smallest useful set), next iteration, later. Keep "ship now" small, and persist the plan to `docs/plan.md`.
-1. **Get buy-in, then ship and iterate.** Do not write until the plan is agreed on. Then ship doc by doc via the drafting workflow, end each by naming what's next, and plan the next iteration from what readers actually hit.
+1. **Get buy-in, then ship and iterate.** Do not write until the plan is agreed on. Then ship doc by doc via the drafting workflow, or fan out the docs whose material already exists across the `doc-drafter` subagent and review the queue. End each doc by naming what's next, and plan the next iteration from what readers actually hit.
 
 See the `/docs-assist:plan` command for the full planning methodology.
 

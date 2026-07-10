@@ -17,9 +17,9 @@
 
 ## Commands
 
+- [/docs-assist:health](commands/health.md): Fast docs health check: a scorecard across coverage, freshness, consistency, and findability, plus the single highest-leverage fix. The recommended first command.
 - [/docs-assist:draft](commands/draft.md): Guided workflow for SMEs to contribute a single document.
 - [/docs-assist:plan](commands/plan.md): Plan a full documentation set: user journeys, content types, priorities, and writing order.
-- [/docs-assist:health](commands/health.md): Fast docs health check: a scorecard across coverage, freshness, consistency, and findability, plus the single highest-leverage fix. The recommended first command.
 - [/docs-assist:audit](commands/audit.md): Systematic documentation audit for quality, gaps, and structure.
 - [/docs-assist:make-examples](commands/make-examples.md): Add or improve code examples in existing docs.
 - [/docs-assist:init](commands/init.md): Scaffold project-local configuration so the plugin and the linters share one source of truth.

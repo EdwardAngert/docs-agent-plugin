@@ -84,6 +84,7 @@ Once installed, the plugin activates automatically whenever someone asks for doc
 No special commands required.
 A few commands are worth knowing:
 
+- `/docs-assist:health`: a thirty-second scorecard of where the docs stand (coverage, freshness, consistency, findability) and the one fix to start with. The best first command after installing, and the periodic pulse check afterward.
 - `/docs-assist:draft`: guided intake for a single document. It opens by asking the contributor to share everything they know, then shapes it into a draft.
 - `/docs-assist:plan`: for "we need docs for this project" moments. Reads the codebase, tells you what it found and where to start, and produces a plan built to ship the useful docs first and iterate. Start here when rolling out documentation for a new project or team.
 - `/docs-assist:template`: start a doc from a proven structure (The Good Docs Project) instead of a blank page.

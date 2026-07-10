@@ -65,9 +65,10 @@ const changedDocs = changed.filter(([s, f]) => !s.startsWith('R') && isDoc(f)).m
 const changedSrc = changed.filter(([, f]) => f && !isDoc(f)).map(([, f]) => f)
   .filter((f) => /\.(js|mjs|ts|jsx|tsx|py|go|rs|java|rb|sh|c|cpp|h|json|ya?ml|toml)$/.test(f));
 
-// 2. Heading changes in docs (anchor-link risk).
+// 2. Heading changes in docs (anchor-link risk). Renamed docs are scanned
+// too: a move plus a heading edit rides both edges.
 const headingChanges = [];
-for (const f of changedDocs) {
+for (const f of [...changedDocs, ...movedDocs.map(([, , to]) => to)]) {
   let diff = '';
   try { diff = sh(`git diff -U0 ${range} -- "${f}"`); } catch { continue; }
   const hits = diff.split('\n').filter((l) => /^[-+]#{1,4} /.test(l));
@@ -88,9 +89,11 @@ if (changedSrc.length && docsSet.length) {
     if (tokens.size > 400) break;
   }
   const noise = /^(this|that|with|from|return|const|function|import|export|class|public|private|string|number|boolean|value|values|true|false|null|undefined|error|errors|test|tests|https?|about|which|would|should|there|these|those)$/i;
+  const docsLower = docsSet.map((d) => ({ file: d.file, text: d.text.toLowerCase() }));
   for (const token of tokens) {
     if (noise.test(token)) continue;
-    const mentions = docsSet.filter((d) => d.text.includes(token)).map((d) => d.file);
+    const needle = token.toLowerCase();
+    const mentions = docsLower.filter((d) => d.text.includes(needle)).map((d) => d.file);
     if (mentions.length) termHits.set(token, mentions);
     if (termHits.size >= 20) break;
   }

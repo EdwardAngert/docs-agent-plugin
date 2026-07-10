@@ -148,15 +148,7 @@ Options:
 4. **Skip**: Omit this section entirely
 ```
 
-### 5. Deliver the Report by Scope
-
-The conversation is for triage; end with a persist offer, per the skill's feedback guidance.
-
-- A change-based audit of a PR: offer to post the report as a sticky PR comment (`gh pr comment`), summary first with detail collapsed in a `details` element. Update the existing comment on a re-run rather than adding another.
-- A full-set or directory audit: offer to save it to `.docs-assist/reports/audit-<date>.md`, so the next audit can be compared against it.
-- Either way, present the findings here first and let the user choose. Never persist without the offer.
-
-### 6. Prioritize Issues
+### 5. Prioritize Issues
 
 Rank all issues by:
 
@@ -165,6 +157,14 @@ Rank all issues by:
 - **Frequency**: How often do users encounter this?
 
 Focus on issues that are high-impact and low-effort first.
+
+### 6. Deliver the Report by Scope
+
+The conversation is for triage; end with a persist offer, per the skill's feedback guidance.
+
+- A change-based audit of a PR: offer to post the report as a sticky PR comment (`gh pr comment`), summary first with detail collapsed in a `details` element. Update the existing comment on a re-run rather than adding another.
+- A full-set or directory audit: offer to save it to `.docs-assist/reports/audit-<date>.md`, so the next audit can be compared against it.
+- Either way, present the findings here first and let the user choose. Never persist without the offer.
 
 ## Notes
 

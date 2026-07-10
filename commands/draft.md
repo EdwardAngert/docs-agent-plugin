@@ -21,7 +21,7 @@ The full method is in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake
 
 ## Process
 
-### 1 Through 5: Run the Intake Loop
+### 1-5. Run the Intake Loop
 
 Run the first five intake moves as `intake.md` defines them: survey quietly, ask for the dump, reflect it back, situate it, then dig at the gaps.
 

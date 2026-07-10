@@ -113,7 +113,7 @@ Use this for:
 - Existing projects with scattered docs that need a coherent structure
 - Onboarding a team to a tool and needing to document it for them
 
-Once you agree on the plan, Claude works through it doc by doc.
+Once you agree on the plan, Claude works through it doc by doc, and drafts the docs whose material already exists in parallel while you review the queue.
 
 ### Add Examples to Existing Docs
 
