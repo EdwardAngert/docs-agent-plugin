@@ -1,6 +1,6 @@
 ---
 title: "Docs Assist Command Reference"
-description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers draft, plan, template, make-examples, audit, update, init, setup-lint, and setup-hooks."
+description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers draft, plan, template, make-examples, audit, update, release-notes, init, setup-lint, and setup-hooks."
 content-type: reference
 audience: users
 keywords:
@@ -28,6 +28,7 @@ Every command also works with no argument: it asks for what it needs.
 | `/docs-assist:make-examples` | Add or improve code examples in a doc         | `[doc-path]`                         |
 | `/docs-assist:audit`         | Audit docs for quality, gaps, and structure   | `[path]`                             |
 | `/docs-assist:update`        | Update the docs affected by a code change     | `[git ref, PR number, or path]`      |
+| `/docs-assist:release-notes` | Write reader-facing notes for a release       | `[range, tag, or version]`           |
 | `/docs-assist:init`          | Scaffold project-local configuration          | `[docs directory]`                   |
 | `/docs-assist:setup-lint`    | Scaffold optional documentation linting       | `[tool]`                             |
 | `/docs-assist:setup-hooks`   | Install opt-in git and in-session hooks       | `[hook]`                             |
@@ -106,6 +107,18 @@ Use it after a code change so the docs keep pace.
 
 ```text
 /docs-assist:update 42
+```
+
+### /docs-assist:release-notes
+
+`/docs-assist:release-notes [range, tag, or version]`
+
+Turn a release's worth of changes into reader-facing release notes.
+It reads the commits and merged PRs in the range, asks you for the why, and writes notes that lead with breaking changes and upgrade steps, matching the project's changelog convention.
+Use it when cutting a release, so the notes describe outcomes readers care about instead of repeating commit messages.
+
+```text
+/docs-assist:release-notes v0.8.0..HEAD
 ```
 
 ## Configure Your Project

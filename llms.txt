@@ -25,6 +25,7 @@
 - [/docs-assist:setup-lint](commands/setup-lint.md): Scaffold optional documentation linting (Vale, markdownlint, MegaLinter, cspell, link check), generated from the project config and respecting any existing linter.
 - [/docs-assist:setup-hooks](commands/setup-hooks.md): Install opt-in documentation hooks (git pre-commit lint, in-session doc lint). Default off.
 - [/docs-assist:update](commands/update.md): Find and update the docs affected by a code change (a diff, a PR, or changed files).
+- [/docs-assist:release-notes](commands/release-notes.md): Turn a release's worth of changes into reader-facing release notes, leading with breaking changes and upgrade steps.
 - [/docs-assist:template](commands/template.md): Suggest and scaffold a documentation template (The Good Docs Project) for a healthy start. Opt-in.
 
 ## Agents
@@ -41,11 +42,12 @@
 - [Frontmatter spec](skills/docs-assist/reference/frontmatter-spec.md): Schema for per-doc metadata: fields, tiers, and how the plugin uses them.
 - [Tone and voice](skills/docs-assist/reference/tone-and-voice.md): Formatting rules, heading case, markdown style, and voice guidelines.
 - [Code examples](skills/docs-assist/reference/code-examples.md): Write safe code samples that stay consistent across docs, using a plugin-maintained example-variables registry.
+- [Terminology](skills/docs-assist/reference/terminology.md): Keep product terms consistent across docs, using a plugin-maintained terms registry that audits check for drift.
 - [Config resolution](skills/docs-assist/reference/config-resolution.md): How a project's committed `.docs-assist/` configuration overrides the defaults and feeds the linters.
 - [Documentation patterns](skills/docs-assist/reference/documentation-patterns.md): Patterns, antipatterns, examples, SEO, and accessibility.
 - [Templates](skills/docs-assist/reference/templates.md): Suggest and apply external documentation templates (The Good Docs Project) for a healthy start. Opt-in, with content-type and seven-action selection.
 
-## Optional
+## For Docs Leads
 
 - [Audit methodology](skills/docs-assist/reference/audit-methodology.md): Systematic audit process for docs leads.
 - [Impact analysis](skills/docs-assist/reference/impact-analysis.md): Scope a change-based audit or update. Maps each change type to the edges it can break, with a traversal budget and residual-risk reporting.
