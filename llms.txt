@@ -52,3 +52,4 @@
 - [IA methodology](skills/docs-assist/reference/ia-methodology.md): Information architecture research, design, and validation.
 - [Style guides](skills/docs-assist/reference/style-guides.md): Style guide selection, components, and enforcement strategies.
 - [Contributing](CONTRIBUTING.md): How to contribute to this plugin.
+- [0.8.0 product review findings](docs/reviews/0.8.0-findings.md): The prioritized findings behind the 0.8.0 release, with the remaining recommendations.
