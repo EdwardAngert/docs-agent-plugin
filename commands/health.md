@@ -37,7 +37,9 @@ With no committed config, the standard is the set's own internal consistency, pe
 
 ### 3. Deliver the Scorecard
 
-Keep it small enough to read in thirty seconds:
+Before writing it, check `.docs-assist/reports/` for a previous health scorecard. When one exists, note what moved: a dimension that improved or regressed since the last check is more useful than any absolute rating.
+
+Keep the scorecard small enough to read in thirty seconds:
 
 ```markdown
 ## Docs Health: <repo name>
@@ -63,6 +65,8 @@ End with an offer, not homework. Match the offer to the finding:
 - Broad problems across dimensions: recommend the full `/docs-assist:audit` and offer to run it.
 
 One offer, sized to ship in this session. Getting the first fix out the door is the point; the rest belongs in the next pulse check or the full audit.
+
+Also offer to save the scorecard to `.docs-assist/reports/health-<date>.md`, so the next check has a baseline to compare against and the trend survives the session.
 
 ## Notes
 

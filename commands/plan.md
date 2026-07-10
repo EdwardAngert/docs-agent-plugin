@@ -46,6 +46,8 @@ If the contributor has a pile of raw source material (tickets, a PRD, Slack thre
 
 The inventory feeds the plan: clusters become candidate docs, gaps become priorities. If there is no pile, skip this step.
 
+When the inventory's gaps point at knowledge that lives with people who are not in the session, offer intake packets (portable questionnaires, pre-loaded with what the survey and code already reveal) so their answers arrive as more pile. See the async section of `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`.
+
 ### 3. Orient and Recommend a Starting Point
 
 Before asking the contributor to think like a docs strategist, tell them what you found and where you'd start. Many people reach for this because they don't know where to begin. Don't hand them a questionnaire.
@@ -124,7 +126,15 @@ Adjusting a plan is cheap. Rewriting docs is expensive.
 
 ### 8. Execute and Iterate
 
-Once the plan is approved, ship doc by doc. Each follows the `/draft` workflow (survey, dump, reflect, situate, dig, verify, shape, outline, draft, review, finalize).
+Once the plan is approved, ship doc by doc, or fan the stage out in parallel. Each doc follows the `/draft` workflow (survey, dump, reflect, situate, dig, verify, shape, outline, draft, review, finalize).
+
+**Fan out the ship-now stage when the material already exists.** Split the stage honestly:
+
+- Docs whose knowledge is already captured (in the intake inventory, the code, or existing docs) can be drafted in parallel: launch the `doc-drafter` subagent once per doc, each briefed with its plan entry, the target path, the relevant inventory and code paths, and the resolved conventions (config, `style.md`, `terms.txt`, `example-variables.txt`). This is multi-file work, so the branch delivery rule applies.
+- Docs that need fresh knowledge from a human stay conversational. Do not fan out a doc whose material does not exist; the drafter flags gaps, it does not invent.
+- Consolidate the fan-out: collect each drafter's report, add their proposed `llms.txt` entries yourself (subagents never edit shared files), apply the cross-references they suggest, and present the contributor a review queue of drafts with every `needs-sme` flag gathered in one list.
+
+The contributor's role in a fan-out is reviewer, not co-author: they work the queue for accuracy while you handle everything else.
 
 - **Ship the start-here doc first**, then the rest of "ship now." Getting good docs out the door is the point; don't wait for the whole set.
 - **Keep momentum.** End each doc by naming what's next: "That's the quickstart done. Next up: the configuration reference." The contributor should never wonder where they are.

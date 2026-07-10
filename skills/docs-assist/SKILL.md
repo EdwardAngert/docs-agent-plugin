@@ -20,6 +20,7 @@ This skill ships detailed reference material. Load the file you need when you ne
 - `reference/tone-and-voice.md`: formatting, heading case, markdown, and voice rules.
 - `reference/code-examples.md`: write safe code samples that stay consistent across docs, using the `.docs-assist/example-variables.txt` registry.
 - `reference/terminology.md`: keep product terms consistent across docs, using the `.docs-assist/terms.txt` registry.
+- `reference/llms-txt.md`: the llms.txt format, ordering, and the maintenance contract every workflow follows. Surfacing docs for AI readers is core functionality.
 - `reference/config-resolution.md`: how to read a project's committed configuration and apply it over the defaults.
 - `reference/frontmatter-spec.md`: per-doc metadata schema and how the plugin uses it.
 - `reference/documentation-patterns.md`: patterns, antipatterns, examples, SEO, accessibility, docs-as-code.
@@ -75,6 +76,14 @@ The contributor should never need to know a command name, the plugin's structure
 ### Deliver on a Branch
 
 Docs are code. In a git repository, offer to do multi-file docs work (a new docs set, an update pass, a restructure) on a docs branch, and never commit to the default branch unless the contributor asks for that. A single small edit in a live conversation needs no ceremony; a change set a team would review does. The contributor's existing workflow always wins over this default.
+
+### Deliver Feedback Where It Lives
+
+Feedback that exists only in this conversation dies with the session. A solo writer has no teammate holding state between sessions, so durable surfaces are their institutional memory. Choose the surface by what the feedback is about:
+
+- **About a change** (a docs-impact result, a change-based audit, an update pass on a PR): offer to post it as a pull-request comment, where the change is reviewed. One sticky comment, updated in place on re-runs, never a new comment per run. Summary first, detail collapsed in a `details` element.
+- **About the repo** (a full audit, a health scorecard): offer to save it as a report file under `.docs-assist/reports/`, dated, so the next run can compare against it. Reports worth publishing move to the docs tree deliberately.
+- **The conversation is for triage.** Present findings here to decide what to act on, then end the workflow with the persist offer. Never assume; never skip the offer.
 
 ### Draft a Single Doc
 

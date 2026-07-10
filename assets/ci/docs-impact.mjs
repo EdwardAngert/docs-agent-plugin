@@ -15,6 +15,9 @@
 //                              "large change, no docs touched" signal
 //                              (default: 100)
 //   DOCS_IMPACT_STRICT         "1" exits nonzero when signals fire
+//   DOCS_IMPACT_REPORT_FILE    when set, the report is also written there
+//                              (the workflow uses this to post a sticky
+//                              PR comment)
 //   GITHUB_STEP_SUMMARY        when set, the report is appended there too
 
 import { execSync } from 'node:child_process';
@@ -118,4 +121,5 @@ if (signals.length) {
 }
 console.log(report);
 if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, report + '\n');
+if (process.env.DOCS_IMPACT_REPORT_FILE) writeFileSync(process.env.DOCS_IMPACT_REPORT_FILE, report);
 if (signals.length && process.env.DOCS_IMPACT_STRICT === '1') process.exit(1);

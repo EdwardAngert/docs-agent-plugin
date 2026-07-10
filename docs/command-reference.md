@@ -1,6 +1,6 @@
 ---
 title: "Docs Assist Command Reference"
-description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, plan, template, make-examples, audit, update, release-notes, agent-ready, init, setup-lint, and setup-hooks."
+description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, plan, template, make-examples, audit, update, release-notes, agent-ready, init, setup-lint, setup-hooks, and setup-site."
 content-type: reference
 audience: users
 keywords:
@@ -33,7 +33,8 @@ Every command also works with no argument: it asks for what it needs.
 | `/docs-assist:agent-ready`   | Make the docs legible to AI tools             | `[docs directory]`                   |
 | `/docs-assist:init`          | Scaffold project-local configuration          | `[docs directory]`                   |
 | `/docs-assist:setup-lint`    | Scaffold optional documentation linting       | `[tool]`                             |
-| `/docs-assist:setup-hooks`   | Install opt-in git and in-session hooks       | `[hook]`                             |
+| `/docs-assist:setup-hooks`   | Install opt-in git, in-session, and CI hooks  | `[hook]`                             |
+| `/docs-assist:setup-site`    | Generate site navigation from docs metadata   | `[docusaurus \| mkdocs]`             |
 
 ## Write and Plan
 
@@ -183,4 +184,16 @@ The argument names a hook: `pre-commit`, `claude-code`, `ci`, or `all`.
 
 ```text
 /docs-assist:setup-hooks pre-commit
+```
+
+### /docs-assist:setup-site
+
+`/docs-assist:setup-site [docusaurus | mkdocs]`
+
+Generate site navigation from the docs' own metadata: `llms.txt` reader-priority order becomes the sidebar order, and frontmatter titles become the labels.
+When no static site generator exists, it scaffolds a minimal Docusaurus or MkDocs setup wired to your docs directory.
+Deliberately not a site builder: theming, search, and deployment stay with your generator's own tooling.
+
+```text
+/docs-assist:setup-site mkdocs
 ```
