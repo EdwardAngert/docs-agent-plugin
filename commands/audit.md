@@ -46,16 +46,16 @@ For a full set, explore the documentation structure:
 
 ### 2. Check External Links
 
-Docs rot silently when a linked repo, page, or account is renamed, moved, or deleted elsewhere — nothing in the doc itself changes, so content review alone will not catch it. This is mechanical, so use an existing tool rather than re-implementing it, in this order:
+Docs rot silently when a linked repo, page, or account is renamed, moved, or deleted elsewhere: nothing in the doc itself changes, so content review alone will not catch it. This is mechanical, so use an existing tool rather than re-implementing it, in this order:
 
-1. **Already wired up**: if `.markdown-link-check.json` exists, or `.docs-assist/config.yml` sets `lint.link_check`, or `.github/workflows/` already runs a link check, it's owned by the linter, the same way Vale/markdownlint are. Don't re-check by hand — note its last CI result and move on. If it's failing or hasn't run recently, flag that as the finding instead of the individual links.
-2. **No CI yet, but the repo has GitHub Actions**: recommend `/docs-assist:setup-lint` to wire the link-check step into `.github/workflows/docs-lint.yml` (it scaffolds `markdown-link-check` with the right config) so this runs on every PR instead of once per audit. Still do a one-off pass this run (step 3) so the current audit isn't empty-handed.
-3. **No tooling at all, or a one-off scoped audit**: run `npx --yes markdown-link-check --quiet <files>` directly (add `--config .markdown-link-check.json` if present) rather than hand-rolling requests with `curl`/`WebFetch`. Treat its dead-link findings as Critical.
+1. **Already wired up**: if `.markdown-link-check.json` exists, or `.docs-assist/config.yml` sets `lint.link_check`, or `.github/workflows/` already runs a link check, it's owned by the linter, the same way Vale/markdownlint are. Don't re-check by hand; note its last CI result and move on. If it's failing or hasn't run recently, flag that as the finding instead of the individual links.
+1. **No CI yet, but the repo has GitHub Actions**: recommend `/docs-assist:setup-lint` to wire the link-check step into `.github/workflows/docs-lint.yml` (it scaffolds `markdown-link-check` with the right config) so this runs on every PR instead of once per audit. Still do a one-off pass this run (step 3) so the current audit isn't empty-handed.
+1. **No tooling at all, or a one-off scoped audit**: run `npx --yes markdown-link-check --quiet <files>` directly (add `--config .markdown-link-check.json` if present) rather than hand-rolling requests with `curl`/`WebFetch`. Treat its dead-link findings as Critical.
 
-A redirect that `markdown-link-check` still counts as alive can hide a rename (`github.com/OWNER/REPO` resolving to a different owner or repo name is the common case). If a link looks suspicious — an org/repo name that doesn't match the project, a host that redirects — spot-check that one URL's effective destination (`curl -sIL -o /dev/null -w '%{url_effective}\n' <url>`) and propose the corrected URL; don't do this for every link, only ones flagged as worth a second look.
+A redirect that `markdown-link-check` still counts as alive can hide a rename (`github.com/OWNER/REPO` resolving to a different owner or repo name is the common case). If a link looks suspicious (an org/repo name that doesn't match the project, a host that redirects), spot-check that one URL's effective destination (`curl -sIL -o /dev/null -w '%{url_effective}\n' <url>`) and propose the corrected URL; don't do this for every link, only ones flagged as worth a second look.
 
 - For a change-based audit, check only the links touched by or added in the diff, not the whole set (see `impact-analysis.md`).
-- For a large full-set audit, this step runs once against the deduped file list, not per subagent slice — running it inside the `doc-auditor` fan-out described in the Notes below would just duplicate the same network calls.
+- For a large full-set audit, this step runs once against the deduped file list, not per subagent slice: running it inside the `doc-auditor` fan-out described in the Notes below would just duplicate the same network calls.
 
 ### 3. Analyze Content
 
@@ -147,7 +147,7 @@ These may be intentionally linked from external sources or may be unused.
 ### Unverifiable Links
 
 The following external links could not be checked (network error, timeout, or auth-gated).
-Not reported as broken — just unconfirmed.
+Not reported as broken, just unconfirmed.
 
 - `path/to/doc.md`: `https://example.com/page`
 

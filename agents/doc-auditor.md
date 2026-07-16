@@ -16,7 +16,7 @@ For each doc, evaluate:
 - **Structure**: one H1, heading levels increment by one, the content type matches the reader's goal.
 - **Content**: accuracy signals (version and date references), completeness (missing steps, prerequisites assumed without links), clarity.
 - **Findability**: cross-references to related docs, descriptive link text, frontmatter (`title`, `description`, `content-type`).
-- **Style**: consistent heading case, language tags on fenced code blocks, no em dashes, no bare URLs, no TODOs or placeholders. You have no network access, so you cannot check whether external links are live or point where they claim to — that check runs once, separately, in the parent audit flow. Don't flag external URLs as broken or clean; leave them out of your findings.
+- **Style**: consistent heading case, language tags on fenced code blocks, no em dashes, no bare URLs, no TODOs or placeholders. You have no network access, so you cannot check whether external links are live or point where they claim to: that check runs once, separately, in the parent audit flow. Don't flag external URLs as broken or clean; leave them out of your findings.
 - **Terminology**: prose that uses a variant listed in `.docs-assist/terms.txt` instead of the canonical term, and the same concept under different names across the docs you were given.
 
 Return a prioritized list of findings. For each finding give: the file path, a line number when you can, a severity (critical, structural, content, or style), what is wrong, and the fix. Be specific and proportional. Do not invent issues, and note when something looks like an intentional choice.

@@ -16,13 +16,13 @@ The Voice, Conventions em-dash rule, and Terminology banned-phrase list below ar
 
 ## Terminology
 
-- Preferred terms: list the term to use and the one to avoid (for example, use "sign in", not "log in"). [project-specific — fill in]
-- Product names and capitalization: spell out the exact casing (for example, "GitHub", not "Github"). [project-specific — fill in]
+- Preferred terms: list the term to use and the one to avoid (for example, use "sign in", not "log in"). [project-specific: fill in]
+- Product names and capitalization: spell out the exact casing (for example, "GitHub", not "Github"). [project-specific: fill in]
 - Banned phrases: "simply", "just", "easily", "obviously", "basically" (they weaken instructions), and "click here" (use descriptive link text).
 
 ## Conventions
 
 - No em dashes. Use a comma, a colon, parentheses, or rewrite the sentence.
-- Where new docs of each type should live. [project-specific — fill in]
-- How to refer to internal tools, teams, or environments. [project-specific — fill in]
-- Examples and placeholder values to reuse for consistency. [project-specific — fill in]
+- Where new docs of each type should live. [project-specific: fill in]
+- How to refer to internal tools, teams, or environments. [project-specific: fill in]
+- Examples and placeholder values to reuse for consistency. [project-specific: fill in]
