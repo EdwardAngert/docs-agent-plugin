@@ -36,7 +36,7 @@ Confirm before writing. If a value is ambiguous, ask a focused question rather t
 When the user approves:
 
 - Write `.docs-assist/config.yml` with the agreed values.
-- Write `.docs-assist/style.md` from `${CLAUDE_PLUGIN_ROOT}/assets/config/style.md`, pre-filling the voice and terminology sections with anything you can infer from existing docs (leave clear placeholders for what you cannot).
+- Write `.docs-assist/style.md` from `${CLAUDE_PLUGIN_ROOT}/assets/config/style.md`. Voice, the no-em-dash rule, and the banned-phrase list are already the Docs Assist opinionated defaults, not placeholders — keep them unless the repo's existing docs show a real convention that contradicts them (for example, docs that already lean on em dashes throughout). Terminology's product names and preferred terms, and the project-specific Conventions entries, have no sensible default: infer them from existing docs where you can, and leave the `[project-specific — fill in]` markers otherwise.
 - Never overwrite an existing `.docs-assist/` file without showing the diff and confirming.
 
 ### 4. Offer Templates and Linting

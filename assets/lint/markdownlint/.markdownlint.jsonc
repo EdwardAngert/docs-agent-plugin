@@ -3,45 +3,174 @@
   // Scaffolded by `/docs-assist:setup-lint` from .docs-assist/config.yml.
   // Encodes the structural markdown rules. Prose style (em dashes, headings,
   // weasel words) is handled by the Vale DocsAssist style.
+  //
+  // This is the Docs Assist opinionated default: every rule below was
+  // reviewed and decided explicitly, not left to markdownlint's built-in
+  // defaults. `default: true` only catches rules newer than this list.
 
   "default": true,
 
-  // One H1 per file. Ignore the frontmatter "title" field so docs can carry
-  // both a frontmatter title and a matching body H1 (the recommended convention).
-  "MD025": { "front_matter_title": "" },
-  "MD041": true,
-
-  // Heading levels increment by one.
+  // MD001 - Heading levels increment by one at a time.
   "MD001": true,
 
-  // Blank lines around headings and lists.
-  "MD022": true,
-  "MD032": true,
+  // MD003 - Heading style: consistent with whatever the first heading uses
+  // (not forced to ATX or Setext specifically).
+  "MD003": { "style": "consistent" },
 
-  // Fenced code blocks must declare a language.
-  "MD040": true,
-
-  // Unordered lists use "-" (from config.yml list_marker).
+  // MD004 - Unordered lists use "-" (from config.yml list_marker).
   "MD004": { "style": "dash" },
 
-  // Ordered lists use a repeated "1." (from config.yml ordered_list_style).
-  "MD029": { "style": "one" },
+  // MD005 - Consistent indentation for list items at the same level.
+  "MD005": true,
 
-  // Allow "?" in headings; flag other trailing punctuation.
-  "MD026": { "punctuation": ".,;:!。，；：！" },
+  // MD007 - Unordered list indentation.
+  "MD007": true,
 
-  // No emphasis used in place of a heading; no bare URLs.
-  "MD036": true,
-  "MD034": true,
+  // MD009 - No trailing spaces.
+  "MD009": true,
 
-  // Allow the HTML disclosure elements, so long changelogs and reference
-  // sections can collapse detail behind a summary. All other inline HTML
-  // is still flagged.
-  "MD033": { "allowed_elements": ["details", "summary"] },
+  // MD010 - Hard tabs: not enforced.
+  "MD010": false,
 
-  // Allow the same heading text under different parents (common in structured docs).
+  // MD011 - No reversed link syntax, e.g. (text)[url].
+  "MD011": true,
+
+  // MD012 - No multiple consecutive blank lines.
+  "MD012": true,
+
+  // MD013 - Line length: not enforced. One-sentence-per-line means lines
+  // are intentionally long; wrapping by character count fights that.
+  "MD013": false,
+
+  // MD014 - No dollar signs before shell commands that show no output.
+  "MD014": true,
+
+  // MD018-MD021 - Hash spacing on ATX-style headings, opening and closed.
+  "MD018": true,
+  "MD019": true,
+  "MD020": true,
+  "MD021": true,
+
+  // MD022 - Headings surrounded by blank lines.
+  "MD022": true,
+
+  // MD023 - Headings must start at the beginning of the line.
+  "MD023": true,
+
+  // MD024 - Allow the same heading text under different parents (common in
+  // structured docs); still flags duplicates within the same parent.
   "MD024": { "siblings_only": true },
 
-  // One sentence per line means lines are intentionally long; do not enforce length.
-  "MD013": false
+  // MD025 - One H1 per file. Ignore the frontmatter "title" field so docs can
+  // carry both a frontmatter title and a matching body H1 (the recommended
+  // convention).
+  "MD025": { "front_matter_title": "" },
+
+  // MD026 - Trailing punctuation in headings. Allow "?" for FAQ-style titles;
+  // flag everything else.
+  "MD026": { "punctuation": ".,;:!。，；：！" },
+
+  // MD027 - No multiple spaces after the blockquote symbol.
+  "MD027": true,
+
+  // MD028 - No blank line inside a blockquote.
+  "MD028": true,
+
+  // MD029 - Ordered lists use a repeated "1." (from config.yml
+  // ordered_list_style).
+  "MD029": { "style": "one" },
+
+  // MD030 - Spaces after list markers.
+  "MD030": true,
+
+  // MD031 - Fenced code blocks surrounded by blank lines.
+  "MD031": true,
+
+  // MD032 - Lists surrounded by blank lines.
+  "MD032": true,
+
+  // MD033 - Allow the HTML disclosure elements, so long changelogs and
+  // reference sections can collapse detail behind a summary. All other
+  // inline HTML is still flagged.
+  "MD033": { "allowed_elements": ["details", "summary"] },
+
+  // MD034 - No bare URLs; wrap them in angle brackets or link syntax.
+  "MD034": true,
+
+  // MD035 - Consistent horizontal rule style.
+  "MD035": true,
+
+  // MD036 - No emphasis used in place of a heading.
+  "MD036": true,
+
+  // MD037-MD039 - No stray spaces inside emphasis, code span, or link text.
+  "MD037": true,
+  "MD038": true,
+  "MD039": true,
+
+  // MD040 - Fenced code blocks must declare a language.
+  "MD040": true,
+
+  // MD041 - First line does not have to be a top-level heading (frontmatter
+  // usually comes first).
+  "MD041": false,
+
+  // MD042 - No empty links.
+  "MD042": true,
+
+  // MD043 - Required heading structure: not enforced. Content type dictates
+  // structure; a single fixed skeleton does not fit every doc.
+  "MD043": false,
+
+  // MD044 - Proper-name capitalization: not enforced here. Terminology
+  // consistency is handled by .docs-assist/terms.txt instead (see
+  // terminology.md), which the team maintains directly rather than hardcoding
+  // a proper-name list into the linter.
+  "MD044": false,
+
+  // MD045 - Images must have alt text.
+  "MD045": true,
+
+  // MD046 - Consistent code block style (fenced vs. indented).
+  "MD046": true,
+
+  // MD047 - Files end with a single newline.
+  "MD047": true,
+
+  // MD048 - Code fence style (``` vs. ~~~): not enforced.
+  "MD048": false,
+
+  // MD049 - Emphasis style (* vs. _): not enforced.
+  "MD049": false,
+
+  // MD050 - Strong style (** vs. __): not enforced.
+  "MD050": false,
+
+  // MD051 - Link fragments must resolve to a real heading or anchor.
+  "MD051": true,
+
+  // MD052 - Reference links/images must use a defined label: not enforced.
+  "MD052": false,
+
+  // MD053 - Unused link/image reference definitions: not enforced.
+  "MD053": false,
+
+  // MD054 - Link and image style (inline vs. reference vs. autolink): not
+  // enforced.
+  "MD054": false,
+
+  // MD055 - Consistent table pipe style.
+  "MD055": true,
+
+  // MD056 - Consistent table column count per row.
+  "MD056": true,
+
+  // MD058 - Tables surrounded by blank lines.
+  "MD058": true,
+
+  // MD059 - Descriptive link text; flags "click here" and similar.
+  "MD059": true,
+
+  // MD060 - Consistent table column alignment style: not enforced.
+  "MD060": false
 }

@@ -18,7 +18,20 @@ A full set, a directory, a few changed files, and a diff are different jobs. For
 - Note last-updated dates and any ownership signals.
 - List image assets and flag ones not referenced by any doc.
 
-### 2. Analyze Each Document
+### 2. Check External Links
+
+A page can go stale with no word in the doc itself changing: the linked repo gets renamed, the page moves, the account is deleted.
+Check against the live target, not the page text.
+This is mechanical, so defer to existing tooling rather than hand-rolling requests.
+Use the repo's own link-check setup if one exists (`.markdown-link-check.json`, `.docs-assist/config.yml`'s `lint.link_check`, or a CI workflow) and report its last result.
+If the repo has CI but no link check yet, recommend `/docs-assist:setup-lint` to wire it in.
+Otherwise, run `npx --yes markdown-link-check` for this audit.
+Flag dead links (4xx/5xx) as Critical.
+A redirect can still hide a rename even though the linter treats it as alive: the common case is `github.com/OWNER/REPO` resolving to a different owner or repo name.
+Spot-check suspicious-looking links individually (`curl -sIL -w '%{url_effective}'`) and propose the corrected URL rather than re-requesting everything by hand.
+For a scoped audit, check only the links in the edit scope.
+
+### 3. Analyze Each Document
 
 Evaluate against five dimensions:
 
@@ -28,7 +41,7 @@ Evaluate against five dimensions:
 - **Findability**: can a reader locate it through navigation, search, or cross-references?
 - **Consistency**: does it match the style and terminology of its neighbors?
 
-### 3. Evaluate Information Architecture
+### 4. Evaluate Information Architecture
 
 - Does the structure match how users think, not the org chart?
 - Are related topics grouped together?
@@ -37,14 +50,14 @@ Evaluate against five dimensions:
 
 See `ia-methodology.md` for deeper IA evaluation.
 
-### 4. Identify Gaps
+### 5. Identify Gaps
 
 - Missing documentation for known user journeys.
 - Outdated content and stale `last-verified` dates.
 - Inconsistent terminology for the same concept.
 - Duplicated content that should be single-sourced.
 
-### 5. Prioritize
+### 6. Prioritize
 
 Rank every finding by user impact, effort to fix, and how often users hit it.
 Lead with high-impact, low-effort fixes.
