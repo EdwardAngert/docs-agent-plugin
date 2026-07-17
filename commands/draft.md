@@ -27,8 +27,8 @@ Run the first six intake moves as `intake.md` defines them: survey quietly, ask 
 
 Draft-specific notes for those moves:
 
-- **Survey**: note the frontmatter field names in use (`tags` vs `keywords`, `type` vs `content-type`) and any SSG fields you'll need to preserve, since this doc will carry frontmatter that matches.
-- **Dump**: if they gave a topic or issue number (`$ARGUMENTS`), start from it and read the issue for context.
+- **Survey**: note the frontmatter field names in use (`tags` vs `keywords`, `type` vs `content-type`) and any SSG fields you'll need to preserve, since this doc will carry frontmatter that matches. Also glob `.docs-assist/intake/notes/*.md` for a file matching this topic (or list what's in progress if the topic is unclear). If one exists, offer to resume from it instead of starting the loop over.
+- **Dump**: if they gave a topic or issue number (`$ARGUMENTS`), start from it and read the issue for context. If the dump is long, many-part, or the contributor signals they'll need to step away and come back, offer to keep a running notes file as you go (see "Persist as You Go" in `intake.md`). On yes, write and keep updating `.docs-assist/intake/notes/<topic>.md` through every remaining move.
 - **Dig**: this is also the natural moment to learn the contributor's context (writing for themselves, or setting standards others will follow) when it isn't already clear. Calibrate offers accordingly, per the skill's calibration guidance.
 - **When the expert isn't in the session**: if the contributor is documenting someone else's knowledge, offer an intake packet (a portable questionnaire pre-loaded from the survey and code) instead of making them guess. See the async section of `intake.md`. Draft what the material supports now; fold the answers in when they arrive.
 
@@ -52,13 +52,15 @@ Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/co
 
 For anything beyond a short entry, show the outline before writing the full draft. Changing an outline is cheap; rewriting a draft is not.
 
+- If a notes file exists for this topic, base the outline on it rather than on conversation scrollback: it's had every move folded in, including any that happened in an earlier session.
 - Present the sections and headings, a line each on what goes in them, and where code samples will go.
 - Confirm scope and order, and adjust before drafting.
 - Skip it for a very short doc (a single troubleshooting entry). Offer it rather than forcing it.
+- Record the shape decision and outline back to the notes file, if one is in use.
 
 ### 10. Produce the Draft
 
-Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md` automatically:
+Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md` automatically. If a notes file exists, write from it: it already holds the reconciled facts, the SME-attested claims, and the answered dig questions.
 
 - Clear, action-oriented headings
 - Prerequisites section if there are any
@@ -96,6 +98,7 @@ When the contributor is satisfied:
 - Update related docs to cross-reference this new content (or make the edits and show the contributor what you changed).
 - In a git repo, when the work touched several files (the new doc plus cross-reference updates), offer to put the change set on a docs branch rather than leaving it on the default branch. Never commit to the default branch unless asked.
 - Note remaining follow-ups: the backlog docs the dump revealed, images or diagrams that would help, or cross-references a subject matter expert should verify.
+- If a notes file seeded this doc, offer to archive or delete it now that the doc it was tracking exists (per `intake.md`'s lifecycle rule for intake artifacts).
 
 ## Notes
 

@@ -29,6 +29,7 @@ Drafting scaled linearly (a 15-doc plan meant 15 sequential conversations) while
 The solo writer's other bottleneck is knowledge in other people's heads, and the SME had to be in the session.
 
 - Shipped in 0.9.5: intake packets. The plugin generates a targeted questionnaire as a Markdown file, pre-loaded with what the code already reveals, that the writer sends to the expert over any channel. Returned answers are ingested through `doc-intake` into `.docs-assist/intake/`, where drafting picks them up.
+- Added: an opt-in running notes file for single-doc drafts that outlast one sitting. Offered when a dump is long, many-part, or the contributor needs to step away, it persists every intake move to `.docs-assist/intake/notes/<topic>.md` so a later session (or `/docs-assist:draft` run again) can resume instead of starting over. See "Persist as You Go" in `skills/docs-assist/reference/intake.md`.
 
 ## Workstream 3: Feedback Surfaces
 

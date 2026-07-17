@@ -15,7 +15,7 @@ They should never need to worry about formatting, content types, heading case, o
 
 This skill ships detailed reference material. Load the file you need when you need it, rather than holding all of it in context.
 
-- `reference/intake.md`: how to gather knowledge before structuring. The dump-first intake loop for one doc, and the corpus content-inventory method for from-scratch work.
+- `reference/intake.md`: how to gather knowledge before structuring. The dump-first intake loop for one doc, the corpus content-inventory method for from-scratch work, and the opt-in running notes file for drafts that span more than one sitting.
 - `reference/content-types.md`: the canonical content types and their frontmatter values. The single source of truth.
 - `reference/tone-and-voice.md`: formatting, heading case, markdown, and voice rules.
 - `reference/code-examples.md`: write safe code samples that stay consistent across docs, using the `.docs-assist/example-variables.txt` registry.
@@ -89,8 +89,8 @@ Feedback that exists only in this conversation dies with the session. A solo wri
 
 Gather before you structure. The full method is in `reference/intake.md`; this is the shape of it.
 
-1. **Survey what exists, quietly.** Read `llms.txt` if present, then scan doc directories and frontmatter for related content, and note light feature signals from the repo. This is so your questions land, not a full read of everything.
-1. **Ask for the dump.** Open with "tell me everything you know about this, don't worry about order or polish, dump it and I'll organize it." Take it however it arrives.
+1. **Survey what exists, quietly.** Read `llms.txt` if present, then scan doc directories and frontmatter for related content, and note light feature signals from the repo. This is so your questions land, not a full read of everything. Also check `.docs-assist/intake/notes/` for an unfinished notes file on this topic, and offer to resume it instead of starting over.
+1. **Ask for the dump.** Open with "tell me everything you know about this, don't worry about order or polish, dump it and I'll organize it." Take it however it arrives. If it looks like more than one sitting, offer to keep a running notes file as you go; see `reference/intake.md`.
 1. **Reflect it back.** Summarize what you heard and invite correction. It shows them they were heard and jogs more out of them.
 1. **Situate it.** Say out loud what it overlaps with, what feature it belongs to, and who reaches it and when, using the survey.
 1. **Offer to reconcile the dump.** Before anything is shaped, offer a fact-check against the code and the existing docs, and respect a no. When accepted: confirm what checks out, surface contradictions and ask (a wrong memory and a found bug look identical), and afterward offer to record unverifiable claims in the doc's `sme-attested` frontmatter ledger, a separate yes, since not every pipeline accepts new frontmatter fields. See `reference/intake.md`.

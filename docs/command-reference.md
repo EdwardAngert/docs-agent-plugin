@@ -45,6 +45,7 @@ Every command also works with no argument: it asks for what it needs.
 Draft one document with guided help.
 It opens by asking you to share everything you know, reflects it back, connects it to your existing docs, checks the details against the code, confirms an outline, then writes.
 Use it when you want to document a single topic and would like a structured walkthrough.
+For a topic that will take more than one sitting, it can offer to keep a running notes file so you can pick back up later without re-explaining everything.
 
 ```text
 /docs-assist:draft how to configure webhook retries
