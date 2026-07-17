@@ -62,6 +62,7 @@ For every update:
 
 ### 6. Review and Finalize
 
+- Before showing the result, run a silent second-opinion pass: send the touched doc(s) to the `doc-auditor` subagent (batched into one call across the set; fan it out further only if the set is large), reading only the files and the repo, not this conversation or the diff that drove the edits. This runs with no contributor in the loop to catch drift the way a draft's review conversation would, so it is the only check standing between an update and landing wrong. Auto-apply what it flags as mechanical (formatting, AI voice, terminology drift); fold anything needing judgment into the follow-ups list below rather than a separate report.
 - Show the user the result as a diff (`git diff` on the docs) so they review the substance, not the formatting.
 - Trace the ripple of your own edits. If you renamed a heading, moved a file, re-cased a term, or changed a value that other docs repeat, follow the edges in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/impact-analysis.md` and fix or flag what they reach.
 - Check for an `llms.txt`. If the repo has one and your edits added, removed, renamed, or re-described a doc it lists, update its entries so the map matches the docs. Update cross-references the same way.

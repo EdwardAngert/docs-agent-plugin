@@ -46,6 +46,7 @@ The diff says what changed; the contributor knows why it matters. One short dig,
 
 ### 5. Finalize
 
+- Before placing the notes, run a silent second-opinion pass: send the drafted notes to the `doc-auditor` subagent, reading only the notes and the repo, not this conversation. Release notes are exactly the content most prone to the AI voice and inflation this workflow already warns against (`describe outcomes, not implementation`, `do not inflate`); a fresh read catches what the same context that wrote them is prone to miss. Skip this for a release small enough that the notes are only a few lines. Auto-apply mechanical fixes; fold anything needing judgment into the finalize checks below.
 - Place the notes per the project's convention (prepend the changelog entry, add the release file, or output the GitHub release body).
 - Flag shipped features that have no documentation yet, and offer `/docs-assist:draft` for each.
 - The branch delivery rule applies: in a git repo, offer to land the notes on a branch rather than the default branch.
