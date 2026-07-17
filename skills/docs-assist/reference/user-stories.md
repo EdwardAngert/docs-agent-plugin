@@ -30,7 +30,7 @@ Calibration is not a single global setting for the whole project (`tone-and-voic
 
 Once set, the baseline does two concrete things to the draft, not just the tone:
 
-- **Prerequisites list only what sits outside the baseline.** An SDK for backend engineers does not need "install Node" as a prerequisite; it needs the actual gap, the SDK-specific setup the ecosystem doesn't already cover. A prerequisite the story's reader already has is padding, and padding in a prerequisites section is where experienced readers stop trusting the doc.
+- **Prerequisites list only what sits outside the baseline, but a version or compatibility fact is never padding.** An SDK for backend engineers doesn't need "install Node" (how to get the runtime is inside their baseline); it does need "requires Node 18+" (that specific fact is not something the baseline implies, and getting it wrong breaks the reader). The line is teaching versus stating: don't teach what the baseline covers, but never drop a fact the reader has no other way to know just because it's short.
 - **Failure modes anticipate what that reader actually hits.** The dig's failure-modes question (`intake.md`) should be answered for the calibrated reader, not a generic one: an expert audience trips on edge cases, version mismatches, and interactions with other advanced tools; a beginner audience trips on setup and terminology. The same tool can need both, in different docs, for different stories.
 
 ## How Drafting Uses It
