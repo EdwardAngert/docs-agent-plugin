@@ -103,13 +103,16 @@ for (const doc of docs) {
         .map((m) => m[1])
         .filter((t) => !/^(https?|true|false|null)/.test(t))
     )].slice(0, 20);
-    for (const t of tokens) {
-      const hits = sh(`git grep -l -F -- ${JSON.stringify(t)} -- ':!*.md' ':!*.mdx'`);
+    if (tokens.length) {
+      // One git grep per doc, all tokens OR'd, instead of one call per
+      // token: /docs-assist:health runs this inline and promises a fast
+      // scorecard, so the whole scan is two subprocess calls per doc.
+      const patternArgs = tokens.map((t) => `-e ${JSON.stringify(t)}`).join(' ');
+      const hits = sh(`git grep -l -F ${patternArgs} -- ':!*.md' ':!*.mdx'`);
       for (const f of hits.split('\n')) if (f) churnFiles.add(f);
-      if (churnFiles.size >= 50) break;
     }
     if (churnFiles.size) {
-      const files = [...churnFiles].map((f) => JSON.stringify(f)).join(' ');
+      const files = [...churnFiles].slice(0, 50).map((f) => JSON.stringify(f)).join(' ');
       const log = sh(`git log --oneline --since=@${lastCommit} -- ${files}`);
       churn = log ? log.split('\n').length : 0;
     }

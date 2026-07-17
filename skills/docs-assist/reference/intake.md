@@ -29,7 +29,7 @@ Before you say anything, build context so your later questions are sharp, not ge
 
 - Read `llms.txt` if it exists, then scan the docs directory and read frontmatter from related docs. You are looking for what this topic touches, not reading everything.
 - Note light feature signals from the repo: names, commands, config, and routes that relate to the topic. Do not do a deep code analysis; you want enough to connect the dots, not a source audit.
-- Check for `.docs-assist/example-variables.txt` or `.docs-assist/terms.txt`. These are the pre-`reference.yml` format; the plugin no longer reads them. If either exists, offer a one-time migration into `.docs-assist/reference.yml` (see "Migrating" in `reference-registry.md`) rather than silently drafting or auditing as if no registry existed.
+- Check for `.docs-assist/example-variables.txt` or `.docs-assist/terms.txt`. These are the pre-`reference.yml` format; the plugin no longer reads them. Note it and keep surveying: the offer to migrate (see "Migrating" in `reference-registry.md`) waits until the registry would actually be consulted, when choosing example values or checking terms during shaping and drafting. The contributor came to share knowledge; a file-format prompt before the dump is the wrong opening. Never silently draft as if no registry existed, but never lead with the migration either.
 - Hold what you find. You will use it to situate the dump and to spot what the expert leaves out.
 
 ## 2. Dump: "Tell Me Everything You Know"
@@ -141,7 +141,7 @@ Do not make the writer choose between waiting and guessing. Send the questions t
 
 A single-doc dump normally lives in conversation, not a file (see below). But some drafts are not a single sitting: a long or many-part dump, a contributor who says "let me check and get back to you," or a Shape call that reveals several docs all mean the work will outlast this conversation.
 
-**Offer, don't default.** Once a signal like that shows up, ask once: "This looks like it'll take a few sittings. Want me to keep a running notes file as we go, so we can pick this back up without you re-explaining everything?" A repo can set a standing preference in `.docs-assist/config.yml` (see `config-resolution.md`) for a team that always wants this, but the per-session offer is what runs by default.
+**Offer, don't default, and never interrupt the dump to offer.** The dump's own rule holds: let it all land. Make the offer once at the next natural pause, which is usually the Reflect read-back ("Here's what I've got. This looks like it'll take a few sittings; want me to keep a running notes file as we go, so we can pick this back up without you re-explaining everything?"), or immediately when the contributor pauses themselves ("let me check and get back to you"). A repo can set a standing preference in `.docs-assist/config.yml` (see `config-resolution.md`) for a team that always wants this, but the per-session offer is what runs by default.
 
 When accepted, write to `.docs-assist/intake/notes/<topic>.md` (the same kebab-case topic slug convention as an intake packet) and keep it current after every move from Dump onward:
 
