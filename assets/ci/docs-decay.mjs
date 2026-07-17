@@ -144,7 +144,7 @@ out += `| Score | Doc | Why |\n| ---: | --- | --- |\n`;
 for (const r of shown) {
   out += `| ${r.score} | \`${r.doc}\` | ${r.reasons.join('; ') || 'no decay signals'} |\n`;
 }
-out += `\n**Suggested follow-up**: work the queue top-down with \`/docs-assist:update\` (when the related code changed) or a re-verification pass that ends by bumping \`last-verified\`.\n`;
+out += `\n**Suggested follow-up**: work the queue top-down with \`/docs-assist:update\` (when the related code changed) or \`/docs-assist:verify\` (for procedural docs, which it re-runs step by step, bumping \`last-verified\` on a clean pass).\n`;
 
 report(out);
 if (decayed.length && process.env.DOCS_DECAY_STRICT === '1') process.exit(1);

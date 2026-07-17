@@ -107,6 +107,7 @@ When the contributor is satisfied:
 - If the repo has an `llms.txt`, add an entry for the new doc.
 - Update related docs to cross-reference this new content (or make the edits and show the contributor what you changed).
 - In a git repo, when the work touched several files (the new doc plus cross-reference updates), offer to put the change set on a docs branch rather than leaving it on the default branch. Never commit to the default branch unless asked.
+- For a procedural doc (a task, tutorial, or troubleshooting entry with executable steps), offer to run `/docs-assist:verify` on it before it ships: the `doc-verifier` subagent executes the steps in an isolated workspace and catches the step that works in the author's head but not in a fresh environment. On a clean pass, set `last-verified` with real evidence behind it.
 - Note remaining follow-ups: the backlog docs the dump revealed, images or diagrams that would help, or cross-references a subject matter expert should verify.
 - If a notes file seeded this doc, offer to archive or delete it now that the doc it was tracking exists (per `intake.md`'s lifecycle rule for intake artifacts).
 

@@ -22,13 +22,15 @@
     "./commands/update.md",
     "./commands/release-notes.md",
     "./commands/agent-ready.md",
-    "./commands/template.md"
+    "./commands/template.md",
+    "./commands/verify.md"
   ],
   "agents": [
     "./agents/doc-auditor.md",
     "./agents/doc-updater.md",
     "./agents/doc-intake.md",
     "./agents/doc-recon.md",
-    "./agents/doc-drafter.md"
+    "./agents/doc-drafter.md",
+    "./agents/doc-verifier.md"
   ]
 }

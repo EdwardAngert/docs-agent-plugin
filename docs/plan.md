@@ -51,6 +51,14 @@ The plugin wrote rich frontmatter and `llms.txt` but never helped stand up the s
 
 - Shipped in 0.9.5: `/docs-assist:setup-site` detects an existing static site generator and generates navigation from the metadata the plugin already maintains (`llms.txt` order becomes sidebar order), or scaffolds a minimal Docusaurus or MkDocs setup when none exists. Deliberately not a site builder.
 
+## Cross-Cutting: Verified Docs
+
+Everything above makes the docs better written; none of it knew whether the docs actually work. A tutorial whose step 3 broke two releases ago reads perfectly.
+
+- Added: `/docs-assist:verify` and the `doc-verifier` subagent, the first in the plugin with Bash. It executes a procedural doc's steps, in order, in an isolated workspace, and reports per step: pass, divergence (documented vs. actual output shown), fail, blocked, unverified, or skipped. Safety is tiered and conservative: workspace-scoped commands run; anything needing credentials, privilege escalation, real services, or out-of-workspace writes is reported as `unverified`, never run. A missing prerequisite the verifier had to supply is a top-value finding (the assumption gap, made concrete), and a doc whose critical steps are all unrunnable is reported as unverifiable rather than implied-green.
+- Added: `last-verified` now has an evidence-backed meaning. A clean verify pass offers the bump, so the date can mean "a machine ran this procedure" rather than "someone eyeballed it." The decay detector reads the field, so verified docs sink down the re-verification queue and the freshness loop closes: `docs-decay.mjs` ranks cheaply, an audit reads carefully, verify actually runs the steps, and each feeds the next.
+- Wired in where procedures surface: draft's finalize offers verification before a procedural doc ships, audits recommend it for load-bearing procedures instead of trusting a read-through, and health routes the decay queue's worst procedural docs to it.
+
 ## Cross-Cutting: llms.txt as Core Functionality
 
 Surfacing docs for AI readers is core, so its rules are single-sourced.

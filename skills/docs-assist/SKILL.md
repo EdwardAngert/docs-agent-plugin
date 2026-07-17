@@ -54,6 +54,7 @@ There are two modes: writing a single doc, and planning a full documentation set
 - "Help me document X" is a single doc. Use the drafting workflow below.
 - "We need docs for this project" or "document this for a new team" is a plan. Ask about scope and direction before writing anything.
 - "How are our docs?" or "what's the state of our documentation?" is neither: it is a health check. Run the `/docs-assist:health` workflow (a fast scorecard across coverage, freshness, consistency, and findability, ending in the single highest-leverage fix and an offer to do it now), and let its result route into drafting, planning, or a full audit.
+- "Does this tutorial still work?" or "a user says the quickstart is broken" is verification: run the `/docs-assist:verify` workflow, which executes the doc's steps in an isolated workspace and reports where reality diverges, instead of re-reading prose that looks fine.
 
 One request can need more than one doc. A newly shipped feature usually wants a how-to plus release notes, and sometimes a concept. When you see this, draft the one they asked for, then offer the small set that completes it rather than making them ask again for each.
 

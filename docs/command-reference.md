@@ -1,6 +1,6 @@
 ---
 title: "Docs Assist Command Reference"
-description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, plan, template, make-examples, audit, update, release-notes, agent-ready, init, setup-lint, setup-hooks, and setup-site."
+description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, plan, template, make-examples, audit, update, verify, release-notes, agent-ready, init, setup-lint, setup-hooks, and setup-site."
 content-type: reference
 audience: users
 keywords:
@@ -29,6 +29,7 @@ Every command also works with no argument: it asks for what it needs.
 | `/docs-assist:health`        | Fast docs health scorecard and first fix      | `[docs directory]`                   |
 | `/docs-assist:audit`         | Audit docs for quality, gaps, and structure   | `[path]`                             |
 | `/docs-assist:update`        | Update the docs affected by a code change     | `[git ref, PR number, or path]`      |
+| `/docs-assist:verify`        | Execute a procedural doc's steps and report   | `[doc path or directory]`            |
 | `/docs-assist:release-notes` | Write reader-facing notes for a release       | `[range, tag, or version]`           |
 | `/docs-assist:agent-ready`   | Make the docs legible to AI tools             | `[docs directory]`                   |
 | `/docs-assist:init`          | Scaffold project-local configuration          | `[docs directory]`                   |
@@ -123,6 +124,20 @@ Use it after a code change so the docs keep pace.
 
 ```text
 /docs-assist:update 42
+```
+
+### /docs-assist:verify
+
+`/docs-assist:verify [doc path or directory]`
+
+Verify a procedural doc by executing it.
+It runs the doc's steps in order in an isolated workspace, compares actual output against what the doc shows, and reports every divergence, failure, and missing prerequisite.
+Steps needing credentials, privilege escalation, or real services are reported as unverified, never run.
+On a clean pass it offers to set `last-verified`, so the date means a machine ran the procedure.
+Use it on quickstarts and tutorials, the docs where a broken step costs the most trust.
+
+```text
+/docs-assist:verify docs/quickstart.md
 ```
 
 ### /docs-assist:release-notes

@@ -27,6 +27,7 @@
 - [/docs-assist:setup-hooks](commands/setup-hooks.md): Install opt-in documentation hooks (git pre-commit lint, in-session doc lint, CI docs-impact check). Default off.
 - [/docs-assist:setup-site](commands/setup-site.md): Generate site navigation from the docs' metadata (llms.txt order becomes sidebar order), scaffolding minimal Docusaurus or MkDocs when no site exists.
 - [/docs-assist:update](commands/update.md): Find and update the docs affected by a code change (a diff, a PR, or changed files).
+- [/docs-assist:verify](commands/verify.md): Verify a procedural doc by executing its steps in an isolated workspace and reporting where the doc diverges from reality. A clean pass earns the `last-verified` bump.
 - [/docs-assist:release-notes](commands/release-notes.md): Turn a release's worth of changes into reader-facing release notes, leading with breaking changes and upgrade steps.
 - [/docs-assist:agent-ready](commands/agent-ready.md): Make the docs legible to AI tools: create or repair llms.txt, complete frontmatter, record conventions.
 - [/docs-assist:template](commands/template.md): Suggest and scaffold a documentation template (The Good Docs Project) for a healthy start. Opt-in.
@@ -38,6 +39,7 @@
 - [doc-intake](agents/doc-intake.md): Reads a pile of raw source material in isolation and returns a compact content inventory. Used to fan out corpus intake without loading the pile into the main conversation.
 - [doc-recon](agents/doc-recon.md): Reads a codebase in isolation and returns a compact project map (what it does, features, entry points, audiences, candidate docs). Used to orient a from-scratch docs effort without reading the whole repo in the main conversation.
 - [doc-drafter](agents/doc-drafter.md): Drafts one planned doc from a plan entry and existing source material, flagging what needs SME verification. Used to fan out drafting across an approved plan stage in parallel.
+- [doc-verifier](agents/doc-verifier.md): Executes one procedural doc's commands in an isolated workspace and reports, step by step, where reality diverges from the doc. Used to fan out verification across a set's procedural docs.
 
 ## Standards and Methodology
 
