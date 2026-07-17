@@ -87,6 +87,7 @@ This repo's own `.docs-assist/reference.yml` is migrated from its former `exampl
 
 Deliberately deferred, in rough priority order:
 
+- A standalone `npx` CLI so the plugin reaches people who don't use Claude Code, without forking the instructions into a second codebase. See [Standalone CLI Packaging Plan](standalone-cli-plan.md) for the tiered scope (static scaffolding vs. agentic coaching) and the phased rollout. Blocked on a maintainer decision on npm naming and which Tier 2 adapters ship first.
 - Auto-running `/docs-assist:update` from CI on detector hits, committing docs changes to the PR. The trust cliff: the sticky-comment loop should earn confidence first.
 - Docs-impact noise knobs: a per-repo ignore list in `.docs-assist/config.yml`, and requiring term matches in code-ish doc contexts (inline backticks) rather than anywhere in prose.
 - Navigation generation for Astro, Hugo, and Jekyll (0.9.5 covers Docusaurus and MkDocs).

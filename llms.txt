@@ -66,3 +66,4 @@
 - [Contributing](CONTRIBUTING.md): How to contribute to this plugin.
 - [0.8.0 product review findings](docs/reviews/0.8.0-findings.md): The prioritized findings behind the 0.8.0 release, with the remaining recommendations.
 - [Docs Assist 1.0 plan](docs/plan.md): The staged product plan toward 1.0, with what has shipped and what remains.
+- [Standalone CLI packaging plan](docs/standalone-cli-plan.md): A deferred plan for an `npx`-run CLI so the plugin reaches people who don't use Claude Code, without forking the instructions into a second codebase.

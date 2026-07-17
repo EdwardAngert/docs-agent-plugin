@@ -45,7 +45,20 @@ For a full set, explore the documentation structure:
 - Check which images are referenced in documentation files
 - Flag orphaned images (images not linked from any doc)
 
-### 2. Analyze Content
+### 2. Check External Links
+
+Docs rot silently when a linked repo, page, or account is renamed, moved, or deleted elsewhere: nothing in the doc itself changes, so content review alone will not catch it. This is mechanical, so use an existing tool rather than re-implementing it, in this order:
+
+1. **Already wired up**: if `.markdown-link-check.json` exists, or `.docs-assist/config.yml` sets `lint.link_check`, or `.github/workflows/` already runs a link check, it's owned by the linter, the same way Vale/markdownlint are. Don't re-check by hand; note its last CI result and move on. If it's failing or hasn't run recently, flag that as the finding instead of the individual links.
+1. **No CI yet, but the repo has GitHub Actions**: recommend `/docs-assist:setup-lint` to wire the link-check step into `.github/workflows/docs-lint.yml` (it scaffolds `markdown-link-check` with the right config) so this runs on every PR instead of once per audit. Still do a one-off pass this run (step 3) so the current audit isn't empty-handed.
+1. **No tooling at all, or a one-off scoped audit**: run `npx --yes markdown-link-check --quiet <files>` directly (add `--config .markdown-link-check.json` if present) rather than hand-rolling requests with `curl`/`WebFetch`. Treat its dead-link findings as Critical.
+
+A redirect that `markdown-link-check` still counts as alive can hide a rename (`github.com/OWNER/REPO` resolving to a different owner or repo name is the common case). If a link looks suspicious (an org/repo name that doesn't match the project, a host that redirects), spot-check that one URL's effective destination (`curl -sIL -o /dev/null -w '%{url_effective}\n' <url>`) and propose the corrected URL; don't do this for every link, only ones flagged as worth a second look.
+
+- For a change-based audit, check only the links touched by or added in the diff, not the whole set (see `impact-analysis.md`).
+- For a large full-set audit, this step runs once against the deduped file list, not per subagent slice: running it inside the `doc-auditor` fan-out described in the Notes below would just duplicate the same network calls.
+
+### 3. Analyze Content
 
 For each document, evaluate:
 
@@ -61,6 +74,7 @@ For each document, evaluate:
 - Inconsistent formatting
 - Missing code block language tags
 - Broken internal links
+- Broken or redirecting external links: dead pages, and links that 301/302 to a different URL than the one in the doc (a common sign the target repo, page, or account was renamed or moved). See "Check External Links" above.
 - Missing alt text on images
 - TODOs or placeholders
 - Inconsistent example values: code samples that use different placeholder values for the same thing across docs, or values that do not match an `example-variable` entry in `.docs-assist/reference.yml` when it exists. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md`
@@ -84,7 +98,7 @@ For each document, evaluate:
 - No cross-references to related content
 - Stale or missing `llms.txt`: if the repo has one, check its entries against the current docs (titles, descriptions, paths, and reader-priority order) per the contract in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/llms-txt.md`, and note a missing one when the docs would benefit
 
-### 3. Assess Information Architecture
+### 4. Assess Information Architecture
 
 Evaluate overall structure:
 
@@ -93,7 +107,7 @@ Evaluate overall structure:
 - Is hierarchy appropriate (3-4 levels max)?
 - Is navigation intuitive?
 
-### 4. Format Output
+### 5. Format Output
 
 Provide findings in this structure:
 
@@ -134,6 +148,13 @@ These may be intentionally linked from external sources or may be unused.
 - `path/to/image1.png`
 - `path/to/image2.svg`
 
+### Unverifiable Links
+
+The following external links could not be checked (network error, timeout, or auth-gated).
+Not reported as broken, just unconfirmed.
+
+- `path/to/doc.md`: `https://example.com/page`
+
 ## Residual Risk
 
 [For a scoped or change-based audit, state what you did not check: the change types found and the edges followed for each, plus the edges you did not follow and why. Omit this section for a full-set audit that covered everything.]
@@ -153,7 +174,7 @@ Options:
 4. **Skip**: Omit this section entirely
 ```
 
-### 5. Prioritize Issues
+### 6. Prioritize Issues
 
 Rank all issues by:
 
@@ -163,7 +184,7 @@ Rank all issues by:
 
 Focus on issues that are high-impact and low-effort first.
 
-### 6. Deliver the Report by Scope
+### 7. Deliver the Report by Scope
 
 The conversation is for triage; end with a persist offer, per the skill's feedback guidance.
 
@@ -180,5 +201,6 @@ The conversation is for triage; end with a persist offer, per the skill's feedba
 - For a change-based target, follow `impact-analysis.md` and report residual risk rather than auditing the changed files in isolation
 - An audit reports; it does not edit. When `llms.txt` is stale or missing, flag it as a finding and recommend `/docs-assist:update` to apply the fix
 - Consider context: some "issues" may be intentional choices
+- External link checking prefers, in order: an existing linter/CI setup already in the repo, wiring one up via `/docs-assist:setup-lint` when CI exists, then an ad hoc `npx markdown-link-check` run. It needs `Bash` (for `npx`) or `WebFetch`; if neither is available, skip the check and say so rather than reporting links as clean
 - For large repositories, ask how to handle the files list before outputting
 - For large documentation sets, fan out: launch the `doc-auditor` subagent in parallel across slices of the set, then consolidate the findings into one prioritized report. Include the resolved conventions in each subagent's brief (the relevant `.docs-assist/config.yml` settings and `style.md` rules, or the inferred conventions when no config exists), so every slice audits against the same standard
