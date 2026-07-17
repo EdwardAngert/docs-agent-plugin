@@ -18,7 +18,7 @@ Machine-checkable settings live in `config.yml`. Judgment-based guidance lives h
 - The plugin was renamed from `documentation-agent`. Use the new name; mention the old one only in the migration note.
 - One word: "subagent". Two words: "content type".
 - Refer to commands as `/docs-assist:draft`, `/docs-assist:plan`, and so on.
-- Banned phrases: "simply", "just", "easily", "obviously", "basically" (they weaken instructions), and "click here" (use descriptive link text).
+- Banned phrases: `simply`, `easily`, `obviously`, `basically` (they weaken instructions), and `click here` (use descriptive link text). `just` is not banned: it's ordinary English far more often than it weakens an instruction.
 
 ## Conventions
 

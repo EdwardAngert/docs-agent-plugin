@@ -78,7 +78,7 @@ For each document, evaluate:
 #### Findability Issues
 
 - Missing navigation entries
-- Poor link text ("click here")
+- Poor link text (`click here`)
 - No cross-references to related content
 - Stale or missing `llms.txt`: if the repo has one, check its entries against the current docs (titles, descriptions, paths, and reader-priority order) per the contract in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/llms-txt.md`, and note a missing one when the docs would benefit
 

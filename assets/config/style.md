@@ -18,7 +18,7 @@ Describe how docs should sound. For example:
 
 - Preferred terms: list the term to use and the one to avoid (for example, use "sign in", not "log in").
 - Product names and capitalization: spell out the exact casing (for example, "GitHub", not "Github").
-- Banned phrases: words that weaken docs (for example, "simply", "just", "easy", "obviously") and AI-voice tells (for example, `seamless`, `powerful`, `it's worth noting`).
+- Banned phrases: words that weaken docs (for example, `simply`, `easily`, `obviously`, `basically`) and AI-voice tells (for example, `seamless`, `powerful`, `it's worth noting`).
 
 ## Conventions
 
