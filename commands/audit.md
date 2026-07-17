@@ -64,7 +64,7 @@ For each document, evaluate:
 - TODOs or placeholders
 - Inconsistent example values: code samples that use different placeholder values for the same thing across docs, or values that do not match `.docs-assist/example-variables.txt` when it exists. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md`
 - Terminology drift: prose that uses a variant listed in `.docs-assist/terms.txt` instead of the canonical term, or the same concept under different terms across docs when no registry exists (flag the outliers against the dominant usage, and offer to record the winner). See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/terminology.md`
-- AI voice: hedging, marketing language, false-contrast framing ("it's not X, it's Y"), and throat-clearing openers. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md`'s "Avoid AI Voice" section
+- AI voice: hedging, marketing language, false-contrast framing (`it's not X, it's Y`), and throat-clearing openers. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md`'s "Avoid AI Voice" section
 
 #### Content Issues
 
