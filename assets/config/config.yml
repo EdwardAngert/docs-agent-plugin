@@ -31,6 +31,10 @@ one_sentence_per_line: true
 # Disallow em dashes: true | false
 no_em_dashes: true
 
+# Disallow AI voice: hedging, marketing language, false-contrast framing
+# ("it's not X, it's Y"), and throat-clearing openers: true | false
+no_ai_voice: true
+
 # Frontmatter conventions. Match the field names the repo already uses so the
 # plugin extends existing frontmatter instead of fighting it.
 frontmatter:

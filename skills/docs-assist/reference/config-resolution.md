@@ -32,7 +32,7 @@ When `config.yml` is present, apply it directly:
 
 - `heading_case`, `title_case_style`, `action_oriented_headings`: how you format every heading.
 - `list_marker`, `ordered_list_style`: list formatting.
-- `one_sentence_per_line`, `no_em_dashes`: line and punctuation rules.
+- `one_sentence_per_line`, `no_em_dashes`, `no_ai_voice`: line, punctuation, and voice rules. See `tone-and-voice.md`'s "Avoid AI Voice" section for what `no_ai_voice` covers.
 - `frontmatter.*`: the field names to write and the allowed `content-type` values. Honor the repo's names over the plugin's defaults.
 - `docs_dir`: where to look and where new docs go.
 - `lint.*`: which linter the project uses, so you can recommend running it and avoid re-flagging what the linter already covers.

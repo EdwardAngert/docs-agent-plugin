@@ -15,7 +15,7 @@ Linting is optional and is never bundled. This command only scaffolds it when as
 
 Read `.docs-assist/config.yml`. The linter config is generated from it, so the checks match how the plugin writes:
 
-- `heading_case`, `list_marker`, `ordered_list_style`, `no_em_dashes`, and the `frontmatter` fields all map to specific rules.
+- `heading_case`, `list_marker`, `ordered_list_style`, `no_em_dashes`, `no_ai_voice`, and the `frontmatter` fields all map to specific rules.
 - If `.docs-assist/config.yml` does not exist, offer to run `/docs-assist:init` first. You can proceed with the defaults, but tell the user the linter will encode defaults, not their conventions.
 
 ### 2. Detect Existing Linters First
@@ -42,7 +42,7 @@ If `$ARGUMENTS` did not specify, ask two short questions:
 
 Copy the templates from `${CLAUDE_PLUGIN_ROOT}/assets/lint/` and adjust them to the resolved config. Do not ship rules the config turns off:
 
-- **Vale** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/vale/`): copy `.vale.ini` and `styles/DocsAssist/` to the repo root. Drop `EmDash.yml` if `no_em_dashes` is false. Drop `HeadingGerund.yml` if the project does not use action-oriented headings.
+- **Vale** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/vale/`): copy `.vale.ini` and `styles/DocsAssist/` to the repo root. Drop `EmDash.yml` if `no_em_dashes` is false. Drop `HeadingGerund.yml` if the project does not use action-oriented headings. Drop `MarketingLanguage.yml`, `FillerPhrase.yml`, and `FalseContrast.yml` if `no_ai_voice` is false.
 - **markdownlint** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/markdownlint/.markdownlint.jsonc`): set `MD004` from `list_marker`, `MD029` from `ordered_list_style`. If `heading_case` is sentence, leave heading case to Vale and the agent (markdownlint does not check case).
 - **cspell** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/cspell/cspell.json`) and **markdown-link-check** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/linkcheck/.markdown-link-check.json`): copy as-is unless the user opts out.
 - **MegaLinter** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/megalinter/.mega-linter.yml`): copy when the user chose the aggregator.
