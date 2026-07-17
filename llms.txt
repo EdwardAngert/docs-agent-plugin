@@ -49,6 +49,7 @@
 - [Tone and voice](skills/docs-assist/reference/tone-and-voice.md): Formatting rules, heading case, markdown style, and voice guidelines.
 - [Reference registry](skills/docs-assist/reference/reference-registry.md): The single canonical registry for example values, verified facts, worked-example pointers, and terminology. What each of the four entry kinds is for and how it gets checked, including by a generated Vale rule.
 - [Second-opinion pass](skills/docs-assist/reference/second-opinion.md): The silent fresh-reader review every prose-writing workflow runs before showing its output: run cold, briefed with settled facts, once per artifact, mechanical fixes applied silently.
+- [User story outlines](skills/docs-assist/reference/user-stories.md): The quick per-doc reader contract (who arrives, from where, to do what, done when what). Drafting writes to it at the shape move; audits walk each story through the doc: arrival, entry, path, exit.
 - [Code examples](skills/docs-assist/reference/code-examples.md): Write safe code samples that stay consistent across docs, using the reference registry's example-variable entries.
 - [Terminology](skills/docs-assist/reference/terminology.md): Keep product terms consistent across docs, using the reference registry's term entries, which audits check for drift and a generated Vale rule also enforces.
 - [llms.txt](skills/docs-assist/reference/llms-txt.md): The llms.txt format, entry ordering, and the maintenance contract every workflow follows. Surfacing docs for AI readers is core functionality.

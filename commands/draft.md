@@ -46,6 +46,8 @@ Confirm the details the draft will state, so it's accurate. This is targeted ver
 
 Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/content-types.md`, and check the scope honestly:
 
+- Write the quick user story outline first, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`: one line per reader this doc serves (who, arriving from where, to do what, done when what), built from what the dump and the dig already told you. More than three stories is itself the several-docs signal below.
+
 - A dump often holds more than one doc. If it mixes a task, an explanation, and failure modes, that's a how-to plus a concept plus troubleshooting. Say so, propose the small set in priority order, and offer to draft the first now and keep the rest as a short backlog.
 - If it's genuinely ambiguous, default to a doc (task-oriented).
 - Offer a starting template where one fits. Suggesting one is free and offline, so do it even if `.docs-assist/templates.yml` is absent; only fetch on the contributor's yes. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. A template is a head start, never a requirement.
@@ -55,6 +57,7 @@ Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/co
 For anything beyond a short entry, show the outline before writing the full draft. Changing an outline is cheap; rewriting a draft is not.
 
 - If a notes file exists for this topic, base the outline on it rather than on conversation scrollback: it's had every move folded in, including any that happened in an earlier session.
+- Present the user stories with the outline, and let them earn the structure: each section should serve a named story, and the prerequisites section is whatever the least-prepared story's reader is missing. Stories are cheap to correct here and expensive to discover wrong after publication.
 - Present the sections and headings, a line each on what goes in them, and where code samples will go.
 - Confirm scope and order, and adjust before drafting.
 - Skip it for a very short doc (a single troubleshooting entry). Offer it rather than forcing it.

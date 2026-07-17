@@ -85,6 +85,8 @@ Each journey suggests a set of docs.
 A "get started" journey might need an installation doc, a quickstart, and a concepts overview.
 A "configure for production" journey might need a configuration reference and a deployment guide.
 
+When the journeys become plan entries, give each doc its quick user story outline (who arrives, from where, to do what, done when what; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`). The stories travel with the entry: a fanned-out drafter writes to them, and a later audit walks them. This is how the set-level journey stays connected to each doc's reader instead of dissolving into a file list.
+
 ### 6. Propose a Docs Plan Built to Ship and Iterate
 
 Write the plan to a file, `docs/plan.md` by default, or wherever the contributor prefers.

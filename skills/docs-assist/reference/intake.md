@@ -187,7 +187,8 @@ Connections to other docs and features found.
 
 ## Shape and Outline
 
-Content type, whether this is one doc or several, and the outline once decided.
+Content type, whether this is one doc or several, the user story outline
+(one line per reader, per user-stories.md), and the outline once decided.
 ```
 
 The `status` frontmatter field is what the Survey move's resume check reads; keep it current so a glob over `.docs-assist/intake/notes/` can tell an unfinished note from a completed one without opening every file.

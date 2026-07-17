@@ -21,13 +21,14 @@ A full set, a directory, a few changed files, and a diff are different jobs. For
 
 ### 2. Analyze Each Document
 
-Evaluate against five dimensions:
+Evaluate against six dimensions:
 
 - **Accuracy**: is it current? Check version references and dates.
 - **Completeness**: are steps missing? Does it assume prerequisites without linking them?
 - **Clarity**: are explanations confusing? Is the content type right for the goal?
 - **Findability**: can a reader locate it through navigation, search, or cross-references?
 - **Consistency**: does it match the style and terminology of its neighbors?
+- **Journeys**: outline the user stories the doc serves and walk each through it: arrival, entry, path, exit. A doc whose reader cannot be inferred is a finding in itself. See `user-stories.md`.
 
 ### 3. Evaluate Information Architecture
 

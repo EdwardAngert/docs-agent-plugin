@@ -59,6 +59,13 @@ Everything above makes the docs better written; none of it knew whether the docs
 - Added: `last-verified` now has an evidence-backed meaning. A clean verify pass offers the bump, so the date can mean "a machine ran this procedure" rather than "someone eyeballed it." The decay detector reads the field, so verified docs sink down the re-verification queue and the freshness loop closes: `docs-decay.mjs` ranks cheaply, an audit reads carefully, verify actually runs the steps, and each feeds the next.
 - Wired in where procedures surface: draft's finalize offers verification before a procedural doc ships, audits recommend it for load-bearing procedures instead of trusting a read-through, and health routes the decay queue's worst procedural docs to it.
 
+## Cross-Cutting: User Stories as the Reader Contract
+
+Journeys existed at the set level (`/docs-assist:plan` maps them) but dissolved into a file list by the time individual docs were drafted or audited; nothing carried "who is this for, arriving from where, done when what" down to the doc.
+
+- Added: `reference/user-stories.md`, the quick per-doc story outline: one line per reader, one to three per doc, written in minutes at the shape move. Drafting lets the stories earn the structure (each section serves a named story; the prerequisites are what the least-prepared reader is missing), plan entries carry their docs' stories into fanned-out drafter briefs, and more than three stories is the one-doc-or-several signal made countable.
+- Added: audits walk each story through the doc (arrival, entry, path, exit) as a sixth per-doc dimension, and `doc-auditor` infers the stories cold, which doubles as the audience-clarity test: a doc whose reader cannot be inferred is a finding before any walking starts. The second-opinion pass inherits the check for free, since it runs on `doc-auditor`.
+
 ## Cross-Cutting: llms.txt as Core Functionality
 
 Surfacing docs for AI readers is core, so its rules are single-sourced.

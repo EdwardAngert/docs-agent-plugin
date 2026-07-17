@@ -17,6 +17,7 @@ Focus on **content and strategy**, the things that require judgment:
 - Does content make assumptions about prerequisite knowledge?
 - Is related information consolidated or scattered?
 - Are docs serving users or just describing features?
+- Does each doc's reader journey actually work? Outline the user stories each doc serves and walk them through it: arrival, entry, path, exit. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`.
 
 Leave mechanical checks to linters (Vale, markdownlint, cspell).
 You can note obvious style issues, but your primary value is understanding the documentation holistically and identifying opportunities to better serve users.
@@ -72,6 +73,7 @@ For each document, evaluate:
 - Outdated information (check dates and version references; for a full-set audit in a git repo, `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/docs-decay.mjs` ranks every doc by staleness risk in one deterministic pass)
 - Unverified claims: docs whose `sme-attested` frontmatter ledger is large or old. Surface the specific claims so a reviewer can verify and delete entries (the ledger exists to shrink; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`)
 - Incomplete instructions (missing steps). Reading can only catch so much here: for a load-bearing procedural doc, recommend `/docs-assist:verify`, which executes the steps in an isolated workspace and finds the break a read-through misses
+- Broken reader journeys: a story whose arrival, entry, path, or exit fails when walked through the doc, and docs whose intended reader cannot be inferred at all. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`
 - Assumption gaps (undefined terms, missing prerequisites)
 - Duplicated content
 
