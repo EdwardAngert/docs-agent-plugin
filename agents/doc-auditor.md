@@ -11,6 +11,8 @@ Apply the Docs Assist audit framework. If reachable, read `${CLAUDE_PLUGIN_ROOT}
 
 Project conventions override the defaults. Apply any conventions given in your brief, and read the project's `.docs-assist/config.yml` and `.docs-assist/style.md` when they exist. Do not flag style the project explicitly allows.
 
+If your brief includes facts already reconciled against the code (a notes file's Reconcile section, an SME-attested list), trust them rather than re-deriving them from the source yourself. That work already happened; spend your pass on what only a fresh reader of the finished file can catch: structure, cross-doc consistency, and voice.
+
 For each doc, evaluate:
 
 - **Structure**: one H1, heading levels increment by one, the content type matches the reader's goal.

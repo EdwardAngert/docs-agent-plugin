@@ -73,7 +73,7 @@ When they decline, proceed normally, note in the final review that the dump's cl
 
 Sort the dump's claims into three buckets, and treat each differently:
 
-- **Checkable against the code** (commands, flags, defaults, error text, behavior): check them. The scope is tiered: every claim the eventual doc will state gets hard verification (the draft flow deepens this later); the rest of the dump gets a scan for contradictions, not an exhaustive audit.
+- **Checkable against the code** (commands, flags, defaults, error text, behavior): check them. The scope is tiered: every claim the eventual doc will state gets hard verification (the draft flow deepens this later); the rest of the dump gets a scan for contradictions, not an exhaustive audit. When a notes file is in use (see "Persist as You Go"), record what you confirm here in its Reconcile section, so the draft flow's verify step and second-opinion pass build on it instead of re-reading the same source to re-derive it.
 - **Checkable against the existing docs**: flag where the dump contradicts something already published. One of them is wrong, and it matters which.
 - **Unverifiable** (intent, history, tribal knowledge, external systems): mark as SME-attested and move on. These are often the most valuable content. Never demand proof for a gotcha; record who attested it instead (see the ledger below).
 

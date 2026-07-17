@@ -36,9 +36,11 @@ Draft-specific notes for those moves:
 
 Confirm the details the draft will state, so it's accurate. This is targeted verification, not a full codebase map.
 
+- If a notes file exists, start from its Reconcile section instead of re-deriving from scratch: it already holds what move 5 confirmed against the code. Read code again only for what's new since Dig, or what the Shape/Outline steps pulled in that Reconcile never saw. Re-reading a file you already reconciled wastes a pass for no new information.
 - Read the specific code behind what you're documenting: the exact command names, flags, defaults, config keys, endpoints, and error messages the doc will mention.
 - Reconcile the dump with the code. Where the contributor's memory and the code disagree, surface it and ask rather than guessing.
 - Pull real values (defaults, limits, error strings) so the draft and its examples are correct.
+- Record anything newly verified here back to the notes file's Reconcile section, if one is in use, so later moves inherit it too.
 
 ### 8. Shape: One Doc, or Several?
 
@@ -73,6 +75,7 @@ Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-a
 
 - Skip this pass for a very short single-entry doc, same threshold as skipping the outline in step 9. It exists to pay for itself on real drafts, not to add a round trip to a two-paragraph doc.
 - Run it once, right here, not again after every Refine turn; re-running it on each small edit would cost more than it returns.
+- Brief it with the notes file's Reconcile section, if one exists (which facts are already confirmed against the code, which are SME-attested). It's still blind to the conversation and the drafting reasoning, the independence that makes it useful, but there's no reason for it to re-derive a fact check move 5 already did. Spending its pass re-verifying settled facts instead of checking structure, consistency, and voice is the redundant work, not the independence.
 - Auto-apply anything mechanical it flags (heading case, broken internal links, missing alt text, TODOs, terminology drift, formatting, AI voice per `tone-and-voice.md`'s hedging, marketing language, and false-contrast patterns) without mentioning it. These are already your department per the rule below.
 - Fold anything that needs judgment (a completeness gap, an accuracy concern, an unclear audience fit) into the **Do** list below, as your own read of the draft. The contributor sees one editor's questions, not a report and then a review.
 
