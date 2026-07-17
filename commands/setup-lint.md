@@ -60,6 +60,16 @@ Copy the templates from `${CLAUDE_PLUGIN_ROOT}/assets/lint/` and adjust them to 
 
   This file has no static template in `assets/lint/`, since its content is entirely project-specific. Regenerate it whenever `reference.yml`'s `term` entries change, the same way markdownlint's config regenerates when `config.yml` changes.
 - **markdownlint** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/markdownlint/.markdownlint.jsonc`): set `MD004` from `list_marker`, `MD029` from `ordered_list_style`. If `heading_case` is sentence, leave heading case to Vale and the agent (markdownlint does not check case).
+- **markdownlint scope, generated, not copied**: also write a `.markdownlint-cli2.jsonc` at the repo root, extending the config above, with the same globs the CI workflow uses (`**/*.md`, excluding `node_modules`). Without this, a bare `npx markdownlint-cli2` with no arguments falls back to markdownlint's stock defaults (`MD013` line-length included, which this config likely turns off) and scans whatever the invoker happens to type, not what the project actually lints or what CI checks. This file makes the correct scope the default, and CI can then call the bare command instead of hardcoding the glob a second place it could drift from:
+
+  ```jsonc
+  {
+    "config": { "extends": ".markdownlint.jsonc" },
+    "globs": ["**/*.md", "!**/node_modules/**"]
+  }
+  ```
+
+  If the project's own convention excludes some markdown from linting (generated files, vendored docs, agent/instruction files that aren't published documentation), adjust the globs to match; don't assume every project wants the same scope this plugin uses on itself.
 - **cspell** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/cspell/cspell.json`) and **markdown-link-check** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/linkcheck/.markdown-link-check.json`): copy as-is unless the user opts out.
 - **MegaLinter** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/megalinter/.mega-linter.yml`): copy when the user chose the aggregator.
 
