@@ -71,13 +71,11 @@ Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-a
 - Notes or warnings where the contributor flagged gotchas
 - Cross-references to related docs you found in the survey
 
-**Before showing it to the contributor**, run a silent second-opinion pass: send the draft file to the `doc-auditor` subagent, scoped to just this one file and reading only the file and the repo, not this conversation. It never edits, only reports, so a fresh reader catches what the same context that wrote the draft is prone to miss.
+**Before showing it to the contributor**, run the second-opinion pass on the draft file, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/second-opinion.md`. Draft-specific notes:
 
-- Skip this pass for a very short single-entry doc, same threshold as skipping the outline in step 9. It exists to pay for itself on real drafts, not to add a round trip to a two-paragraph doc.
-- Run it once, right here, not again after every Refine turn; re-running it on each small edit would cost more than it returns.
-- Brief it with the notes file's Reconcile section, if one exists (which facts are already confirmed against the code, which are SME-attested). It's still blind to the conversation and the drafting reasoning, the independence that makes it useful, but there's no reason for it to re-derive a fact check move 5 already did. Spending its pass re-verifying settled facts instead of checking structure, consistency, and voice is the redundant work, not the independence.
-- Auto-apply anything mechanical it flags (heading case, broken internal links, missing alt text, TODOs, terminology drift, formatting, AI voice per `tone-and-voice.md`'s hedging, marketing language, and false-contrast patterns) without mentioning it. These are already your department per the rule below.
-- Fold anything that needs judgment (a completeness gap, an accuracy concern, an unclear audience fit) into the **Do** list below, as your own read of the draft. The contributor sees one editor's questions, not a report and then a review.
+- The skip threshold is the same as skipping the outline in step 9: a very short single-entry doc gets no round trip.
+- Brief it with the notes file's Reconcile section when one exists; that is this workflow's record of settled facts.
+- Judgment findings fold into the **Do** list below, as your own read of the draft.
 
 **Do not** ask the contributor to review your formatting choices, heading case, or markdown conventions. Apply them. These are your department.
 

@@ -47,6 +47,7 @@ Present one prioritized result across the set:
 ## Notes
 
 - Never run against production anything. The safety tiers in the `doc-verifier` agent are the contract: workspace-scoped execution, `unverified` for everything requiring credentials, privileges, or real services.
+- Be honest about what the tiers are: instructions to an agent, not an operating-system sandbox. They are conservative and the verifier is told to skip anything it cannot classify, but a project that needs hard isolation guarantees should run this command inside a container or a disposable VM, and it is fine to say exactly that when the stakes warrant it.
 - Stateful means ordered. Never verify a procedure's steps out of order or in parallel within one doc.
 - An environment mismatch is a finding about the doc's stated prerequisites, not automatically a broken doc. Report what platform the run assumed.
 - Verification is the expensive, high-trust end of the freshness spectrum: `docs-decay.mjs` ranks cheaply, an audit reads carefully, this command actually runs the steps. Point the queue's worst offenders here, not the whole set on every run.

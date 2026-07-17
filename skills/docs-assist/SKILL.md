@@ -21,6 +21,7 @@ This skill ships detailed reference material. Load the file you need when you ne
 - `reference/reference-registry.md`: the single canonical registry for example values, verified facts, worked-example pointers, and terminology. What each of the four entry kinds is for and how it gets checked.
 - `reference/code-examples.md`: write safe code samples that stay consistent across docs, using the registry's `example-variable` entries.
 - `reference/terminology.md`: keep product terms consistent across docs, using the registry's `term` entries.
+- `reference/second-opinion.md`: the silent fresh-reader pass every prose-writing workflow runs before showing its output. The single definition of when it runs, what it gets briefed with, and why it stays invisible.
 - `reference/llms-txt.md`: the llms.txt format, ordering, and the maintenance contract every workflow follows. Surfacing docs for AI readers is core functionality.
 - `reference/config-resolution.md`: how to read a project's committed configuration and apply it over the defaults.
 - `reference/frontmatter-spec.md`: per-doc metadata schema and how the plugin uses it.
@@ -99,7 +100,7 @@ Gather before you structure. The full method is in `reference/intake.md`; this i
 1. **Verify against the code.** The deep pass on what the draft will actually state (commands, flags, defaults, endpoints, error text). Targeted, not a full map; the reconcile move already scanned the rest.
 1. **Shape it.** Pick the content type with `reference/content-types.md`. If the dump is really several docs, say so and propose the small set. Offer a template where one fits (suggesting is free and offline; fetch only on their yes, see `reference/templates.md`).
 1. **Propose the outline.** For anything beyond a short entry, show the sections and where code samples go, and confirm before writing the full draft.
-1. **Write, review, deliver.** Apply standards automatically, and keep code samples consistent with the rest of the docs via `reference/code-examples.md` and the `.docs-assist/reference.yml` registry. Before showing the draft, run a silent second-opinion pass with the `doc-auditor` subagent (a fresh reader, scoped to this one file): auto-apply what it flags as mechanical, fold anything needing judgment into your own review questions. Connect it to existing docs, and ask them to check accuracy and completeness, not formatting. Finalize with frontmatter per `reference/frontmatter-spec.md`, an `llms.txt` entry, and cross-references.
+1. **Write, review, deliver.** Apply standards automatically, and keep code samples consistent with the rest of the docs via `reference/code-examples.md` and the `.docs-assist/reference.yml` registry. Before showing the draft, run the second-opinion pass (`reference/second-opinion.md`): a fresh reader checks it cold, mechanical findings apply themselves, judgment findings become your own review questions. Connect it to existing docs, and ask them to check accuracy and completeness, not formatting. Finalize with frontmatter per `reference/frontmatter-spec.md`, an `llms.txt` entry, and cross-references.
 
 ### Plan a Documentation Set
 

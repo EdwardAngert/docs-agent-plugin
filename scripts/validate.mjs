@@ -98,6 +98,22 @@ if (existsSync(rel(catalogPath))) {
   check(ids === urls, `template catalog: ${ids} entries but ${urls} template_url fields`);
 }
 
+// 4c. Every registered command is discoverable: it must appear in llms.txt,
+// docs/command-reference.md, and README.md. Catches the drift where a new
+// command gets wired internally but never surfaced where users look
+// (verify was missing from README when this check was written).
+{
+  const surfaces = ['llms.txt', 'docs/command-reference.md', 'README.md']
+    .filter((f) => existsSync(rel(f)))
+    .map((f) => ({ file: f, text: readFileSync(rel(f), 'utf8') }));
+  for (const f of plugin.commands || []) {
+    const cmd = '/docs-assist:' + f.replace(/^.*\//, '').replace(/\.md$/, '');
+    for (const s of surfaces) {
+      check(s.text.includes(cmd), `${s.file} does not mention registered command ${cmd}`);
+    }
+  }
+}
+
 // 5. llms.txt relative links resolve.
 if (existsSync(rel('llms.txt'))) {
   const llms = readFileSync(rel('llms.txt'), 'utf8');

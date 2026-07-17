@@ -134,6 +134,8 @@ For every command's argument and an example, see the [command reference](docs/co
   Produces a prioritized report.
 - `/docs-assist:update [ref, PR, or path]`: find and update the docs affected by a code change.
   Reads the diff, locates the docs that reference what changed, and updates them for review.
+- `/docs-assist:verify [doc path or directory]`: verify a procedural doc by executing it.
+  Runs the steps in an isolated workspace, reports every divergence and missing prerequisite, and earns the `last-verified` bump on a clean pass.
 - `/docs-assist:release-notes [range, tag, or version]`: turn a release's worth of changes into reader-facing release notes.
   Reads the commits and PRs, asks you for the why, and writes notes that lead with what readers must know.
 - `/docs-assist:agent-ready [docs dir]`: make the docs legible to AI tools.
