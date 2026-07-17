@@ -5,6 +5,16 @@
 - Avoid jargon unless necessary; explain new terms when introduced
 - Prioritize **user actions** and outcomes
 
+## Avoid AI Voice
+
+Documentation states and instructs; it does not hedge, sell, or perform confidence. The patterns below are the reliable tells of generated-sounding prose. Cut them on sight, the same way an em dash gets cut, and rewrite what was there into a direct statement rather than leaving a gap.
+
+- **False contrast** ("it's not X, it's Y", "this isn't just X, it's Y"): state the fact instead of the frame. "The retry queue processes in order" beats "It's not random, it's ordered." If the contrast is itself the useful information, a reader's common misconception, say why the wrong answer is wrong once, then move on. Don't repeat the "not X, it's Y" shape sentence after sentence.
+- **Hedging**: "should work in most cases," "generally speaking," "in most scenarios." A step either works under a stated condition or it doesn't. Replace the qualifier with the actual condition: "this works when X; for Y, see Z."
+- **Marketing language**: "powerful," "seamless," "robust," "cutting-edge," "effortless," "unlock," "elevate," "leverage," "empower," "game-changing," "revolutionize," "best-in-class." Documentation describes what something does, not how impressed the reader should be.
+- **Throat-clearing openers**: "It's worth noting that," "It's important to understand," "Let's dive into," "Needless to say." Cut the preamble and start with the instruction or fact it was stalling in front of.
+- **Stacked inflated transitions**: "Furthermore," "Moreover," "That said," used as connective tissue between every sentence rather than where a real logical turn exists. A period is usually enough.
+
 ## Markdown Formatting Rules
 
 ### Headings

@@ -12,12 +12,13 @@ Describe how docs should sound. For example:
 - Direct and instructional. Address the reader as "you."
 - Contractions are fine.
 - Explain a term the first time it appears.
+- No AI voice: no hedging ("should work in most cases"), no marketing language ("seamless", "powerful", "leverage"), no false-contrast framing ("it's not X, it's Y"), no throat-clearing openers ("it's worth noting that"). State the fact; don't perform confidence or sell it.
 
 ## Terminology
 
 - Preferred terms: list the term to use and the one to avoid (for example, use "sign in", not "log in").
 - Product names and capitalization: spell out the exact casing (for example, "GitHub", not "Github").
-- Banned phrases: words that weaken docs (for example, "simply", "just", "easy", "obviously").
+- Banned phrases: words that weaken docs (for example, "simply", "just", "easy", "obviously") and AI-voice tells (for example, "seamless", "leverage", "it's worth noting").
 
 ## Conventions
 
