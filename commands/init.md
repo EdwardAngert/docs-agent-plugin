@@ -21,6 +21,7 @@ Do not ask the user what they could observe yourself. Survey the repo first:
 - Sample headings to infer heading case (title vs sentence) and whether they are action-oriented.
 - Check list markers (`-`, `*`, `+`) and whether docs use one sentence per line.
 - Look for an existing linter (`.vale.ini`, `.markdownlint*`, `.mega-linter.yml`, `cspell.json`) and record which tool, if any.
+- Check for `.docs-assist/example-variables.txt` or `.docs-assist/terms.txt`. These predate `.docs-assist/reference.yml` and the plugin no longer reads them; if either exists, plan to offer a one-time migration in step 4 rather than treating the project as having no registry.
 
 ### 2. Propose the Config
 
@@ -45,8 +46,8 @@ Set the team up in one pass instead of leaving them to find commands:
 
 - Offer to turn on documentation templates: a proven starting structure from The Good Docs Project, suggested during drafting. If they want it, scaffold `.docs-assist/templates.yml` from `${CLAUDE_PLUGIN_ROOT}/assets/config/templates.yml` with `enabled: true`. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. If they decline, do nothing: the assistant still offers a template when one fits and fetches only on their yes.
 - Offer to generate matching linters from `config.yml` (the same workflow as `/docs-assist:setup-lint`).
-- Offer to seed `.docs-assist/example-variables.txt` from `${CLAUDE_PLUGIN_ROOT}/assets/config/example-variables.txt`, pre-filled with any placeholder values already used across the docs, so code samples stay consistent. The plugin maintains it from then on. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md`.
-- Offer to seed `.docs-assist/terms.txt` from `${CLAUDE_PLUGIN_ROOT}/assets/config/terms.txt`, pre-filled with the product terms the existing docs already use (and any drift you noticed while surveying, resolved to the dominant usage). The plugin maintains it from then on. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/terminology.md`.
+- If you found `.docs-assist/example-variables.txt` or `.docs-assist/terms.txt` in step 1, offer the one-time migration first: read both, propose a `.docs-assist/reference.yml` with each `example-variables.txt` line as an `example-variable` entry and each `terms.txt` line as a `term` entry, and offer to delete the old files once the contributor confirms. Never delete them without that confirmation, and never invent entries beyond what the old files stated. See "Migrating" in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/reference-registry.md`.
+- Otherwise, offer to seed `.docs-assist/reference.yml` from `${CLAUDE_PLUGIN_ROOT}/assets/config/reference.yml`, pre-filled with the placeholder values and product terms already used across the docs (and any terminology drift you noticed while surveying, resolved to the dominant usage), so code samples and terms stay consistent. The plugin maintains it from then on. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/reference-registry.md`.
 
 ### 5. Point to Next Steps
 

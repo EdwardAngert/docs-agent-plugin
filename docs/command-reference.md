@@ -156,7 +156,7 @@ Use it once to retrofit a docs set, and after large changes; day-to-day maintena
 `/docs-assist:init [docs directory]`
 
 Scaffold project-local configuration in a committed `.docs-assist/` directory, pre-filled from the repo's existing conventions.
-It writes `config.yml` and `style.md`, and offers to enable templates and seed the example-variables registry.
+It writes `config.yml` and `style.md`, and offers to enable templates and seed the reference registry.
 Run it first so every doc from the first follows the same conventions.
 
 ```text

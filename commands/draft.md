@@ -67,7 +67,7 @@ Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-a
 - Clear, action-oriented headings
 - Prerequisites section if there are any
 - Numbered steps for procedures
-- Code examples that are copy-paste safe and consistent with the rest of the docs. Follow `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md`: reuse variable names from related docs and the `.docs-assist/example-variables.txt` registry, and offer to create and maintain that registry.
+- Code examples that are copy-paste safe and consistent with the rest of the docs. Follow `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md`: reuse variable names from related docs and the `.docs-assist/reference.yml` registry, and offer to create and maintain it.
 - Notes or warnings where the contributor flagged gotchas
 - Cross-references to related docs you found in the survey
 

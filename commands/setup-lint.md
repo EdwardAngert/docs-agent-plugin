@@ -18,6 +18,8 @@ Read `.docs-assist/config.yml`. The linter config is generated from it, so the c
 - `heading_case`, `list_marker`, `ordered_list_style`, `no_em_dashes`, `no_ai_voice`, and the `frontmatter` fields all map to specific rules.
 - If `.docs-assist/config.yml` does not exist, offer to run `/docs-assist:init` first. You can proceed with the defaults, but tell the user the linter will encode defaults, not their conventions.
 
+Also read `.docs-assist/reference.yml` if it exists. Its `term` entries (canonical value plus variants) become a generated Vale rule in step 4; the other entry kinds (`example-variable`, `fact`, `pointer`) have no linter equivalent and stay agent-checked.
+
 ### 2. Detect Existing Linters First
 
 Never clobber what is already there. Look for:
@@ -43,6 +45,20 @@ If `$ARGUMENTS` did not specify, ask two short questions:
 Copy the templates from `${CLAUDE_PLUGIN_ROOT}/assets/lint/` and adjust them to the resolved config. Do not ship rules the config turns off:
 
 - **Vale** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/vale/`): copy `.vale.ini` and `styles/DocsAssist/` to the repo root. Drop `EmDash.yml` if `no_em_dashes` is false. Drop `HeadingGerund.yml` if the project does not use action-oriented headings. Drop `MarketingLanguage.yml`, `FillerPhrase.yml`, and `FalseContrast.yml` if `no_ai_voice` is false.
+- **Terminology, generated, not copied**: if `.docs-assist/reference.yml` has `term` entries, generate `styles/DocsAssist/Terminology.yml` yourself, a Vale `substitution` rule with one `swap` line per variant pointing at its canonical term:
+
+  ```yaml
+  extends: substitution
+  message: "Use '%s' instead of '%s'."
+  level: warning
+  ignorecase: true
+  swap:
+    DocsAssist: Docs Assist
+    docs assist: Docs Assist
+    sub-agent: subagent
+  ```
+
+  This file has no static template in `assets/lint/`, since its content is entirely project-specific. Regenerate it whenever `reference.yml`'s `term` entries change, the same way markdownlint's config regenerates when `config.yml` changes.
 - **markdownlint** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/markdownlint/.markdownlint.jsonc`): set `MD004` from `list_marker`, `MD029` from `ordered_list_style`. If `heading_case` is sentence, leave heading case to Vale and the agent (markdownlint does not check case).
 - **cspell** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/cspell/cspell.json`) and **markdown-link-check** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/linkcheck/.markdown-link-check.json`): copy as-is unless the user opts out.
 - **MegaLinter** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/megalinter/.mega-linter.yml`): copy when the user chose the aggregator.
@@ -64,11 +80,11 @@ npx cspell "docs/**/*.md"
 npx markdown-link-check docs/**/*.md
 ```
 
-For Vale, point them at the install (Vale is a standalone binary; the CI workflow uses the official action). Note that re-running `/docs-assist:setup-lint` after editing `config.yml` regenerates the linter config.
+For Vale, point them at the install (Vale is a standalone binary; the CI workflow uses the official action). Note that re-running `/docs-assist:setup-lint` after editing `config.yml` or adding a `term` entry to `reference.yml` regenerates the linter config.
 
 ## Notes
 
 - Detect before you generate. An existing linter is a signal of the team's preference; work with it.
 - Scope every linter to documentation (`*.md`, `*.mdx`, the `docs_dir` from config), not source code.
 - Prefer `npx` invocations and the official Vale action so the repo needs no global installs.
-- The configs are generated from `config.yml`. When the config changes, the linter config should be regenerated so the two never drift.
+- The configs are generated from `config.yml`, and the terminology rule from `reference.yml`'s `term` entries. When either changes, the linter config should be regenerated so they never drift.

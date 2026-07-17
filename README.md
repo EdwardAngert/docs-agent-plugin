@@ -154,8 +154,7 @@ Commit a `.docs-assist/` directory and the whole team writes to the same convent
 - `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools).
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
-- `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, so examples stay consistent across docs. The plugin maintains it.
-- `.docs-assist/terms.txt`: canonical product terms and the variants to avoid, so the same concept never appears under different names. The plugin maintains it, and audits flag drift against it.
+- `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and product terms, so examples and terminology stay consistent across docs. The plugin maintains it, and audits flag drift against it.
 
 Run `/docs-assist:init` to generate them, pre-filled from what your docs already do.
 Because this config is committed to your repo, it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.

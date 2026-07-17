@@ -18,8 +18,9 @@ This skill ships detailed reference material. Load the file you need when you ne
 - `reference/intake.md`: how to gather knowledge before structuring. The dump-first intake loop for one doc, the corpus content-inventory method for from-scratch work, and the opt-in running notes file for drafts that span more than one sitting.
 - `reference/content-types.md`: the canonical content types and their frontmatter values. The single source of truth.
 - `reference/tone-and-voice.md`: formatting, heading case, markdown, and voice rules.
-- `reference/code-examples.md`: write safe code samples that stay consistent across docs, using the `.docs-assist/example-variables.txt` registry.
-- `reference/terminology.md`: keep product terms consistent across docs, using the `.docs-assist/terms.txt` registry.
+- `reference/reference-registry.md`: the single canonical registry for example values, verified facts, worked-example pointers, and terminology. What each of the four entry kinds is for and how it gets checked.
+- `reference/code-examples.md`: write safe code samples that stay consistent across docs, using the registry's `example-variable` entries.
+- `reference/terminology.md`: keep product terms consistent across docs, using the registry's `term` entries.
 - `reference/llms-txt.md`: the llms.txt format, ordering, and the maintenance contract every workflow follows. Surfacing docs for AI readers is core functionality.
 - `reference/config-resolution.md`: how to read a project's committed configuration and apply it over the defaults.
 - `reference/frontmatter-spec.md`: per-doc metadata schema and how the plugin uses it.
@@ -37,8 +38,7 @@ Before you survey or write, check whether the project has committed configuratio
 - `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools).
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/templates.yml`: optional settings for documentation templates. See `reference/templates.md`.
-- `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, maintained by the plugin. See `reference/code-examples.md`.
-- `.docs-assist/terms.txt`: canonical product terms and the variants to avoid, maintained by the plugin. See `reference/terminology.md`.
+- `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and terminology, maintained by the plugin. See `reference/reference-registry.md`.
 
 When present, these override the plugin defaults. Apply them to everything you write and review.
 When absent, run on the defaults plus whatever conventions the existing docs already follow, and offer `/docs-assist:init` when committed config would help: a team adopting shared standards, or a solo maintainer who wants the plugin to hold their docs to a consistent line.
@@ -98,7 +98,7 @@ Gather before you structure. The full method is in `reference/intake.md`; this i
 1. **Verify against the code.** The deep pass on what the draft will actually state (commands, flags, defaults, endpoints, error text). Targeted, not a full map; the reconcile move already scanned the rest.
 1. **Shape it.** Pick the content type with `reference/content-types.md`. If the dump is really several docs, say so and propose the small set. Offer a template where one fits (suggesting is free and offline; fetch only on their yes, see `reference/templates.md`).
 1. **Propose the outline.** For anything beyond a short entry, show the sections and where code samples go, and confirm before writing the full draft.
-1. **Write, review, deliver.** Apply standards automatically, and keep code samples consistent with the rest of the docs via `reference/code-examples.md` and the `.docs-assist/example-variables.txt` registry. Before showing the draft, run a silent second-opinion pass with the `doc-auditor` subagent (a fresh reader, scoped to this one file): auto-apply what it flags as mechanical, fold anything needing judgment into your own review questions. Connect it to existing docs, and ask them to check accuracy and completeness, not formatting. Finalize with frontmatter per `reference/frontmatter-spec.md`, an `llms.txt` entry, and cross-references.
+1. **Write, review, deliver.** Apply standards automatically, and keep code samples consistent with the rest of the docs via `reference/code-examples.md` and the `.docs-assist/reference.yml` registry. Before showing the draft, run a silent second-opinion pass with the `doc-auditor` subagent (a fresh reader, scoped to this one file): auto-apply what it flags as mechanical, fold anything needing judgment into your own review questions. Connect it to existing docs, and ask them to check accuracy and completeness, not formatting. Finalize with frontmatter per `reference/frontmatter-spec.md`, an `llms.txt` entry, and cross-references.
 
 ### Plan a Documentation Set
 
@@ -140,7 +140,7 @@ When it is ambiguous, default to a doc (task-oriented) and let the reviewer rest
 
 These are your responsibility, not the contributor's. The full rules live in `reference/tone-and-voice.md`. The essentials:
 
-- Direct, clear, instructional tone. Active voice. Match the contributor's terminology rather than replacing it with generic words, and keep product terms consistent with the `.docs-assist/terms.txt` registry when one exists (`reference/terminology.md`).
+- Direct, clear, instructional tone. Active voice. Match the contributor's terminology rather than replacing it with generic words, and keep product terms consistent with `.docs-assist/reference.yml`'s `term` entries when they exist (`reference/terminology.md`).
 - AP title case headings that are action-oriented (imperative verbs, not gerunds). One H1 per file. No emojis in headings.
 - `1.` for ordered lists, `-` for unordered. A language tag on every code block. Copy-paste safe examples with placeholder values.
 - No em dashes. Use a comma, a colon, parentheses, or rewrite the sentence.

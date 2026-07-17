@@ -40,7 +40,7 @@ For each doc missing required metadata, add it using the repo's field names:
 ### 4. Record the Conventions
 
 If the repo uses nonstandard field names (`tags` for keywords, `type` for content type), note the mapping in `llms.txt` so the next AI tool does not re-derive it.
-If the project has `.docs-assist/terms.txt` or `example-variables.txt`, mention them in the note: they tell an agent which values and terms are canonical.
+If the project has `.docs-assist/reference.yml`, mention it in the note: it tells an agent which values, facts, and terms are canonical.
 
 ### 5. Verify and Report
 

@@ -52,6 +52,16 @@ Surfacing docs for AI readers is core, so its rules are single-sourced.
 
 - Shipped in 0.9.5: `reference/llms-txt.md` defines the format (per the llms.txt convention), entry ordering, description rules, the mapping note, and the maintenance contract every workflow follows.
 
+## Cross-Cutting: The Reference Registry
+
+Example values, verified facts, worked-example pointers, and terminology used to live in two separate files (`example-variables.txt`, `terms.txt`), checked only by the agent. Consolidated into one, with a real deterministic check for the part of it that's checkable that way.
+
+- Added: `.docs-assist/reference.yml` replaces both files, single-sourced in `reference/reference-registry.md`. Four entry kinds: `example-variable` (a placeholder value), `fact` (a value tied to a `source` so drift from the source gets caught, not just drift between docs), `pointer` (a link to where a good worked example already lives, so it's reused instead of rewritten), and `term` (canonical word plus variants, the direct successor to `terms.txt`).
+- Added: `/docs-assist:setup-lint` compiles every `term` entry into a generated Vale `substitution` rule (`styles/DocsAssist/Terminology.yml`), so terminology consistency also runs as a deterministic lint. The other three kinds stay agent-only: Vale doesn't check inside code blocks by default, ruling out `example-variable` and `fact`, and it can't follow a link to resolve a `pointer`.
+- Clean break, not a dual-read: the plugin no longer reads `example-variables.txt` or `terms.txt`. Pre-1.0, and every adopter is using a plugin, not a stable file format, so the simpler path won over a permanent compatibility shim. The survey step in every workflow (draft, audit, init) checks for the old files and offers a one-time migration into `reference.yml` rather than silently ignoring them.
+
+This repo's own `.docs-assist/reference.yml` is migrated from its former `example-variables.txt` and `terms.txt`, dogfooding the same migration a real adopter would run.
+
 ## Later
 
 Deliberately deferred, in rough priority order:

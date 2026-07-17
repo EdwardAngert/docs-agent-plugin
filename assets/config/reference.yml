@@ -1,0 +1,58 @@
+# Docs Assist reference registry.
+#
+# One place for canonical example values, verified facts, pointers to
+# existing worked examples, and product terminology. Docs Assist reads this
+# when drafting or auditing, and `/docs-assist:setup-lint` compiles every
+# `kind: term` entry into a generated Vale substitution rule.
+#
+# Four kinds:
+#   example-variable - a safe, reusable placeholder value for code samples.
+#   fact             - a real value tied to its source, so drift from the
+#                      source (not just between docs) gets caught.
+#   pointer          - a link to where a good worked example already lives,
+#                      instead of duplicating it here.
+#   term             - a canonical word or phrase and the variants to avoid.
+#
+# Edit freely; the plugin respects what you set and adds entries it
+# introduces. See reference-registry.md for the full format and how each
+# kind gets checked.
+
+base_url:
+  kind: example-variable
+  value: "https://api.example.com"
+
+api_key:
+  kind: example-variable
+  value: "sk_test_EXAMPLE0123456789"
+  note: "Fake, never a real key."
+
+project_id:
+  kind: example-variable
+  value: "proj_example_42"
+
+region:
+  kind: example-variable
+  value: "us-east-1"
+
+# Example of a fact: a real value that should track its source, not just
+# stay consistent across docs. Replace with your project's own.
+#
+# retry_default:
+#   kind: fact
+#   value: 3
+#   source: "src/config/retry.ts:DEFAULT_RETRIES"
+
+# Example of a pointer: instead of re-writing a worked example, point new
+# docs at the best existing one.
+#
+# webhook_retry_flow:
+#   kind: pointer
+#   ref: "docs/guides/webhooks.md#retry-configuration"
+#   note: "Best existing worked example of a full retry-config flow."
+
+# Example of a term: replace with your product's own vocabulary.
+#
+# workspace:
+#   kind: term
+#   canonical: "workspace"
+#   variants: ["project", "environment"]

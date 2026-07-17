@@ -24,5 +24,5 @@ Machine-checkable settings live in `config.yml`. Judgment-based guidance lives h
 
 - Reader-facing tutorials live in `docs/`. The skill's reference material lives under `skills/docs-assist/reference/`.
 - No em dashes. Use a comma, a colon, parentheses, or rewrite the sentence.
-- Reuse the placeholder values in `example-variables.txt` for code samples.
+- Reuse the placeholder values in `reference.yml` for code samples.
 - Keep examples copy-paste safe: reserved example domains, documentation IP ranges, and fake credentials that cannot work.

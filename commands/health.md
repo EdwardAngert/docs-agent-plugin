@@ -30,7 +30,7 @@ Assess each dimension from samples and cheap signals, not an exhaustive pass. Ra
 
 - **Coverage**: does a doc exist for each thing users need? Compare the project's main features and entry points against the docs that exist. A missing README, quickstart, or install doc outweighs any number of polish issues.
 - **Freshness**: are the docs still true? Compare doc modification dates and `last-verified` frontmatter against the churn of the code they describe. A doc describing a heavily-changed area, untouched since, is the signal.
-- **Consistency**: do the docs agree with each other? Spot-check example values against each other and `.docs-assist/example-variables.txt`, terms against `.docs-assist/terms.txt` (see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/terminology.md`), and heading and frontmatter conventions across sibling docs.
+- **Consistency**: do the docs agree with each other? Spot-check example values against each other and `.docs-assist/reference.yml`'s `example-variable` entries, terms against its `term` entries (see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/terminology.md`), and heading and frontmatter conventions across sibling docs.
 - **Findability**: can a reader (or an AI tool) get to the right doc? Check for an `llms.txt` and whether it matches the docs, cross-references between related docs, and orphan docs nothing links to.
 
 With no committed config, the standard is the set's own internal consistency, per the skill's cold-invocation default.

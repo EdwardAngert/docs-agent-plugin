@@ -90,7 +90,7 @@ Surround headings and lists with blank lines (markdownlint rules MD022 and MD032
 ## Terminology Consistency
 
 Use the same term for the same concept in every doc.
-When the project has a `.docs-assist/terms.txt` registry, its canonical terms are authoritative; see `terminology.md`.
+When the project has `term` entries in `.docs-assist/reference.yml`, its canonical terms are authoritative; see `terminology.md`.
 For general style questions beyond this file, `style-guides.md` covers choosing and applying an external guide such as the [Google developer documentation style guide](https://developers.google.com/style/).
 
 ## Document Hygiene

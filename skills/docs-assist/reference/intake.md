@@ -29,6 +29,7 @@ Before you say anything, build context so your later questions are sharp, not ge
 
 - Read `llms.txt` if it exists, then scan the docs directory and read frontmatter from related docs. You are looking for what this topic touches, not reading everything.
 - Note light feature signals from the repo: names, commands, config, and routes that relate to the topic. Do not do a deep code analysis; you want enough to connect the dots, not a source audit.
+- Check for `.docs-assist/example-variables.txt` or `.docs-assist/terms.txt`. These are the pre-`reference.yml` format; the plugin no longer reads them. If either exists, offer a one-time migration into `.docs-assist/reference.yml` (see "Migrating" in `reference-registry.md`) rather than silently drafting or auditing as if no registry existed.
 - Hold what you find. You will use it to situate the dump and to spot what the expert leaves out.
 
 ## 2. Dump: "Tell Me Everything You Know"

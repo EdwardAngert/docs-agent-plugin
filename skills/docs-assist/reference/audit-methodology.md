@@ -17,6 +17,7 @@ A full set, a directory, a few changed files, and a diff are different jobs. For
 - Categorize each by content type using `content-types.md`.
 - Note last-updated dates and any ownership signals.
 - List image assets and flag ones not referenced by any doc.
+- Check for `.docs-assist/example-variables.txt` or `.docs-assist/terms.txt`. These predate `reference.yml` and are no longer read. If either exists, flag it and offer the one-time migration in `reference-registry.md` rather than auditing as if no registry existed.
 
 ### 2. Analyze Each Document
 
