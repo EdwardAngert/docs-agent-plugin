@@ -134,6 +134,8 @@ For every command's argument and an example, see the [command reference](docs/co
   Produces a prioritized report.
 - `/docs-assist:update [ref, PR, or path]`: find and update the docs affected by a code change.
   Reads the diff, locates the docs that reference what changed, and updates them for review.
+- `/docs-assist:verify [doc path or directory]`: verify a procedural doc by executing it.
+  Runs the steps in an isolated workspace, reports every divergence and missing prerequisite, and earns the `last-verified` bump on a clean pass.
 - `/docs-assist:release-notes [range, tag, or version]`: turn a release's worth of changes into reader-facing release notes.
   Reads the commits and PRs, asks you for the why, and writes notes that lead with what readers must know.
 - `/docs-assist:agent-ready [docs dir]`: make the docs legible to AI tools.
@@ -154,8 +156,7 @@ Commit a `.docs-assist/` directory and the whole team writes to the same convent
 - `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools).
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
-- `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, so examples stay consistent across docs. The plugin maintains it.
-- `.docs-assist/terms.txt`: canonical product terms and the variants to avoid, so the same concept never appears under different names. The plugin maintains it, and audits flag drift against it.
+- `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and product terms, so examples and terminology stay consistent across docs. The plugin maintains it, and audits flag drift against it.
 
 Run `/docs-assist:init` to generate them, pre-filled from what your docs already do.
 Because this config is committed to your repo, it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
@@ -168,7 +169,7 @@ Linting is optional and never bundled.
 Run `/docs-assist:setup-lint` to scaffold it, and the plugin generates the linter config from your `.docs-assist/config.yml`.
 That means one source of truth: the same settings drive how the agent writes and how the linter checks, so they never drift.
 
-- A Vale custom style encodes the prose rules (no em dashes, action-oriented headings, descriptive link text, banned weasel words).
+- Vale runs a small `DocsAssist` style for what's specific to this plugin (AI voice, no em dashes, descriptive link text, imperative headings), plus the managed `Google`, `write-good`, and `alex` packages for everything general-purpose (weasel words, passive voice, wordiness, clichés, inclusive language). General prose quality is a solved, maintained problem; this plugin doesn't keep its own copy of it.
 - markdownlint covers the structural rules.
 - cspell and a link checker cover spelling and links.
 - MegaLinter is offered for teams that want one aggregated tool.

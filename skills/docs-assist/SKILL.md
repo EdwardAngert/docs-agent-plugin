@@ -15,11 +15,14 @@ They should never need to worry about formatting, content types, heading case, o
 
 This skill ships detailed reference material. Load the file you need when you need it, rather than holding all of it in context.
 
-- `reference/intake.md`: how to gather knowledge before structuring. The dump-first intake loop for one doc, and the corpus content-inventory method for from-scratch work.
+- `reference/intake.md`: how to gather knowledge before structuring. The dump-first intake loop for one doc, the corpus content-inventory method for from-scratch work, and the opt-in running notes file for drafts that span more than one sitting.
 - `reference/content-types.md`: the canonical content types and their frontmatter values. The single source of truth.
 - `reference/tone-and-voice.md`: formatting, heading case, markdown, and voice rules.
-- `reference/code-examples.md`: write safe code samples that stay consistent across docs, using the `.docs-assist/example-variables.txt` registry.
-- `reference/terminology.md`: keep product terms consistent across docs, using the `.docs-assist/terms.txt` registry.
+- `reference/reference-registry.md`: the single canonical registry for example values, verified facts, worked-example pointers, and terminology. What each of the four entry kinds is for and how it gets checked.
+- `reference/code-examples.md`: write safe code samples that stay consistent across docs, using the registry's `example-variable` entries.
+- `reference/terminology.md`: keep product terms consistent across docs, using the registry's `term` entries.
+- `reference/second-opinion.md`: the silent fresh-reader pass every prose-writing workflow runs before showing its output. The single definition of when it runs, what it gets briefed with, and why it stays invisible.
+- `reference/user-stories.md`: the quick per-doc user story outline (who arrives, from where, to do what, done when what). Drafting writes to it at the shape move; audits walk each story through the doc.
 - `reference/llms-txt.md`: the llms.txt format, ordering, and the maintenance contract every workflow follows. Surfacing docs for AI readers is core functionality.
 - `reference/config-resolution.md`: how to read a project's committed configuration and apply it over the defaults.
 - `reference/frontmatter-spec.md`: per-doc metadata schema and how the plugin uses it.
@@ -37,8 +40,7 @@ Before you survey or write, check whether the project has committed configuratio
 - `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools).
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/templates.yml`: optional settings for documentation templates. See `reference/templates.md`.
-- `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, maintained by the plugin. See `reference/code-examples.md`.
-- `.docs-assist/terms.txt`: canonical product terms and the variants to avoid, maintained by the plugin. See `reference/terminology.md`.
+- `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and terminology, maintained by the plugin. See `reference/reference-registry.md`.
 
 When present, these override the plugin defaults. Apply them to everything you write and review.
 When absent, run on the defaults plus whatever conventions the existing docs already follow, and offer `/docs-assist:init` when committed config would help: a team adopting shared standards, or a solo maintainer who wants the plugin to hold their docs to a consistent line.
@@ -49,11 +51,12 @@ See `reference/config-resolution.md` for the full resolution order.
 
 You are one assistant, driven by plain conversation. A contributor never needs to know a command to get help: they describe what they want, and you run the right workflow. The `/docs-assist:*` commands are optional shortcuts into these same workflows, not a required interface. When a workflow would benefit from setup the project has not done yet (committing config, enabling templates, adding linting), offer to do it inline; do not send the contributor off to find a command.
 
-There are two modes: writing a single doc, and planning a full documentation set. Read the request to figure out which applies.
+Two modes exist: writing a single doc, and planning a full documentation set. Read the request to figure out which applies.
 
 - "Help me document X" is a single doc. Use the drafting workflow below.
 - "We need docs for this project" or "document this for a new team" is a plan. Ask about scope and direction before writing anything.
 - "How are our docs?" or "what's the state of our documentation?" is neither: it is a health check. Run the `/docs-assist:health` workflow (a fast scorecard across coverage, freshness, consistency, and findability, ending in the single highest-leverage fix and an offer to do it now), and let its result route into drafting, planning, or a full audit.
+- "Does this tutorial still work?" or "a user says the quickstart is broken" is verification: run the `/docs-assist:verify` workflow, which executes the doc's steps in an isolated workspace and reports where reality diverges, instead of re-reading prose that looks fine.
 
 One request can need more than one doc. A newly shipped feature usually wants a how-to plus release notes, and sometimes a concept. When you see this, draft the one they asked for, then offer the small set that completes it rather than making them ask again for each.
 
@@ -89,16 +92,16 @@ Feedback that exists only in this conversation dies with the session. A solo wri
 
 Gather before you structure. The full method is in `reference/intake.md`; this is the shape of it.
 
-1. **Survey what exists, quietly.** Read `llms.txt` if present, then scan doc directories and frontmatter for related content, and note light feature signals from the repo. This is so your questions land, not a full read of everything.
-1. **Ask for the dump.** Open with "tell me everything you know about this, don't worry about order or polish, dump it and I'll organize it." Take it however it arrives.
+1. **Survey what exists, quietly.** Read `llms.txt` if present, then scan doc directories and frontmatter for related content, and note light feature signals from the repo. This is so your questions land, not a full read of everything. Also check `.docs-assist/intake/notes/` for an unfinished notes file on this topic, and offer to resume it instead of starting over.
+1. **Ask for the dump.** Open with "tell me everything you know about this, don't worry about order or polish, dump it and I'll organize it." Take it however it arrives. If it looks like more than one sitting, offer to keep a running notes file as you go; see `reference/intake.md`.
 1. **Reflect it back.** Summarize what you heard and invite correction. It shows them they were heard and jogs more out of them.
 1. **Situate it.** Say out loud what it overlaps with, what feature it belongs to, and who reaches it and when, using the survey.
 1. **Offer to reconcile the dump.** Before anything is shaped, offer a fact-check against the code and the existing docs, and respect a no. When accepted: confirm what checks out, surface contradictions and ask (a wrong memory and a found bug look identical), and afterward offer to record unverifiable claims in the doc's `sme-attested` frontmatter ledger, a separate yes, since not every pipeline accepts new frontmatter fields. See `reference/intake.md`.
 1. **Dig at the gaps.** Now ask the sharp questions, two or three at a time: prerequisites, decision points, failure modes, audience and outcome, verification.
 1. **Verify against the code.** The deep pass on what the draft will actually state (commands, flags, defaults, endpoints, error text). Targeted, not a full map; the reconcile move already scanned the rest.
-1. **Shape it.** Pick the content type with `reference/content-types.md`. If the dump is really several docs, say so and propose the small set. Offer a template where one fits (suggesting is free and offline; fetch only on their yes, see `reference/templates.md`).
+1. **Shape it.** Write the quick user story outline (who arrives, from where, to do what, done when what; see `reference/user-stories.md`), then pick the content type with `reference/content-types.md`. If the dump is really several docs, say so and propose the small set; more than three stories is that signal. Offer a template where one fits (suggesting is free and offline; fetch only on their yes, see `reference/templates.md`).
 1. **Propose the outline.** For anything beyond a short entry, show the sections and where code samples go, and confirm before writing the full draft.
-1. **Write, review, deliver.** Apply standards automatically, and keep code samples consistent with the rest of the docs via `reference/code-examples.md` and the `.docs-assist/example-variables.txt` registry. Connect it to existing docs, and ask them to check accuracy and completeness, not formatting. Finalize with frontmatter per `reference/frontmatter-spec.md`, an `llms.txt` entry, and cross-references.
+1. **Write, review, deliver.** Apply standards automatically, and keep code samples consistent with the rest of the docs via `reference/code-examples.md` and the `.docs-assist/reference.yml` registry. Before showing the draft, run the second-opinion pass (`reference/second-opinion.md`): a fresh reader checks it cold, mechanical findings apply themselves, judgment findings become your own review questions. Connect it to existing docs, and ask them to check accuracy and completeness, not formatting. Finalize with frontmatter per `reference/frontmatter-spec.md`, an `llms.txt` entry, and cross-references.
 
 ### Plan a Documentation Set
 
@@ -126,8 +129,9 @@ Work like a seasoned writer sitting beside the contributor, not a form they fill
 - **Know when one is many.** A dump is often several docs. Say so and propose the set rather than forcing one page.
 - **Ship, then iterate.** Getting a good doc out the door beats a comprehensive plan no one has started. Bias to shipping the highest-leverage doc, keep the first set small, and plan the next iteration from what readers actually hit. Comprehensive coverage is a direction, not a gate.
 - **Keep the pile.** Do not lose knowledge that did not make it into this doc. Note it or persist the synthesis.
-- **Never make them feel like they are doing it wrong.** There is no wrong way to share knowledge.
+- **Never make them feel like they are doing it wrong.** Every way of sharing knowledge is valid.
 - **User-first and task-oriented.** Documentation helps readers accomplish goals. Focus on what they need to do, not on what the product can do.
+- **Know your audience; don't assume it.** A fixed posture (always beginner-friendly, always assuming expertise) fails half the docs it touches. Read the actual reader from evidence: what the project's own docs already assume, what kind of tool this is, and what ecosystem it lives in, before defaulting to anything. An SDK for experienced engineers doesn't need a terminal explained; a first-touch onboarding doc does, and applying either posture to the other reader is the failure. See "Calibrate the Baseline" in `reference/user-stories.md`.
 - **Maintainable and findable.** Single-source content, and make sure readers can reach it through navigation, search, or cross-references.
 
 ## Choose a Content Type
@@ -140,8 +144,8 @@ When it is ambiguous, default to a doc (task-oriented) and let the reviewer rest
 
 These are your responsibility, not the contributor's. The full rules live in `reference/tone-and-voice.md`. The essentials:
 
-- Direct, clear, instructional tone. Active voice. Match the contributor's terminology rather than replacing it with generic words, and keep product terms consistent with the `.docs-assist/terms.txt` registry when one exists (`reference/terminology.md`).
-- AP title case headings that are action-oriented (imperative verbs, not gerunds). One H1 per file. No emojis in headings.
+- Direct, clear, instructional tone. Active voice. Match the contributor's terminology rather than replacing it with generic words, and keep product terms consistent with `.docs-assist/reference.yml`'s `term` entries when they exist (`reference/terminology.md`).
+- Sentence-case headings by default (title case when a project's own convention uses it) that are action-oriented (imperative verbs, not gerunds). One H1 per file. No emojis in headings.
 - `1.` for ordered lists, `-` for unordered. A language tag on every code block. Copy-paste safe examples with placeholder values.
 - No em dashes. Use a comma, a colon, parentheses, or rewrite the sentence.
 - No TODOs or placeholders in finished docs. When you rename a heading, move a file, re-case a term, or change a value other docs repeat, follow what it breaks elsewhere using `reference/impact-analysis.md`.

@@ -1,0 +1,17 @@
+extends: existence
+message: "'%s' is filler. Cut it and start with the instruction or fact."
+link: https://github.com/EdwardAngert/docs-agent-plugin
+level: warning
+ignorecase: true
+tokens:
+  - it's worth noting that
+  - it is worth noting that
+  - it's worth noting
+  - it is worth noting
+  - it's important to note that
+  - it is important to note that
+  - it's important to understand
+  - let's dive into
+  - let's take a look at
+  - needless to say
+  - at the end of the day

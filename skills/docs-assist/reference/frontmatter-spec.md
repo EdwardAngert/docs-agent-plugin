@@ -103,6 +103,9 @@ languages:
 **`last-verified`**
 The date someone last confirmed the doc's technical accuracy.
 This is not the same as the file's last-modified date. A doc can be edited for formatting without being verified for accuracy.
+The strongest form: `/docs-assist:verify` executed the doc's procedure end to end and every runnable step passed, and the bump was offered on that evidence.
+A human read-through also earns a bump; the point is that someone, or something, checked the claims, not just the prose.
+The decay detector (`docs-decay.mjs`) reads this field, so verified docs drop down the re-verification queue.
 
 **`template`**
 The catalog id of the documentation template this doc was seeded from, when one was used.

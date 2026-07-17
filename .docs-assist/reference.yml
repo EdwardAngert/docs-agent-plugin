@@ -1,0 +1,37 @@
+# Docs Assist reference registry for this repo.
+#
+# Migrated from the former example-variables.txt and terms.txt (merged in the
+# reference.yml redesign). See skills/docs-assist/reference/reference-registry.md
+# for the format.
+
+base_url:
+  kind: example-variable
+  value: "https://api.example.com"
+
+api_key:
+  kind: example-variable
+  value: "sk_test_EXAMPLE0123456789"
+  note: "Fake, never a real key."
+
+docs-assist-name:
+  kind: term
+  canonical: "Docs Assist"
+  variants: ["DocsAssist", "docs assist"]
+  note: "Product name in prose. The plugin id stays docs-assist in code, commands, and file paths."
+
+subagent:
+  kind: term
+  canonical: "subagent"
+  variants: ["sub-agent", "sub agent"]
+
+content-type-term:
+  kind: term
+  canonical: "content type"
+  variants: ["contenttype"]
+  note: "Two words in prose. The frontmatter field stays content-type."
+
+good-docs-project:
+  kind: term
+  canonical: "The Good Docs Project"
+  variants: ["Good Docs project", "gooddocs"]
+  note: "Full name on first use in a doc."

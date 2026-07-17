@@ -1,6 +1,6 @@
 ---
-description: Install opt-in documentation hooks (git pre-commit lint, in-session doc lint, CI docs-impact check). Default off, nothing is installed without your choice
-argument-hint: [pre-commit | claude-code | ci | all]
+description: Install opt-in documentation hooks (git pre-commit lint, in-session doc lint, CI docs-impact check, CI reference-registry check). Default off, nothing is installed without your choice
+argument-hint: [pre-commit | claude-code | ci | ci-facts | all]
 ---
 
 # Set Up Documentation Hooks
@@ -12,6 +12,7 @@ Install hooks that keep documentation in shape automatically. Hooks are opt-in: 
 - **Git pre-commit hook** (`${CLAUDE_PLUGIN_ROOT}/assets/hooks/pre-commit`): lints staged Markdown with the repo's configured linter and reminds you to run `/docs-assist:update` when you commit source changes without touching docs. Fails the commit only on lint errors. The reminder never blocks.
 - **Claude Code post-edit lint** (`${CLAUDE_PLUGIN_ROOT}/assets/hooks/claude-code-hooks.json`): a `PostToolUse` hook that lints a Markdown file right after Claude writes or edits it, so style issues surface in the session. Requires `jq` and `npx`.
 - **CI docs-impact check** (`${CLAUDE_PLUGIN_ROOT}/assets/ci/docs-impact.mjs` and `${CLAUDE_PLUGIN_ROOT}/assets/ci/github/docs-impact.yml`): a deterministic detector that runs on every pull request and reports when a diff rides the change types that ripple into docs: moved or renamed docs, changed headings, changed code terms the docs mention, or a large source change with no docs touched. It costs no agent tokens; it tells reviewers when `/docs-assist:update` is worth running, and can be made blocking with `DOCS_IMPACT_STRICT`.
+- **CI reference-registry check** (`${CLAUDE_PLUGIN_ROOT}/assets/ci/check-facts.mjs` and `${CLAUDE_PLUGIN_ROOT}/assets/ci/github/check-facts.yml`): a deterministic detector that runs on every pull request and verifies the mechanical parts of `.docs-assist/reference.yml`: every `fact` entry's `source` still contains the referenced identifier, and every `pointer` entry's target file and heading anchor still resolve. Only offer this when the project has a `reference.yml` with `fact` or `pointer` entries; skip it otherwise, since there's nothing for it to check. Can be made blocking with `CHECK_FACTS_STRICT`.
 
 ## Process
 
@@ -53,7 +54,17 @@ When chosen:
 - Explain the tuning knobs: `DOCS_IMPACT_LINE_THRESHOLD` (source lines that count as a large silent change, default 100), `DOCS_IMPACT_STRICT` (fail the check instead of reporting), and `DOCS_DIR` (defaults to `docs_dir` from `.docs-assist/config.yml`).
 - Tell the user the check reports; it does not run `/docs-assist:update` itself. The report names the range to pass when they do.
 
-### 6. Confirm and Explain
+### 6. Install the CI Reference-Registry Check
+
+When chosen:
+
+- Check `.docs-assist/reference.yml` for any `fact` or `pointer` entries first. If it has neither, tell the user there's nothing for this check to do yet and skip installing it.
+- Copy `${CLAUDE_PLUGIN_ROOT}/assets/ci/check-facts.mjs` to `scripts/check-facts.mjs` and `${CLAUDE_PLUGIN_ROOT}/assets/ci/github/check-facts.yml` to `.github/workflows/check-facts.yml`.
+- If either destination exists, show a diff and confirm. Never silently overwrite.
+- Explain the tuning knob: `CHECK_FACTS_STRICT` (fail the check instead of reporting).
+- Tell the user this only checks that a `fact`'s source and a `pointer`'s target still exist; it does not compare a fact's value against its source, since that needs understanding the source language. That deeper check stays something `doc-auditor` and drafting do.
+
+### 7. Confirm and Explain
 
 After installing, tell the user:
 

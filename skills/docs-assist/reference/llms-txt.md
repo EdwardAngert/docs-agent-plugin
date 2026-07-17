@@ -39,10 +39,10 @@ When the repo uses nonstandard frontmatter field names, record the mapping as pr
 
 ```markdown
 > This repo uses `tags` for keywords and `type` for content type.
-> Code samples use the canonical values in `.docs-assist/example-variables.txt`; product terms follow `.docs-assist/terms.txt`.
+> Code samples and product terms follow the canonical registry in `.docs-assist/reference.yml`.
 ```
 
-Pointing at the registries tells an agent which values and terms are canonical, which makes its answers consistent with the docs.
+Pointing at the registry tells an agent which values and terms are canonical, which makes its answers consistent with the docs.
 
 ## The Maintenance Contract
 

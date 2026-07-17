@@ -37,7 +37,7 @@ This file covers the patterns, antipatterns, examples, and practices that apply 
 
 ## Examples and Code Blocks
 
-The full rules for safe, consistent code examples are single-sourced in `code-examples.md`: reuse before you invent, the `.docs-assist/example-variables.txt` registry, copy-paste safety, and formatting.
+The full rules for safe, consistent code examples are single-sourced in `code-examples.md`: reuse before you invent, the `.docs-assist/reference.yml` registry, copy-paste safety, and formatting.
 One pattern worth restating here because it spans docs rather than living in any one of them: use the same example values throughout the documentation set, so users can follow any doc in any order without translating between disparate examples.
 Inconsistent examples are a maintenance burden and an audit finding.
 

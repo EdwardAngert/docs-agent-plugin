@@ -1,0 +1,29 @@
+extends: existence
+message: "'%s' is marketing language, not a description. State what it does."
+link: https://github.com/EdwardAngert/docs-agent-plugin
+level: warning
+ignorecase: true
+# "leverage" is deliberately excluded: it doubles as a legitimate compound
+# noun in plenty of technical prose ("highest-leverage fix"), not just the
+# verb cliché ("leverage our platform"). A bare-word existence match can't
+# tell the two apart, so drop it here and catch the cliché by review instead.
+tokens:
+  - seamless
+  - seamlessly
+  - powerful
+  - robust
+  - cutting-edge
+  - cutting edge
+  - effortless
+  - effortlessly
+  - unlock
+  - elevate
+  - empower
+  - game-changing
+  - game changing
+  - revolutionize
+  - revolutionary
+  - best-in-class
+  - world-class
+  - unparalleled
+  - transformative

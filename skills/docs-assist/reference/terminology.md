@@ -9,30 +9,19 @@ The fix is the same as for example values: a small registry every doc is checked
 
 Load this when writing or auditing docs in a project that has a registry, or when drift you find suggests a project needs one.
 
-## The Terms Registry
+## The Reference Registry
 
-`.docs-assist/terms.txt` is the canonical vocabulary for the project. Read it first, write with its terms, and keep it current.
+`.docs-assist/reference.yml` holds the canonical vocabulary for the project, as `term` entries, alongside example values and other registered facts. Read it first, write with its terms, and keep it current. The full format, including the other entry kinds, is single-sourced in `reference-registry.md`; this section only covers what's specific to terminology.
 
-- **Read it first.** If the file exists, its canonical terms are authoritative in prose. Use them in everything you write.
-- **Offer to create it.** When you find terminology drift (in an audit, or while surveying before a draft), offer to create the registry seeded with the canonical choices, so the decision is recorded instead of re-made every session. Scaffold from `${CLAUDE_PLUGIN_ROOT}/assets/config/terms.txt`.
-- **Maintain it.** When a draft introduces a product term readers will see again, add it with its variants to avoid. The registry is the plugin's responsibility to keep in sync, not the contributor's.
+- **Read it first.** If a `term` entry exists, its canonical form is authoritative in prose. Use it in everything you write.
+- **Offer to create it.** When you find terminology drift (in an audit, or while surveying before a draft), offer to create the registry seeded with the canonical choices, so the decision is recorded instead of re-made every session. Scaffold from `${CLAUDE_PLUGIN_ROOT}/assets/config/reference.yml`.
+- **Maintain it.** When a draft introduces a product term readers will see again, add a `term` entry with its variants to avoid. The registry is the plugin's responsibility to keep in sync, not the contributor's.
 - **Respect the boundary with `style.md`.** The registry holds machine-checkable pairs: a canonical term and the variants to avoid. Judgment-based language guidance (voice, banned phrases, when a term is appropriate) stays in `.docs-assist/style.md`. When the two disagree, `style.md` wins and the registry needs updating.
-
-### Format
-
-Simple `canonical = variants` lines, with `#` comments carrying any nuance. Human-editable, machine-greppable.
-
-```text
-# Docs Assist terminology registry. Canonical terms and the variants to avoid.
-# Product name in prose. The plugin id stays docs-assist in code and commands.
-Docs Assist = DocsAssist, docs assist
-# One word.
-subagent = sub-agent, sub agent
-```
+- **The only kind Vale also checks.** `/docs-assist:setup-lint` compiles every `term` entry into a generated Vale substitution rule, so this check also runs as a deterministic lint, not only during a drafting or audit conversation.
 
 ## How the Audit Uses It
 
-`/docs-assist:audit` treats the registry the way it treats `.docs-assist/example-variables.txt`:
+`/docs-assist:audit` treats `term` entries in the registry the way it treats `example-variable` entries:
 
 - Flag prose that uses a listed variant instead of the canonical term.
 - Flag the same concept appearing under different terms across docs, even when neither is in the registry yet, and suggest the pair to add.

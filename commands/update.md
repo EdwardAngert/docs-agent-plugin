@@ -62,6 +62,7 @@ For every update:
 
 ### 6. Review and Finalize
 
+- Before showing the result, run the second-opinion pass batched across the touched docs, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/second-opinion.md`. It matters most here: an update can run entirely off a diff with no contributor conversation to catch drift, so this pass is the only check standing between the edits and landing wrong. Keep it blind to the diff as well as the conversation, and fold judgment findings into the follow-ups list below.
 - Show the user the result as a diff (`git diff` on the docs) so they review the substance, not the formatting.
 - Trace the ripple of your own edits. If you renamed a heading, moved a file, re-cased a term, or changed a value that other docs repeat, follow the edges in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/impact-analysis.md` and fix or flag what they reach.
 - Check for an `llms.txt`. If the repo has one and your edits added, removed, renamed, or re-described a doc it lists, update its entries so the map matches the docs. Update cross-references the same way.

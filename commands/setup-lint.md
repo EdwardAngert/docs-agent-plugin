@@ -15,8 +15,10 @@ Linting is optional and is never bundled. This command only scaffolds it when as
 
 Read `.docs-assist/config.yml`. The linter config is generated from it, so the checks match how the plugin writes:
 
-- `heading_case`, `list_marker`, `ordered_list_style`, `no_em_dashes`, and the `frontmatter` fields all map to specific rules.
+- `heading_case`, `list_marker`, `ordered_list_style`, `no_em_dashes`, `no_ai_voice`, and the `frontmatter` fields all map to specific rules.
 - If `.docs-assist/config.yml` does not exist, offer to run `/docs-assist:init` first. You can proceed with the defaults, but tell the user the linter will encode defaults, not their conventions.
+
+Also read `.docs-assist/reference.yml` if it exists. Its `term` entries (canonical value plus variants) become a generated Vale rule in step 4; the other entry kinds (`example-variable`, `fact`, `pointer`) have no linter equivalent and stay agent-checked.
 
 ### 2. Detect Existing Linters First
 
@@ -29,7 +31,7 @@ Never clobber what is already there. Look for:
 - `.markdown-link-check.json`.
 - Lint scripts in `package.json`, a `.pre-commit-config.yaml`, and existing workflows in `.github/workflows/`.
 
-Report what you found. If a linter already exists, extend it (add the DocsAssist Vale style, merge missing markdownlint rules) rather than replacing it. Show a diff and confirm before changing an existing config.
+Report what you found. If a linter already exists, extend it (add the DocsAssist Vale style, merge missing markdownlint rules) rather than replacing it. If an existing `.vale.ini` already declares its own `Packages`, merge `Google`, `write-good`, and `alex` into that list rather than overwriting it; a project may already be using other packages this plugin doesn't know about. Show a diff and confirm before changing an existing config.
 
 ### 3. Choose the Approach
 
@@ -42,8 +44,37 @@ If `$ARGUMENTS` did not specify, ask two short questions:
 
 Copy the templates from `${CLAUDE_PLUGIN_ROOT}/assets/lint/` and adjust them to the resolved config. Do not ship rules the config turns off:
 
-- **Vale** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/vale/`): copy `.vale.ini` and `styles/DocsAssist/` to the repo root. Drop `EmDash.yml` if `no_em_dashes` is false. Drop `HeadingGerund.yml` if the project does not use action-oriented headings.
+- **Vale** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/vale/`): copy `.vale.ini` and `styles/DocsAssist/` to the repo root, then run `vale sync` to download the `Google`, `write-good`, and `alex` packages the config declares. General prose quality (weasel words, passive voice, wordiness, clichés, inclusive language, punctuation and heading conventions) is a managed problem now, not something this plugin keeps its own copy of; `DocsAssist` stays small on purpose, covering only AI voice and this plugin's own opinionated defaults. Adjust the copied `.vale.ini` to the resolved config:
+  - If `heading_case` is `title` instead of the default `sentence`, flip `Google.Headings` from `YES` to `NO`: Google's own rule assumes sentence case and would fight a project that has chosen title case on purpose.
+  - If `no_em_dashes` is false, leave `Google.EmDash` at its default (`NO` in the template only because `DocsAssist.EmDash` already bans em dashes outright); when there's no house ban, Google's formatting-only check is worth keeping, so flip it to `YES`.
+  - Drop `HeadingGerund.yml` if the project does not use action-oriented headings.
+  - Drop `MarketingLanguage.yml`, `FillerPhrase.yml`, and `FalseContrast.yml` if `no_ai_voice` is false.
+  - `vale sync` needs network access; if it isn't available in the current environment, still write the config and tell the user to run `vale sync` themselves before the first lint.
+- **Terminology, generated, not copied**: if `.docs-assist/reference.yml` has `term` entries, generate `styles/DocsAssist/Terminology.yml` yourself, a Vale `substitution` rule with one `swap` line per variant pointing at its canonical term:
+
+  ```yaml
+  extends: substitution
+  message: "Use '%s' instead of '%s'."
+  level: warning
+  ignorecase: true
+  swap:
+    DocsAssist: Docs Assist
+    docs assist: Docs Assist
+    sub-agent: subagent
+  ```
+
+  This file has no static template in `assets/lint/`, since its content is entirely project-specific. Regenerate it whenever `reference.yml`'s `term` entries change, the same way markdownlint's config regenerates when `config.yml` changes.
 - **markdownlint** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/markdownlint/.markdownlint.jsonc`): set `MD004` from `list_marker`, `MD029` from `ordered_list_style`. If `heading_case` is sentence, leave heading case to Vale and the agent (markdownlint does not check case).
+- **markdownlint scope, generated, not copied**: also write a `.markdownlint-cli2.jsonc` at the repo root, extending the config above, with the same globs the CI workflow uses (`**/*.md`, excluding `node_modules`). Without this, a bare `npx markdownlint-cli2` with no arguments falls back to markdownlint's stock defaults (`MD013` line-length included, which this config likely turns off) and scans whatever the invoker happens to type, not what the project actually lints or what CI checks. This file makes the correct scope the default, and CI can then call the bare command instead of hardcoding the glob a second place it could drift from:
+
+  ```jsonc
+  {
+    "config": { "extends": ".markdownlint.jsonc" },
+    "globs": ["**/*.md", "!**/node_modules/**"]
+  }
+  ```
+
+  If the project's own convention excludes some markdown from linting (generated files, vendored docs, agent/instruction files that aren't published documentation), adjust the globs to match; don't assume every project wants the same scope this plugin uses on itself.
 - **cspell** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/cspell/cspell.json`) and **markdown-link-check** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/linkcheck/.markdown-link-check.json`): copy as-is unless the user opts out.
 - **MegaLinter** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/megalinter/.mega-linter.yml`): copy when the user chose the aggregator.
 
@@ -64,11 +95,11 @@ npx cspell "docs/**/*.md"
 npx markdown-link-check docs/**/*.md
 ```
 
-For Vale, point them at the install (Vale is a standalone binary; the CI workflow uses the official action). Note that re-running `/docs-assist:setup-lint` after editing `config.yml` regenerates the linter config.
+For Vale, point them at the install (Vale is a standalone binary; the CI workflow uses the official action) and tell them to run `vale sync` once, locally, before the first lint: Vale never fetches the `Google`, `write-good`, and `alex` packages on its own, and a lint run without syncing first will error that the styles are missing, not silently skip them. Note that re-running `/docs-assist:setup-lint` after editing `config.yml` or adding a `term` entry to `reference.yml` regenerates the linter config.
 
 ## Notes
 
 - Detect before you generate. An existing linter is a signal of the team's preference; work with it.
 - Scope every linter to documentation (`*.md`, `*.mdx`, the `docs_dir` from config), not source code.
 - Prefer `npx` invocations and the official Vale action so the repo needs no global installs.
-- The configs are generated from `config.yml`. When the config changes, the linter config should be regenerated so the two never drift.
+- The configs are generated from `config.yml`, and the terminology rule from `reference.yml`'s `term` entries. When either changes, the linter config should be regenerated so they never drift.

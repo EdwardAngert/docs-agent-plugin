@@ -11,7 +11,7 @@ This is the deeper reference behind the change-based paths of `/docs-assist:audi
 
 Narrowing the edit scope does not narrow the impact scope. A three-file edit can break links across the entire site. You keep the work small by following only the edges a change rides, not by trusting the file count.
 
-So the order is: classify what changed, follow the edges that change type implicates, then report which edges you walked.
+The order is: classify what changed, follow the edges that change type implicates, then report which edges you walked.
 
 ## Classify the Change
 
@@ -21,7 +21,7 @@ For each change in the edit scope, name its type. The type decides which edges y
 | --- | --- |
 | Heading text or slug changed | Inbound anchor links (`path#slug`) from any doc, in-page tables of contents, cross-references that deep-link the heading |
 | File renamed, moved, or slug changed | Every inbound link to the old route, redirects, `llms.txt`, navigation or sidebar config |
-| Proper noun, product, or term renamed or re-cased | Every other occurrence of the term across the docs set, the glossary, the `.docs-assist/terms.txt` registry, terminology in `.docs-assist/style.md` |
+| Proper noun, product, or term renamed or re-cased | Every other occurrence of the term across the docs set, the glossary, the `term` entries in `.docs-assist/reference.yml`, terminology in `.docs-assist/style.md` |
 | Heading or title case changed | The case convention across sibling docs. Decide whether this is a one-off fix or a convention shift the neighbors should match |
 | Number, stat, price, or version edited | Every other surface that repeats the same value: landing pages, READMEs, release notes. Duplicated facts drift |
 | Command, flag, endpoint, or config key changed | Other docs that reference the same symbol. This is the code-to-docs edge `/docs-assist:update` already follows |

@@ -19,10 +19,10 @@ Consistency with the surrounding docs matters more than any single guide's rules
 
 When a team is selecting a guide, these are the common starting points:
 
-- **Google Developer Documentation Style Guide**: modern, comprehensive, API-focused.
+- **Google Developer Documentation Style Guide**: modern, comprehensive, API-focused. The plugin's default managed Vale package, and where its default heading case (sentence case) comes from.
 - **Microsoft Writing Style Guide**: software and consumer tech products.
 - **Chicago Manual of Style**: general purpose, academic roots.
-- **AP Stylebook**: news and journalism style. The plugin's default heading case (AP title case) comes from here.
+- **AP Stylebook**: news and journalism style. A supported alternative for title case (`title_case_style: ap` in `config.yml`) for a project whose own convention already uses it.
 - **Custom or hybrid**: one of the above plus company-specific rules.
 
 Choose based on product type, audience, industry norms, the team's capacity to enforce it, and how much existing content would need to change.

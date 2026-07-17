@@ -1,0 +1,59 @@
+# Docs Assist reference-registry check.
+#
+# Installed by /docs-assist:setup-hooks (ci). Runs the deterministic
+# check-facts detector on every pull request: it verifies that every `fact`
+# entry's source still contains the referenced identifier, and every
+# `pointer` entry's target file and heading anchor still resolve.
+#
+# Cheap by design: no agent, no network calls beyond GitHub itself, no
+# tokens. It catches a fact or pointer going stale as its source moves,
+# renames, or gets deleted; it does not compare fact values (that needs
+# understanding the source language), which stays an agent-side check.
+# Set CHECK_FACTS_STRICT: "1" to fail the check instead of only reporting.
+#
+# The result is posted as a single sticky PR comment, updated in place on
+# every push, so re-runs never pile up new comments.
+
+name: Reference registry check
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  check-facts:
+    name: Check reference registry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Check facts and pointers
+        run: node scripts/check-facts.mjs > check-facts-report.md
+        env:
+          CHECK_FACTS_STRICT: "0"
+      # continue-on-error: fork PRs get a read-only token, so the comment
+      # post fails there; the report still lands in the job summary above.
+      - name: Post sticky PR comment
+        if: always() && github.event_name == 'pull_request'
+        continue-on-error: true
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            if (!fs.existsSync('check-facts-report.md')) return;
+            const marker = '<!-- docs-assist:check-facts -->';
+            const body = marker + '\n' + fs.readFileSync('check-facts-report.md', 'utf8');
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo, issue_number: context.issue.number, per_page: 100,
+            });
+            const existing = comments.find((c) => c.body && c.body.startsWith(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ ...context.repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ ...context.repo, issue_number: context.issue.number, body });
+            }

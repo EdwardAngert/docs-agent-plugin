@@ -1,6 +1,6 @@
 ---
 title: "Docs Assist Command Reference"
-description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, plan, template, make-examples, audit, update, release-notes, agent-ready, init, setup-lint, setup-hooks, and setup-site."
+description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, plan, template, make-examples, audit, update, verify, release-notes, agent-ready, init, setup-lint, setup-hooks, and setup-site."
 content-type: reference
 audience: users
 keywords:
@@ -29,6 +29,7 @@ Every command also works with no argument: it asks for what it needs.
 | `/docs-assist:health`        | Fast docs health scorecard and first fix      | `[docs directory]`                   |
 | `/docs-assist:audit`         | Audit docs for quality, gaps, and structure   | `[path]`                             |
 | `/docs-assist:update`        | Update the docs affected by a code change     | `[git ref, PR number, or path]`      |
+| `/docs-assist:verify`        | Execute a procedural doc's steps and report   | `[doc path or directory]`            |
 | `/docs-assist:release-notes` | Write reader-facing notes for a release       | `[range, tag, or version]`           |
 | `/docs-assist:agent-ready`   | Make the docs legible to AI tools             | `[docs directory]`                   |
 | `/docs-assist:init`          | Scaffold project-local configuration          | `[docs directory]`                   |
@@ -45,6 +46,7 @@ Every command also works with no argument: it asks for what it needs.
 Draft one document with guided help.
 It opens by asking you to share everything you know, reflects it back, connects it to your existing docs, checks the details against the code, confirms an outline, then writes.
 Use it when you want to document a single topic and would like a structured walkthrough.
+For a topic that will take more than one sitting, it can offer to keep a running notes file so you can pick back up later without re-explaining everything.
 
 ```text
 /docs-assist:draft how to configure webhook retries
@@ -124,6 +126,20 @@ Use it after a code change so the docs keep pace.
 /docs-assist:update 42
 ```
 
+### /docs-assist:verify
+
+`/docs-assist:verify [doc path or directory]`
+
+Verify a procedural doc by executing it.
+It runs the doc's steps in order in an isolated workspace, compares actual output against what the doc shows, and reports every divergence, failure, and missing prerequisite.
+Steps needing credentials, privilege escalation, or real services are reported as unverified, never run.
+On a clean pass it offers to set `last-verified`, so the date means a machine ran the procedure.
+Use it on quickstarts and tutorials, the docs where a broken step costs the most trust.
+
+```text
+/docs-assist:verify docs/quickstart.md
+```
+
 ### /docs-assist:release-notes
 
 `/docs-assist:release-notes [range, tag, or version]`
@@ -155,7 +171,7 @@ Use it once to retrofit a docs set, and after large changes; day-to-day maintena
 `/docs-assist:init [docs directory]`
 
 Scaffold project-local configuration in a committed `.docs-assist/` directory, pre-filled from the repo's existing conventions.
-It writes `config.yml` and `style.md`, and offers to enable templates and seed the example-variables registry.
+It writes `config.yml` and `style.md`, and offers to enable templates and seed the reference registry.
 Run it first so every doc from the first follows the same conventions.
 
 ```text

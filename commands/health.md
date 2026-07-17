@@ -29,8 +29,8 @@ Speed matters more than completeness here. Sample; do not read everything.
 Assess each dimension from samples and cheap signals, not an exhaustive pass. Rate each **solid**, **needs work**, or **missing**, with one line of evidence.
 
 - **Coverage**: does a doc exist for each thing users need? Compare the project's main features and entry points against the docs that exist. A missing README, quickstart, or install doc outweighs any number of polish issues.
-- **Freshness**: are the docs still true? Compare doc modification dates and `last-verified` frontmatter against the churn of the code they describe. A doc describing a heavily-changed area, untouched since, is the signal.
-- **Consistency**: do the docs agree with each other? Spot-check example values against each other and `.docs-assist/example-variables.txt`, terms against `.docs-assist/terms.txt` (see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/terminology.md`), and heading and frontmatter conventions across sibling docs.
+- **Freshness**: are the docs still true? In a git repo, run the decay detector (`node ${CLAUDE_PLUGIN_ROOT}/assets/ci/docs-decay.mjs`) and read its ranked queue: it scores every doc on related-source churn since the doc last changed, `last-verified` age, doc age, and open `sme-attested` claims, deterministically and with the reasons shown. It costs about two git calls per doc; for a docs set large enough that a full scan would break the fast-scorecard promise (hundreds of files), pass it the highest-traffic subdirectory instead of the whole tree, and say that's what you scanned. Outside a git repo, fall back to comparing doc modification dates and `last-verified` frontmatter against the code by hand. Either way, a doc describing a heavily changed area, untouched since, is the signal.
+- **Consistency**: do the docs agree with each other? Spot-check example values against each other and `.docs-assist/reference.yml`'s `example-variable` entries, terms against its `term` entries (see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/terminology.md`), and heading and frontmatter conventions across sibling docs.
 - **Findability**: can a reader (or an AI tool) get to the right doc? Check for an `llms.txt` and whether it matches the docs, cross-references between related docs, and orphan docs nothing links to.
 
 With no committed config, the standard is the set's own internal consistency, per the skill's cold-invocation default.
@@ -59,7 +59,7 @@ Keep the scorecard small enough to read in thirty seconds:
 End with an offer, not homework. Match the offer to the finding:
 
 - Coverage gap: offer to draft the missing doc now (`/docs-assist:draft` flow).
-- Freshness gap: offer to run the update pass against recent changes (`/docs-assist:update`).
+- Freshness gap: offer to run the update pass against recent changes (`/docs-assist:update`), and for the decay queue's worst procedural docs, offer `/docs-assist:verify` to run their steps and settle whether they still work.
 - Consistency gap: offer `/docs-assist:init` to record the conventions, and the fix pass to apply them.
 - Findability gap: offer to generate or repair `llms.txt` and the missing cross-references.
 - Broad problems across dimensions: recommend the full `/docs-assist:audit` and offer to run it.

@@ -1,0 +1,12 @@
+extends: existence
+message: "Rewrite the 'it's not X, it's Y' contrast as a direct statement of the fact."
+link: https://github.com/EdwardAngert/docs-agent-plugin
+level: suggestion
+ignorecase: true
+nonword: true
+# Heuristic for the "it's not X, it's Y" / "not X, but Y" contrast pattern.
+# It can match legitimate technical prose ("if it's not configured, but a
+# default applies, ..."), so this is a suggestion, not an error: a prompt to
+# look at the sentence, not an automatic rewrite.
+tokens:
+  - '\b(?:not|isn''t|is not)\b[^.!?,;]{0,50},\s*(?:but\s+)?(?:it''s|it is|they''re|they are)\b'

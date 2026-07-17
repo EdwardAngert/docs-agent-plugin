@@ -98,6 +98,22 @@ if (existsSync(rel(catalogPath))) {
   check(ids === urls, `template catalog: ${ids} entries but ${urls} template_url fields`);
 }
 
+// 4c. Every registered command is discoverable: it must appear in llms.txt,
+// docs/command-reference.md, and README.md. Catches the drift where a new
+// command gets wired internally but never surfaced where users look
+// (verify was missing from README when this check was written).
+{
+  const surfaces = ['llms.txt', 'docs/command-reference.md', 'README.md']
+    .filter((f) => existsSync(rel(f)))
+    .map((f) => ({ file: f, text: readFileSync(rel(f), 'utf8') }));
+  for (const f of plugin.commands || []) {
+    const cmd = '/docs-assist:' + f.replace(/^.*\//, '').replace(/\.md$/, '');
+    for (const s of surfaces) {
+      check(s.text.includes(cmd), `${s.file} does not mention registered command ${cmd}`);
+    }
+  }
+}
+
 // 5. llms.txt relative links resolve.
 if (existsSync(rel('llms.txt'))) {
   const llms = readFileSync(rel('llms.txt'), 'utf8');
@@ -106,6 +122,67 @@ if (existsSync(rel('llms.txt'))) {
     if (/^https?:/.test(link) || link.startsWith('#')) continue;
     const path = link.split('#')[0];
     check(existsSync(rel(path)), `llms.txt broken relative link: ${link}`);
+  }
+}
+
+// 6. The shipped Vale styles do not fire on the plugin's own docs.
+// A style that bans a phrase and then explains itself using that phrase in
+// plain prose flags itself; this happened for real (MarketingLanguage vs.
+// this repo's own "highest-leverage fix", and every doc describing the new
+// AI-voice rules quoting its own banned examples). Catch it here instead of
+// by hand-grepping after the fact. Only the plain literal-token styles are
+// checked this way; the two regex-based styles (HeadingGerund, FalseContrast)
+// are heuristics reviewed by hand when they change, not automated here.
+const styleTokens = [];
+const styleDir = 'assets/lint/vale/styles/DocsAssist';
+for (const f of ['EmDash.yml', 'ClickHere.yml', 'MarketingLanguage.yml', 'FillerPhrase.yml']) {
+  const path = join(styleDir, f);
+  if (!existsSync(rel(path))) continue;
+  const src = readFileSync(rel(path), 'utf8');
+  const tokensBlock = src.match(/^tokens:\n((?:\s+-.*\n?)+)/m);
+  if (!tokensBlock) continue;
+  for (const line of tokensBlock[1].split('\n')) {
+    const m = line.match(/^\s*-\s*(.+)$/);
+    if (!m) continue;
+    const token = m[1].trim().replace(/^['"]|['"]$/g, '');
+    if (token && !/^[\\^$.|?*+()[\]{}]/.test(token)) styleTokens.push({ file: f, token });
+  }
+}
+
+function stripCode(md) {
+  return md.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, '');
+}
+
+function allMdFiles(dir) {
+  const out = [];
+  for (const entry of readdirSync(rel(dir), { withFileTypes: true })) {
+    if (entry.name === 'node_modules' || entry.name.startsWith('.git')) continue;
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...allMdFiles(path));
+    else if (entry.name.endsWith('.md')) out.push(path);
+  }
+  return out;
+}
+
+function escapeRegex(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+if (styleTokens.length) {
+  const patterns = styleTokens.map(({ file, token }) => ({
+    file,
+    token,
+    // Word boundaries around the whole token, so "just" does not match
+    // inside "adjust" or "justify", but "click here" still matches as a
+    // phrase.
+    re: new RegExp(`\\b${escapeRegex(token)}\\b`, 'i'),
+  }));
+  for (const f of allMdFiles('.')) {
+    if (f.startsWith(join(styleDir))) continue; // the style files themselves, not markdown anyway
+    const prose = stripCode(readFileSync(rel(f), 'utf8'));
+    for (const { file: styleFile, token, re } of patterns) {
+      check(!re.test(prose), `${f} contains "${token}" in plain prose, which the shipped ${styleFile} Vale style flags; wrap it in backticks or rephrase`);
+    }
   }
 }
 

@@ -85,6 +85,8 @@ Each journey suggests a set of docs.
 A "get started" journey might need an installation doc, a quickstart, and a concepts overview.
 A "configure for production" journey might need a configuration reference and a deployment guide.
 
+When the journeys become plan entries, give each doc its quick user story outline (who arrives, from where, to do what, done when what; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`). The stories travel with the entry: a fanned-out drafter writes to them, and a later audit walks them. This is how the set-level journey stays connected to each doc's reader instead of dissolving into a file list.
+
 ### 6. Propose a Docs Plan Built to Ship and Iterate
 
 Write the plan to a file, `docs/plan.md` by default, or wherever the contributor prefers.
@@ -130,9 +132,9 @@ Once the plan is approved, ship doc by doc, or fan the stage out in parallel. Ea
 
 **Fan out the ship-now stage when the material already exists.** Split the stage honestly:
 
-- Docs whose knowledge is already captured (in the intake inventory, the code, or existing docs) can be drafted in parallel: launch the `doc-drafter` subagent once per doc, each briefed with its plan entry, the target path, the relevant inventory and code paths, and the resolved conventions (config, `style.md`, `terms.txt`, `example-variables.txt`). This is multi-file work, so the branch delivery rule applies.
+- Docs whose knowledge is already captured (in the intake inventory, the code, or existing docs) can be drafted in parallel: launch the `doc-drafter` subagent once per doc, each briefed with its plan entry, the target path, the relevant inventory and code paths, and the resolved conventions (config, `style.md`, `reference.yml`). This is multi-file work, so the branch delivery rule applies.
 - Docs that need fresh knowledge from a human stay conversational. Do not fan out a doc whose material does not exist; the drafter flags gaps, it does not invent.
-- Consolidate the fan-out: collect each drafter's report, add their proposed `llms.txt` entries yourself (subagents never edit shared files), apply the cross-references they suggest, and present the contributor a review queue of drafts with every `needs-sme` flag gathered in one list.
+- Consolidate the fan-out: collect each drafter's report, add their proposed `llms.txt` entries yourself (subagents never edit shared files), apply the cross-references they suggest, then run the second-opinion pass batched across the set, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/second-opinion.md`. Brief it with each drafter's SME-attested and verified-against-code lists; the batch is the one vantage point that sees drift between siblings that each drafted in isolation. Fold judgment findings into the same list as the `needs-sme` flags, and present the contributor one review queue.
 
 The contributor's role in a fan-out is reviewer, not co-author: they work the queue for accuracy while you handle everything else.
 

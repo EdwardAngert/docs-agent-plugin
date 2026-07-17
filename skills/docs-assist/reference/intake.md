@@ -29,6 +29,7 @@ Before you say anything, build context so your later questions are sharp, not ge
 
 - Read `llms.txt` if it exists, then scan the docs directory and read frontmatter from related docs. You are looking for what this topic touches, not reading everything.
 - Note light feature signals from the repo: names, commands, config, and routes that relate to the topic. Do not do a deep code analysis; you want enough to connect the dots, not a source audit.
+- Check for `.docs-assist/example-variables.txt` or `.docs-assist/terms.txt`. These are the pre-`reference.yml` format; the plugin no longer reads them. Note it and keep surveying: the offer to migrate (see "Migrating" in `reference-registry.md`) waits until the registry would actually be consulted, when choosing example values or checking terms during shaping and drafting. The contributor came to share knowledge; a file-format prompt before the dump is the wrong opening. Never silently draft as if no registry existed, but never lead with the migration either.
 - Hold what you find. You will use it to situate the dump and to spot what the expert leaves out.
 
 ## 2. Dump: "Tell Me Everything You Know"
@@ -73,7 +74,7 @@ When they decline, proceed normally, note in the final review that the dump's cl
 
 Sort the dump's claims into three buckets, and treat each differently:
 
-- **Checkable against the code** (commands, flags, defaults, error text, behavior): check them. The scope is tiered: every claim the eventual doc will state gets hard verification (the draft flow deepens this later); the rest of the dump gets a scan for contradictions, not an exhaustive audit.
+- **Checkable against the code** (commands, flags, defaults, error text, behavior): check them. The scope is tiered: every claim the eventual doc will state gets hard verification (the draft flow deepens this later); the rest of the dump gets a scan for contradictions, not an exhaustive audit. When a notes file is in use (see "Persist as You Go"), record what you confirm here in its Reconcile section, so the draft flow's verify step and second-opinion pass build on it instead of re-reading the same source to re-derive it.
 - **Checkable against the existing docs**: flag where the dump contradicts something already published. One of them is wrong, and it matters which.
 - **Unverifiable** (intent, history, tribal knowledge, external systems): mark as SME-attested and move on. These are often the most valuable content. Never demand proof for a gotcha; record who attested it instead (see the ledger below).
 
@@ -94,10 +95,10 @@ This move guards every door, not only the conversational dump: `doc-intake` repo
 
 Only now, with the dump and the survey in hand, ask the targeted questions. They land because they are specific. Aim at the gaps, not the basics.
 
-- **Prerequisites** the expert takes for granted (the assumption gap).
+- **Prerequisites** the expert takes for granted (the assumption gap): read against the reader's calibrated baseline (see "Calibrate the Baseline" in `user-stories.md`), not a generic checklist, since what counts as taken-for-granted depends entirely on who's arriving.
 - **Decision points** where the path forks by context, role, or setup.
-- **Failure modes**: what breaks, what is confusing, what people get wrong the first time. Often the most valuable content.
-- **Usage and audience**: who this is for and what they should be able to do afterward.
+- **Failure modes**: what breaks, what is confusing, what people get wrong the first time, for *that* reader specifically. An expert audience trips on edge cases and version interactions; a beginner audience trips on setup and terminology. Often the most valuable content.
+- **Usage and audience**: who this is for, what they already know coming in, and what they should be able to do afterward. This is where the user story's baseline comes from.
 - **Verification**: how a reader knows it worked.
 
 Ask two or three at a time, conversationally. Never run down the list like a checklist.
@@ -132,15 +133,79 @@ Do not make the writer choose between waiting and guessing. Send the questions t
 
 - **Generate an intake packet**: a Markdown file of targeted questions the expert can answer in minutes, in any order, as messily as they like. It is the dig step, made portable.
 - **Pre-load it from the survey and the code**, so the questions are sharp, not generic: "The retry default is 3; when should someone change it, and to what?" beats "describe the retry behavior." Include what you already know so the expert corrects instead of dictating.
-- **Write it to `.docs-assist/intake/packets/<topic>.md`** and hand it to the writer to send over whatever channel they use. The packet states, at the top, that order and polish do not matter.
+- **Write it to `.docs-assist/intake/packets/<topic>.md`**, with `<topic>` a kebab-case slug of the doc's working title, and hand it to the writer to send over whatever channel they use. The packet states, at the top, that order and polish do not matter.
 - **Ingest the returned answers** as a pile slice: `doc-intake` reads them into the inventory, and drafting proceeds from there, conversationally or via the fan-out.
 - **Never block on a packet.** Draft what the material already supports and flag the rest; fold the answers in when they arrive.
+
+## Persist as You Go (Opt In)
+
+A single-doc dump normally lives in conversation, not a file (see below). But some drafts are not a single sitting: a long or many-part dump, a contributor who says "let me check and get back to you," or a Shape call that reveals several docs all mean the work will outlast this conversation.
+
+**Offer, don't default, and never interrupt the dump to offer.** The dump's own rule holds: let it all land. Make the offer once at the next natural pause, which is usually the Reflect read-back ("Here's what I've got. This looks like it'll take a few sittings; want me to keep a running notes file as we go, so we can pick this back up without you re-explaining everything?"), or immediately when the contributor pauses themselves ("let me check and get back to you"). A repo can set a standing preference in `.docs-assist/config.yml` (see `config-resolution.md`) for a team that always wants this, but the per-session offer is what runs by default.
+
+When accepted, write to `.docs-assist/intake/notes/<topic>.md` (the same kebab-case topic slug convention as an intake packet) and keep it current after every move from Dump onward:
+
+```markdown
+---
+topic: "webhook retry configuration"
+status: in-progress   # in-progress | ready-to-draft | complete
+updated: 2026-07-17
+---
+
+# Notes: Webhook Retry Configuration
+
+## Status
+
+- [x] Survey
+- [x] Dump
+- [x] Reflect
+- [ ] Situate
+- [ ] Reconcile
+- [ ] Dig
+- [ ] Shape
+
+## Dump
+
+- Cleaned into bullets, not a transcript.
+
+## Reflected Summary
+
+## Situate
+
+Connections to other docs and features found.
+
+## Reconcile
+
+- Confirmed against the code: ...
+- Conflicts: ...
+- SME-attested: ...
+
+## Dig
+
+- Open: ...
+- Answered: ...
+
+## Shape and Outline
+
+Content type, whether this is one doc or several, the user story outline
+(one line per reader, per user-stories.md), and the outline once decided.
+```
+
+The `status` frontmatter field is what the Survey move's resume check reads; keep it current so a glob over `.docs-assist/intake/notes/` can tell an unfinished note from a completed one without opening every file.
+
+If Shape reveals more than one doc, this file keeps tracking the one being drafted now; list the rest under Shape and Outline as the backlog, per the usual "draft the first, backlog the rest" rule, rather than forking a notes file per doc.
+
+Once this file exists, later drafting moves (proposing the outline, producing the draft) read it as their source instead of relying on conversation memory.
+
+**Resuming across a session boundary needs an explicit trigger; nothing carries this awareness on its own.** A new conversation does not know a notes file exists unless something looks for it. The Survey move already scans the docs directory and `llms.txt` before anything else: extend that scan to glob `.docs-assist/intake/notes/*.md` for a file matching the topic, or list what is in progress when the topic is unclear, and offer to resume from it rather than starting the intake loop over. This runs whenever a drafting command is invoked, so the contributor does not need to remember the file exists.
+
+A team that wants a new session to open already aware of unfinished notes, without the contributor asking, can add that same check to a `SessionStart` hook via `/docs-assist:setup-hooks` (default off, like every hook that command installs).
 
 ## Persist the Synthesis, Not the Raw Pile
 
 Keep what is reusable; do not hoard raw material.
 
 - **Persist the inventory or plan**, the synthesized artifact a team can resume from. Write it to `.docs-assist/intake/`, outside the published docs tree, so a static-site build never picks it up. These are working artifacts: commit them if the team wants a shared, resumable record, or add `.docs-assist/intake/` to `.gitignore` to keep them local.
-- **Hold a single-doc dump in the conversation.** Only offer to save leftover knowledge as a note when the dump clearly holds more than one doc.
+- **Hold a single-doc dump in the conversation by default.** Persist it mid-loop only on the contributor's opt-in (see Persist as You Go, above) or once the dump turns out to hold more than one doc.
 - **Do not persist raw dumps from sensitive sources** (support tickets, customer data, security details) without asking. Git history is permanent and shareable. When in doubt, ask before writing, and summarize rather than paste.
 - **Give it a lifecycle.** An intake artifact is working material. Offer to archive or delete it once the docs it seeded exist.

@@ -56,7 +56,7 @@ You get to focus on the strategic work: information architecture, content gaps, 
 The plugin handles the tactical work of making sure individual docs are well-formed and connected.
 
 You can also customize the standards.
-The plugin ships with defaults (AP title case, action-oriented headings, specific markdown conventions), but you can edit the configuration files to match your team's style guide.
+The plugin ships with defaults (sentence-case headings, action-oriented headings, specific markdown conventions), but you can edit the configuration files to match your team's style guide.
 
 ## Install the Plugin
 
@@ -100,8 +100,7 @@ Run `/docs-assist:init` to scaffold a `.docs-assist/` directory:
 - `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools). This file also drives the linters, so your rules stay in one place.
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
-- `.docs-assist/example-variables.txt`: canonical placeholder values for code samples, maintained by the plugin.
-- `.docs-assist/terms.txt`: canonical product terms and the variants to avoid, maintained by the plugin. Audits flag prose that drifts from it.
+- `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and product terms, maintained by the plugin. Audits flag prose or code samples that drift from it.
 
 Because this config is committed, it survives plugin updates and is shared across your whole team.
 This repo runs on the same setup: see its committed `.docs-assist/` for a real example.

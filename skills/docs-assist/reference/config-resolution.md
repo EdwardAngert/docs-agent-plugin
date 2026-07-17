@@ -11,8 +11,7 @@ A configured project has a `.docs-assist/` directory at its root:
 - `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools). Shared with the linters.
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases) that need human judgment.
 - `.docs-assist/templates.yml`: optional. Settings for external documentation templates (auto-use flag, selection model, source, attribution). Absent does not disable suggestions: the assistant still offers a template when one fits and fetches only on the contributor's yes. See `templates.md`.
-- `.docs-assist/example-variables.txt`: optional. Canonical placeholder values for code samples, so examples stay consistent across docs. The plugin reads it and maintains it. See `code-examples.md`.
-- `.docs-assist/terms.txt`: optional. Canonical product terms and the variants to avoid, so the same concept never appears under different names. The plugin reads it and maintains it. See `terminology.md`.
+- `.docs-assist/reference.yml`: optional. The canonical registry of example values, verified facts, worked-example pointers, and terminology, so examples and product terms stay consistent across docs. The plugin reads it and maintains it. See `reference-registry.md`. Replaces the older separate `example-variables.txt` and `terms.txt` files; the plugin no longer reads either.
 
 `/docs-assist:init` scaffolds `config.yml` and `style.md`, pre-filled from the repo's existing conventions. `/docs-assist:template` scaffolds `templates.yml` when a project opts into templates.
 
@@ -32,7 +31,7 @@ When `config.yml` is present, apply it directly:
 
 - `heading_case`, `title_case_style`, `action_oriented_headings`: how you format every heading.
 - `list_marker`, `ordered_list_style`: list formatting.
-- `one_sentence_per_line`, `no_em_dashes`: line and punctuation rules.
+- `one_sentence_per_line`, `no_em_dashes`, `no_ai_voice`: line, punctuation, and voice rules. See `tone-and-voice.md`'s "Avoid AI Voice" section for what `no_ai_voice` covers.
 - `frontmatter.*`: the field names to write and the allowed `content-type` values. Honor the repo's names over the plugin's defaults.
 - `docs_dir`: where to look and where new docs go.
 - `lint.*`: which linter the project uses, so you can recommend running it and avoid re-flagging what the linter already covers.
@@ -44,3 +43,5 @@ When `config.yml` is present, apply it directly:
 `config.yml` is also what `/docs-assist:setup-lint` reads to generate Vale and markdownlint configuration.
 That means a change to `heading_case` or `no_em_dashes` updates both how you write and how the linter checks.
 When you edit config for a project, note that the linter config may need regenerating, and point the user to `/docs-assist:setup-lint`.
+
+`reference.yml`'s `term` entries feed the same generation step: `/docs-assist:setup-lint` compiles them into a Vale substitution rule, so a term added to the registry updates both how you write and how the linter checks, the same as `config.yml`. The other three entry kinds (`example-variable`, `fact`, `pointer`) stay agent-only; Vale has no way to check inside code blocks or follow a link.
