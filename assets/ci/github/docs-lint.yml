@@ -53,16 +53,24 @@ jobs:
 
       # Vale never fetches the Google, write-good, and alex packages .vale.ini
       # declares on its own; only `vale sync` does, and only its LSP mode runs
-      # that automatically. Sync explicitly first, via the npm-wrapped CLI so
-      # no separate binary install is needed.
+      # that automatically. Sync explicitly first.
+      # NOTE: the npm-wrapped @vvago/vale CLI does not reliably resolve on a
+      # fresh `npx` run (it works from a prior global install, not a clean
+      # one), so this downloads the real release binary via `gh release
+      # download` instead, which is what's actually verified to work here.
       - name: vale sync
         if: always()
-        run: npx --yes @vvago/vale sync
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download --repo vale-cli/vale --pattern '*Linux_64-bit.tar.gz' --output vale.tar.gz --clobber
+          tar -xzf vale.tar.gz vale
+          ./vale sync
+          rm -f vale vale.tar.gz
 
       # Prose style. Uses the official Vale action.
       # NOTE: errata-ai was renamed to vale-cli; errata-ai/vale-action@v2 still
       # resolves. Swap to vale-cli/vale-action@v2 if the redirect is ever dropped.
-      # npx fallback (no action): npx --yes @vvago/vale --glob='*.{md,mdx}' .
       # --minAlertLevel=error makes Vale emit only error-level findings, so the
       # job fails on those and not on warnings. reviewdog reports at info level
       # and would otherwise fail the build on any warning-level prose finding.

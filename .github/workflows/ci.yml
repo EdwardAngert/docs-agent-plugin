@@ -43,11 +43,20 @@ jobs:
 
       # Vale never fetches Packages (Google, write-good, alex) on its own;
       # only `vale sync` does, and only its LSP mode runs that automatically.
-      # The action below does not either, so sync explicitly first via the
-      # npm-wrapped CLI (no separate binary install needed).
+      # The action below does not either, so sync explicitly first.
+      # NOTE: the npm-wrapped @vvago/vale CLI was tried here first and does
+      # not reliably resolve on a fresh npx install (works from a prior
+      # global install, not a clean npx run); downloading the real release
+      # binary via `gh release download` is what's actually verified to work.
       - name: vale sync (fetch Google, write-good, alex)
         if: always()
-        run: npx --yes @vvago/vale sync --config=assets/lint/vale/.vale.ini
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download --repo vale-cli/vale --pattern '*Linux_64-bit.tar.gz' --output vale.tar.gz --clobber
+          tar -xzf vale.tar.gz vale
+          ./vale sync --config=assets/lint/vale/.vale.ini
+          rm -f vale vale.tar.gz
 
       # Prose rules, using the Vale DocsAssist style this plugin ships, plus
       # the managed Google, write-good, and alex packages synced above.
