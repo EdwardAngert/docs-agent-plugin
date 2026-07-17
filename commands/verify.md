@@ -15,6 +15,7 @@ The argument (`$ARGUMENTS`) is a doc path or a directory. If omitted, survey the
 
 - Resolve `.docs-assist/` config if present (`${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/config-resolution.md`).
 - Identify the procedural docs in scope: docs whose content type is task-oriented (doc, guide, tutorial, troubleshooting) and that contain executable fenced commands. A concept doc with no commands has nothing to verify; say so rather than reporting it as clean.
+- When more than one doc is in scope, decide whether they are independent or a journey: do they share a user story (`user-stories.md`), does a plan or a guide lay out an order, does one doc's prerequisites point at another's outcome? Say which you concluded before running anything; this decision sets the workspace boundary in step 3.
 - Tell the user what will run and what will not before running anything: the verifier executes workspace-scoped commands only, and steps needing credentials, privilege escalation, or real services are reported as `unverified`, never run. If the doc set's procedures are mostly in that category, say so up front so the user can calibrate expectations.
 
 ### 2. Prepare the Workspace
@@ -24,9 +25,21 @@ The argument (`$ARGUMENTS`) is a doc path or a directory. If omitted, survey the
 
 ### 3. Run the Verifier
 
-- One doc: launch the `doc-verifier` subagent with the doc path and the workspace path.
-- A set: fan out, one `doc-verifier` per doc, each with its own workspace, in parallel. Procedures are independent across docs but stateful within one, which is exactly the subagent boundary.
+First decide whether the target is independent docs or a journey (see "Verifying a Journey" below): docs a reader follows in sequence to reach one outcome, per their shared user stories or the order a guide or plan lays out. This decision changes the workspace boundary, not just the run.
+
+- **One doc**: launch the `doc-verifier` subagent with the doc path and the workspace path.
+- **Independent docs** (unrelated procedures that happen to be verified in the same pass): fan out, one `doc-verifier` per doc, each with its own workspace, in parallel.
+- **A journey** (docs meant to compose into one outcome): one `doc-verifier` call, given the ordered doc list and a single shared workspace. Never fan a journey out into independent workspaces; that proves each doc works alone, which is not the claim a journey makes.
 - The verifier never edits files; every result comes back as a report.
+
+### Verifying a Journey
+
+A quickstart, a configuration guide, and a deployment guide that share a user story ("arrives from the quickstart," per `user-stories.md`) are not independent procedures verified in the same batch; they are one procedure split across files. Verify them as such:
+
+- One workspace for the whole sequence, not one per doc. State a step in doc two produces has to exist for step one in doc three to consume it, the same as within a single doc.
+- Run the docs in the sequence a reader would actually follow (the journey's order, not file order or alphabetical order).
+- Attribute every divergence to the doc and step where it actually happened, even though the workspace is shared; a reader hits the wall in doc three, not in some averaged position across the set.
+- A journey that passes proves what `code-examples.md`'s "Compose Across the Docs Set" asks for: the examples do not just match each other's values, they produce a working result end to end. A journey that fails on a resource-name or state mismatch between docs (not a broken command) is exactly the composition failure that per-doc verification and per-doc auditing both miss.
 
 ### 4. Consolidate and Triage
 
@@ -41,6 +54,7 @@ Present one prioritized result across the set:
 
 - On a clean pass (every executable step green), offer to bump the doc's `last-verified` frontmatter to today. After this command, that date means a machine ran the procedure, the strongest freshness signal the plugin has.
 - On a partial pass, do not bump `last-verified`; note in the report which steps stand between the doc and a clean run.
+- For a journey, bump only the docs the run actually reached clean: a doc after the point of failure was never really executed against live state, only reported as `blocked`, and bumping it would claim evidence the run doesn't have.
 - The decay detector (`docs-decay.mjs`) reads `last-verified`, so verified docs drop down the re-verification queue and the queue stays focused on what actually needs attention.
 - The conversation is for triage, per the skill's feedback guidance: offer to save the full run report under `.docs-assist/reports/verify-<date>.md`, and end by naming the natural next step.
 

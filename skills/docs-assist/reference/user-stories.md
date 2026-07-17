@@ -48,4 +48,6 @@ Walk each story through the doc, end to end, and report where the journey breaks
 
 A doc whose stories cannot be inferred from the doc itself is a finding before any walking starts: if a cold reader cannot tell who a doc serves, neither can the reader it was written for. This makes the check natural for `doc-auditor`, which reads cold by design; infer the stories from the doc and the docs around it, walk each one, and flag both broken journeys and the un-inferable-reader case.
 
+When one story's "done when" is another doc's "arrives from," the story spans docs: that's a journey, and it needs one more check beyond walking each doc alone. `code-examples.md`'s "Compose Across the Docs Set" is the reading version of that check (do the examples use the same resource throughout); `/docs-assist:verify`'s journey mode (see "Verifying a Journey" in `verify.md`) is the executed version, running the sequence in one shared workspace to prove it, not just read it.
+
 For a change-based audit, the walk is scoped: only the stories whose journeys pass through the changed docs, per `impact-analysis.md`.
