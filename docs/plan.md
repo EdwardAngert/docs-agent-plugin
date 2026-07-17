@@ -23,6 +23,7 @@ Drafting scaled linearly (a 15-doc plan meant 15 sequential conversations) while
 - Shipped in 0.9.5: the `doc-drafter` subagent drafts one planned doc from a plan entry plus persisted intake material, in parallel with its siblings, flagging what needs subject matter expert verification instead of inventing it.
 - Shipped in 0.9.5: `/docs-assist:plan` execution offers to fan out the ship-now stage. Only docs whose material already exists (inventory, code, existing docs) are fanned out; docs needing fresh knowledge stay conversational. The writer becomes the reviewer of a draft queue.
 - Shipped in 0.9.5: subagents report their `llms.txt` entries instead of editing the file, and the main conversation writes them, so parallel drafts never collide on the map.
+- Added: a silent second-opinion pass on every drafted doc (single or fanned-out), before the contributor sees it. The `doc-auditor` subagent reviews the draft cold, reading only the file and the repo, not the conversation that produced it, the same independence a fresh reviewer in a new session would have. Mechanical findings apply themselves; anything needing judgment folds into the normal review questions instead of surfacing as a separate report. Skipped for very short single-entry docs, and run once per draft rather than after every refinement, so it stays cheap.
 
 ## Workstream 2: Async SME Capture
 

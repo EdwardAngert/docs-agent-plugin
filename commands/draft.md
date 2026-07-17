@@ -69,6 +69,13 @@ Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-a
 - Notes or warnings where the contributor flagged gotchas
 - Cross-references to related docs you found in the survey
 
+**Before showing it to the contributor**, run a silent second-opinion pass: send the draft file to the `doc-auditor` subagent, scoped to just this one file and reading only the file and the repo, not this conversation. It never edits, only reports, so a fresh reader catches what the same context that wrote the draft is prone to miss.
+
+- Skip this pass for a very short single-entry doc, same threshold as skipping the outline in step 9. It exists to pay for itself on real drafts, not to add a round trip to a two-paragraph doc.
+- Run it once, right here, not again after every Refine turn; re-running it on each small edit would cost more than it returns.
+- Auto-apply anything mechanical it flags (heading case, broken internal links, missing alt text, TODOs, terminology drift, formatting) without mentioning it. These are already your department per the rule below.
+- Fold anything that needs judgment (a completeness gap, an accuracy concern, an unclear audience fit) into the **Do** list below, as your own read of the draft. The contributor sees one editor's questions, not a report and then a review.
+
 **Do not** ask the contributor to review your formatting choices, heading case, or markdown conventions. Apply them. These are your department.
 
 **Do** ask the contributor to review:
