@@ -1,0 +1,17 @@
+// Dev-time convenience so `npx markdownlint-cli2` with no arguments matches
+// what CI actually lints (.github/workflows/ci.yml, "Lint own docs" job).
+//
+// This is NOT the config Docs Assist ships to other projects: that template
+// lives at assets/lint/markdownlint/.markdownlint.jsonc and is copied out by
+// /docs-assist:setup-lint, scoped to the target project's own docs_dir.
+//
+// agents/*.md, commands/*.md, and skills/**/*.md are Claude instruction
+// files, not published documentation, and are intentionally out of scope
+// here (most lack an H1 by design). Vale's em-dash check still covers them;
+// see the "Vale (own docs)" CI job.
+{
+  "config": {
+    "extends": "assets/lint/markdownlint/.markdownlint.jsonc"
+  },
+  "globs": ["README.md", "CHANGELOG.md", "docs/**/*.md"]
+}
