@@ -3,6 +3,64 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
+## Unreleased
+
+This release asks whether the docs actually work, not just whether they read well.
+A new `/docs-assist:verify` executes a procedural doc's steps in an isolated workspace and reports where reality diverges, the same way CI executes tests instead of reading the code and guessing; a clean pass is what gives `last-verified` real evidence behind it for the first time.
+Every doc now carries a quick user story (who arrives, from where, to do what, done when what), calibrated from evidence instead of a fixed posture, so drafting can write to a reader instead of a guess and audits can walk the journey end to end.
+Two registries that used to duplicate each other's territory (`example-variables.txt`, `terms.txt`) merge into one `reference.yml`, with two new entry kinds: facts tied to a real source, and pointers to a worked example instead of a rewritten one.
+And general prose quality stops being something this plugin maintains its own copy of: `Google`, `write-good`, and `alex` are now the managed Vale packages doing that work, actively maintained upstream, with the plugin's own style stripped down to only what they do not cover.
+The staged plan behind this release is committed at `docs/plan.md`.
+
+<details>
+<summary>All changes in this release</summary>
+
+### Added
+
+- `/docs-assist:verify` and a new `doc-verifier` subagent (the plugin's first with Bash): executes a procedural doc's steps in an isolated workspace and classifies each one (pass, divergence, fail, blocked, unverified, skipped).
+  Safety is conservative and workspace-scoped; anything needing credentials, privilege escalation, real services, or out-of-workspace writes is reported as `unverified`, never run.
+  A journey mode runs an ordered sequence of docs in one shared workspace instead of independent ones, so a guide's docs are verified as the one continuous procedure a reader actually experiences, not proven to work alone and nothing more.
+  A clean pass offers the `last-verified` bump; a partial one does not.
+- User story outlines (`reference/user-stories.md`): a one-line-per-reader contract (role and prior knowledge, arrival point, goal, done-state) written at the drafting shape move and walked by audits (arrival, entry, path, exit) as a sixth per-doc dimension.
+  `doc-auditor` infers a doc's stories cold, which doubles as an audience-clarity test: a doc whose reader cannot be inferred is a finding in itself.
+- Reader-baseline calibration from evidence (what the project's docs already assume, what kind of tool this is, the ecosystem it lives in) instead of a fixed writing posture.
+  Prerequisites list only what sits outside the calibrated baseline; failure modes anticipate what that specific reader trips on.
+- `.docs-assist/reference.yml`, replacing `example-variables.txt` and `terms.txt` with one registry and two new entry kinds: `fact` (a value tied to a `source`, so drift from the source gets caught, not just drift between docs) and `pointer` (a link to an existing worked example, reused instead of rewritten).
+  `term` entries compile into a generated Vale `substitution` rule, so terminology consistency also runs as a deterministic lint.
+  A one-time migration is offered wherever the old files are found; the plugin no longer reads them.
+- AI-voice detection: hedging, marketing language, false-contrast framing ("it's not X, it's Y"), and throat-clearing openers, named in `tone-and-voice.md` and checked by every drafting workflow's second-opinion pass.
+- A silent second-opinion pass, run cold by `doc-auditor` before `/docs-assist:draft`, `/docs-assist:plan`'s fan-out, `/docs-assist:update`, and `/docs-assist:release-notes` show their output.
+  Mechanical findings apply themselves; judgment findings fold into the workflow's own review questions.
+  Briefed with settled facts (a notes file's reconciled claims, a drafter's SME-attested list) so it spends its pass on what only a fresh, cross-file read catches instead of re-deriving what already happened.
+- An opt-in running notes file (`.docs-assist/intake/notes/`) for a draft that outlasts one sitting, offered at the natural pause rather than mid-dump, so a later session can resume instead of starting over.
+- Cross-doc example composition (`reference/code-examples.md`): a named requirement that a reader following every example across a guided journey reaches one working result, not several individually-plausible snippets that silently diverge.
+  A destructive, upgrade, or troubleshooting example must now fail safe if copy-pasted verbatim (an unresolvable placeholder, not a plausible real-looking target), the opposite rule from a setup example, which must work exactly as pasted.
+- `docs-decay.mjs`: a deterministic, dependency-free detector that ranks every doc by accumulated staleness risk (related-source churn, `last-verified` age, doc age, open `sme-attested` claims), run by `/docs-assist:health` for the Freshness dimension.
+- `check-facts.mjs`: a deterministic, opt-in (via `/docs-assist:setup-hooks`) checker for `reference.yml`'s mechanical parts: does a `fact`'s source still contain its identifier, does a `pointer`'s target still resolve.
+- External link checking in both audit paths: prefers existing CI tooling, then `/docs-assist:setup-lint`, then an ad hoc `markdown-link-check` run, with a spot-check for redirects that hide a rename.
+- A standalone `npx` CLI packaging plan (`docs/standalone-cli-plan.md`), deferred pending a maintainer decision on naming and which adapters ship first.
+
+### Changed
+
+- `Google`, `write-good`, and `alex` are now the default managed Vale packages (fetched with `vale sync`), covering weasel words, passive voice, wordiness, clichés, and inclusive language.
+  `DocsAssist`'s own style is stripped to only what those packages do not cover (AI voice, no em dashes, descriptive link text, imperative headings); `Weasel.yml` is retired, superseded by write-good's more complete version of the same rule.
+- `heading_case`'s default changes from `title` to `sentence`, matching what the new default managed package (Google's developer documentation style guide) itself recommends.
+  Title case stays fully supported for a project whose own convention already uses it, and a project's detected convention always wins over the default.
+- The shipped markdownlint config now decides every rule explicitly (MD001 through MD060) instead of relying on unstated defaults.
+- `/docs-assist:setup-lint` also generates a root `.markdownlint-cli2.jsonc` for the target project, so a bare `npx markdownlint-cli2` matches what CI actually checks instead of falling back to markdownlint's stock defaults.
+
+### Fixed
+
+- `Weasel.yml`'s `just` token was flagging ordinary restrictive or contrastive English ("not just X," "just enough") in a dozen-plus files, never the weakening sense the rule meant to catch; removed before the packages adopted above ultimately replaced the file entirely.
+- `MarketingLanguage.yml`'s `leverage` token collided with this plugin's own vocabulary ("highest-leverage fix"); removed with a comment explaining why, a live example of why bare-word bans need contextual judgment.
+- `scripts/validate.mjs` now checks that the shipped Vale styles do not fire on the plugin's own docs, catching both of the above during review instead of after merge, and checks that every registered command is discoverable from `llms.txt`, `docs/command-reference.md`, and `README.md`.
+
+### Version Policy
+
+- Left at 0.9.5. Agent-driven work caps there by policy; the version bump for everything in this release is the maintainer's call.
+
+</details>
+
 ## 0.9.5 - 2026-07-10
 
 One person now operates like a docs team.
