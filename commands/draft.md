@@ -68,7 +68,7 @@ For anything beyond a short entry, show the outline before writing the full draf
 Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md` automatically. If a notes file exists, write from it: it already holds the reconciled facts, the SME-attested claims, and the answered dig questions.
 
 - Clear, action-oriented headings
-- Prerequisites section if there are any
+- Prerequisites section listing only what sits outside the calibrated reader's baseline (per the story's "what they already know"; see `user-stories.md`), not everything the doc happens to touch
 - Numbered steps for procedures
 - Code examples that are copy-paste safe and consistent with the rest of the docs. Follow `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md`: reuse variable names from related docs and the `.docs-assist/reference.yml` registry, and offer to create and maintain it.
 - Notes or warnings where the contributor flagged gotchas
@@ -117,5 +117,5 @@ When the contributor is satisfied:
 - Never make the contributor feel like they're "doing it wrong." There's no wrong way to share knowledge.
 - Messy, out-of-order information is normal and good. You sort it out.
 - If they're unsure about something, note it as needing verification rather than skipping it.
-- Match the technical depth to the audience. Don't oversimplify for developers; don't assume expertise for end users.
+- Match the technical depth to the calibrated baseline, not a fixed posture: read it from the project's own docs, what the tool is, and the ecosystem it lives in before defaulting to anything (see "Calibrate the Baseline" in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`). An SDK for experienced engineers doesn't need a terminal explained; a first-touch onboarding doc for non-engineers does. Both are correct for their reader; the failure is applying either posture to the wrong one.
 - Follow existing repo conventions (frontmatter fields, directory structure, naming).

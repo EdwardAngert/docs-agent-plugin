@@ -15,6 +15,24 @@ One line per story, four parts:
 
 Most docs carry one to three stories. More than three is the "one doc or several?" signal from the shape move: each extra reader is diluting every other reader's doc.
 
+## Calibrate the Baseline, Don't Assume It
+
+"With what they already know" is the part of the story that goes wrong by default, in both directions: explaining a terminal to someone who already runs one all day is the expert tax, and skipping a step because "everyone knows that" is the assumption gap. Neither comes from thinking about the reader; both come from writing at a fixed posture (always beginner-friendly, or always assuming fluency) instead of reading the actual signals.
+
+Read the baseline from evidence, in order of how reliable it is:
+
+- **What the project's own docs already assume.** If the README shows `cargo add x` with no explanation of Cargo, or `kubectl apply -f` with no explanation of kubectl, the project has already drawn the line: match it, don't redraw it lower. An existing docs set's assumed baseline is the strongest signal available, because it is the convention the contributor already chose.
+- **What the tool is.** An SDK, an API, a CLI plugin, an infrastructure or platform tool implies a practitioner audience before a single word is written: they installed a language toolchain, a package manager, a cloud CLI, or all three, just to get this far. A consumer application, a tool explicitly aimed at non-engineers, or a first-touch onboarding flow implies otherwise. The tool's own nature is evidence; use it before defaulting to anything.
+- **What the surrounding ecosystem assumes.** A doc for a Rust crate inherits Rust's own baseline (ownership, `cargo`, `crates.io`); a doc for a Kubernetes operator inherits Kubernetes' baseline (`kubectl`, manifests, namespaces). Do not re-teach the ecosystem the reader already had to learn to get here.
+- **What the dig actually revealed.** The intake loop's dig already asks "usage and audience" (`intake.md`); when the project offers no signal and the dig didn't resolve it, that is the moment to ask, not to guess or to default to teaching the basics "just in case."
+
+Calibration is not a single global setting for the whole project (`tone-and-voice.md`'s "developer or technical admin" is a floor, not a ceiling): a platform's admin CLI and its embeddable widget can have entirely different baselines in the same repo. Set it per doc, from that doc's own story.
+
+Once set, the baseline does two concrete things to the draft, not just the tone:
+
+- **Prerequisites list only what sits outside the baseline.** An SDK for backend engineers does not need "install Node" as a prerequisite; it needs the actual gap, the SDK-specific setup the ecosystem doesn't already cover. A prerequisite the story's reader already has is padding, and padding in a prerequisites section is where experienced readers stop trusting the doc.
+- **Failure modes anticipate what that reader actually hits.** The dig's failure-modes question (`intake.md`) should be answered for the calibrated reader, not a generic one: an expert audience trips on edge cases, version mismatches, and interactions with other advanced tools; a beginner audience trips on setup and terminology. The same tool can need both, in different docs, for different stories.
+
 ## How Drafting Uses It
 
 Write the stories at the Shape move, from what the dump and the dig already surfaced (the audience and usage questions are the raw material), and show them with the outline: stories are cheap to correct at outline time and expensive to discover wrong after publication. Then let them earn the structure: each section justifies itself by serving a named story, the prerequisites section is whatever the least-prepared story's reader is missing, and the doc ends where its stories end (the "done when" plus the next step each reader takes). Record them in the notes file's Shape section when one is in use, and in a fan-out, the plan entry carries each doc's stories into the drafter's brief.

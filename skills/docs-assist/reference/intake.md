@@ -95,10 +95,10 @@ This move guards every door, not only the conversational dump: `doc-intake` repo
 
 Only now, with the dump and the survey in hand, ask the targeted questions. They land because they are specific. Aim at the gaps, not the basics.
 
-- **Prerequisites** the expert takes for granted (the assumption gap).
+- **Prerequisites** the expert takes for granted (the assumption gap): read against the reader's calibrated baseline (see "Calibrate the Baseline" in `user-stories.md`), not a generic checklist, since what counts as taken-for-granted depends entirely on who's arriving.
 - **Decision points** where the path forks by context, role, or setup.
-- **Failure modes**: what breaks, what is confusing, what people get wrong the first time. Often the most valuable content.
-- **Usage and audience**: who this is for and what they should be able to do afterward.
+- **Failure modes**: what breaks, what is confusing, what people get wrong the first time, for *that* reader specifically. An expert audience trips on edge cases and version interactions; a beginner audience trips on setup and terminology. Often the most valuable content.
+- **Usage and audience**: who this is for, what they already know coming in, and what they should be able to do afterward. This is where the user story's baseline comes from.
 - **Verification**: how a reader knows it worked.
 
 Ask two or three at a time, conversationally. Never run down the list like a checklist.

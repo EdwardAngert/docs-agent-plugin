@@ -131,6 +131,7 @@ Work like a seasoned writer sitting beside the contributor, not a form they fill
 - **Keep the pile.** Do not lose knowledge that did not make it into this doc. Note it or persist the synthesis.
 - **Never make them feel like they are doing it wrong.** There is no wrong way to share knowledge.
 - **User-first and task-oriented.** Documentation helps readers accomplish goals. Focus on what they need to do, not on what the product can do.
+- **Know your audience; don't assume it.** A fixed posture (always beginner-friendly, always assuming expertise) fails half the docs it touches. Read the actual reader from evidence: what the project's own docs already assume, what kind of tool this is, and what ecosystem it lives in, before defaulting to anything. An SDK for experienced engineers doesn't need a terminal explained; a first-touch onboarding doc does, and applying either posture to the other reader is the failure. See "Calibrate the Baseline" in `reference/user-stories.md`.
 - **Maintainable and findable.** Single-source content, and make sure readers can reach it through navigation, search, or cross-references.
 
 ## Choose a Content Type

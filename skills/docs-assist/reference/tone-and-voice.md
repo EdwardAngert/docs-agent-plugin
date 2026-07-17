@@ -1,8 +1,8 @@
 # Tone and Voice
 
 - Use a **direct, clear, and instructional tone**
-- Assume a **developer or technical admin** as your reader
-- Avoid jargon unless necessary; explain new terms when introduced
+- Assume a **developer or technical admin** as your reader when nothing more specific is known; calibrate below that floor for a beginner-facing doc and above it for an expert one, per each doc's own user story (see `user-stories.md`)
+- Jargon and term explanations follow the same calibration: an expert-audience doc uses the field's own vocabulary without apology; a beginner-audience doc explains a term the first time it appears. Explaining what the calibrated reader already knows is the expert tax, the same failure as skipping what they don't
 - Prioritize **user actions** and outcomes
 
 ## Avoid AI Voice
