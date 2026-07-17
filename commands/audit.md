@@ -69,7 +69,7 @@ For each document, evaluate:
 
 #### Content Issues
 
-- Outdated information (check dates, version references)
+- Outdated information (check dates and version references; for a full-set audit in a git repo, `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/docs-decay.mjs` ranks every doc by staleness risk in one deterministic pass)
 - Unverified claims: docs whose `sme-attested` frontmatter ledger is large or old. Surface the specific claims so a reviewer can verify and delete entries (the ledger exists to shrink; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`)
 - Incomplete instructions (missing steps)
 - Assumption gaps (undefined terms, missing prerequisites)
