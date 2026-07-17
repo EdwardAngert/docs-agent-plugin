@@ -27,8 +27,10 @@ frontmatter:
   audience_field: audience
   content_types: [doc, guide, tutorial, concept, reference, troubleshooting]
 
-# CI runs the shipped Vale DocsAssist style and markdownlint against the docs.
+# CI runs the shipped Vale DocsAssist style, markdownlint, and cspell against
+# the docs. cspell uses this repo's own word list (.cspell.json), not the
+# generic template this plugin ships at assets/lint/cspell/.
 lint:
   tools: [vale, markdownlint]
-  spelling: false
+  spelling: true
   link_check: false

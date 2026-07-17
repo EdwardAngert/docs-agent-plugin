@@ -58,7 +58,10 @@ CI also dogfoods the shipped linters against the plugin's own docs, so if you ch
 
 ```bash
 npx markdownlint-cli2
+npx cspell "**/*.md" ".docs-assist/**"
 ```
+
+Spelling uses `.cspell.json`, this repo's own word list (its own vocabulary: `frontmatter`, `llms`, `dogfooding`, and so on), not the generic template the plugin ships to other projects at `assets/lint/cspell/`. If a real word is missing, add it there rather than ignoring the finding.
 
 ### When You Rename a Plugin Concept
 

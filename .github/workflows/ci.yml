@@ -58,3 +58,9 @@ jobs:
           reporter: github-pr-check
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Spelling, using this repo's own word list (.cspell.json), separate
+      # from the generic template this plugin ships at assets/lint/cspell/.
+      - name: cspell (own docs)
+        if: always()
+        run: npx --yes cspell --no-progress --config .cspell.json "**/*.md" ".docs-assist/**"
