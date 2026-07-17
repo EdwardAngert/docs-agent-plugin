@@ -132,7 +132,7 @@ Do not make the writer choose between waiting and guessing. Send the questions t
 
 - **Generate an intake packet**: a Markdown file of targeted questions the expert can answer in minutes, in any order, as messily as they like. It is the dig step, made portable.
 - **Pre-load it from the survey and the code**, so the questions are sharp, not generic: "The retry default is 3; when should someone change it, and to what?" beats "describe the retry behavior." Include what you already know so the expert corrects instead of dictating.
-- **Write it to `.docs-assist/intake/packets/<topic>.md`** and hand it to the writer to send over whatever channel they use. The packet states, at the top, that order and polish do not matter.
+- **Write it to `.docs-assist/intake/packets/<topic>.md`**, with `<topic>` a kebab-case slug of the doc's working title, and hand it to the writer to send over whatever channel they use. The packet states, at the top, that order and polish do not matter.
 - **Ingest the returned answers** as a pile slice: `doc-intake` reads them into the inventory, and drafting proceeds from there, conversationally or via the fan-out.
 - **Never block on a packet.** Draft what the material already supports and flag the rest; fold the answers in when they arrive.
 
@@ -142,15 +142,56 @@ A single-doc dump normally lives in conversation, not a file (see below). But so
 
 **Offer, don't default.** Once a signal like that shows up, ask once: "This looks like it'll take a few sittings. Want me to keep a running notes file as we go, so we can pick this back up without you re-explaining everything?" A repo can set a standing preference in `.docs-assist/config.yml` (see `config-resolution.md`) for a team that always wants this, but the per-session offer is what runs by default.
 
-When accepted, write to `.docs-assist/intake/notes/<topic>.md` and keep it current after every move from Dump onward:
+When accepted, write to `.docs-assist/intake/notes/<topic>.md` (the same kebab-case topic slug convention as an intake packet) and keep it current after every move from Dump onward:
 
-- A status line: which moves are done, which is in progress.
-- The dump, cleaned into bullets, not a transcript.
-- The reflected summary.
-- Situate: connections to other docs and features found.
-- Reconcile: confirmed-against-code, conflicts, and SME-attested claims, the same three buckets as above, written down instead of only held in the conversation.
-- Dig: open questions versus answered ones.
-- The shape decision and outline, once made.
+```markdown
+---
+topic: "webhook retry configuration"
+status: in-progress   # in-progress | ready-to-draft | complete
+updated: 2026-07-17
+---
+
+# Notes: Webhook Retry Configuration
+
+## Status
+
+- [x] Survey
+- [x] Dump
+- [x] Reflect
+- [ ] Situate
+- [ ] Reconcile
+- [ ] Dig
+- [ ] Shape
+
+## Dump
+
+- Cleaned into bullets, not a transcript.
+
+## Reflected Summary
+
+## Situate
+
+Connections to other docs and features found.
+
+## Reconcile
+
+- Confirmed against the code: ...
+- Conflicts: ...
+- SME-attested: ...
+
+## Dig
+
+- Open: ...
+- Answered: ...
+
+## Shape and Outline
+
+Content type, whether this is one doc or several, and the outline once decided.
+```
+
+The `status` frontmatter field is what the Survey move's resume check reads; keep it current so a glob over `.docs-assist/intake/notes/` can tell an unfinished note from a completed one without opening every file.
+
+If Shape reveals more than one doc, this file keeps tracking the one being drafted now; list the rest under Shape and Outline as the backlog, per the usual "draft the first, backlog the rest" rule, rather than forking a notes file per doc.
 
 Once this file exists, later drafting moves (proposing the outline, producing the draft) read it as their source instead of relying on conversation memory.
 
