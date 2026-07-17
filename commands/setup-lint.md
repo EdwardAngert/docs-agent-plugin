@@ -31,7 +31,7 @@ Never clobber what is already there. Look for:
 - `.markdown-link-check.json`.
 - Lint scripts in `package.json`, a `.pre-commit-config.yaml`, and existing workflows in `.github/workflows/`.
 
-Report what you found. If a linter already exists, extend it (add the DocsAssist Vale style, merge missing markdownlint rules) rather than replacing it. Show a diff and confirm before changing an existing config.
+Report what you found. If a linter already exists, extend it (add the DocsAssist Vale style, merge missing markdownlint rules) rather than replacing it. If an existing `.vale.ini` already declares its own `Packages`, merge `Google`, `write-good`, and `alex` into that list rather than overwriting it; a project may already be using other packages this plugin doesn't know about. Show a diff and confirm before changing an existing config.
 
 ### 3. Choose the Approach
 
@@ -44,7 +44,12 @@ If `$ARGUMENTS` did not specify, ask two short questions:
 
 Copy the templates from `${CLAUDE_PLUGIN_ROOT}/assets/lint/` and adjust them to the resolved config. Do not ship rules the config turns off:
 
-- **Vale** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/vale/`): copy `.vale.ini` and `styles/DocsAssist/` to the repo root. Drop `EmDash.yml` if `no_em_dashes` is false. Drop `HeadingGerund.yml` if the project does not use action-oriented headings. Drop `MarketingLanguage.yml`, `FillerPhrase.yml`, and `FalseContrast.yml` if `no_ai_voice` is false.
+- **Vale** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/vale/`): copy `.vale.ini` and `styles/DocsAssist/` to the repo root, then run `vale sync` to download the `Google`, `write-good`, and `alex` packages the config declares. General prose quality (weasel words, passive voice, wordiness, clichés, inclusive language, punctuation and heading conventions) is a managed problem now, not something this plugin keeps its own copy of; `DocsAssist` stays small on purpose, covering only AI voice and this plugin's own opinionated defaults. Adjust the copied `.vale.ini` to the resolved config:
+  - If `heading_case` is `title` instead of the default `sentence`, flip `Google.Headings` from `YES` to `NO`: Google's own rule assumes sentence case and would fight a project that has chosen title case on purpose.
+  - If `no_em_dashes` is false, leave `Google.EmDash` at its default (`NO` in the template only because `DocsAssist.EmDash` already bans em dashes outright); when there's no house ban, Google's formatting-only check is worth keeping, so flip it to `YES`.
+  - Drop `HeadingGerund.yml` if the project does not use action-oriented headings.
+  - Drop `MarketingLanguage.yml`, `FillerPhrase.yml`, and `FalseContrast.yml` if `no_ai_voice` is false.
+  - `vale sync` needs network access; if it isn't available in the current environment, still write the config and tell the user to run `vale sync` themselves before the first lint.
 - **Terminology, generated, not copied**: if `.docs-assist/reference.yml` has `term` entries, generate `styles/DocsAssist/Terminology.yml` yourself, a Vale `substitution` rule with one `swap` line per variant pointing at its canonical term:
 
   ```yaml
@@ -90,7 +95,7 @@ npx cspell "docs/**/*.md"
 npx markdown-link-check docs/**/*.md
 ```
 
-For Vale, point them at the install (Vale is a standalone binary; the CI workflow uses the official action). Note that re-running `/docs-assist:setup-lint` after editing `config.yml` or adding a `term` entry to `reference.yml` regenerates the linter config.
+For Vale, point them at the install (Vale is a standalone binary; the CI workflow uses the official action) and tell them to run `vale sync` once, locally, before the first lint: Vale never fetches the `Google`, `write-good`, and `alex` packages on its own, and a lint run without syncing first will error that the styles are missing, not silently skip them. Note that re-running `/docs-assist:setup-lint` after editing `config.yml` or adding a `term` entry to `reference.yml` regenerates the linter config.
 
 ## Notes
 

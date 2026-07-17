@@ -11,7 +11,11 @@
 docs_dir: docs
 
 # Heading case: title | sentence
-heading_case: title
+# Sentence case is the default: it's what Google's developer documentation
+# style guide (the plugin's default managed Vale package) recommends, and it
+# reads faster and diffs cleaner than title case. Switch to "title" if the
+# project's own convention already uses it.
+heading_case: sentence
 
 # Title-case style, used only when heading_case is title: ap | chicago
 title_case_style: ap

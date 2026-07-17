@@ -135,7 +135,7 @@ if (existsSync(rel('llms.txt'))) {
 // are heuristics reviewed by hand when they change, not automated here.
 const styleTokens = [];
 const styleDir = 'assets/lint/vale/styles/DocsAssist';
-for (const f of ['EmDash.yml', 'Weasel.yml', 'ClickHere.yml', 'MarketingLanguage.yml', 'FillerPhrase.yml']) {
+for (const f of ['EmDash.yml', 'ClickHere.yml', 'MarketingLanguage.yml', 'FillerPhrase.yml']) {
   const path = join(styleDir, f);
   if (!existsSync(rel(path))) continue;
   const src = readFileSync(rel(path), 'utf8');

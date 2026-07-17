@@ -169,7 +169,7 @@ Linting is optional and never bundled.
 Run `/docs-assist:setup-lint` to scaffold it, and the plugin generates the linter config from your `.docs-assist/config.yml`.
 That means one source of truth: the same settings drive how the agent writes and how the linter checks, so they never drift.
 
-- A Vale custom style encodes the prose rules (no em dashes, action-oriented headings, descriptive link text, banned weasel words).
+- Vale runs a small `DocsAssist` style for what's specific to this plugin (AI voice, no em dashes, descriptive link text, imperative headings), plus the managed `Google`, `write-good`, and `alex` packages for everything general-purpose (weasel words, passive voice, wordiness, clichés, inclusive language). General prose quality is a solved, maintained problem; this plugin doesn't keep its own copy of it.
 - markdownlint covers the structural rules.
 - cspell and a link checker cover spelling and links.
 - MegaLinter is offered for teams that want one aggregated tool.

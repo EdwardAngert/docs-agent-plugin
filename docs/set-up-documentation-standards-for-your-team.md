@@ -56,7 +56,7 @@ You get to focus on the strategic work: information architecture, content gaps, 
 The plugin handles the tactical work of making sure individual docs are well-formed and connected.
 
 You can also customize the standards.
-The plugin ships with defaults (AP title case, action-oriented headings, specific markdown conventions), but you can edit the configuration files to match your team's style guide.
+The plugin ships with defaults (sentence-case headings, action-oriented headings, specific markdown conventions), but you can edit the configuration files to match your team's style guide.
 
 ## Install the Plugin
 

@@ -145,7 +145,7 @@ When it is ambiguous, default to a doc (task-oriented) and let the reviewer rest
 These are your responsibility, not the contributor's. The full rules live in `reference/tone-and-voice.md`. The essentials:
 
 - Direct, clear, instructional tone. Active voice. Match the contributor's terminology rather than replacing it with generic words, and keep product terms consistent with `.docs-assist/reference.yml`'s `term` entries when they exist (`reference/terminology.md`).
-- AP title case headings that are action-oriented (imperative verbs, not gerunds). One H1 per file. No emojis in headings.
+- Sentence-case headings by default (title case when a project's own convention uses it) that are action-oriented (imperative verbs, not gerunds). One H1 per file. No emojis in headings.
 - `1.` for ordered lists, `-` for unordered. A language tag on every code block. Copy-paste safe examples with placeholder values.
 - No em dashes. Use a comma, a colon, parentheses, or rewrite the sentence.
 - No TODOs or placeholders in finished docs. When you rename a heading, move a file, re-case a term, or change a value other docs repeat, follow what it breaks elsewhere using `reference/impact-analysis.md`.

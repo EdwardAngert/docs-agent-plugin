@@ -23,21 +23,20 @@ Documentation states and instructs; it does not hedge, sell, or perform confiden
 - Top-level headings (H1) should only appear once per file
 - Prefer heading structure over bold for organization
 - **Do not use emojis in headings**
-- Use **AP title case** for headings
-  - Capitalize major words (nouns, verbs, adjectives, adverbs)
-  - Lowercase articles (a, an, the), coordinating conjunctions (and, but, or), and short prepositions (in, on, for, to, with)
-  - Always capitalize the first and last word
+- Use **sentence case** for headings by default: capitalize only the first word and proper nouns
+  - Good: "Install the plugin", "Configure authentication"
+  - Bad: "Install The Plugin", "Configure Authentication"
 - Write **action-oriented headings**: use imperative verbs, not gerunds
-  - Good: "Install the Plugin", "Configure Authentication"
-  - Bad: "Installing the Plugin", "Configuring Authentication"
+  - Good: "Install the plugin", "Configure authentication"
+  - Bad: "Installing the plugin", "Configuring authentication"
 - Make headings **SEO-friendly**: use keywords users would search for
-  - Good: "Troubleshoot Connection Errors"
-  - Bad: "When Things Go Wrong"
+  - Good: "Troubleshoot connection errors"
+  - Bad: "When things go wrong"
 
 > [!NOTE]
-> AP title case is a style choice.
-> Some teams prefer sentence case.
-> Choose one and apply it consistently.
+> Sentence case is the default because it's what Google's developer documentation style guide recommends, and that guide is this plugin's default managed Vale package.
+> Title case (AP or Chicago) is a fully supported alternative for a project whose own convention already uses it; set `heading_case: title` in `config.yml` and the plugin, the linters, and this rule all follow.
+> Whichever one a project uses, apply it consistently.
 
 ### Lists
 

@@ -51,6 +51,14 @@ jobs:
         if: always()
         run: npx --yes markdownlint-cli2
 
+      # Vale never fetches the Google, write-good, and alex packages .vale.ini
+      # declares on its own; only `vale sync` does, and only its LSP mode runs
+      # that automatically. Sync explicitly first, via the npm-wrapped CLI so
+      # no separate binary install is needed.
+      - name: vale sync
+        if: always()
+        run: npx --yes @vvago/vale sync
+
       # Prose style. Uses the official Vale action.
       # NOTE: errata-ai was renamed to vale-cli; errata-ai/vale-action@v2 still
       # resolves. Swap to vale-cli/vale-action@v2 if the redirect is ever dropped.
