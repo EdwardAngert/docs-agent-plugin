@@ -11,7 +11,7 @@ This is the deeper reference behind the change-based paths of `/docs-assist:audi
 
 Narrowing the edit scope does not narrow the impact scope. A three-file edit can break links across the entire site. You keep the work small by following only the edges a change rides, not by trusting the file count.
 
-So the order is: classify what changed, follow the edges that change type implicates, then report which edges you walked.
+The order is: classify what changed, follow the edges that change type implicates, then report which edges you walked.
 
 ## Classify the Change
 

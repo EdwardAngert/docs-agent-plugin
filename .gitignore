@@ -1,0 +1,5 @@
+# Vale packages fetched by `vale sync` (Google, write-good, alex, and any
+# others a project adds). Only the DocsAssist style is this plugin's own and
+# tracked; the rest are synced fresh by CI and by /docs-assist:setup-lint.
+assets/lint/vale/styles/*/
+!assets/lint/vale/styles/DocsAssist/

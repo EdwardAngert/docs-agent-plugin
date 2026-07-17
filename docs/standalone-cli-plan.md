@@ -105,7 +105,7 @@ Extend `scripts/validate.mjs` (it already checks that the two plugin manifests a
 **Phase 0.** Get these decisions from Edward before any code is written:
 
 - Confirm the npm package name.
-- Confirm which Tier 2 adapter(s) ship in v1. Recommendation: Claude Code (already done) plus the generic rules-file adapter only; defer the bare-API-key agent loop.
+- Confirm which Tier 2 adapters ship in v1. Recommendation: Claude Code (already done) plus the generic rules-file adapter only; defer the bare-API-key agent loop.
 - Decide whether the CLI is announced as part of Docs Assist or as a separate-but-related tool, since it changes the README/install story.
 
 **Phase 1.** Build the Tier 1 CLI: `package.json`, `cli/index.mjs`, ported detection and scaffolding logic, `npx docs-assist init` and `check` working end to end with no LLM dependency.

@@ -43,7 +43,7 @@ Never fetch without an explicit yes. The full schema lives in `config-resolution
 
 ## Select a Template
 
-There are two selection models, set by `selection_model` in `templates.yml`.
+Two selection models exist, set by `selection_model` in `templates.yml`.
 
 ### Content-Type Model (Default)
 

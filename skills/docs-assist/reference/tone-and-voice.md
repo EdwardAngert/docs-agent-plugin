@@ -57,7 +57,7 @@ Documentation states and instructs; it does not hedge, sell, or perform confiden
   - CLI flags (`--debug`)
   - Inline code (`npm run build`)
   - Environment variables (`LOG_LEVEL`)
-- Include a language tag on all code blocks (e.g., `bash`, `json`, `md`)
+- Include a language tag on all code blocks (for example, `bash`, `json`, `md`)
 - Examples:
 
   ```bash
@@ -71,7 +71,7 @@ Surround headings and lists with blank lines (markdownlint rules MD022 and MD032
 
 ### Links
 
-- Use relative paths for internal links (e.g., `../admin/configure-firewall.md`)
+- Use relative paths for internal links (for example, `../admin/configure-firewall.md`)
 - Avoid linking directly to headings, unless persistent
 - Use link text that describes the destination purpose
 
