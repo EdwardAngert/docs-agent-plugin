@@ -29,6 +29,7 @@ Never clobber what is already there. Look for:
 - `.mega-linter.yml`.
 - `cspell.json` or `cspell.config.*`.
 - `.markdown-link-check.json`.
+- `.doc-detective.json` or `doc-detective.config.json`, or a `doc-detective` dependency in `package.json`. Not scaffolded by this command (`/docs-assist:verify` detects and uses it directly if present); note it here so the link-check question in step 3 can mention that Doc Detective already covers link validation as part of a verify run, and a separate `markdown-link-check` setup would be redundant with it.
 - Lint scripts in `package.json`, a `.pre-commit-config.yaml`, and existing workflows in `.github/workflows/`.
 
 Report what you found. If a linter already exists, extend it (add the DocsAssist Vale style, merge missing markdownlint rules) rather than replacing it. If an existing `.vale.ini` already declares its own `Packages`, merge `Google`, `write-good`, and `alex` into that list rather than overwriting it; a project may already be using other packages this plugin doesn't know about. Show a diff and confirm before changing an existing config.
