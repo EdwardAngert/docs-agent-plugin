@@ -1,6 +1,6 @@
 ---
-description: Install opt-in documentation hooks (git pre-commit lint, in-session doc lint, CI docs-impact check, CI reference-registry check). Default off, nothing is installed without your choice
-argument-hint: [pre-commit | claude-code | ci | ci-facts | all]
+description: Install opt-in documentation hooks (git pre-commit lint, in-session doc lint, CI docs-impact check, CI reference-registry check, CI claim check). Default off, nothing is installed without your choice
+argument-hint: [pre-commit | claude-code | ci | ci-facts | ci-claims | all]
 ---
 
 # Set Up Documentation Hooks
@@ -13,6 +13,7 @@ Install hooks that keep documentation in shape automatically. Hooks are opt-in: 
 - **Claude Code post-edit lint** (`${CLAUDE_PLUGIN_ROOT}/assets/hooks/claude-code-hooks.json`): a `PostToolUse` hook that lints a Markdown file right after Claude writes or edits it, so style issues surface in the session. Requires `jq` and `npx`.
 - **CI docs-impact check** (`${CLAUDE_PLUGIN_ROOT}/assets/ci/docs-impact.mjs` and `${CLAUDE_PLUGIN_ROOT}/assets/ci/github/docs-impact.yml`): a deterministic detector that runs on every pull request and reports when a diff rides the change types that ripple into docs: moved or renamed docs, changed headings, changed code terms the docs mention, or a large source change with no docs touched. It costs no agent tokens; it tells reviewers when `/docs-assist:update` is worth running, and can be made blocking with `DOCS_IMPACT_STRICT`.
 - **CI reference-registry check** (`${CLAUDE_PLUGIN_ROOT}/assets/ci/check-facts.mjs` and `${CLAUDE_PLUGIN_ROOT}/assets/ci/github/check-facts.yml`): a deterministic detector that runs on every pull request and verifies the mechanical parts of `.docs-assist/reference.yml`: every `fact` entry's `source` still contains the referenced identifier, and every `pointer` entry's target file and heading anchor still resolve. Only offer this when the project has a `reference.yml` with `fact` or `pointer` entries; skip it otherwise, since there's nothing for it to check. Can be made blocking with `CHECK_FACTS_STRICT`.
+- **CI claim check** (`${CLAUDE_PLUGIN_ROOT}/assets/ci/check-claims.mjs` and `${CLAUDE_PLUGIN_ROOT}/assets/ci/github/check-claims.yml`): a deterministic detector that runs on every pull request, extracting checkable claims (CLI flags, config/env keys, function or class names, file paths, version requirements) from every doc and resolving each against the code with `git grep`. Unlike the reference-registry check, this needs no curated `.docs-assist/reference.yml` entries first; it scans the whole doc set cold. It only settles claims a lookup can settle: described-behavior and numeric claims still need `claim-verification.md`'s agent trace. Can be made blocking with `CHECK_CLAIMS_STRICT`, though non-strict is the safer default since a "missing" result can also mean the claim's target is intentionally untracked (gitignored) rather than gone.
 
 ## Process
 
@@ -64,7 +65,17 @@ When chosen:
 - Explain the tuning knob: `CHECK_FACTS_STRICT` (fail the check instead of reporting).
 - Tell the user this only checks that a `fact`'s source and a `pointer`'s target still exist; it does not compare a fact's value against its source, since that needs understanding the source language. That deeper check stays something `doc-auditor` and drafting do.
 
-### 7. Confirm and Explain
+### 7. Install the CI Claim Check
+
+When chosen:
+
+- Copy `${CLAUDE_PLUGIN_ROOT}/assets/ci/check-claims.mjs` to `scripts/check-claims.mjs` and `${CLAUDE_PLUGIN_ROOT}/assets/ci/github/check-claims.yml` to `.github/workflows/check-claims.yml`.
+- If either destination exists, show a diff and confirm. Never silently overwrite.
+- Explain the tuning knobs: `CHECK_CLAIMS_STRICT` (fail the check instead of reporting) and `DOCS_DIR` (defaults to `docs_dir` from `.docs-assist/config.yml`).
+- Tell the user what this catches and what it doesn't: it resolves identifier-shaped claims (paths, flags, function/class names, config keys) against `git grep`/`git ls-files`, so it's fast and needs no agent, but it demotes anything about described or numeric behavior to a `claims-needs-judgment.json` file rather than guessing. `${CLAUDE_PLUGIN_ROOT}/assets/ci/claim-briefs.mjs` turns that into one brief per doc for a manual or agent-driven follow-up trace; this workflow does not run that step automatically.
+- A "missing" result isn't automatically a doc bug: a claim naming a file that's real but gitignored (a vendored asset, a build output) will also show as missing, since the check only sees `git`-tracked content. Say so if the user is deciding whether to flip on `CHECK_CLAIMS_STRICT`.
+
+### 8. Confirm and Explain
 
 After installing, tell the user:
 
