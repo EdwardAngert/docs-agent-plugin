@@ -51,7 +51,7 @@ Before editing, check the branch. If the working tree is on the default branch a
 
 For a small number of affected docs, edit them directly, applying the standard drafting rules.
 
-For a larger set, fan out: launch the `doc-updater` subagent once per affected doc, in parallel, each with the change summary and one doc path. Each subagent edits its doc in the working tree and reports what it changed. This keeps large updates fast and consistent.
+Fan out once the affected set crosses a concrete size, the same threshold `/docs-assist:audit` uses: more than 5 docs, or roughly 2,000 lines combined. At or above it, launch the `doc-updater` subagent once per affected doc, in parallel, each with the change summary and one doc path. Each subagent edits its doc in the working tree and reports what it changed. This keeps large updates fast and consistent.
 
 For every update:
 
@@ -66,6 +66,7 @@ For every update:
 - Show the user the result as a diff (`git diff` on the docs) so they review the substance, not the formatting.
 - Trace the ripple of your own edits. If you renamed a heading, moved a file, re-cased a term, or changed a value that other docs repeat, follow the edges in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/impact-analysis.md` and fix or flag what they reach.
 - Check for an `llms.txt`. If the repo has one and your edits added, removed, renamed, or re-described a doc it lists, update its entries so the map matches the docs. Update cross-references the same way.
+- If `.docs-assist/config.yml` sets `lint.tools`, re-run them against the touched docs before calling the pass finished, and fix what they find or list it in follow-ups with why it's staying. An update that edits prose and skips this check is exactly the gap that let a hand-checked pass miss what a linter would have caught in seconds.
 - List remaining follow-ups: docs that need an SME to confirm, screenshots that went stale, edges you did not follow, or new docs the change calls for that do not exist yet.
 - When the target was a PR, offer to post the what-changed summary as a comment on it (`gh pr comment`), so the docs update is visible where the change is reviewed. Start the comment with an HTML marker (`<!-- docs-assist:update -->`) and update the marked comment on a re-run rather than stacking a new one.
 

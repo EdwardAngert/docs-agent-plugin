@@ -2,7 +2,10 @@
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
   "version": "0.2",
   "language": "en",
-  "enableFiletypes": ["markdown", "mdx"],
+  "enableFiletypes": [
+    "markdown",
+    "mdx"
+  ],
   "ignorePaths": [
     "node_modules/**",
     ".git/**",
@@ -50,9 +53,12 @@
     "ignorecase",
     "linkcheck",
     "myapi",
+    "operationalized",
     "pyproject",
     "quickstarts",
+    "reformatters",
     "scroller",
+    "triaging",
     "underbuild",
     "unrunnable",
     "upserted",

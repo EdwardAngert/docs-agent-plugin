@@ -35,6 +35,7 @@ When `config.yml` is present, apply it directly:
 - `frontmatter.*`: the field names to write and the allowed `content-type` values. Honor the repo's names over the plugin's defaults.
 - `docs_dir`: where to look and where new docs go.
 - `lint.*`: which linter the project uses, so you can recommend running it and avoid re-flagging what the linter already covers.
+- `verify.tool`: `auto` (default), `doc-detective`, or `docs-assist`. Controls which engine `/docs-assist:verify` uses; see that command's step 1.5.
 
 `style.md` is prose: read it and follow it the way you would a team style guide. When it conflicts with a plugin default, `style.md` wins.
 

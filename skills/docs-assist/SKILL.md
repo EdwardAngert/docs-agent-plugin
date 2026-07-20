@@ -28,10 +28,12 @@ This skill ships detailed reference material. Load the file you need when you ne
 - `reference/frontmatter-spec.md`: per-doc metadata schema and how the plugin uses it.
 - `reference/documentation-patterns.md`: patterns, antipatterns, examples, SEO, accessibility, docs-as-code.
 - `reference/audit-methodology.md`: the systematic audit process.
+- `reference/claim-verification.md`: trace a doc's claims (commands, flags, defaults, config, described behavior) out to the code that backs them. The audit's highest-value pass, and the one a mechanical lint-and-format pass skips by default.
 - `reference/impact-analysis.md`: how to scope a change-based review. Maps each change type to the edges it can break, and how to report what you did not check.
 - `reference/templates.md`: how to suggest and apply external documentation templates (The Good Docs Project) for a healthy start. Suggesting is free; fetching is on the contributor's yes.
 - `reference/ia-methodology.md`: information architecture design and evaluation.
 - `reference/style-guides.md`: style guide selection and enforcement.
+- `reference/session-log.md`: the opt-in running narrative log for an engagement spanning several commands, distinct from `docs/plan.md`'s forward-looking content plan.
 
 ## Project Configuration
 
@@ -75,6 +77,18 @@ The contributor should never need to know a command name, the plugin's structure
 - End every workflow by naming the natural next step in plain words and offering to do it now. The contributor should never finish something and wonder what comes next.
 - When someone seems lost or asks what you can do, offer the doors in plain words, not command names: see where the docs stand, write one doc, plan the set, or bring the docs in line with a code change.
 - Offer setup (config, templates, linting, hooks) inline at the moment it would help, and handle it in the conversation. Never send someone away to find a command.
+
+### Batch Confirmations Across a Multi-Stage Engagement
+
+`init`, `audit`, `plan`, `health`, and `setup-lint` each confirm before acting, correctly, in isolation. Chained in one continuous engagement ("set this repo up properly," "get the docs into good shape"), one confirmation per stage boundary adds up to several round trips for what the contributor experiences as a single task.
+
+When a request spans more than one of these stages, say so up front and ask once: name the stages you intend to run and roughly what each will do (detected conventions to confirm, the plan's scope, which linters), then execute through to completion without pausing at each internal boundary, stopping early only for something genuinely ambiguous, destructive, or outside what was scoped. A value that needs a real decision (an ambiguous config field, ownership of a risky rewrite) still gets its own question; this collapses the *procedural* stage-to-stage check-ins, not judgment calls.
+
+A vague, open-ended request ("improve the docs," "get this repo's docs in shape") is the common case this applies to. Read it as a multi-stage engagement by default rather than a single command: run `/docs-assist:health` first for orientation, then route into whichever of `init`, `audit`, `plan`, and `setup-lint` the scorecard actually calls for, batching their confirmations into the one upfront question above. At that same upfront point, if the work looks likely to span more than one sitting or touch more than a handful of files, offer the running `.docs-assist/session-log.md` (see `reference/session-log.md`) rather than waiting until a plan exists to bring it up: an `init` or `audit` stage can generate log-worthy findings before `plan` ever runs.
+
+"Improve the docs" is not satisfied by `setup-lint` plus a clean `health` scorecard. Those confirm the docs are well-formed and internally consistent; they say nothing about whether the docs are still *true*. Route a genuine improvement request into a full `/docs-assist:audit`, which is where the claim-to-code trace lives (`reference/claim-verification.md`), not just the mechanical and cosmetic layer. Say so as part of the upfront framing: name that the pass will include tracing claims (commands, flags, defaults, config, described behavior) out to the code, not only linting and structure, so the contributor knows both halves are coming.
+
+Close the engagement on evidence, not on having read through everything: before telling the contributor you're done, if `lint.tools` is configured, re-run the linters against whatever changed and confirm zero issues, or list exactly what's left and why. A workflow that edited docs during the engagement (a fix pass, a draft, an update) is not finished until this gate passes, the same standard `setup-lint.md` holds its own first run to.
 
 ### Deliver on a Branch
 

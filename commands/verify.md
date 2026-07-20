@@ -18,6 +18,14 @@ The argument (`$ARGUMENTS`) is a doc path or a directory. If omitted, survey the
 - When more than one doc is in scope, decide whether they are independent or a journey: do they share a user story (`user-stories.md`), does a plan or a guide lay out an order, does one doc's prerequisites point at another's outcome? Say which you concluded before running anything; this decision sets the workspace boundary in step 3.
 - Tell the user what will run and what will not before running anything: the verifier executes workspace-scoped commands only, and steps needing credentials, privilege escalation, or real services are reported as `unverified`, never run. If the doc set's procedures are mostly in that category, say so up front so the user can calibrate expectations.
 
+### 1.5. Choose the Execution Engine
+
+`.docs-assist/config.yml`'s `verify.tool` can force `doc-detective`, `docs-assist`, or the default `auto`. On `auto` (or when the key is absent), detect [Doc Detective](https://docs.doc-detective.com/) before falling back:
+
+- Look for `.doc-detective.json` / `doc-detective.config.json` at the repo root, a `doc-detective` entry in `package.json`'s dependencies, or `doc-detective` resolving on `PATH` (`doc-detective --version`) or via `npx doc-detective --version`.
+- If found and `verify.tool` isn't set to `docs-assist`, default to it: it is a purpose-built execution engine for exactly this job, including link validation as part of the same run rather than a separate pass. Point it at the doc or docs in scope, translate its per-step results into this command's classification vocabulary (`pass`, `divergence`, `fail`, `blocked`, `unverified`, `skipped`), and continue through steps 3 to 5 the same way regardless of engine, so the report, the journey handling, and the `last-verified` bump behave identically to a `doc-verifier` run. Doc Detective can also drive browser and HTTP steps beyond what `doc-verifier` attempts; say so as part of the "what will run" framing in step 1, since it broadens what "workspace-scoped" means.
+- If not found, or `verify.tool: docs-assist` is set, use the `doc-verifier` subagent as described below. Don't ask the user to install Doc Detective; it's a nice-to-have, not a requirement, and `doc-verifier` covers the same core job without it.
+
 ### 2. Prepare the Workspace
 
 - Create a scratch directory outside the repo working tree for each doc's run, so a verification can never dirty the user's checkout. A temp directory is right; the repo itself is not, unless the doc's procedure is explicitly about operating on this repo, and then work on a disposable copy.
@@ -27,10 +35,13 @@ The argument (`$ARGUMENTS`) is a doc path or a directory. If omitted, survey the
 
 First decide whether the target is independent docs or a journey (see "Verifying a Journey" below): docs a reader follows in sequence to reach one outcome, per their shared user stories or the order a guide or plan lays out. This decision changes the workspace boundary, not just the run.
 
+If step 1.5 chose Doc Detective, run it against the scoped doc or docs with the workspace as its working directory instead of launching `doc-verifier`, then skip to step 4 with its translated results. Otherwise:
+
 - **One doc**: launch the `doc-verifier` subagent with the doc path and the workspace path.
 - **Independent docs** (unrelated procedures that happen to be verified in the same pass): fan out, one `doc-verifier` per doc, each with its own workspace, in parallel.
 - **A journey** (docs meant to compose into one outcome): one `doc-verifier` call, given the ordered doc list and a single shared workspace. Never fan a journey out into independent workspaces; that proves each doc works alone, which is not the claim a journey makes.
 - The verifier never edits files; every result comes back as a report.
+- `doc-verifier` also spot-checks links it encounters in an executable step's surrounding prose (not a full link-check pass, just what the run already touches), the same unified-pass idea Doc Detective's detected tests use for links, so a verify run doesn't skip the links closest to what it just proved works or broke.
 
 ### Verifying a Journey
 

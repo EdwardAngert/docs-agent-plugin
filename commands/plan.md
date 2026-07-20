@@ -90,6 +90,7 @@ When the journeys become plan entries, give each doc its quick user story outlin
 ### 6. Propose a Docs Plan Built to Ship and Iterate
 
 Write the plan to a file, `docs/plan.md` by default, or wherever the contributor prefers.
+Keep it a content plan, forward-looking: what to write, for whom, in what order. If the engagement runs long enough to generate its own narrative worth keeping (findings, decisions, why a call went one way over another), that belongs in the separate `.docs-assist/session-log.md`, not folded into this file; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/session-log.md`. Offer it once, the same way the intake loop offers a running notes file, rather than letting narrative accumulate here by default.
 Present it as a structured list of docs to write, staged so the useful ones ship first.
 For each doc, specify:
 
@@ -130,7 +131,7 @@ Adjusting a plan is cheap. Rewriting docs is expensive.
 
 Once the plan is approved, ship doc by doc, or fan the stage out in parallel. Each doc follows the `/draft` workflow (survey, dump, reflect, situate, reconcile, dig, verify, shape, outline, draft, review, finalize).
 
-**Fan out the ship-now stage when the material already exists.** Split the stage honestly:
+**Fan out the ship-now stage when the material already exists**, and when the stage crosses a concrete size, the same threshold `/docs-assist:audit` uses: more than 5 docs in the stage, or their combined draft length likely to exceed roughly 2,000 lines. Below that, draft in the conversation; a fan-out for two small docs costs more in coordination than it saves. Split the stage honestly:
 
 - Docs whose knowledge is already captured (in the intake inventory, the code, or existing docs) can be drafted in parallel: launch the `doc-drafter` subagent once per doc, each briefed with its plan entry, the target path, the relevant inventory and code paths, and the resolved conventions (config, `style.md`, `reference.yml`). This is multi-file work, so the branch delivery rule applies.
 - Docs that need fresh knowledge from a human stay conversational. Do not fan out a doc whose material does not exist; the drafter flags gaps, it does not invent.
