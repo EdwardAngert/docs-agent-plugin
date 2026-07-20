@@ -76,7 +76,7 @@ if (!docs.length) {
   process.exit(0);
 }
 
-// (category, pattern) — pattern's group 0 is the matched claim text.
+// (category, pattern): pattern's group 0 is the matched claim text.
 const PATTERNS = [
   ['file-path', /`[\w./-]+\.(?:py|js|mjs|cjs|ts|tsx|jsx|go|rb|rs|java|kt|c|h|cpp|hpp|md|mdx|yml|yaml|json|jsonc|toml|ini|sh|Dockerfile)`/g],
   ['bare-path', /`(?:src|lib|scripts|docs|deploy|config|bin)\/[\w./-]+`/g],
@@ -164,7 +164,7 @@ function checkFilePath(matched, context) {
   if (literalHits.length) return ['confirmed', `named as a generated-artifact filename in source: ${literalHits[0]}`];
   const generativeWords = ['writes', 'written', 'generates', 'generated', 'creates', 'created', 'produces', 'produced', 'output', 'outputs', 'saves', 'saved'];
   if (generativeWords.some((w) => context.toLowerCase().includes(w))) {
-    return ['needs-judgment', `no file found for ${pathStr}, but context suggests a generated artifact — verify by running the tool, not by grep`];
+    return ['needs-judgment', `no file found for ${pathStr}, but context suggests a generated artifact: verify by running the tool, not by grep`];
   }
   return ['missing', `no file named ${pathStr} found on disk, by basename, or as a string literal in tracked source`];
 }
@@ -205,7 +205,7 @@ function checkConfigKey(matched) {
   // a doc using it as `<KEY>` elsewhere confirms that reading, not drift.
   const placeholderHits = gitGrepLiteral(`<${key}>`);
   if (placeholderHits.length) {
-    return ['needs-judgment', `'${key}' not found in code, but used as a <${key}> placeholder elsewhere — likely doc shorthand, not a real key`];
+    return ['needs-judgment', `'${key}' not found in code, but used as a <${key}> placeholder elsewhere: likely doc shorthand, not a real key`];
   }
   return ['missing', `'${key}' not found anywhere in tracked non-doc source`];
 }
@@ -252,7 +252,7 @@ const missingClaims = allClaims.filter((c) => c.status === 'missing');
 
 let out = `## Claim check\n\n`;
 out += `${docs.length} docs, ${allClaims.length} candidate claims (${resolved} mechanically checkable: ${confirmed} confirmed, ${missing} missing, ${resolved - confirmed - missing} demoted to judgment). `;
-out += `${needsJudgment.length} require a reader, grouped by doc in \`${OUT_DIR}/claims-needs-judgment.json\` — hand those to \`claim-briefs.mjs\`.\n\n`;
+out += `${needsJudgment.length} require a reader, grouped by doc in \`${OUT_DIR}/claims-needs-judgment.json\`: hand those to \`claim-briefs.mjs\`.\n\n`;
 if (missingClaims.length) {
   out += `### Missing (code doesn't back the claim anymore)\n\n`;
   out += `| Doc | Line | Category | Matched | Evidence |\n| --- | ---: | --- | --- | --- |\n`;

@@ -9,7 +9,7 @@
 # Cheap by design: no agent, no network calls beyond GitHub itself, no
 # tokens. It catches a flag, path, or identifier a doc still references
 # after the code moved, renamed, or removed it. It does not settle
-# described-behavior or numeric claims ("retries three times") — those need
+# described-behavior or numeric claims ("retries three times"); those need
 # a reader, which is what claim-briefs.mjs and the agent fan-out in
 # claim-verification.md are for; this workflow only runs the mechanical half.
 # Set CHECK_CLAIMS_STRICT: "1" to fail the check instead of only reporting;
