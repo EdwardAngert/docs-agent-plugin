@@ -35,7 +35,7 @@ The argument (`$ARGUMENTS`) is a doc path or a directory. If omitted, survey the
 
 First decide whether the target is independent docs or a journey (see "Verifying a Journey" below): docs a reader follows in sequence to reach one outcome, per their shared user stories or the order a guide or plan lays out. This decision changes the workspace boundary, not just the run.
 
-If step 1.5 chose Doc Detective, run it against the scoped doc(s) with the workspace as its working directory instead of launching `doc-verifier`, then skip to step 4 with its translated results. Otherwise:
+If step 1.5 chose Doc Detective, run it against the scoped doc or docs with the workspace as its working directory instead of launching `doc-verifier`, then skip to step 4 with its translated results. Otherwise:
 
 - **One doc**: launch the `doc-verifier` subagent with the doc path and the workspace path.
 - **Independent docs** (unrelated procedures that happen to be verified in the same pass): fan out, one `doc-verifier` per doc, each with its own workspace, in parallel.
