@@ -1,0 +1,66 @@
+# Docs Assist claim check.
+#
+# Installed by /docs-assist:setup-hooks (ci). Runs the deterministic
+# check-claims detector on every pull request: extracts checkable claims
+# (CLI flags, config/env keys, function or class names, file paths, version
+# requirements) from every doc under docs_dir plus README/AGENTS/CLAUDE.md,
+# and resolves each one against the code with `git grep` / `git ls-files`.
+#
+# Cheap by design: no agent, no network calls beyond GitHub itself, no
+# tokens. It catches a flag, path, or identifier a doc still references
+# after the code moved, renamed, or removed it. It does not settle
+# described-behavior or numeric claims ("retries three times") — those need
+# a reader, which is what claim-briefs.mjs and the agent fan-out in
+# claim-verification.md are for; this workflow only runs the mechanical half.
+# Set CHECK_CLAIMS_STRICT: "1" to fail the check instead of only reporting;
+# consider starting non-strict, since a "missing" result can also mean the
+# claim's target is intentionally untracked (gitignored) rather than gone.
+#
+# The result is posted as a single sticky PR comment, updated in place on
+# every push, so re-runs never pile up new comments.
+
+name: Claim check
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  check-claims:
+    name: Check doc claims against code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Check claims
+        run: node scripts/check-claims.mjs > check-claims-report.md
+        env:
+          CHECK_CLAIMS_STRICT: "0"
+      # continue-on-error: fork PRs get a read-only token, so the comment
+      # post fails there; the report still lands in the job summary above.
+      - name: Post sticky PR comment
+        if: always() && github.event_name == 'pull_request'
+        continue-on-error: true
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            if (!fs.existsSync('check-claims-report.md')) return;
+            const marker = '<!-- docs-assist:check-claims -->';
+            const body = marker + '\n' + fs.readFileSync('check-claims-report.md', 'utf8');
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo, issue_number: context.issue.number, per_page: 100,
+            });
+            const existing = comments.find((c) => c.body && c.body.startsWith(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ ...context.repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ ...context.repo, issue_number: context.issue.number, body });
+            }

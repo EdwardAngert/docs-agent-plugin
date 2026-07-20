@@ -3,6 +3,15 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
+## Unreleased
+
+### Added
+
+- `check-claims.mjs` and `claim-briefs.mjs`: a deterministic, dependency-free pair that mechanizes the first half of `claim-verification.md`'s method across the whole doc set. `check-claims.mjs` extracts identifier-shaped claims (CLI commands/flags, config/env keys, function or class names, file paths, version requirements) from every doc and resolves each against the code with `git grep`/`git ls-files`, no agent involved; `claim-briefs.mjs` turns what's left (described-behavior and numeric claims a lookup can't settle) into one self-contained brief per doc for the `doc-auditor` fan-out. `check-facts.mjs` already did the same job for `.docs-assist/reference.yml`'s curated entries; this covers the rest of the corpus, cold, with no registry required first.
+  `/docs-assist:audit` and `claim-verification.md` now point at it as the recommended first pass before tracing claims by hand.
+  `/docs-assist:setup-hooks` gained a CI claim check (`assets/ci/github/check-claims.yml`), the same sticky-PR-comment pattern as the reference-registry check, non-strict by default since a "missing" result can also mean the claim's target is real but gitignored.
+  Born from a real cross-project run: extracted and mechanically resolved 453 candidate claims from a 14-doc corpus in seconds, fanned the 192 that needed judgment out to 14 parallel agents, and found 6 real drifted or inconsistent claims a lint pass alone would have missed.
+
 ## 0.9.6 - 2026-07-19
 
 This release asks whether the docs actually work, not just whether they read well.
