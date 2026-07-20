@@ -36,7 +36,7 @@ For a scoped audit, check only the links in the edit scope.
 
 Evaluate against six dimensions:
 
-- **Accuracy**: is it current? Check version references and dates.
+- **Accuracy**: does it still match the code? This is not a date check. Trace every command, flag, config key, default, endpoint, version requirement, and described behavior out to its actual source and confirm it still holds; see `claim-verification.md` for the method. This is the dimension most likely to get skipped in favor of the mechanical checks, and it's the one a reader actually depends on.
 - **Completeness**: are steps missing? Does it assume prerequisites without linking them?
 - **Clarity**: are explanations confusing? Is the content type right for the goal?
 - **Findability**: can a reader locate it through navigation, search, or cross-references?

@@ -76,9 +76,13 @@
   // MD028 - No blank line inside a blockquote.
   "MD028": true,
 
-  // MD029 - Ordered lists use a repeated "1." (from config.yml
-  // ordered_list_style).
-  "MD029": { "style": "one" },
+  // MD029 - Ordered list numbering. Default to markdownlint's own permissive
+  // default (either repeated "1." or true sequential numbering, as long as a
+  // single list is internally consistent) rather than locking to "one":
+  // real corpora legitimately mix both across files, and config.yml's
+  // ordered_list_style only overrides this to "one" when init actually
+  // verified the project's lists already use it consistently.
+  "MD029": { "style": "one_or_ordered" },
 
   // MD030 - Spaces after list markers.
   "MD030": true,

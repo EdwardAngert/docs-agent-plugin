@@ -64,7 +64,7 @@ Copy the templates from `${CLAUDE_PLUGIN_ROOT}/assets/lint/` and adjust them to 
   ```
 
   This file has no static template in `assets/lint/`, since its content is entirely project-specific. Regenerate it whenever `reference.yml`'s `term` entries change, the same way markdownlint's config regenerates when `config.yml` changes.
-- **markdownlint** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/markdownlint/.markdownlint.jsonc`): set `MD004` from `list_marker`, `MD029` from `ordered_list_style`. If `heading_case` is sentence, leave heading case to Vale and the agent (markdownlint does not check case).
+- **markdownlint** (`${CLAUDE_PLUGIN_ROOT}/assets/lint/markdownlint/.markdownlint.jsonc`): set `MD004` from `list_marker`. Set `MD029` to `"one"` only when `ordered_list_style` is `repeated-one` *and* `init` actually verified the corpus uses it consistently (not just the plugin default); otherwise leave the template's `"one_or_ordered"`, which accepts either style as long as a single list is internally consistent. If `heading_case` is sentence, leave heading case to Vale and the agent (markdownlint does not check case).
 - **markdownlint scope, generated, not copied**: also write a `.markdownlint-cli2.jsonc` at the repo root, extending the config above, with the same globs the CI workflow uses (`**/*.md`, excluding `node_modules`). Without this, a bare `npx markdownlint-cli2` with no arguments falls back to markdownlint's stock defaults (`MD013` line-length included, which this config likely turns off) and scans whatever the invoker happens to type, not what the project actually lints or what CI checks. This file makes the correct scope the default, and CI can then call the bare command instead of hardcoding the glob a second place it could drift from:
 
   ```jsonc
@@ -95,11 +95,27 @@ npx cspell "docs/**/*.md"
 npx markdown-link-check docs/**/*.md
 ```
 
-For Vale, point them at the install (Vale is a standalone binary; the CI workflow uses the official action) and tell them to run `vale sync` once, locally, before the first lint: Vale never fetches the `Google`, `write-good`, and `alex` packages on its own, and a lint run without syncing first will error that the styles are missing, not silently skip them. Note that re-running `/docs-assist:setup-lint` after editing `config.yml` or adding a `term` entry to `reference.yml` regenerates the linter config.
+For Vale, do not recommend `npx --yes @vvago/vale` or `npx --yes --package=@vvago/vale -- vale`: both are known to fail with `vale: command not found` (exit 127) even when the binary downloads correctly, an `npx` bin-resolution problem with that package's `bin` field, not a broken install, and it costs real time to rediscover per session. Instead:
+
+- If Vale is already on `PATH` (a global install, or a devcontainer/CI image that provides it), just use `vale`.
+- Otherwise, fetch the binary directly instead of going through `npx`: `gh release download --repo vale-cli/vale --pattern '*<platform>.tar.gz' --output vale.tar.gz --clobber && tar -xzf vale.tar.gz vale` (match the pattern to the user's OS, for example `*macOS_arm64.tar.gz` or `*Linux_64-bit.tar.gz`; `gh api repos/vale-cli/vale/releases/latest --jq '.assets[].name'` lists exact names if unsure), then run `./vale sync` and `./vale` from that path. This is the same mechanism the shipped CI template uses (`assets/ci/github/docs-lint.yml`) and is confirmed to resolve cleanly where the npm wrapper doesn't.
+
+Either way, tell the user to run `vale sync` once before the first lint: Vale never fetches the `Google`, `write-good`, and `alex` packages on its own, and a lint run without syncing first will error that the styles are missing, not silently skip them. Note that re-running `/docs-assist:setup-lint` after editing `config.yml` or adding a `term` entry to `reference.yml` regenerates the linter config.
+
+### 7. Run It Now and Triage the First Pass
+
+Scaffolding and stopping leaves the first-run gap for the user to hit alone. Before finishing, actually run every tool just configured against the target scope (not just print the commands) and walk the findings to zero, or to an explicit, justified remainder:
+
+- **A real defect** (a genuine heading skip, missing blank line, untagged fence, weasel word, broken link): fix it.
+- **A false positive against a documented convention**: adjust the generated config to match (the same kind of override already documented in the shipped `.vale.ini`, for example `Google.Headings` versus `heading_case`) and note why in a comment, so the next run doesn't re-flag it.
+- **A rule with no corresponding project convention at all** (fires on real, harmless content, like a table-alignment or fence-style rule with no house opinion either way): disable it explicitly with a one-line comment explaining the call, rather than leaving the user to re-triage the same noise on every future run.
+
+Report the before/after count (`607 issues → 0`, or `607 → 12, listed below with why each stays`). A fresh `setup-lint` run should end at a clean baseline the user can trust, not a config they still have to test-drive themselves.
 
 ## Notes
 
 - Detect before you generate. An existing linter is a signal of the team's preference; work with it.
 - Scope every linter to documentation (`*.md`, `*.mdx`, the `docs_dir` from config), not source code.
-- Prefer `npx` invocations and the official Vale action so the repo needs no global installs.
+- Prefer `npx` invocations for markdownlint, cspell, and markdown-link-check; for Vale, prefer a direct binary (already on `PATH`, or fetched via `gh release download`) over the `npx` wrapper packages, and the official `errata-ai/vale-action` in CI, so the repo needs no global installs.
 - The configs are generated from `config.yml`, and the terminology rule from `reference.yml`'s `term` entries. When either changes, the linter config should be regenerated so they never drift.
+- Scaffolding is not done until step 7's first real run is clean or its remainder is explained. Don't stop at "here are the commands to run."

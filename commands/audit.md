@@ -19,8 +19,8 @@ Focus on **content and strategy**, the things that require judgment:
 - Are docs serving users or just describing features?
 - Does each doc's reader journey actually work? Outline the user stories each doc serves and walk them through it: arrival, entry, path, exit. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`.
 
-Leave mechanical checks to linters (Vale, markdownlint, cspell).
-You can note obvious style issues, but your primary value is understanding the documentation holistically and identifying opportunities to better serve users.
+Leave mechanical checks to linters (Vale, markdownlint, cspell). This is an operation, not just a principle: see step 0 below. Do not reimplement `MD022`, `MD032`, `MD040`, or Vale's prose rules by reading files by hand; a linter finds every instance in seconds where a manual pass misses several per file.
+Running the linters clean is the floor, not the audit. It confirms the docs are well-formed; it says nothing about whether they're still true. Your primary value is the two things a linter cannot do: understanding the documentation holistically to serve users better, and tracing what the docs claim out to the code that should back it (see "Trace claims to the code" under Content Issues below). A pass that stops at a clean lint run has not audited the content yet.
 
 Resolve `.docs-assist/config.yml` and `style.md` first if they exist, and audit against them.
 When they do not exist, do not stop to ask about conventions: the docs set's own internal consistency is the standard.
@@ -32,9 +32,19 @@ Match the depth of the audit to the target. A full documentation set, a single d
 
 When the target is a set of changed files or a diff, audit the change and its blast radius rather than the files in isolation. The edit scope is small, but the impact scope follows dependency edges out from it: classify each change, follow the edges it implicates, and report what you checked. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/impact-analysis.md`.
 
+### 0. Run the Mechanical Checks First
+
+Before reading a single file for structure or style, check `.docs-assist/config.yml`'s `lint.tools`:
+
+- **Configured**: run each listed tool against the audit scope (`npx markdownlint-cli2`, `vale`, `npx cspell`, per what's listed) and fold its output straight into Structure Issues and Style Issues below. A heading-level skip, a missing blank line, an untagged fence, a weasel word: these are findings the linter already found, not things to re-derive by reading.
+- **Not configured**: say so explicitly in the report, and offer `/docs-assist:setup-lint` before doing any manual mechanical checking. Do one-off ad hoc runs only if the user wants findings now and declines setup (`npx --yes markdownlint-cli2 <scope>` is enough for a single pass; no config to generate first).
+- Either way, mechanical findings are not optional to skip: a hand-checked pass that substitutes for actually running the tool is the failure mode this step exists to prevent.
+
 ### 1. Take Inventory
 
 Scale this step to the target. For a full set or a directory, take the full inventory below. For a few files or a diff, skip the whole-set inventory and work from the edit scope plus the edges in `impact-analysis.md`.
+
+Check the fan-out threshold now, from the inventory you just took: more than 5 files or roughly 2,000 lines total means fanning out across `doc-auditor` subagents (see the Notes section), not auditing inline. Decide this here, before starting content analysis, not partway through.
 
 For a full set, explore the documentation structure:
 
@@ -86,7 +96,8 @@ For each document, evaluate:
 
 #### Content Issues
 
-- Outdated information (check dates and version references; for a full-set audit in a git repo, `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/docs-decay.mjs` ranks every doc by staleness risk in one deterministic pass)
+- **Trace claims to the code.** This is not optional for a full-set or directory audit, and it is the highest-value part of the audit, not a nice-to-have layered on top of the mechanical checks: for every doc, walk each command, flag, config key, default value, endpoint, version requirement, and described behavior out to the actual source and confirm it still matches. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/claim-verification.md` for the method, what counts as a claim, and how to classify what you find (matches, drifted, missing, needs `/docs-assist:verify`). A pass that runs the mechanical linters, gets them clean, and stops there has finished the cheaper half of the audit and skipped the half a reader depends on.
+- Outdated information (check dates and version references; for a full-set audit in a git repo, `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/docs-decay.mjs` ranks every doc by staleness risk in one deterministic pass, prioritizing which docs get the claim trace above first)
 - Unverified claims: docs whose `sme-attested` frontmatter ledger is large or old. Surface the specific claims so a reviewer can verify and delete entries (the ledger exists to shrink; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`)
 - Incomplete instructions (missing steps). Reading can only catch so much here: for a load-bearing procedural doc, recommend `/docs-assist:verify`, which executes the steps in an isolated workspace and finds the break a read-through misses
 - Broken reader journeys: a story whose arrival, entry, path, or exit fails when walked through the doc, and docs whose intended reader cannot be inferred at all. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`
@@ -193,6 +204,7 @@ The conversation is for triage; end with a persist offer, per the skill's feedba
 - A change-based audit of a PR: offer to post the report as a sticky PR comment (`gh pr comment`), summary first with detail collapsed in a `details` element. Update the existing comment on a re-run rather than adding another.
 - A full-set or directory audit: offer to save it to `.docs-assist/reports/audit-<date>.md`, so the next audit can be compared against it.
 - Either way, present the findings here first and let the user choose. Never persist without the offer.
+- If `.docs-assist/session-log.md` is in use (check for it if this audit is one stage of a broader pass), append what this stage found and decided rather than letting that narrative dissolve into the audit report. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/session-log.md`.
 
 ## Notes
 
@@ -205,4 +217,4 @@ The conversation is for triage; end with a persist offer, per the skill's feedba
 - Consider context: some "issues" may be intentional choices
 - External link checking prefers, in order: an existing linter/CI setup already in the repo, wiring one up via `/docs-assist:setup-lint` when CI exists, then an ad hoc `npx markdown-link-check` run. It needs `Bash` (for `npx`) or `WebFetch`; if neither is available, skip the check and say so rather than reporting links as clean
 - For large repositories, ask how to handle the files list before outputting
-- For large documentation sets, fan out: launch the `doc-auditor` subagent in parallel across slices of the set, then consolidate the findings into one prioritized report. Include the resolved conventions in each subagent's brief (the relevant `.docs-assist/config.yml` settings and `style.md` rules, or the inferred conventions when no config exists), so every slice audits against the same standard
+- Fan out when the scope crosses a concrete threshold, not a feeling: more than 5 files or roughly 2,000 lines total in one audit. Below that, review inline. At or above it, launch the `doc-auditor` subagent in parallel across slices of the set, then consolidate the findings into one prioritized report. Include the resolved conventions in each subagent's brief (the relevant `.docs-assist/config.yml` settings and `style.md` rules, or the inferred conventions when no config exists), so every slice audits against the same standard. Check the threshold explicitly at the start of Take Inventory (step 1), not only when it feels large partway through a long session: a qualitative trigger is easy to talk yourself out of once already deep in the work
