@@ -3,13 +3,15 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
-## Unreleased
+## 0.9.6 - 2026-07-19
 
 This release asks whether the docs actually work, not just whether they read well.
 A new `/docs-assist:verify` executes a procedural doc's steps in an isolated workspace and reports where reality diverges, the same way CI executes tests instead of reading the code and guessing; a clean pass is what gives `last-verified` real evidence behind it for the first time.
 Every doc now carries a quick user story (who arrives, from where, to do what, done when what), calibrated from evidence instead of a fixed posture, so drafting can write to a reader instead of a guess and audits can walk the journey end to end.
 Two registries that used to duplicate each other's territory (`example-variables.txt`, `terms.txt`) merge into one `reference.yml`, with two new entry kinds: facts tied to a real source, and pointers to a worked example instead of a rewritten one.
 And general prose quality stops being something this plugin maintains its own copy of: `Google`, `write-good`, and `alex` are now the managed Vale packages doing that work, actively maintained upstream, with the plugin's own style stripped down to only what they do not cover.
+A field report from a real end-to-end run (`docs/reviews/0.9.5-field-report-reformatters-session.md`) then closed the gap between what this plugin claims by default and what it actually does: mechanical checks are now wired into `audit` and `health` instead of stated as a principle, `setup-lint` runs and triages its first pass instead of stopping at scaffolding, and a mandatory claim-to-code trace (`reference/claim-verification.md`) makes "improve the docs" reach further than a clean lint run.
+`/docs-assist:verify` also now defers to [Doc Detective](https://docs.doc-detective.com/) when it's present in the target repo, since it's a purpose-built execution engine for the same job; the plugin's own `doc-verifier` remains the default otherwise.
 The staged plan behind this release is committed at `docs/plan.md`.
 
 <details>
@@ -39,6 +41,10 @@ The staged plan behind this release is committed at `docs/plan.md`.
 - `check-facts.mjs`: a deterministic, opt-in (via `/docs-assist:setup-hooks`) checker for `reference.yml`'s mechanical parts: does a `fact`'s source still contain its identifier, does a `pointer`'s target still resolve.
 - External link checking in both audit paths: prefers existing CI tooling, then `/docs-assist:setup-lint`, then an ad hoc `markdown-link-check` run, with a spot-check for redirects that hide a rename.
 - A standalone `npx` CLI packaging plan (`docs/standalone-cli-plan.md`), deferred pending a maintainer decision on naming and which adapters ship first.
+- `reference/claim-verification.md`: the method for tracing a doc claim (a command, flag, config key, default, endpoint, version requirement, or described behavior) to its source and classifying the result. Mandatory for a full-set `/docs-assist:audit`, named by `health.md`'s Freshness dimension, and routed to by default from a vague "improve the docs" request in `SKILL.md`, rather than something a contributor has to ask for by name.
+- `reference/session-log.md` and an opt-in `.docs-assist/session-log.md`: an append-only, backward-looking narrative log for a multi-stage engagement, distinct from `docs/plan.md`'s forward-looking content plan.
+- Doc Detective detection in `/docs-assist:verify`: if a target repo has Doc Detective configured or installed, the command defers to it as the execution engine (including its unified link validation) instead of the `doc-verifier` subagent; a `verify.tool` config key can force either engine. `doc-verifier` also now spot-checks the links immediately around each step it runs, the one piece of that idea worth keeping even without the dependency.
+- A shared fan-out threshold ("more than 5 files or roughly 2,000 lines") applied consistently across `audit`, `plan`, and `update`, and a closing re-lint gate after a fix pass in `draft`, `update`, and the skill's own multi-stage flow, so an edit made in the session doesn't become the next check's finding.
 
 ### Changed
 
@@ -57,7 +63,7 @@ The staged plan behind this release is committed at `docs/plan.md`.
 
 ### Version Policy
 
-- Left at 0.9.5. Agent-driven work caps there by policy; the version bump for everything in this release is the maintainer's call.
+- Bumped to 0.9.6 on the maintainer's explicit call. Agent-driven work otherwise caps at 0.9.5; the version bump is always the maintainer's decision, not the agent's.
 
 </details>
 
