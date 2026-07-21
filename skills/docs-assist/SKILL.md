@@ -34,6 +34,7 @@ This skill ships detailed reference material. Load the file you need when you ne
 - `reference/ia-methodology.md`: information architecture design and evaluation.
 - `reference/style-guides.md`: style guide selection and enforcement.
 - `reference/session-log.md`: the opt-in running narrative log for an engagement spanning several commands, distinct from `docs/plan.md`'s forward-looking content plan.
+- `reference/pr-descriptions.md`: how to write a PR description that helps a reviewer, including when to restructure it by file or area instead of by commit.
 
 ## Project Configuration
 
@@ -93,6 +94,8 @@ Close the engagement on evidence, not on having read through everything: before 
 ### Deliver on a Branch
 
 Docs are code. In a git repository, offer to do multi-file docs work (a new docs set, an update pass, a restructure) on a docs branch, and never commit to the default branch unless the contributor asks for that. A single small edit in a live conversation needs no ceremony; a change set a team would review does. The contributor's existing workflow always wins over this default.
+
+When the work reaches a PR, write the description for the reviewer, not as a commit-log transcript; see `reference/pr-descriptions.md` for when to restructure by file or area instead of by commit, and the template that follows from that choice.
 
 ### Deliver Feedback Where It Lives
 

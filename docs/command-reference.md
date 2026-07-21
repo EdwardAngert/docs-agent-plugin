@@ -195,8 +195,8 @@ The argument names a tool: `vale`, `markdownlint`, `megalinter`, or `all`.
 `/docs-assist:setup-hooks [hook]`
 
 Install opt-in documentation hooks. Default off: nothing is installed without your choice.
-It offers a git pre-commit doc linter, an in-session lint hook that runs after Claude edits a Markdown file, and a CI docs-impact check that flags pull requests whose changes ripple into the docs.
-The argument names a hook: `pre-commit`, `claude-code`, `ci`, or `all`.
+It offers a git pre-commit doc linter, an in-session lint hook that runs after Claude edits a Markdown file, a CI docs-impact check that flags pull requests whose changes ripple into the docs, a CI reference-registry check that verifies `.docs-assist/reference.yml`'s facts and pointers still resolve, and a CI claim check that resolves identifier-shaped doc claims (paths, flags, function/class names, config keys) against the code with `git grep`.
+The argument names a hook: `pre-commit`, `claude-code`, `ci`, `ci-facts`, `ci-claims`, or `all`.
 
 ```text
 /docs-assist:setup-hooks pre-commit

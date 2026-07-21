@@ -1,7 +1,5 @@
 # Docs Assist
 
-> Turn what your team knows into documentation. No one has to become a technical writer.
-
 A Claude Code plugin that coaches people through writing documentation.
 
 You have subject matter experts with knowledge in their heads: engineers who built the feature, support leads who know every edge case, PMs who understand the workflow.
@@ -60,6 +58,18 @@ You review for accuracy. The formatting is already handled.
    ```
 
    You get a thirty-second scorecard (coverage, freshness, consistency, findability), the single highest-leverage fix, and an offer to make it now.
+
+## Update
+
+Claude Code doesn't auto-update installed plugins.
+
+To update the plugin, open Claude Code, then:
+
+1. Run `/plugin`, select `docs-assist`, and choose the update option. `/plugin` also tells you if you're already on the latest version, so this is safe to run just to check.
+
+1. Run `/reload-plugins` so the running session picks up the new version. Skipping this step leaves the session on the old commands and skill instructions even though the update installed cleanly.
+
+Check `CHANGELOG.md` for what changed since your version.
 
 ## Documentation
 
