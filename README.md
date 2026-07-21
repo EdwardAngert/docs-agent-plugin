@@ -61,6 +61,15 @@ You review for accuracy. The formatting is already handled.
 
    You get a thirty-second scorecard (coverage, freshness, consistency, findability), the single highest-leverage fix, and an offer to make it now.
 
+## Update
+
+Claude Code doesn't auto-update installed plugins.
+
+1. Run `/plugin`, select `docs-assist`, and choose the update option. `/plugin` also tells you if you're already on the latest version, so this is safe to run just to check.
+1. Run `/reload-plugins` so the running session picks up the new version. Skipping this step leaves the session on the old commands and skill instructions even though the update installed cleanly.
+
+Check `CHANGELOG.md` for what changed since your version.
+
 ## Documentation
 
 - [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): for docs leads and devrel. Why to install, what changes for contributors, and how to customize.
