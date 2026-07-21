@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
+## Unreleased
+
+### Added
+
+- `reference/pr-descriptions.md`: when a PR's commits aren't independently reviewable (a later commit fixes something an earlier one touched, common in docs work), restructure the description by file or area instead of by commit, say so explicitly near the top, and write for a human reviewer whose first pass is already automated (spend words on judgment calls and verification, not on what a linter or bot first-pass already covers). Cross-linked from `SKILL.md`'s "Deliver on a Branch" and `/docs-assist:update`'s own-PR path.
+
 ## 0.9.7 - 2026-07-20
 
 `check-facts.mjs` verifies the curated `.docs-assist/reference.yml` registry deterministically; this release extends the same approach, cold, to the whole doc set.

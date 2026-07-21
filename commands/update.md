@@ -69,6 +69,7 @@ For every update:
 - If `.docs-assist/config.yml` sets `lint.tools`, re-run them against the touched docs before calling the pass finished, and fix what they find or list it in follow-ups with why it's staying. An update that edits prose and skips this check is exactly the gap that let a hand-checked pass miss what a linter would have caught in seconds.
 - List remaining follow-ups: docs that need an SME to confirm, screenshots that went stale, edges you did not follow, or new docs the change calls for that do not exist yet.
 - When the target was a PR, offer to post the what-changed summary as a comment on it (`gh pr comment`), so the docs update is visible where the change is reviewed. Start the comment with an HTML marker (`<!-- docs-assist:update -->`) and update the marked comment on a re-run rather than stacking a new one.
+- When the update opens its own new PR instead of commenting on an existing one, write its description per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/pr-descriptions.md`.
 
 ## Notes
 
