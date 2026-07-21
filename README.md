@@ -1,7 +1,5 @@
 # Docs Assist
 
-> Turn what your team knows into documentation. ~No one has to become~ Everyone is a technical writer.
-
 A Claude Code plugin that coaches people through writing documentation.
 
 You have subject matter experts with knowledge in their heads: engineers who built the feature, support leads who know every edge case, PMs who understand the workflow.
