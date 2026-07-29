@@ -2,6 +2,8 @@
 
 Every doc makes claims the code can confirm or refute: a flag exists and behaves as described, a default value matches, a config key is spelled right, an error message reads as documented, a version requirement still holds, a described behavior actually happens. Mechanical linting (Vale, markdownlint, cspell) cannot check any of this: it operates on the prose's surface, not its truth. Tracing claims to the code is the audit's highest-value pass, and the one most likely to get skipped, because the mechanical pass is easier to automate and produces a satisfying clean count that feels like the work is done. It is not; it just did the cheaper half.
 
+This method traces a claim to the local code. A claim about something outside the repo — a vendor's behavior, a third party's API, a protocol's guarantees — needs `external-verification.md` instead; nothing here can settle it, since there's no local source to grep.
+
 ## What Counts as a Claim
 
 - A CLI command, subcommand, or flag, and what it does or defaults to.

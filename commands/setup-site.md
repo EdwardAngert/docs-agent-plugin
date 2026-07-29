@@ -38,6 +38,14 @@ The metadata is the source of truth; the navigation is derived, never hand-inven
 - Write the generator's navigation format: `sidebars.js` for Docusaurus, the `nav` block in `mkdocs.yml` for MkDocs.
 - **Never silently overwrite navigation someone curated.** If a sidebar or nav block exists, show the diff and confirm. Preserve entries for pages outside the docs set.
 
+### 3.5. Offer Structured Data (Optional)
+
+The page hierarchy this step already computed for navigation is one step from what `schema.org` JSON-LD needs, so offer to emit it — optional, and skipped where the target SSG already emits something equivalent (the same "don't duplicate semantics" rule `frontmatter-spec.md` applies to field names).
+
+- **`BreadcrumbList`**: derived directly from the navigation hierarchy just built; no new data needed.
+- **`dateModified`**: sourced from the SSG's real git-derived "file last touched" signal where one exists (Starlight's `lastUpdated` and equivalents in other generators), never from an invented date and never from `last-verified` — that field means something checked the content, not that the file changed, and the two must stay distinct (see `frontmatter-spec.md`'s `last-verified` entry).
+- Cheap because both trails are already computed or already exposed by the generator; this step only wires them into JSON-LD output. Skip a generator that has no accessible last-touched signal rather than fabricating one.
+
 ### 4. Verify and Hand Off
 
 - Confirm every navigation entry resolves to a real file, and every doc in `llms.txt` is either in the navigation or intentionally excluded (say which).

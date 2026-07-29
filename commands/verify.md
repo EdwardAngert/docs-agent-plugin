@@ -60,6 +60,7 @@ Present one prioritized result across the set:
 - **Missing prerequisites** the verifier had to supply: the assumption gap, made concrete. Usually the fix is a sentence in the doc's prerequisites section, and it's cheap.
 - **Unverified steps**, with reasons, so nobody mistakes a partial pass for a full one.
 - Offer to fix what the run proved wrong, through the normal drafting flow: update the command, the documented output, or the prerequisites to match reality. When the code is what's wrong (the doc describes intended behavior the code no longer delivers), surface it and ask rather than rewriting the doc to match a bug; offer to record it the way the reconcile move does.
+- Once a step or a claim has a recorded verdict, drop the raw evidence that produced it (command output, search results, fetched pages) from working context; keep only the citation and the verdict. This matters more as the run scales across many steps or docs — a whole-set verify pass accumulates tool output past the point of usefulness once each item is settled.
 
 ### 5. Record the Verification
 
@@ -68,6 +69,15 @@ Present one prioritized result across the set:
 - For a journey, bump only the docs the run actually reached clean: a doc after the point of failure was never really executed against live state, only reported as `blocked`, and bumping it would claim evidence the run doesn't have.
 - The decay detector (`docs-decay.mjs`) reads `last-verified`, so verified docs drop down the re-verification queue and the queue stays focused on what actually needs attention.
 - The conversation is for triage, per the skill's feedback guidance: offer to save the full run report under `.docs-assist/reports/verify-<date>.md`, and end by naming the natural next step.
+
+### 6. External Claim Verification (opt-in, on request)
+
+Everything above verifies a doc against the environment it runs commands in. It has no bearing on a claim about the outside world — a third party's behavior, a vendor's API, a protocol's guarantees — that no local command can settle. This mode covers that case. It is a distinct, heavier tier, not something a routine verify run does on its own: it requires real web access, which is a materially bigger action than anything else this command does, so it stays opt-in and off by default. Offer it when a doc's claims are clearly about an external system; run it only when asked.
+
+- **Input**: the non-code assertions `claim-briefs.mjs` already isolates as claims a lookup can't settle (see `claim-verification.md`), or a specific claim/section the user names directly.
+- **Method**: for each claim, follow `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/external-verification.md` — when the claim names a specific product or brand, search its generic or underlying form too, not instead, and always exclude the doc set under verification from its own search results.
+- **Output per claim**: a date, a source link with an access date, and the verdict. Where no independent source turns up, say so explicitly — `no independent source found` is a real, expected result, not a failure of the pass. Firsthand testing isn't available to this mode by construction, since it never touches the reader's own environment.
+- **Recording it**: offer the section-level marker from `section-verification.md` for a claim this pass confirmed or corrected, not a page-level `last-verified` bump — this mode verifies individual claims, and a page-level bump would overstate what was actually checked.
 
 ## Notes
 

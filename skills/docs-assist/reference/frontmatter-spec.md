@@ -107,6 +107,8 @@ The strongest form: `/docs-assist:verify` executed the doc's procedure end to en
 A human read-through also earns a bump; the point is that someone, or something, checked the claims, not just the prose.
 The decay detector (`docs-decay.mjs`) reads this field, so verified docs drop down the re-verification queue.
 
+**Never derive `last-verified` from aggregating section-level verification markers, if the doc has any (see `section-verification.md`).** A page whose parts decay at different rates will have a stale section and a fresh one at the same time; rolling those up by taking the oldest makes the whole page look as stale as its worst section, and destroys the recency signal for the parts of the page that were checked recently. If a doc has section markers, `last-verified` keeps its current, narrower meaning — someone or something verified *something* on this page, on this date — and is computed independently, never derived from the sections. Where the target SSG exposes a real "file last touched" signal (most do, usually git-derived), recommend surfacing that separately rather than conflating it with `last-verified`: a typo fix should move the file-touched date and not the verification date.
+
 **`template`**
 The catalog id of the documentation template this doc was seeded from, when one was used.
 Set it alongside the canonical `content-type` so the origin is traceable.
@@ -218,3 +220,7 @@ The per-doc frontmatter and the repo-level `llms.txt` work together:
 - The plugin updates both: when it writes a new doc, it adds frontmatter to the doc and adds an entry to `llms.txt`
 
 The llms.txt format, entry ordering, and maintenance contract are defined in `llms-txt.md`.
+
+## Relationship to Section Verification
+
+`last-verified` and the per-section markers `section-verification.md` defines answer different questions at different granularity. `last-verified` says something on this page was checked, once, at the page level; it's frontmatter, so it never reaches the rendered page a retriever fetches. Section markers, where a doc has them, say a specific claim was checked, and they render as visible body text, so they survive to what a retriever actually reads. Most docs need only `last-verified`. See `section-verification.md` for when a doc earns section-level markers too, and why that stays a prompted exception rather than something every doc gets.

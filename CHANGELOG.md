@@ -3,6 +3,23 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
+## Unreleased
+
+Grounded in a same-day research trace, verification pass, and site implementation on a real docs site (`drafts-research/pi-hole-ai-provenance-study.md`), generalized here for a docs set the plugin has never seen: legible verification that reaches what an AI retriever actually fetches, not just what lives in frontmatter.
+
+### Added
+
+- Section-level verification (`reference/section-verification.md`): a plain-text marker (`**Verified 2026-07.**`) placed after a heading, rendering as visible body text so it survives to the HTML a retriever fetches, unlike frontmatter. Page-level `last-verified` stays the default every doc gets; section markers are a prompted, opt-in enhancement offered only when a doc mixes decay-heterogeneous content (a stable core section next to one making third-party or version-pinned claims), not a convention every project adopts. Date-only by default, no plugin-defined method vocabulary — a method is free text a project opts into, only where its docs already carry genuine provenance ambiguity. `/docs-assist:draft` and `/docs-assist:audit` (and `doc-auditor`) now detect the shape and offer it.
+- `assets/ci/section-verification.mjs`: a deterministic, dependency-free extractor for the marker above, in the style of `check-claims.mjs`. `docs-decay.mjs` reads its output for any doc that has markers, ranking by the doc's stalest section instead of a single page-level date; strictly additive, and a doc with no markers is unaffected.
+- `reference/external-verification.md` and a new opt-in mode on `/docs-assist:verify`: verifying a claim about the outside world (a vendor's behavior, a third party's API) rather than the local codebase, which `claim-verification.md` has no reach into. Off by default, since it requires real web access. Two rules single-sourced there: when a claim names a specific product or brand, search its generic or underlying form too (not instead); and always exclude the doc set under verification from its own search results, since a well-ranking doc can otherwise be returned as corroboration for itself.
+- The llms.txt altitude test (`reference/llms-txt.md`): a three-way check (too specific, too vague, right altitude) for descriptions and entries, plus a two-axis rule for whether an entry should carry a conclusion inline or stay a pointer — inline only when a conclusion is both short and durable, since a short-but-volatile fact inlined into `llms.txt` just relocates the staleness problem into a second file.
+- `agent-ready.md`'s survey step now checks whether the target SSG renders frontmatter into page output at all before recommending a field for external-facing reach, and redirects to `llms.txt` or visible body text where it doesn't.
+- `setup-site.md` can optionally emit `schema.org` `BreadcrumbList` and `dateModified` JSON-LD from the same navigation hierarchy and git-derived last-touched signal it already computes, skipped where the target SSG already emits an equivalent.
+
+### Version Policy
+
+- Nothing above is bumped past 0.9.5 by an agent; a version number is the maintainer's call, made by hand.
+
 ## 0.9.8 - 2026-07-21
 
 ### Added

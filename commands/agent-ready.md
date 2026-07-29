@@ -19,6 +19,7 @@ The optional argument (`$ARGUMENTS`) is the docs directory. Detect it if not giv
 - Resolve `.docs-assist/` config if present.
 - Inventory the docs: paths, titles, and what frontmatter each already carries.
 - Learn the repo's frontmatter field names and any SSG-required fields, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`. The repo's conventions win; never fight the build system.
+- **Check whether the detected SSG renders frontmatter into page output at all.** Frontmatter serves three audiences (`frontmatter-spec.md`'s "Why Frontmatter Matters"), but two of them — AI tools scanning the fetched page, search engines indexing it — only see a field if the SSG actually emits it somewhere in the rendered HTML (a meta description tag is the easy, near-universal thing to check for; look at the SSG's default template or a built page if one exists). The plugin's own survey step is the third audience, and reads raw source regardless of rendering, so it's always true independent of this check. Note the result: it determines what step 3 can safely recommend a field for.
 
 ### 2. Create or Repair llms.txt
 
@@ -36,6 +37,7 @@ For each doc missing required metadata, add it using the repo's field names:
 - `title`, `description`, and the content-type field at minimum; `audience` and keywords where the content makes them clear.
 - **Never overwrite an existing field**, and never remove or reorder SSG-required fields.
 - Derive values from the doc's own content. Where a doc is too ambiguous to describe honestly, flag it for its owner instead of inventing a description.
+- **Where step 1 found the SSG doesn't render frontmatter into output, don't recommend a field for external-facing reach it can't have.** A `description` or `summary`-shaped field that only ever lives in the source file is useful to the plugin's own survey step, but invisible to any AI tool or search engine that only sees the fetched page — a frontmatter field written for that audience while living in a schema that never reaches it is dead weight from the moment it's written. When the content matters for external retrieval, put it in `llms.txt` instead (a confirmed pre-fetch surface, per `llms-txt.md`) or in visible body text, rather than trusting a field to do a job that depends on a rendering step this repo doesn't take.
 
 ### 4. Record the Conventions
 
