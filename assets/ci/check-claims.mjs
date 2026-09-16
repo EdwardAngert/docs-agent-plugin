@@ -178,12 +178,17 @@ function gitGrepHits(pattern) {
 function gitGrepLiteral(pattern) {
   const key = `lit:${pattern}`;
   if (gitGrepCache.has(key)) return gitGrepCache.get(key);
-  // Exclude this checker's own output. claims.json records every claim it
-  // found, so once that directory is committed, every claim resolves by
-  // finding itself and the check reports zero findings forever. Caught by
-  // re-running after committing the artifacts: 20 real findings became 0.
+  // The plugin's own working tree is never evidence for the plugin's own
+  // checks. claims.json records the text of every claim found, so tracking it
+  // made each claim resolve by finding itself: 20 real findings silently became
+  // 0 between two runs with nothing fixed. The same shape applies to every
+  // artifact under .docs-assist/ — a reconstructed packet is a transcription of
+  // a document's claims, and a report quotes them. Markdown artifacts happen to
+  // be excluded by the *.md filter below, but that is accidental protection,
+  // and a packet written as YAML or a report as JSON would poison this again.
+  // Exclude the whole working tree by rule rather than by coincidence.
   const out = sh(['git', 'grep', '-n', '-F', '-e', pattern, '--',
-    ':!*.md', ':!*.mdx', `:!${OUT_DIR}/*`, ':!.docs-assist/claims/*']);
+    ':!*.md', ':!*.mdx', `:!${OUT_DIR}/*`, ':!.docs-assist/*']);
   const hits = out ? out.split('\n').filter(Boolean) : [];
   gitGrepCache.set(key, hits);
   return hits;

@@ -5,6 +5,18 @@ For claims about something the project does not vendor, the method here has no r
 
 Every doc makes claims the code can confirm or refute: a flag exists and behaves as described, a default value matches, a config key is spelled right, an error message reads as documented, a version requirement still holds, a described behavior actually happens. Mechanical linting (Vale, markdownlint, cspell) cannot check any of this: it operates on the prose's surface, not its truth. Tracing claims to the code is the audit's highest-value pass, and the one most likely to get skipped, because the mechanical pass is easier to automate and produces a satisfying clean count that feels like the work is done. It is not; it just did the cheaper half.
 
+## The Plugin's Own Artifacts Are Never Evidence
+
+Anything under `.docs-assist/` is the plugin's working tree: cached claim output, reconstructed packets, reports, intake material, state. None of it counts as evidence that a claim is true.
+
+The reason is circularity, and it fails silently. A claim cache records the text of every claim it found. A reconstructed packet is a transcription of what a document asserts. A report quotes both. Resolve a claim by searching those and it confirms itself, the check reports zero findings, and zero findings is indistinguishable from a clean repository.
+
+This happened here. Committing `.docs-assist/claims/` took `check-claims.mjs` from 20 findings to 0 between two runs with nothing fixed in between.
+
+**Whether a project tracks these artifacts is its own call.** Committing them gives a team a shared record so the same claim is not re-litigated by the next contributor; gitignoring them keeps the working tree quiet. Both are fine, and the checks must be immune either way.
+
+What is worth tracking is not the raw output but the **resolutions**. A claim that needed judgment and got settled becomes a `fact` entry in `.docs-assist/reference.yml`, with a `source` so it stays re-checkable, or an attested-claim entry in `.docs-assist/state/docs.yml` when nothing can source it. Those are small, hand-editable, and survive a merge. The JSON is a cache, and a cache in version control is diff noise that nobody can resolve by hand.
+
 ## What Counts as a Claim
 
 - A CLI command, subcommand, or flag, and what it does or defaults to.
