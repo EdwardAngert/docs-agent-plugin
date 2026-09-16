@@ -14,16 +14,11 @@
     "./commands/draft.md",
     "./commands/plan.md",
     "./commands/audit.md",
-    "./commands/make-examples.md",
-    "./commands/init.md",
-    "./commands/setup-lint.md",
-    "./commands/setup-hooks.md",
-    "./commands/setup-site.md",
+    "./commands/verify.md",
     "./commands/update.md",
     "./commands/release-notes.md",
-    "./commands/agent-ready.md",
-    "./commands/template.md",
-    "./commands/verify.md"
+    "./commands/setup.md",
+    "./commands/merge-prep.md"
   ],
   "agents": [
     "./agents/doc-updater.md",

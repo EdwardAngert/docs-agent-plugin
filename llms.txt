@@ -18,19 +18,14 @@
 ## Commands
 
 - [/docs-assist:health](commands/health.md): Fast docs health check: a scorecard across coverage, freshness, consistency, and findability, plus the single highest-leverage fix. The recommended first command.
-- [/docs-assist:draft](commands/draft.md): Guided workflow for SMEs to contribute a single document.
+- [/docs-assist:draft](commands/draft.md): Write a document through the authoring loop. The contributor brings what they know; the plugin handles the writing.
 - [/docs-assist:plan](commands/plan.md): Plan a full documentation set: user journeys, content types, priorities, and writing order.
-- [/docs-assist:audit](commands/audit.md): Systematic documentation audit for quality, gaps, and structure.
-- [/docs-assist:make-examples](commands/make-examples.md): Add or improve code examples in existing docs.
-- [/docs-assist:init](commands/init.md): Scaffold project-local configuration so the plugin and the linters share one source of truth.
-- [/docs-assist:setup-lint](commands/setup-lint.md): Scaffold optional documentation linting (Vale, markdownlint, MegaLinter, cspell, link check), generated from the project config and respecting any existing linter.
-- [/docs-assist:setup-hooks](commands/setup-hooks.md): Install opt-in documentation hooks (git pre-commit lint, in-session doc lint, CI docs-impact check). Default off.
-- [/docs-assist:setup-site](commands/setup-site.md): Generate site navigation from the docs' metadata (llms.txt order becomes sidebar order), scaffolding minimal Docusaurus or MkDocs when no site exists.
+- [/docs-assist:audit](commands/audit.md): Review existing docs by reconstructing what each one claims and ruling on it. The loop pointed at a finished doc.
+- [/docs-assist:verify](commands/verify.md): Verify a procedural doc by executing its steps in an isolated workspace and reporting where the doc diverges from reality.
 - [/docs-assist:update](commands/update.md): Find and update the docs affected by a code change (a diff, a PR, or changed files).
-- [/docs-assist:verify](commands/verify.md): Verify a procedural doc by executing its steps in an isolated workspace and reporting where the doc diverges from reality. A clean pass earns the `last-verified` bump.
 - [/docs-assist:release-notes](commands/release-notes.md): Turn a release's worth of changes into reader-facing release notes, leading with breaking changes and upgrade steps.
-- [/docs-assist:agent-ready](commands/agent-ready.md): Make the docs legible to AI tools: create or repair llms.txt, complete frontmatter, record conventions.
-- [/docs-assist:template](commands/template.md): Suggest and scaffold a documentation template (The Good Docs Project) for a healthy start. Opt-in.
+- [/docs-assist:setup](commands/setup.md): Set up conventions, linting, hooks, and site navigation in one pass. Every stage opt-in, nothing written without a yes.
+- [/docs-assist:merge-prep](commands/merge-prep.md): Get a docs change ready to merge. Everything expensive that scales with the whole set runs here and nowhere else.
 
 ## Agents
 

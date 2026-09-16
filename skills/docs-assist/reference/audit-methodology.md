@@ -1,7 +1,28 @@
 # Audit Methodology
 
 Systematic evaluation of existing documentation to find gaps, inconsistencies, and improvement opportunities.
-This file is the deeper reference behind the `/docs-assist:audit` command.
+
+## An Audit Is the Loop Pointed at a Finished Doc
+
+There is no separate audit mechanism.
+Reviewing an existing document and reviewing a fresh draft are the same job with the same chairs, and running them as two systems produced two sets of standards that drifted.
+
+The difference is only where pass 0 comes from:
+
+| | Drafting | Auditing |
+| --- | --- | --- |
+| Pass 0 | The packet is written, then shaped into a draft | The document already exists; the packet is *reconstructed* from it |
+| Ledger | What the advocate chair added | What the document asserts that its packet cannot support |
+| Output | A draft plus questions | Findings plus questions |
+
+Reconstructing the packet is the move that makes an audit find things.
+Read the finished document and write down what it claims, as cold rows, exactly as `packet-procedure.md` describes.
+Then ask the authority chair to rule on those rows.
+A claim nobody can source is a finding, and it is invisible when you read the prose straight through, because in prose it sits next to twenty claims that *are* sourced and looks identical to them.
+
+Run `${CLAUDE_PLUGIN_ROOT}/assets/ci/file-path-check.mjs`, `duration-check.mjs`, `example-continuity.mjs`, and the claim checks before any of this, and brief the chairs with what they found.
+
+Everything below is what the chairs apply, and what to do when a document is too small to justify a full run.
 
 The first half is what you do in a session. The second half is research that needs real users, which you cannot run yourself: recommend it to the docs lead when the scope warrants it.
 

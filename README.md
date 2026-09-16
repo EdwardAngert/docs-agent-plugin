@@ -132,8 +132,6 @@ For every command's argument and an example, see the [command reference](docs/co
 - `/docs-assist:plan [repo or description]`: plan a full documentation set.
   Reads the codebase, asks about users and goals, maps user journeys, and proposes a prioritized plan before writing anything.
   Once the plan is approved, docs whose material already exists draft in parallel across the authoring loop, and you review the queue instead of co-writing each one.
-- `/docs-assist:make-examples [doc-path]`: add or improve copy-paste safe code examples in an existing doc.
-- `/docs-assist:template [problem or topic]`: start from a proven structure (The Good Docs Project) instead of a blank page.
   Suggests a template from what you describe and fills the skeleton with what you know.
 
 ### Review and Maintain
@@ -148,16 +146,13 @@ For every command's argument and an example, see the [command reference](docs/co
   Runs the steps in an isolated workspace, reports every divergence and missing prerequisite, and earns the `last-verified` bump on a clean pass.
 - `/docs-assist:release-notes [range, tag, or version]`: turn a release's worth of changes into reader-facing release notes.
   Reads the commits and PRs, asks you for the why, and writes notes that lead with what readers must know.
-- `/docs-assist:agent-ready [docs dir]`: make the docs legible to AI tools.
+- `/docs-assist:merge-prep [branch]`: get a docs change ready to merge. Whole-set generation, linting, link and drift checks, in one pass you ask for.
   Creates or repairs `llms.txt`, completes per-doc frontmatter, and records the repo's conventions where the next tool will find them.
 
 ### Configure
 
-- `/docs-assist:init [docs dir]`: scaffold project-local configuration, pre-filled from the repo's existing conventions.
-- `/docs-assist:setup-lint [tool]`: scaffold optional documentation linting, generated from your config.
-- `/docs-assist:setup-hooks [hook]`: install opt-in git, in-session, and CI hooks, including the pull-request docs-impact check.
+- `/docs-assist:setup [stage]`: conventions, linting, hooks, and site navigation in one pass. Every stage opt-in.
   Default off.
-- `/docs-assist:setup-site [ssg]`: generate site navigation from the docs' own metadata (`llms.txt` order becomes sidebar order), scaffolding a minimal Docusaurus or MkDocs setup when no site exists.
 
 ## Configure for Your Team
 
@@ -168,7 +163,7 @@ Commit a `.docs-assist/` directory and the whole team writes to the same convent
 - `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
 - `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and product terms, so examples and terminology stay consistent across docs. The plugin maintains it, and audits flag drift against it.
 
-Run `/docs-assist:init` to generate them, pre-filled from what your docs already do.
+Run `/docs-assist:setup` to generate them, pre-filled from what your docs already do.
 Because this config is committed to your repo, it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
 
 Writing solo? The same config is how the plugin acts as your second reader: it holds your docs to a consistent line and catches the drift in examples and terminology that a team would catch in review.
@@ -176,7 +171,7 @@ Writing solo? The same config is how the plugin acts as your second reader: it h
 ## Lint With the Same Rules You Write By
 
 Linting is optional and never bundled.
-Run `/docs-assist:setup-lint` to scaffold it, and the plugin generates the linter config from your `.docs-assist/config.yml`.
+Run `/docs-assist:setup` to scaffold it, and the plugin generates the linter config from your `.docs-assist/config.yml`.
 That means one source of truth: the same settings drive how the agent writes and how the linter checks, so they never drift.
 
 - Vale runs a small `DocsAssist` style for what's specific to this plugin (AI voice, no em dashes, descriptive link text, imperative headings), plus the managed `Google`, `write-good`, and `alex` packages for everything general-purpose (weasel words, passive voice, wordiness, clichés, inclusive language). General prose quality is a solved, maintained problem; this plugin doesn't keep its own copy of it.
@@ -194,7 +189,7 @@ Describe the problem in plain words, for example "people keep opening tickets ab
 
 Templates supplement the content types; they never replace them.
 Suggesting one is free and offline, so the assistant offers a template in any drafting conversation, and only fetches it when you accept.
-`/docs-assist:template` turns the feature on for a team or scaffolds a template directly.
+Templates are offered during drafting; `/docs-assist:setup` turns the feature on for a team.
 The Good Docs templates are MIT-0; see `THIRD-PARTY-NOTICES.md`.
 
 ## Keep Docs in Sync With Code
@@ -204,13 +199,13 @@ The plugin reads the diff, summarizes what changed, finds the docs that referenc
 Large changes fan out across the `doc-updater` subagent so many docs update in parallel.
 
 You can also put the watching on autopilot.
-`/docs-assist:setup-hooks ci` installs a docs-impact check that runs on every pull request: a deterministic, token-free detector that flags diffs riding the change types that break docs (moved files, changed headings, changed code terms the docs mention, large silent source changes) and tells reviewers exactly which `/docs-assist:update` range to run.
+`/docs-assist:setup` installs a docs-impact check that runs on every pull request: a deterministic, token-free detector that flags diffs riding the change types that break docs (moved files, changed headings, changed code terms the docs mention, large silent source changes) and tells reviewers exactly which `/docs-assist:update` range to run.
 Cheap detection in CI, expensive updating only when it is warranted.
 
 ## Make Your Docs Agent-Ready
 
 Your docs' readers now include AI tools: coding agents, docs assistants, and search systems that read structure before prose.
-Run `/docs-assist:agent-ready` to retrofit the docs set for them: it creates or repairs `llms.txt` (the map an AI tool reads first), completes per-doc frontmatter using your repo's own field names, and records your conventions where the next tool will find them.
+Run `/docs-assist:merge-prep` to bring them current: it creates or repairs `llms.txt` (the map an AI tool reads first), completes per-doc frontmatter using your repo's own field names, and records your conventions where the next tool will find them.
 The plugin then maintains all of it as part of its normal drafting and updating work.
 
 ## What's Inside
@@ -241,7 +236,7 @@ docs-assist/
 ```
 
 To customize without committing project config, edit `skills/docs-assist/reference/tone-and-voice.md` and `SKILL.md` directly.
-For team-wide, update-safe customization, prefer `/docs-assist:init`.
+For team-wide, update-safe customization, prefer `/docs-assist:setup`.
 
 ## What Would Improve It Most
 

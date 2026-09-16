@@ -68,11 +68,19 @@ That is implemented by which file the chair loads, not by telling it to be stric
 
 | Pass | Authority loads          | Advocate loads          |
 | ---- | ------------------------ | ------------------------ |
+| 0    | a packet schema          | `pass-1-shape.md`        |
 | 1    | `pass-1-correctness.md`  | `pass-1-shape.md`        |
 | 2    | `pass-2-assumptions.md`  | `pass-2-clarity.md`      |
 | 3    | `pass-3-misleading.md`   | `pass-3-precision.md`    |
 
 Every chair also loads its own `contract.md` and `chairs/shared-rules.md`, every pass.
+
+Pass 0 is production, not review, which is why the two columns disagree there.
+The authority chair has nothing to review yet, so it loads a packet schema instead of a rulebook.
+The advocate chair is making shape decisions for the first time, so it loads the shape rulebook and loads it again at pass 1, when it revisits those decisions against the authority chair's first verdicts.
+
+That repetition is deliberate.
+Shape is the only thing decided twice, because it is the only thing where the first pass of feedback can invalidate the original call: a correction that removes half a procedure changes what the document should have been.
 
 "More keen-eyed" is a fact about which rules are in context, never a personality instruction.
 A model told to be grouchy writes grouchy prose and does not read more carefully.

@@ -1,6 +1,6 @@
 ---
 title: "Docs Assist Command Reference"
-description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, plan, template, make-examples, audit, update, verify, release-notes, agent-ready, init, setup-lint, setup-hooks, and setup-site."
+description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, plan, audit, verify, update, release-notes, setup, and merge-prep."
 content-type: reference
 audience: users
 keywords:
@@ -22,20 +22,15 @@ Every command also works with no argument: it asks for what it needs.
 
 | Command                      | What it does                                  | Argument                             |
 | ---------------------------- | --------------------------------------------- | ------------------------------------ |
-| `/docs-assist:draft`         | Draft a single document from what you know    | `[topic or issue number]`            |
-| `/docs-assist:plan`          | Plan a documentation set, built to ship first | `[repo path or description]`         |
-| `/docs-assist:template`      | Start a doc from a proven template            | `[problem, topic, or template name]` |
-| `/docs-assist:make-examples` | Add or improve code examples in a doc         | `[doc-path]`                         |
 | `/docs-assist:health`        | Fast docs health scorecard and first fix      | `[docs directory]`                   |
-| `/docs-assist:audit`         | Audit docs for quality, gaps, and structure   | `[path]`                             |
-| `/docs-assist:update`        | Update the docs affected by a code change     | `[git ref, PR number, or path]`      |
+| `/docs-assist:draft`         | Write a document through the authoring loop   | `[topic or issue number]`            |
+| `/docs-assist:plan`          | Plan a documentation set, built to ship first | `[repo path or description]`         |
+| `/docs-assist:audit`         | Review existing docs by reconstructing claims | `[path]`                             |
 | `/docs-assist:verify`        | Execute a procedural doc's steps and report   | `[doc path or directory]`            |
+| `/docs-assist:update`        | Update the docs affected by a code change     | `[git ref, PR number, or path]`      |
 | `/docs-assist:release-notes` | Write reader-facing notes for a release       | `[range, tag, or version]`           |
-| `/docs-assist:agent-ready`   | Make the docs legible to AI tools             | `[docs directory]`                   |
-| `/docs-assist:init`          | Scaffold project-local configuration          | `[docs directory]`                   |
-| `/docs-assist:setup-lint`    | Scaffold optional documentation linting       | `[tool]`                             |
-| `/docs-assist:setup-hooks`   | Install opt-in git, in-session, and CI hooks  | `[hook]`                             |
-| `/docs-assist:setup-site`    | Generate site navigation from docs metadata   | `[docusaurus \| mkdocs]`             |
+| `/docs-assist:setup`         | Conventions, linting, hooks, and navigation   | `[stage]`                            |
+| `/docs-assist:merge-prep`    | Ready a docs change to merge                  | `[branch or path]`                   |
 
 ## Write and Plan
 
@@ -62,30 +57,6 @@ Use it for a new project with no docs, a project with scattered docs, or onboard
 
 ```text
 /docs-assist:plan
-```
-
-### /docs-assist:template
-
-`/docs-assist:template [problem, topic, or template name]`
-
-Start a doc from a proven structure instead of a blank page, using The Good Docs Project templates.
-Describe the problem in plain words and it suggests a matching template, then fills the skeleton with what you know.
-Use it to turn a recurring question into a doc, or to turn templates on for a project.
-
-```text
-/docs-assist:template people keep opening tickets about a login loop
-```
-
-### /docs-assist:make-examples
-
-`/docs-assist:make-examples [doc-path]`
-
-Add or improve code examples in an existing doc.
-It writes copy-paste safe examples and reuses the variable names already in your docs so they stay consistent.
-Use it when a doc is missing examples or its examples have drifted.
-
-```text
-/docs-assist:make-examples docs/webhooks.md
 ```
 
 ## Review and Maintain
@@ -152,64 +123,25 @@ Use it when cutting a release, so the notes describe outcomes readers care about
 /docs-assist:release-notes v0.8.0..HEAD
 ```
 
-### /docs-assist:agent-ready
-
-`/docs-assist:agent-ready [docs directory]`
-
-Make the docs legible to AI tools.
-It creates or repairs `llms.txt`, completes per-doc frontmatter using the repo's own field names (never overwriting what exists), and records nonstandard conventions where the next tool will find them.
-Use it once to retrofit a docs set, and after large changes; day-to-day maintenance happens through the normal drafting and update workflows.
-
-```text
-/docs-assist:agent-ready docs
-```
-
 ## Configure Your Project
 
-### /docs-assist:init
+### /docs-assist:setup
 
-`/docs-assist:init [docs directory]`
+`/docs-assist:setup [stage]`
 
-Scaffold project-local configuration in a committed `.docs-assist/` directory, pre-filled from the repo's existing conventions.
-It writes `config.yml` and `style.md`, and offers to enable templates and seed the reference registry.
-Run it first so every doc from the first follows the same conventions.
+Conventions, linting, hooks, and site navigation, in one pass with one set of questions. Every stage is opt-in and nothing is written without a yes. The plugin also offers this inline at the moment it would help, so you rarely need to type it.
 
 ```text
-/docs-assist:init docs
+/docs-assist:setup
+/docs-assist:setup lint
 ```
 
-### /docs-assist:setup-lint
+### /docs-assist:merge-prep
 
-`/docs-assist:setup-lint [tool]`
+`/docs-assist:merge-prep [branch or path]`
 
-Scaffold optional documentation linting, generated from `.docs-assist/config.yml`, so the linter checks the same rules the plugin writes by.
-It sets up Vale, markdownlint, cspell, a link checker, or MegaLinter, and detects any linter you already use.
-The argument names a tool: `vale`, `markdownlint`, `megalinter`, or `all`.
+Everything expensive that scales with the whole docs set: whole-set continuity, `llms.txt` and `llms-full.txt`, bundle drift, the deterministic checks, the configured linters, and link checking. Routine workflows never do this, so a single content fix does not trigger a full regenerate-and-diff pass.
 
 ```text
-/docs-assist:setup-lint all
-```
-
-### /docs-assist:setup-hooks
-
-`/docs-assist:setup-hooks [hook]`
-
-Install opt-in documentation hooks. Default off: nothing is installed without your choice.
-It offers a git pre-commit doc linter, an in-session lint hook that runs after Claude edits a Markdown file, a CI docs-impact check that flags pull requests whose changes ripple into the docs, a CI reference-registry check that verifies `.docs-assist/reference.yml`'s facts and pointers still resolve, and a CI claim check that resolves identifier-shaped doc claims (paths, flags, function/class names, config keys) against the code with `git grep`.
-The argument names a hook: `pre-commit`, `claude-code`, `ci`, `ci-facts`, `ci-claims`, or `all`.
-
-```text
-/docs-assist:setup-hooks pre-commit
-```
-
-### /docs-assist:setup-site
-
-`/docs-assist:setup-site [docusaurus | mkdocs]`
-
-Generate site navigation from the docs' own metadata: `llms.txt` reader-priority order becomes the sidebar order, and frontmatter titles become the labels.
-When no static site generator exists, it scaffolds a minimal Docusaurus or MkDocs setup wired to your docs directory.
-Deliberately not a site builder: theming, search, and deployment stay with your generator's own tooling.
-
-```text
-/docs-assist:setup-site mkdocs
+/docs-assist:merge-prep
 ```

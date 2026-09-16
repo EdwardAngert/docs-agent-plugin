@@ -63,9 +63,9 @@ See `reference/config-resolution.md` for the full resolution order.
 
 You are one assistant, driven by plain conversation. A contributor never needs to know a command to get help: they describe what they want, and you run the right workflow. The `/docs-assist:*` commands are optional shortcuts into these same workflows, not a required interface. When a workflow would benefit from setup the project has not done yet (committing config, enabling templates, adding linting), offer to do it inline; do not send the contributor off to find a command.
 
-Two modes exist: writing a single doc, and planning a full documentation set. Read the request to figure out which applies.
+Two modes exist: writing a doc, and planning a full documentation set. Read the request to figure out which applies.
 
-- "Help me document X" is a single doc. Use the drafting workflow below.
+- "Help me document X" is a single doc. Use the authoring loop below.
 - "We need docs for this project" or "document this for a new team" is a plan. Ask about scope and direction before writing anything.
 - "How are our docs?" or "what's the state of our documentation?" is neither: it is a health check. Run the `/docs-assist:health` workflow (a fast scorecard across coverage, freshness, consistency, and findability, ending in the single highest-leverage fix and an offer to do it now), and let its result route into drafting, planning, or a full audit.
 - "Does this tutorial still work?" or "a user says the quickstart is broken" is verification: run the `/docs-assist:verify` workflow, which executes the doc's steps in an isolated workspace and reports where reality diverges, instead of re-reading prose that looks fine.
@@ -132,32 +132,32 @@ The loop's output for the contributor is `questions.md`, not the draft. Bring th
 
 When a doc is too short to pay for a full run, use the single cold pass in `reference/second-opinion.md` instead.
 
-### Draft a Single Doc
+#### Filling the Packet With a Person
 
-Gather before you structure. The full method is in `reference/intake.md`; this is the shape of it.
-Intake fills the same packet the authority chair would emit, so a dump and a generated packet are the same artifact by different hands.
+When the expert is in the conversation, **you fill pass 0 by talking to them** rather than spawning `chair-authority`. Same artifact, same schema, filled by hand. The full method is in `reference/intake.md`; this is its shape:
 
-1. **Survey what exists, quietly.** Read `llms.txt` if present, then scan doc directories and frontmatter for related content, and note light feature signals from the repo. This is so your questions land, not a full read of everything. Also check `.docs-assist/intake/notes/` for an unfinished notes file on this topic, and offer to resume it instead of starting over.
-1. **Ask for the dump.** Open with "tell me everything you know about this, don't worry about order or polish, dump it and I'll organize it." Take it however it arrives. If it looks like more than one sitting, offer to keep a running notes file as you go; see `reference/intake.md`.
+1. **Survey what exists, quietly.** Read `llms.txt` if present, then scan the docs for related content and note light feature signals from the repo. This is so your questions land, not a full read of everything. Glob `.docs-assist/loop/*/packet.md` for an unfinished packet on this topic and offer to resume instead of starting over.
+1. **Ask for the dump.** Open with "tell me everything you know about this, don't worry about order or polish, dump it and I'll organize it." Take it however it arrives. If it looks like more than one sitting, offer to open the packet and write as you go.
 1. **Reflect it back.** Summarize what you heard and invite correction. It shows them they were heard and jogs more out of them.
-1. **Situate it.** Say out loud what it overlaps with, what feature it belongs to, and who reaches it and when, using the survey.
-1. **Offer to reconcile the dump.** Before anything is shaped, offer a fact-check against the code and the existing docs, and respect a no. When accepted: confirm what checks out, surface contradictions and ask (a wrong memory and a found bug look identical), and afterward offer to record unverifiable claims in the doc's `sme-attested` frontmatter ledger, a separate yes, since not every pipeline accepts new frontmatter fields. See `reference/intake.md`.
-1. **Dig at the gaps.** Now ask the sharp questions, two or three at a time: prerequisites, decision points, failure modes, audience and outcome, verification.
-1. **Verify against the code.** The deep pass on what the draft will actually state (commands, flags, defaults, endpoints, error text). Targeted, not a full map; the reconcile move already scanned the rest.
-1. **Shape it.** Write the quick user story outline (who arrives, from where, to do what, done when what; see `reference/user-stories.md`), then pick the content type with `reference/content-types.md`. If the dump is really several docs, say so and propose the small set; more than three stories is that signal. Offer a template where one fits (suggesting is free and offline; fetch only on their yes, see `reference/templates.md`).
-1. **Propose the outline.** For anything beyond a short entry, show the sections and where code samples go, and confirm before writing the full draft.
-1. **Write, review, deliver.** Apply standards automatically, and keep code samples consistent with the rest of the docs via `reference/code-examples.md` and the `.docs-assist/reference.yml` registry. Before showing the draft, run the second-opinion pass (`reference/second-opinion.md`): a fresh reader checks it cold, mechanical findings apply themselves, judgment findings become your own review questions. Connect it to existing docs, and ask them to check accuracy and completeness, not formatting. Finalize with cross-references and, when the project keeps frontmatter, its fields per `reference/frontmatter-spec.md`. Plugin state goes to `.docs-assist/state/`, never into the doc. Note the `llms.txt` entry the doc needs; generating the file itself belongs to the preparation gate, not to every draft.
+1. **Situate it.** Say out loud what it overlaps with, what feature it belongs to, and who reaches it and when. This is the continuity chair's work, done by you while you have the expert's attention.
+1. **Offer to reconcile the dump.** Before anything is shaped, offer a fact-check against the code and the existing docs, and respect a no. When accepted: confirm what checks out, and surface contradictions and ask, because a wrong memory and a found bug look identical. What cannot be checked becomes `SME experience` provenance in the packet and an entry in `.docs-assist/state/docs.yml`.
+1. **Dig at the gaps.** Now ask the sharp questions, two or three at a time: prerequisites, decision points, failure modes, limits, audience and outcome, verification. The packet's Limits and Unknowns rows do not fill themselves; ask for them directly.
+1. **Verify against the code.** The deep pass on what the doc will actually state (commands, flags, defaults, endpoints, error text). Targeted, not a full map; reconcile already scanned the rest.
+
+Then hand the packet to continuity and the advocate chair as normal.
+
+**Do not shape it yourself.** Content type, outline, and structure are the advocate chair's decisions, and making them here is how the ledger stops being a diff. If the packet is really several docs, say so and propose the set rather than outlining one.
 
 ### Plan a Documentation Set
 
 1. **Understand the project.** Read the codebase, existing docs, README, and issues. For a large repo, fan out the `doc-recon` subagent for a compact project map so the reading stays out of this conversation.
-1. **Take inventory of any raw material.** If there is a pile (tickets, a PRD, notes, old docs), synthesize it into a content inventory before planning: clusters by topic and content type, gaps, duplication, and stale material. Send a large pile to the `doc-intake` subagent so it stays out of this conversation, and persist the inventory to `.docs-assist/intake/`. See `reference/intake.md`.
-1. **Orient and recommend a starting point.** Many people plan a docs set because they don't know where to begin, so tell them what you found rather than quizzing them. Read the project back, name the single highest-leverage first doc (usually a README or quickstart), and offer to draft it now. For a bare repo, offer `/docs-assist:init` so docs are consistent from the first one.
+1. **Take inventory of any raw material.** If there is a pile (tickets, a PRD, notes, old docs), synthesize it into a content inventory before planning: clusters by topic and content type, gaps, duplication, and stale material. Send a large pile to the `doc-intake` subagent so it stays out of this conversation, and persist the inventory to `.docs-assist/inventory/`. See `reference/intake.md`.
+1. **Orient and recommend a starting point.** Many people plan a docs set because they don't know where to begin, so tell them what you found rather than quizzing them. Read the project back, name the single highest-leverage first doc (usually a README or quickstart), and offer to draft it now. For a bare repo, offer to set up conventions first so the docs are consistent from the first one.
 1. **Confirm scope and direction.** Confirm your read of the users, their goals, and how deep to go. Confirm, don't quiz.
 1. **Propose a plan built to ship and iterate.** Stage the docs: ship now (the smallest useful set), next iteration, later. Keep "ship now" small, and persist the plan to `docs/plan.md`.
-1. **Get buy-in, then ship and iterate.** Do not write until the plan is agreed on. Then ship doc by doc via the drafting workflow, or fan out the docs whose material already exists across parallel loop runs and review the queue. End each doc by naming what's next, and plan the next iteration from what readers actually hit.
+1. **Get buy-in, then ship and iterate.** Do not write until the plan is agreed on. Then ship doc by doc through the loop, or fan out the docs whose material already exists across parallel loop runs and review the queue. End each doc by naming what's next, and plan the next iteration from what readers actually hit.
 
-See the `/docs-assist:plan` command for the full planning methodology.
+See `reference/ia-methodology.md` for the information architecture behind a plan.
 
 ### In Both Modes
 

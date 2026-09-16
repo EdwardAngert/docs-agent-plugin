@@ -137,24 +137,42 @@ Do not make the writer choose between waiting and guessing. Send the questions t
 - **Ingest the returned answers** as a pile slice: `doc-intake` reads them into the inventory, and drafting proceeds from there, conversationally or via the fan-out.
 - **Never block on a packet.** Draft what the material already supports and flag the rest; fold the answers in when they arrive.
 
+## Intake Fills the Packet
+
+**The intake loop is pass 0 of the authoring loop with a person in the authority chair.**
+
+The moves above are how a human fills a packet: Dump and Dig gather the rows, Reconcile types the provenance, Survey and Situate are what the continuity chair does when no human is doing it.
+There is no separate notes format and no separate directory.
+Everything lands in `.docs-assist/loop/<doc-slug>/packet.md`, in the schema from `packet-procedure.md` or `packet-concept.md`.
+
+This matters beyond tidiness.
+A packet a human filled and a packet the `chair-authority` subagent emitted are interchangeable, so a doc can start conversationally and finish with the loop, or start automated and get corrected by hand, and nothing downstream needs to know which happened.
+
+Shape is the one move that does **not** belong to intake.
+Content type, structure, and outline are the advocate chair's decisions, and a packet that makes them has stopped being raw material. When Shape reveals several docs, record that as a note in the packet header and let the orchestrator propose the set.
+
 ## Persist as You Go (Opt In)
 
-A single-doc dump normally lives in conversation, not a file (see below). But some drafts are not a single sitting: a long or many-part dump, a contributor who says "let me check and get back to you," or a Shape call that reveals several docs all mean the work will outlast this conversation.
+A short dump can live in conversation and go straight into a packet at the end.
+Some do not: a long or many-part dump, a contributor who says "let me check and get back to you," or material that clearly spans more than one sitting.
 
-**Offer, don't default, and never interrupt the dump to offer.** The dump's own rule holds: let it all land. Make the offer once at the next natural pause, which is usually the Reflect read-back ("Here's what I've got. This looks like it'll take a few sittings; want me to keep a running notes file as we go, so we can pick this back up without you re-explaining everything?"), or immediately when the contributor pauses themselves ("let me check and get back to you"). A repo can set a standing preference in `.docs-assist/config.yml` (see `config-resolution.md`) for a team that always wants this, but the per-session offer is what runs by default.
+**Offer, don't default, and never interrupt the dump to offer.** The dump's own rule holds: let it all land. Make the offer once at the next natural pause, usually the Reflect read-back ("Here's what I've got. This looks like it'll take a few sittings; want me to write it down as we go, so we can pick this back up without you re-explaining everything?"), or immediately when the contributor pauses themselves. A repo can set a standing preference in `.docs-assist/config.yml` (see `config-resolution.md`), but the per-session offer is what runs by default.
 
-When accepted, write to `.docs-assist/intake/notes/<topic>.md` (the same kebab-case topic slug convention as an intake packet) and keep it current after every move from Dump onward:
+When accepted, open the packet early and keep it current after every move.
+Add a progress header so a later session can resume without re-reading the whole file:
 
 ```markdown
 ---
 topic: "webhook retry configuration"
-status: in-progress   # in-progress | ready-to-draft | complete
+cast: procedure          # procedure | concept
+status: in-progress      # in-progress | ready-to-shape | shaped
 updated: 2026-07-17
+filled-by: human
 ---
 
-# Notes: Webhook Retry Configuration
+# Packet: Webhook Retry Configuration
 
-## Status
+## Intake progress
 
 - [x] Survey
 - [x] Dump
@@ -162,44 +180,23 @@ updated: 2026-07-17
 - [ ] Situate
 - [ ] Reconcile
 - [ ] Dig
-- [ ] Shape
 
-## Dump
+## Open with the contributor
 
-- Cleaned into bullets, not a transcript.
+- Does the backoff ceiling apply per-endpoint or globally?
 
-## Reflected Summary
-
-## Situate
-
-Connections to other docs and features found.
-
-## Reconcile
-
-- Confirmed against the code: ...
-- Conflicts: ...
-- SME-attested: ...
-
-## Dig
-
-- Open: ...
-- Answered: ...
-
-## Shape and Outline
-
-Content type, whether this is one doc or several, the user story outline
-(one line per reader, per user-stories.md), and the outline once decided.
+<!-- Then the packet rows themselves, per packet-procedure.md:
+     Prerequisites, Steps, Code, Provenance, Limits, Flat statements, Unknowns. -->
 ```
 
-The `status` frontmatter field is what the Survey move's resume check reads; keep it current so a glob over `.docs-assist/intake/notes/` can tell an unfinished note from a completed one without opening every file.
+The `status` field is what the Survey move's resume check reads, so keep it current: a glob over `.docs-assist/loop/*/packet.md` can then tell an unfinished packet from a ready one without opening every file.
 
-If Shape reveals more than one doc, this file keeps tracking the one being drafted now; list the rest under Shape and Outline as the backlog, per the usual "draft the first, backlog the rest" rule, rather than forking a notes file per doc.
+`filled-by` records whether a human or the authority chair produced it.
+Nothing downstream branches on it; it exists so a reviewer knows whether the gaps are an expert's blind spots or an agent's.
 
-Once this file exists, later drafting moves (proposing the outline, producing the draft) read it as their source instead of relying on conversation memory.
+**Resuming across a session boundary needs an explicit trigger; nothing carries this awareness on its own.** A new conversation does not know a packet exists unless something looks for it. The Survey move already scans the docs directory and `llms.txt` before anything else: extend that scan to glob `.docs-assist/loop/*/packet.md` for one matching the topic, or list what is in progress when the topic is unclear, and offer to resume rather than starting intake over.
 
-**Resuming across a session boundary needs an explicit trigger; nothing carries this awareness on its own.** A new conversation does not know a notes file exists unless something looks for it. The Survey move already scans the docs directory and `llms.txt` before anything else: extend that scan to glob `.docs-assist/intake/notes/*.md` for a file matching the topic, or list what is in progress when the topic is unclear, and offer to resume from it rather than starting the intake loop over. This runs whenever a drafting command is invoked, so the contributor does not need to remember the file exists.
-
-A team that wants a new session to open already aware of unfinished notes, without the contributor asking, can add that same check to a `SessionStart` hook via `/docs-assist:setup-hooks` (default off, like every hook that command installs).
+A team that wants a new session to open already aware of unfinished packets can add that same check to a `SessionStart` hook via setup (default off, like every hook).
 
 ## Persist the Synthesis, Not the Raw Pile
 
