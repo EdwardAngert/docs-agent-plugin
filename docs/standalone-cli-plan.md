@@ -53,7 +53,7 @@ docs-agent-plugin/
 ├── cli/                     # new: the npx package
 │   ├── index.mjs            # bin entry
 │   └── src/
-│       ├── detect.mjs       # port of the convention-detection logic in commands/init.md
+│       ├── detect.mjs       # port of the convention-detection logic in commands/setup.md
 │       ├── scaffold.mjs     # copies/templates assets/* into the target repo
 │       ├── prompts.mjs      # loads commands/*.md + skills/docs-assist/** as source text
 │       └── adapters/        # per-tool converters for Tier 2, see below
@@ -67,7 +67,7 @@ docs-agent-plugin/
 
 ## What the CLI Actually Does
 
-1. `npx docs-assist init` is the Tier 1 entry point. It detects the docs directory, frontmatter field names, heading case, and list style the way `commands/init.md` describes, then scaffolds `.docs-assist/config.yml`, `style.md`, lint configs, and CI workflows from `assets/`.
+1. `npx docs-assist init` is the Tier 1 entry point. It detects the docs directory, frontmatter field names, heading case, and list style the way `commands/setup.md` describes, then scaffolds `.docs-assist/config.yml`, `style.md`, lint configs, and CI workflows from `assets/`.
    It's fully deterministic and makes zero LLM calls, matching this repo's existing no-dependencies philosophy (see `scripts/validate.mjs`'s header comment).
 1. `npx docs-assist check` runs the parts of `health.md` that are pure checks (missing frontmatter, broken relative links, stale-by-git-log docs) as plain Node and prints a scorecard.
    The narrative "here's the one fix, want me to make it" step stays Tier 2 and is explicitly out of scope for this command.

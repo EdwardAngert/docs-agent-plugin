@@ -35,12 +35,12 @@ Before tracing by hand, run `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/check-claims.m
 For each claim the script leaves unresolved, or when working a doc by hand without it:
 
 1. Find where the code would prove or disprove it: grep for the flag name, the config key, the constant, the function. Read the actual definition, not just a usage site.
-2. Compare what you find to what the doc states:
+1. Compare what you find to what the doc states:
    - **Matches**: no finding, move on.
    - **Drifted**: the code exists but disagrees with the doc (a renamed flag, a changed default, an updated error string, a signature that gained or dropped a parameter). Report the specific doc line next to the specific code line; this is the finding, not "seems outdated."
    - **Missing**: nothing in the code backs the claim anymore, removed or renamed beyond recognition. Report as Critical: a reader will follow instructions that no longer resolve to anything.
-3. When a static read cannot settle it, because the claim is about runtime behavior rather than a fixed value ("retries with exponential backoff," "starts within 30 seconds"), it is a candidate for `/docs-assist:verify`, not something to guess at from reading. Say so rather than marking it verified on inference.
-4. If the claim is already a `fact` entry in `.docs-assist/reference.yml`, check its `source` field directly instead of re-deriving from scratch; see `reference-registry.md`. If it is not tracked yet and looks likely to drift again (a default that has already changed once, a value repeated across several docs), offer to add it, so the same claim gets caught automatically next time the source changes instead of needing a full manual retrace.
+1. When a static read cannot settle it, because the claim is about runtime behavior rather than a fixed value ("retries with exponential backoff," "starts within 30 seconds"), it is a candidate for `/docs-assist:verify`, not something to guess at from reading. Say so rather than marking it verified on inference.
+1. If the claim is already a `fact` entry in `.docs-assist/reference.yml`, check its `source` field directly instead of re-deriving from scratch; see `reference-registry.md`. If it is not tracked yet and looks likely to drift again (a default that has already changed once, a value repeated across several docs), offer to add it, so the same claim gets caught automatically next time the source changes instead of needing a full manual retrace.
 
 ## Scope It Like Everything Else
 
