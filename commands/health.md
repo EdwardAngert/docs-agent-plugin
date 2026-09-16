@@ -62,7 +62,7 @@ End with an offer, not homework. Match the offer to the finding:
 
 - Coverage gap: offer to draft the missing doc now (`/docs-assist:draft` flow).
 - Freshness gap: offer to run the update pass against recent changes (`/docs-assist:update`); for the decay queue's worst procedural docs, offer `/docs-assist:verify` to run their steps and settle whether they still work; and when the queue flags real risk broadly rather than a handful of docs, that is the "broad problems" case below, not a fix this offer alone resolves.
-- Consistency gap: offer `/docs-assist:init` to record the conventions, and the fix pass to apply them.
+- Consistency gap: offer `/docs-assist:setup` to record the conventions, and the fix pass to apply them.
 - Findability gap: offer to generate or repair `llms.txt` and the missing cross-references.
 - Broad problems across dimensions: recommend the full `/docs-assist:audit` and offer to run it.
 

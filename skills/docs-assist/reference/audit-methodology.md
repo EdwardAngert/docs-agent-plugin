@@ -46,7 +46,7 @@ A page can go stale with no word in the doc itself changing: the linked repo get
 Check against the live target, not the page text.
 This is mechanical, so defer to existing tooling rather than hand-rolling requests.
 Use the repo's own link-check setup if one exists (`.markdown-link-check.json`, `.docs-assist/config.yml`'s `lint.link_check`, or a CI workflow) and report its last result.
-If the repo has CI but no link check yet, recommend `/docs-assist:setup-lint` to wire it in.
+If the repo has CI but no link check yet, recommend `/docs-assist:setup` to wire it in.
 Otherwise, run `npx --yes markdown-link-check` for this audit.
 Flag dead links (4xx/5xx) as Critical.
 A redirect can still hide a rename even though the linter treats it as alive: the common case is `github.com/OWNER/REPO` resolving to a different owner or repo name.

@@ -129,25 +129,25 @@ For every command's argument and an example, see the [command reference](docs/co
 - `/docs-assist:draft [topic]`: the primary workflow.
   Guides a contributor through turning their knowledge into a structured draft.
   Bring the expertise, the plugin handles the writing.
+  Behind it, three chairs in separate contexts: one that holds what is true, one that keeps examples coherent across the set, and one that writes and then declares everything it had to assume.
 - `/docs-assist:plan [repo or description]`: plan a full documentation set.
   Reads the codebase, asks about users and goals, maps user journeys, and proposes a prioritized plan before writing anything.
-  Once the plan is approved, docs whose material already exists draft in parallel across the authoring loop, and you review the queue instead of co-writing each one.
-  Suggests a template from what you describe and fills the skeleton with what you know.
+  Once the plan is approved, docs whose material already exists draft in parallel, and you review the queue instead of co-writing each one.
 
 ### Review and Maintain
 
 - `/docs-assist:health [docs dir]`: a fast docs health check, and the best first command to run.
   Scores coverage, freshness, consistency, and findability, names the highest-leverage fix, and offers to make it.
-- `/docs-assist:audit [path]`: audit a directory or file for quality, structure, findability, and gaps.
-  Produces a prioritized report.
+- `/docs-assist:audit [path]`: review existing docs by reconstructing what each one claims and ruling on it.
+  A claim nobody can source is the finding, and in finished prose it is invisible: it sits next to twenty sourced claims and reads exactly like them.
 - `/docs-assist:update [ref, PR, or path]`: find and update the docs affected by a code change.
   Reads the diff, locates the docs that reference what changed, and updates them for review.
 - `/docs-assist:verify [doc path or directory]`: verify a procedural doc by executing it.
-  Runs the steps in an isolated workspace, reports every divergence and missing prerequisite, and earns the `last-verified` bump on a clean pass.
+  Runs the steps in an isolated workspace, reports every divergence and missing prerequisite, and records a fresh verification date on a clean pass.
 - `/docs-assist:release-notes [range, tag, or version]`: turn a release's worth of changes into reader-facing release notes.
   Reads the commits and PRs, asks you for the why, and writes notes that lead with what readers must know.
-- `/docs-assist:merge-prep [branch]`: get a docs change ready to merge. Whole-set generation, linting, link and drift checks, in one pass you ask for.
-  Creates or repairs `llms.txt`, completes per-doc frontmatter, and records the repo's conventions where the next tool will find them.
+- `/docs-assist:merge-prep [branch]`: get a docs change ready to merge.
+  Whole-set continuity, `llms.txt`, bundle drift, the deterministic checks, linting, and link checking, in one pass you ask for. Nothing expensive runs without being asked.
 
 ### Configure
 
@@ -205,32 +205,39 @@ Cheap detection in CI, expensive updating only when it is warranted.
 ## Make Your Docs Agent-Ready
 
 Your docs' readers now include AI tools: coding agents, docs assistants, and search systems that read structure before prose.
-Run `/docs-assist:merge-prep` to bring them current: it creates or repairs `llms.txt` (the map an AI tool reads first), completes per-doc frontmatter using your repo's own field names, and records your conventions where the next tool will find them.
-The plugin then maintains all of it as part of its normal drafting and updating work.
+
+`/docs-assist:merge-prep` creates or repairs `llms.txt`, the map an AI tool reads first, along with everything else that scales with the whole set. It runs when you ask for it and not at the end of every edit, because a single content fix should not trigger a regenerate-and-diff pass over your entire docs tree.
+
+Nothing here depends on frontmatter. Site generators disagree about what frontmatter they accept, plenty of documentation has no site generator at all, and frontmatter only pays off once a reader has already landed on the page. The plugin keeps what it needs in `.docs-assist/`, reads your frontmatter when you have it, and offers to wire more up when you want it.
 
 ## What's Inside
 
 ```text
 docs-assist/
-├── commands/                  # health, draft, plan, audit, make-examples, update, release-notes, agent-ready, template, init, setup-lint, setup-hooks, setup-site
-├── agents/                    # chair-authority/advocate/continuity, cold-reader, doc-updater, doc-intake, doc-recon subagents
+├── commands/                  # health, draft, plan, audit, verify, update, release-notes, setup, merge-prep
+├── agents/                    # the three chairs, cold-reader, doc-harvester, doc-updater, doc-intake, doc-recon, doc-verifier
 ├── skills/docs-assist/
 │   ├── SKILL.md               # core instructions and role definition
 │   └── reference/
-│       ├── intake.md              # gather-first intake loop and corpus inventory
-│       ├── content-types.md       # canonical content types and frontmatter values
+│       ├── loop.md                # the three-chair authoring loop
+│       ├── casting.md             # which chairs to seat, on two axes
+│       ├── packet-procedure.md    # the cold artifact, for a doc a reader acts on
+│       ├── packet-concept.md      # the cold artifact, for a doc a reader learns from
+│       ├── ledger.md              # what the writer added that the packet did not say
+│       ├── style-stack.md         # project, house style, Google, GitLab, in that order
+│       ├── personas.md            # the per-project overlay each chair resolves through
+│       ├── harvest.md             # mine what maintainers already explained
+│       ├── chairs/                # the constitutions, one per role plus shared rules
+│       ├── intake.md              # gather-first intake, which fills the packet by hand
+│       ├── content-types.md       # canonical content types
 │       ├── tone-and-voice.md      # formatting, heading case, markdown style
-│       ├── code-examples.md       # safe, consistent code samples and the variables registry
-│       ├── terminology.md         # consistent product terms and the terms registry
+│       ├── code-examples.md       # safe, consistent code samples
+│       ├── external-verification.md  # checking claims about what you do not vendor
+│       ├── claim-verification.md  # tracing a doc's claims out to the code
 │       ├── llms-txt.md            # the llms.txt format and maintenance contract
-│       ├── frontmatter-spec.md    # per-doc metadata schema
-│       ├── config-resolution.md   # how project-local config overrides defaults
-│       ├── templates.md           # suggest and apply Good Docs templates
 │       ├── impact-analysis.md     # scope a change-based audit or update
-│       ├── documentation-patterns.md
-│       ├── audit-methodology.md
-│       ├── ia-methodology.md
-│       └── style-guides.md
+│       └── ...                    # registry, config resolution, IA, patterns, style guides
+├── assets/ci/                 # deterministic checks: drift, continuity, paths, claims, decay
 ├── assets/                    # config templates, doc templates, lint scaffolds, CI, hook recipes
 └── scripts/validate.mjs       # repository validator (run in CI)
 ```

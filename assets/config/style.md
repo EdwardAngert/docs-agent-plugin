@@ -5,7 +5,7 @@ Edit it to match how your team writes. The plugin reads it before drafting or re
 
 Keep machine-checkable settings (heading case, list markers, frontmatter fields) in `config.yml`. Keep judgment-based guidance here.
 
-The Voice, Conventions em-dash rule, and Terminology banned-phrase list below are the Docs Assist opinionated defaults: apply them as-is when the project has no detectable convention of its own (see `/docs-assist:init`). Detected repo conventions always win over these; they are a fallback, not a target. Terminology's product-name and preferred-term entries are inherently project-specific and have no sensible default, so those stay placeholders until filled in.
+The Voice, Conventions em-dash rule, and Terminology banned-phrase list below are the Docs Assist opinionated defaults: apply them as-is when the project has no detectable convention of its own (see `/docs-assist:setup`). Detected repo conventions always win over these; they are a fallback, not a target. Terminology's product-name and preferred-term entries are inherently project-specific and have no sensible default, so those stay placeholders until filled in.
 
 ## Voice
 

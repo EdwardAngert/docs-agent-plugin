@@ -8,6 +8,9 @@
 //   3. Command, agent, and skill files have the required frontmatter.
 //   4. docs/ files carry the required frontmatter (title, description, content-type).
 //   5. Relative links in llms.txt resolve to real files.
+//   6. Prose does not name an agent or command that no longer exists.
+//   7. Every chair has a contract and a rulebook per threshold.
+//   8. A reference file named inside another reference file resolves.
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
@@ -183,6 +186,75 @@ if (styleTokens.length) {
     for (const { file: styleFile, token, re } of patterns) {
       check(!re.test(prose), `${f} contains "${token}" in plain prose, which the shipped ${styleFile} Vale style flags; wrap it in backticks or rephrase`);
     }
+  }
+}
+
+// 6. Prose does not name an agent or command that no longer exists.
+//
+// Retiring doc-drafter and doc-auditor left seven stale references in
+// docs/plan.md describing them as shipped features. Nothing caught it, because
+// the existing link check only covers llms.txt. A name in prose is a claim
+// that the thing exists, and this is the cheapest kind of claim to check.
+const liveAgents = new Set(
+  readdirSync(rel('agents')).filter((f) => f.endsWith('.md')).map((f) => f.replace(/\.md$/, '')),
+);
+const liveCommands = new Set(
+  readdirSync(rel('commands')).filter((f) => f.endsWith('.md')).map((f) => f.replace(/\.md$/, '')),
+);
+
+// CHANGELOG records what was true at the time and is allowed to name the dead.
+const HISTORY = new Set(['CHANGELOG.md']);
+// Third-party tools whose names match the agent shape but are not ours.
+const EXTERNAL = new Set(['doc-detective']);
+
+for (const f of allMdFiles('.')) {
+  // Dated records of what was true then: a changelog, a field report, a design
+  // report. They are allowed to name the dead, because that is their job.
+  if (HISTORY.has(f) || f.startsWith('reports/') || f.startsWith(join('docs', 'reviews'))) continue;
+  const text = readFileSync(rel(f), 'utf8');
+
+  for (const m of text.matchAll(/\/docs-assist:([a-z][a-z-]*)/g)) {
+    check(liveCommands.has(m[1]), `${f} references removed command /docs-assist:${m[1]}`);
+  }
+  // Agent names are matched in backticks only: "cold reader" as prose is fine,
+  // `cold-reader` is a claim about a file.
+  for (const m of text.matchAll(/`(doc-[a-z-]+|chair-[a-z-]+|cold-reader)`/g)) {
+    if (EXTERNAL.has(m[1])) continue;
+    check(liveAgents.has(m[1]), `${f} references removed agent \`${m[1]}\``);
+  }
+}
+
+// 7. Every chair has a contract, and every pass rulebook a chair's contract
+// names actually exists. The escalation gradient is implemented as file
+// selection, so a missing rulebook is a chair with no rules at its threshold.
+const chairsDir = 'skills/docs-assist/reference/chairs';
+if (existsSync(rel(chairsDir))) {
+  check(existsSync(rel(join(chairsDir, 'shared-rules.md'))), 'chairs/shared-rules.md is missing; every chair loads it on every pass');
+  for (const entry of readdirSync(rel(chairsDir), { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const dir = join(chairsDir, entry.name);
+    check(existsSync(rel(join(dir, 'contract.md'))), `${dir} has no contract.md`);
+    const passes = readdirSync(rel(dir)).filter((f) => /^pass-\d/.test(f));
+    if (entry.name !== 'continuity') {
+      check(passes.length >= 3, `${dir} has ${passes.length} pass rulebooks; the escalation gradient needs one per threshold`);
+    }
+  }
+}
+
+// 8. A reference file named in prose resolves. The constitutions cross-link
+// heavily and a dead pointer sends a chair looking for rules it will not find.
+const refDir = 'skills/docs-assist/reference';
+const refFiles = new Set(allMdFiles(refDir).map((p) => p.slice(refDir.length + 1)));
+const ARTIFACTS = new Set(['questions.md', 'packet.md', 'ledger.md', 'draft.md', 'review.md', 'substitutions.md', 'plan.md', 'style.md', 'docs.yml']);
+for (const f of allMdFiles(refDir)) {
+  const text = readFileSync(rel(f), 'utf8');
+  for (const m of text.matchAll(/`((?:chairs\/[a-z]+\/)?[a-z0-9-]+\.md)`/g)) {
+    const name = m[1];
+    if (ARTIFACTS.has(name)) continue;
+    check(
+      refFiles.has(name) || refFiles.has(name.split('/').pop()) || [...refFiles].some((r) => r.endsWith('/' + name)),
+      `${f} names reference file \`${name}\`, which does not exist`,
+    );
   }
 }
 

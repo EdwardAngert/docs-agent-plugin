@@ -53,7 +53,7 @@ Pointing at the registry tells an agent which values and terms are canonical, wh
 - **Audit** and **health** flag drift: entries whose files are gone, docs with no entry, and titles, descriptions, or paths that no longer match.
 - **Agent-ready** creates the file when missing and repairs it wholesale.
 - **Setup-site** reads it as the source of navigation order.
-- **Fan-out subagents never edit it.** Parallel writers would collide, so `doc-drafter` reports its proposed entry and the main conversation writes them all.
+- **Fan-out subagents never edit it.** Parallel writers would collide, so `chair-advocate` reports its proposed entry and the main conversation writes them all.
 
 ## llms-full.txt
 

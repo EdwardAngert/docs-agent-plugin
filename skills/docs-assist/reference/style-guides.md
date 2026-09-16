@@ -40,7 +40,7 @@ A complete guide usually covers:
 
 Style holds up when it is checked automatically and reviewed by humans:
 
-- **Automated checks**: linters such as Vale, markdownlint, and cspell, run in CI and as pre-commit hooks, plus link validation. The `/docs-assist:setup-lint` command scaffolds these from the project's style settings.
+- **Automated checks**: linters such as Vale, markdownlint, and cspell, run in CI and as pre-commit hooks, plus link validation. The `/docs-assist:setup` command scaffolds these from the project's style settings.
 - **Human review**: peer review, an editorial pass, and subject matter expert review for accuracy.
 - **Accessible rules**: keep the guide easy to find, give an example for each rule, and document the exception process.
 

@@ -36,7 +36,7 @@ Edges are transitive: a renamed heading breaks an anchor, which makes a second d
 - Follow each implicated edge one hop, then judge whether the next hop is worth it.
 - Use `grep` and `llms.txt` to find inbound references rather than reading every file.
 - Check confident matches (a doc links the exact heading you renamed). Skip passing mentions, unless the change is a rename that affects meaning.
-- When following an edge would fan out across a large set, say so and recommend the relevant subagent (`doc-auditor` or `doc-updater`) rather than doing it inline.
+- When following an edge would fan out across a large set, say so and recommend the relevant subagent (`chair-advocate` or `doc-updater`) rather than doing it inline.
 
 ## Report Residual Risk
 

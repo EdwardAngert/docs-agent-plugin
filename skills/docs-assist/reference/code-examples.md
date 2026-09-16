@@ -4,7 +4,7 @@ This is how Docs Assist writes code examples: safe, and consistent with the exam
 
 Inconsistent examples are a quiet source of confusion. When one doc uses `api.example.com` and `sk_test_123` and the next uses `myapi.io` and `YOUR_KEY`, a reader copying across pages has to stop and translate. The fix is a shared set of example values that every doc reuses.
 
-Load this whenever you add or improve code samples, from `/docs-assist:draft` or `/docs-assist:make-examples`.
+Load this whenever you add or improve code samples, from `/docs-assist:draft` or drafting.
 
 ## Reuse Before You Invent
 
@@ -20,7 +20,7 @@ Matching values is not the same as a working path. A reader who follows the quic
 
 - **Name the scenario once, reuse it everywhere.** If the quickstart creates a project called `demo-widgets` in `us-east-1`, every later doc in that journey uses `demo-widgets` in `us-east-1`, not a fresh, differently named example that happens to look similar. A resource a later doc references should be a resource an earlier doc actually created.
 - **Carry state forward deliberately.** A step that depends on a prior doc's output (a resource ID, a generated key, a config file's path) should say so and use the value that step actually produces, not a plausible-looking placeholder that silently diverges from it.
-- **Verify the sequence, not just each doc.** `/docs-assist:verify` can run a journey's docs in one continuous workspace, in order, to prove the examples actually compose end to end; a single doc passing in isolation does not prove this. See "Verifying a Journey" in `verify.md`.
+- **Verify the sequence, not just each doc.** `/docs-assist:verify` can run a journey's docs in one continuous workspace, in order, to prove the examples actually compose end to end; a single doc passing in isolation does not prove this. See "Verifying a Journey" in `commands/verify.md`.
 - **Flag it when a set doesn't compose.** If two docs in the same journey use different project names, regions, or resource IDs for what is supposed to be the same thing, that is a Critical audit finding: a reader following the docs in order hits a wall the individual docs never showed.
 
 ## The Reference Registry

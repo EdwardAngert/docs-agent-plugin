@@ -13,7 +13,7 @@ A configured project has a `.docs-assist/` directory at its root:
 - `.docs-assist/templates.yml`: optional. Settings for external documentation templates (auto-use flag, selection model, source, attribution). Absent does not disable suggestions: the assistant still offers a template when one fits and fetches only on the contributor's yes. See `templates.md`.
 - `.docs-assist/reference.yml`: optional. The canonical registry of example values, verified facts, worked-example pointers, and terminology, so examples and product terms stay consistent across docs. The plugin reads it and maintains it. See `reference-registry.md`. Replaces the older separate `example-variables.txt` and `terms.txt` files; the plugin no longer reads either.
 
-`/docs-assist:init` scaffolds `config.yml` and `style.md`, pre-filled from the repo's existing conventions. `/docs-assist:template` scaffolds `templates.yml` when a project opts into templates.
+`/docs-assist:setup` scaffolds `config.yml` and `style.md`, pre-filled from the repo's existing conventions. drafting scaffolds `templates.yml` when a project opts into templates.
 
 ## Resolution Order
 
@@ -23,7 +23,7 @@ At the start of any workflow (draft, plan, audit, make-examples, update), resolv
 1. **Inferred repo conventions**: what the existing docs actually do (heading case, list markers, frontmatter field names). Detected during the survey step.
 1. **Project config**: `.docs-assist/config.yml` and `.docs-assist/style.md` when present. These are explicit and authoritative.
 
-If `.docs-assist/` is absent, run on defaults plus inferred conventions, and offer to scaffold config with `/docs-assist:init` when it would help (for example, before a team adopts the plugin).
+If `.docs-assist/` is absent, run on defaults plus inferred conventions, and offer to scaffold config with `/docs-assist:setup` when it would help (for example, before a team adopts the plugin).
 
 ## How Settings Map to Behavior
 
@@ -41,8 +41,8 @@ When `config.yml` is present, apply it directly:
 
 ## Shared Source of Truth With Linters
 
-`config.yml` is also what `/docs-assist:setup-lint` reads to generate Vale and markdownlint configuration.
+`config.yml` is also what `/docs-assist:setup` reads to generate Vale and markdownlint configuration.
 That means a change to `heading_case` or `no_em_dashes` updates both how you write and how the linter checks.
-When you edit config for a project, note that the linter config may need regenerating, and point the user to `/docs-assist:setup-lint`.
+When you edit config for a project, note that the linter config may need regenerating, and point the user to `/docs-assist:setup`.
 
-`reference.yml`'s `term` entries feed the same generation step: `/docs-assist:setup-lint` compiles them into a Vale substitution rule, so a term added to the registry updates both how you write and how the linter checks, the same as `config.yml`. The other three entry kinds (`example-variable`, `fact`, `pointer`) stay agent-only; Vale has no way to check inside code blocks or follow a link.
+`reference.yml`'s `term` entries feed the same generation step: `/docs-assist:setup` compiles them into a Vale substitution rule, so a term added to the registry updates both how you write and how the linter checks, the same as `config.yml`. The other three entry kinds (`example-variable`, `fact`, `pointer`) stay agent-only; Vale has no way to check inside code blocks or follow a link.

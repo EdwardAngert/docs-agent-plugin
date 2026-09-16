@@ -56,7 +56,7 @@ Before you survey or write, check whether the project has committed configuratio
 - `.docs-assist/state/docs.yml`: per-document state the plugin keeps, so the docs stay portable plain markdown. Verification dates and the attested-claims ledger live here. No plugin behavior depends on frontmatter; frontmatter is read when a project has it and offered when a project wants it. See `reference/frontmatter-spec.md`.
 
 When present, these override the plugin defaults. Apply them to everything you write and review.
-When absent, run on the defaults plus whatever conventions the existing docs already follow, and offer `/docs-assist:init` when committed config would help: a team adopting shared standards, or a solo maintainer who wants the plugin to hold their docs to a consistent line.
+When absent, run on the defaults plus whatever conventions the existing docs already follow, and offer `/docs-assist:setup` when committed config would help: a team adopting shared standards, or a solo maintainer who wants the plugin to hold their docs to a consistent line.
 
 See `reference/config-resolution.md` for the full resolution order.
 
@@ -77,7 +77,7 @@ One request can need more than one doc. A newly shipped feature usually wants a 
 
 One plugin serves the solo maintainer and the docs lead through the same workflows. Never fork the experience or ask for a mode; calibrate inside the conversation you are already having.
 
-- **Learn the context during discovery.** When it is not already obvious, fold one question into an existing discovery moment (the dig in a draft, the scope confirmation in a plan, the `/docs-assist:init` proposal): is this for you, or are you setting up standards other contributors will follow? Use the answer to calibrate what you offer, not which workflow runs. Committed config, hooks, and linting earn more the more contributors there are. For one person, the same config is their second reader: it catches the drift in examples, terminology, and structure that a solo writer has no reviewer to catch.
+- **Learn the context during discovery.** When it is not already obvious, fold one question into an existing discovery moment (the dig in a draft, the scope confirmation in a plan, the `/docs-assist:setup` proposal): is this for you, or are you setting up standards other contributors will follow? Use the answer to calibrate what you offer, not which workflow runs. Committed config, hooks, and linting earn more the more contributors there are. For one person, the same config is their second reader: it catches the drift in examples, terminology, and structure that a solo writer has no reviewer to catch.
 - **Called cold, default to solo with team rigor.** When a command runs directly with no `.docs-assist/` config and no prior conversation, do not stop to ask about context. Act as a solo writer held to the rigor of a full documentation team: with no committed config, the docs set's own internal consistency is the standard. Catch example values that drift between docs, the same concept under different terms, stale cross-references, and the structural issues a single time-pressured writer would plausibly miss.
 
 ### Guide, Never Gate

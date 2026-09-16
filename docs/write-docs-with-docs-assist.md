@@ -1,6 +1,6 @@
 ---
 title: "Write Docs With Docs Assist"
-description: "How to use the Docs Assist plugin as a contributor: sharing what you know, starting from a template, reviewing for accuracy, and using the draft, plan, and make-examples commands."
+description: "How to use the Docs Assist plugin as a contributor: sharing what you know, starting from a template, reviewing for accuracy, and using the draft, plan, and audit commands."
 content-type: guide
 audience: contributors
 keywords:
@@ -120,7 +120,7 @@ Once you agree on the plan, Claude works through it doc by doc, and drafts the d
 If a doc already exists but is missing code examples, use:
 
 ```text
-/docs-assist:make-examples docs/webhooks.md
+/docs-assist:draft docs/webhooks.md
 ```
 
 Claude Code will identify sections that need examples, write safe copy-paste ready code, and ask before inserting them.

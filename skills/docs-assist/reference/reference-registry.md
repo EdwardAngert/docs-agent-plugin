@@ -2,7 +2,7 @@
 
 `.docs-assist/reference.yml` is the single canonical registry Docs Assist checks against when drafting or auditing: example values, verified facts, pointers to existing worked examples, and product terminology, in one file instead of scattered across several.
 
-Load this whenever you read, write, or maintain the registry, from `/docs-assist:draft`, `/docs-assist:audit`, `/docs-assist:make-examples`, or `/docs-assist:setup-lint`.
+Load this whenever you read, write, or maintain the registry, from `/docs-assist:draft`, `/docs-assist:audit`, or `/docs-assist:setup`.
 
 ## Why One File
 
@@ -82,7 +82,7 @@ workspace:
 - **Write with the canonical term.** Use it in everything you draft.
 - **Respect the boundary with `style.md`.** The registry holds machine-checkable pairs. Judgment-based language guidance (voice, banned phrases, when a term is appropriate) stays in `.docs-assist/style.md`. When the two disagree, `style.md` wins and the registry needs updating.
 - **Checked for**: prose using a listed variant instead of the canonical term, and the same concept under different terms across docs even when neither is registered yet (flag the outliers against dominant usage, and offer to record the winner).
-- **The only kind Vale also checks.** `/docs-assist:setup-lint` compiles every `term` entry into a generated Vale `substitution` rule, so the canonical-vs-variant check also runs as a deterministic lint, not only during a drafting or audit conversation. The other three kinds stay agent-only: Vale doesn't check inside code blocks by default (ruling out `example-variable` and `fact`), and it can't follow a link to resolve a `pointer`.
+- **The only kind Vale also checks.** `/docs-assist:setup` compiles every `term` entry into a generated Vale `substitution` rule, so the canonical-vs-variant check also runs as a deterministic lint, not only during a drafting or audit conversation. The other three kinds stay agent-only: Vale doesn't check inside code blocks by default (ruling out `example-variable` and `fact`), and it can't follow a link to resolve a `pointer`.
 
 ## Maintaining the Registry
 

@@ -17,7 +17,7 @@ Load this when writing or auditing docs in a project that has a registry, or whe
 - **Offer to create it.** When you find terminology drift (in an audit, or while surveying before a draft), offer to create the registry seeded with the canonical choices, so the decision is recorded instead of re-made every session. Scaffold from `${CLAUDE_PLUGIN_ROOT}/assets/config/reference.yml`.
 - **Maintain it.** When a draft introduces a product term readers will see again, add a `term` entry with its variants to avoid. The registry is the plugin's responsibility to keep in sync, not the contributor's.
 - **Respect the boundary with `style.md`.** The registry holds machine-checkable pairs: a canonical term and the variants to avoid. Judgment-based language guidance (voice, banned phrases, when a term is appropriate) stays in `.docs-assist/style.md`. When the two disagree, `style.md` wins and the registry needs updating.
-- **The only kind Vale also checks.** `/docs-assist:setup-lint` compiles every `term` entry into a generated Vale substitution rule, so this check also runs as a deterministic lint, not only during a drafting or audit conversation.
+- **The only kind Vale also checks.** `/docs-assist:setup` compiles every `term` entry into a generated Vale substitution rule, so this check also runs as a deterministic lint, not only during a drafting or audit conversation.
 
 ## How the Audit Uses It
 

@@ -54,7 +54,7 @@ Before asking the contributor to think like a docs strategist, tell them what yo
 
 - **Read it back.** Summarize what the project is, who you think uses it, and what state its docs are in. Invite correction: "Here's what I found. Did I get it right?"
 - **Recommend one first doc.** Name the single highest-leverage doc to write now, usually a README or a quickstart, and say why. Offer to draft it immediately, before the full plan. A shipped doc in the first ten minutes beats a perfect roadmap.
-- **Offer to set conventions.** For a repo with few or no docs, offer `/docs-assist:init` so every doc from the first is consistent (heading style, frontmatter, templates, example variables). See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/config-resolution.md`.
+- **Offer to set conventions.** For a repo with few or no docs, offer `/docs-assist:setup` so every doc from the first is consistent (heading style, frontmatter, templates, example variables). See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/config-resolution.md`.
 
 Getting one good doc out the door here is a feature, not a detour. It builds momentum and sharpens the plan.
 
