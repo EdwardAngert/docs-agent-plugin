@@ -100,7 +100,7 @@ A vague, open-ended request ("improve the docs," "get this repo's docs in shape"
 
 "Improve the docs" is not satisfied by `setup-lint` plus a clean `health` scorecard. Those confirm the docs are well-formed and internally consistent; they say nothing about whether the docs are still *true*. Route a genuine improvement request into a full `/docs-assist:audit`, which is where the claim-to-code trace lives (`reference/claim-verification.md`), not just the mechanical and cosmetic layer. Say so as part of the upfront framing: name that the pass will include tracing claims (commands, flags, defaults, config, described behavior) out to the code, not only linting and structure, so the contributor knows both halves are coming.
 
-Close the engagement on evidence, not on having read through everything: before telling the contributor you're done, if `lint.tools` is configured, re-run the linters against whatever changed and confirm zero issues, or list exactly what's left and why. A workflow that edited docs during the engagement (a fix pass, a draft, an update) is not finished until this gate passes, the same standard `setup-lint.md` holds its own first run to.
+Close the engagement on evidence, not on having read through everything: before telling the contributor you're done, if `lint.tools` is configured, re-run the linters against whatever changed and confirm zero issues, or list exactly what's left and why. A workflow that edited docs during the engagement (a fix pass, a draft, an update) is not finished until this gate passes, the same standard `setup.md` holds its own linting stage to.
 
 ### Deliver on a Branch
 
