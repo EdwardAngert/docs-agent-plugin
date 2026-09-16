@@ -27,6 +27,11 @@
 - [/docs-assist:setup](commands/setup.md): Set up conventions, linting, hooks, and site navigation in one pass. Every stage opt-in, nothing written without a yes.
 - [/docs-assist:merge-prep](commands/merge-prep.md): Get a docs change ready to merge. Everything expensive that scales with the whole set runs here and nowhere else.
 
+## Skills
+
+- [docs-assist](skills/docs-assist/SKILL.md): the documentation expert. Intake, the authoring loop, standards, and every reference file the chairs load.
+- [writing-task](skills/writing-task/SKILL.md): a wider net. Recognizes work that is documentation-shaped without being called documentation, routes to what fits, and says plainly when the plugin has nothing for it.
+
 ## Agents
 
 - [chair-authority](agents/chair-authority.md): The authority chair in the authoring loop. Emits a cold, prose-free packet of what is true, then rules on the ledger entries the advocate chair added. Holds the only web access in the loop.

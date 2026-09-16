@@ -119,6 +119,25 @@ Documenting a whole repo and not sure where to start?
 It reads the codebase, tells you what it found and where it would start, and gets one good doc out the door (usually a README or quickstart) before planning the rest.
 It plans to ship first and iterate, not to boil the ocean.
 
+## Making It Show Up
+
+The plugin activates when something asks it to. A skill matches what you *said*, so work that never mentions documentation never reaches it.
+
+Two things close that gap:
+
+- A second skill, `writing-task`, casts a wider net. It recognizes work that is documentation-shaped without being called documentation (a pull request description, a changelog entry, a runbook) and routes to the part of the plugin that fits. It is also allowed to find nothing and say so, which is what keeps it from becoming noise.
+- **A line in your `CLAUDE.md` is the highest-leverage fix, and the cheapest.** `CLAUDE.md` is always in context where a skill description is only matched, so a standing instruction there outranks anything the plugin can say about itself:
+
+```markdown
+## Documentation
+
+This repo uses the Docs Assist plugin. When work touches anything under `docs/`,
+the README, a release note, or a pull request description, use it rather than
+writing prose directly. Start with `/docs-assist:health` if the state is unclear.
+```
+
+`/docs-assist:setup` offers to add it, adjusted to your layout.
+
 ## Commands
 
 You rarely need these: the plugin activates from plain conversation, and the commands are optional shortcuts.

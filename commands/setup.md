@@ -61,7 +61,29 @@ Build `.docs-assist/personas/advocate.md` from the project's committed conventio
 
 Tell the contributor these are theirs to edit. A persona a contributor corrects is the system working, and an edit there wins over anything inferred.
 
-## 5. Site Navigation
+## 5. Make the Plugin Reachable
+
+The plugin only shows up when something asks it to. A skill matches what the contributor *said*, so work that never mentions documentation never reaches it.
+
+Offer the `CLAUDE.md` line, which is the highest-leverage fix and the cheapest. `CLAUDE.md` is always in context, where a skill description is only matched, so a standing instruction there outranks anything this plugin can say about itself.
+
+Propose three lines, specific about where:
+
+```markdown
+## Documentation
+
+This repo uses the Docs Assist plugin. When work touches anything under `docs/`,
+the README, a release note, or a pull request description, use it rather than
+writing prose directly. Start with `/docs-assist:health` if the state is unclear.
+```
+
+Adjust the paths to the repo's own layout, and keep it short. A vague instruction competes with everything else in that file and loses.
+
+If the repo has no `CLAUDE.md`, offer to create one with just this section rather than scaffolding a whole file it did not ask for.
+
+See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/triggering.md` for the full picture, including what hooks can and cannot do.
+
+## 6. Site Navigation
 
 Only when the project has a site generator, and only on a yes.
 

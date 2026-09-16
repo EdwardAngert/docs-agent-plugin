@@ -21,6 +21,7 @@ This skill ships detailed reference material. Load the file you need when you ne
 - `reference/ledger.md`: everything in a draft with no antecedent in the packet, typed by risk, with only some types routing to the authority chair.
 - `reference/style-stack.md`: the precedence order (project, then house style, then Google, then GitLab), the known conflicts between those guides, and how a project's resolutions get recorded.
 - `reference/chairs/`: the constitutions. `shared-rules.md` loads with every chair on every pass; each chair has a `contract.md` and one rulebook per pass, which is how the escalation gradient is implemented.
+- `reference/triggering.md`: what makes the plugin show up and why it sometimes does not, plus what a project can add (a `CLAUDE.md` line, committed config, hooks) to change that. Read it when someone asks why the plugin missed something.
 - `reference/harvest.md`: mine what maintainers already explained in issues, pull request comments, and commit bodies. Feeds draft proposals, the authority persona, and real reader language. Opt-in, with its own privacy rules.
 - `reference/personas.md`: the project-specific overlay between a chair's constitution and its runtime brief. What goes in `.docs-assist/personas/`, how it is built from repo evidence, and why the authority persona is deliberately not debiased.
 - `reference/external-verification.md`: how to check a claim about something the project does not vendor. Search the specific product and its general form, and always exclude the doc set from its own results.
