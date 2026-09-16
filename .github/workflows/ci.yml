@@ -62,16 +62,25 @@ jobs:
       # the managed Google, write-good, and alex packages synced above.
       # Lints all of the plugin's own markdown. The action's `files` input takes a
       # single path, so scan the repo root and let .vale.ini scope to markdown.
-      # `--minAlertLevel=error` makes Vale emit only error-level findings (em
-      # dashes), so the job fails on those and not on warnings. reviewdog reports
-      # at info level and would otherwise fail the PR on any warning in the diff.
+      # `--minAlertLevel=error` makes Vale emit only error-level findings, so the
+      # job fails on those and not on warnings. reviewdog reports at info level
+      # and would otherwise fail the PR on any warning in the diff.
+      #
+      # The glob excludes working artifacts: `reports/` holds design records, and
+      # `.docs-assist/loop/` holds packets, ledgers, and chair reviews. A packet
+      # is deliberately cold, flat prose written by an agent for another agent,
+      # and "There is no separate audit mechanism" is exactly the right sentence
+      # there. Linting a machine's working notes against a human prose style is
+      # a category error, and it produced 34 of the 47 errors this exclusion was
+      # written to sort out. Published prose under docs/ and the instruction
+      # files under skills/ are still linted, and the other 13 were real.
       - name: Vale (own docs)
         if: always()
         uses: errata-ai/vale-action@v2
         with:
           version: latest
           files: "."
-          vale_flags: "--config=assets/lint/vale/.vale.ini --minAlertLevel=error"
+          vale_flags: "--config=assets/lint/vale/.vale.ini --minAlertLevel=error --glob=!{reports,.docs-assist}/**"
           fail_on_error: true
           reporter: github-pr-check
         env:

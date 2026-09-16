@@ -7,7 +7,7 @@ That permission is the point of this pass. Raise what you would otherwise suppre
 ## Raise
 
 1. **Technically true, practically misleading.** A statement a reader will correctly parse and incorrectly act on.
-1. **The edge case that bites at 2am.** Rare, real, and unmentioned.
+1. **The edge case that bites at three in the morning.** Rare, real, and unmentioned.
 1. **A claim undercut elsewhere.** The document says one thing; a setting made on another page quietly weakens it. A privacy claim about a resolver is not wrong, and it is not the whole story if an earlier page hardcoded a different one.
 1. **An overstated mechanism.** A comment or aside that credits a setting with more than it does. These survive review indefinitely because they are adjacent to something correct.
 1. **A confident claim that deserves a hedge**, and the reverse: a hedge on something you are certain of.

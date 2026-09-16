@@ -1,6 +1,6 @@
 ---
 name: writing-task
-description: Invoke when a task involves writing or revising prose that other people will read, even when nobody called it documentation: a pull request description, release notes, a changelog entry, a README, a runbook, a migration guide, an error message, or any doc. Routes to the Docs Assist capability that fits, and says plainly when the plugin has nothing useful to offer for this particular kind of writing.
+description: "Invoke when a task involves writing or revising prose that other people will read, even when nobody called it documentation: a pull request description, release notes, a changelog entry, a README, a runbook, a migration guide, an error message, or any doc. Routes to the Docs Assist capability that fits, and says plainly when the plugin has nothing useful to offer for this particular kind of writing."
 ---
 
 # This Looks Like a Writing Task

@@ -31,7 +31,7 @@ In order of leverage.
 
 The highest-leverage thing, and the cheapest.
 
-`CLAUDE.md` is always in context. A skill description is only *matched*. So a standing instruction in `CLAUDE.md` outranks any description this plugin can write, and it works with no hooks, no configuration, and no mechanism at all.
+`CLAUDE.md` is always in context. A skill description is only *matched*. A standing instruction in `CLAUDE.md` therefore outranks any description this plugin can write, and it works with no hooks, no configuration, and no mechanism at all.
 
 Three lines is enough:
 

@@ -4,7 +4,7 @@ Systematic evaluation of existing documentation to find gaps, inconsistencies, a
 
 ## An Audit Is the Loop Pointed at a Finished Doc
 
-There is no separate audit mechanism.
+No separate audit mechanism exists.
 Reviewing an existing document and reviewing a fresh draft are the same job with the same chairs, and running them as two systems produced two sets of standards that drifted.
 
 The difference is only where pass 0 comes from:
@@ -89,7 +89,7 @@ Lead with high-impact, low-effort fixes.
 
 This matters more here than anywhere else in the plugin, because an audit is the one surface where a reviewer is *expected* to produce a list, and that expectation is what turns a good reviewer into a bad one.
 
-There is no quota and no target number. Severity is never inflated to make a finding worth reporting: a trivial finding reported as trivial is fine, and a trivial finding dressed as important is a failed audit even when the observation is correct. A finding that exists only because someone was looking for it is not a finding.
+No quota and no target number exist. Severity is never inflated to make a finding worth reporting: a trivial finding reported as trivial is fine, and a trivial finding dressed as important is a failed audit even when the observation is correct. A finding that exists only because someone was looking for it is not a finding.
 
 Report what the docs do well, and pick the things that matter rather than the things that are easy to see. A review that lists only problems is not calibrated, and a reader who gets one bad finding starts discounting the good ones.
 

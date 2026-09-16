@@ -142,7 +142,7 @@ Do not make the writer choose between waiting and guessing. Send the questions t
 **The intake loop is pass 0 of the authoring loop with a person in the authority chair.**
 
 The moves above are how a human fills a packet: Dump and Dig gather the rows, Reconcile types the provenance, Survey and Situate are what the continuity chair does when no human is doing it.
-There is no separate notes format and no separate directory.
+No separate notes format and no separate directory exist.
 Everything lands in `.docs-assist/loop/<doc-slug>/packet.md`, in the schema from `packet-procedure.md` or `packet-concept.md`.
 
 This matters beyond tidiness.

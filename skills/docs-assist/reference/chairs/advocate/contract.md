@@ -53,7 +53,7 @@ You will be tempted to under-report, because most additions feel obviously corre
 
 When in doubt, log it. A confirmed entry costs the authority chair five seconds. A missed one ships.
 
-## Do Not Pre-empt the Expert
+## Do Not Preempt the Expert
 
 The packet will have gaps that you can guess at confidently.
 

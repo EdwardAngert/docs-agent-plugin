@@ -28,7 +28,7 @@ Reviewer and chair mean the same thing here.
 The loop has been run end to end once: the run that produced this page.
 Before that it was exercised twice by hand, in pieces. One of those ran against documentation whose steps had already been tested; the other ran against a recipe.
 
-So most of what follows is design rather than measurement.
+Most of what follows is therefore design rather than measurement.
 The shape of the mechanism is real and it is in the repository.
 Its runtime behavior, including whether runs converge as quickly as the design expects and what a document actually costs to produce, is predicted and not yet observed.
 The [self-assessment in the README](../README.md#what-would-improve-it-most) is the set's standing record of that gap, and this page sits on the same side of it.
@@ -165,7 +165,7 @@ Selecting a stricter rulebook produces finer findings instead, and it caps the c
 
 The loop ends on whichever of these comes first:
 
-1. **An empty pass.** A pass that produces nothing at or above its threshold is a successful pass and ends the run. There is no minimum finding count, no target, and no quota, and a finding that exists only because someone was looking for it is not a finding. One bad finding costs more trust than silence, because a reader who gets one starts discounting the good ones.
+1. **An empty pass.** A pass that produces nothing at or above its threshold is a successful pass and ends the run. No minimum finding count, no target, and no quota apply, and a finding that exists only because someone was looking for it is not a finding. One bad finding costs more trust than silence, because a reader who gets one starts discounting the good ones.
 1. **An oscillation.** A pass that reverses the previous pass's change stops the run immediately. A reversal is not a defect in the loop. It has located a judgment call neither chair can settle, which is precisely where your scarce attention belongs.
 1. **The pass cap.** Three by default, four at maximum, and the fourth is off.
 

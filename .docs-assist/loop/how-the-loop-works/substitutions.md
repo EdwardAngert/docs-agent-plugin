@@ -72,7 +72,7 @@ No worked example of a filled packet, ledger, or `questions.md` exists anywhere 
 
 ## Proposed Canonical Bindings
 
-Proposed, not written. Every one of these depends on Q1, so binding them now would pre-empt the decision. I did not edit `.docs-assist/reference.yml`.
+Proposed, not written. Every one of these depends on Q1, so binding them now would preempt the decision. I did not edit `.docs-assist/reference.yml`.
 
 1. `authoring-loop`, kind `term`, canonical `authoring loop`, note that the first use on a page is "three-chair authoring loop."
 1. `chair` or `reviewer`, kind `term`, canonical pending Q1, with the losing spelling listed as a variant so the set stops carrying both.

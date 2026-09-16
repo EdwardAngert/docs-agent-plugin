@@ -12,7 +12,7 @@ Three reasons, and they compound:
 - **A site generator cannot be assumed at all.** Plenty of documentation is plain markdown in a repository, read on the code host, with no build step to interpret anything.
 - **Frontmatter pays off late.** It helps once a reader has landed on the page, and by then the page itself is in view and more useful than its metadata.
 
-So the plugin keeps what it needs in its own store, `.docs-assist/state/docs.yml`, and the documents stay portable plain markdown.
+The plugin therefore keeps what it needs in its own store, `.docs-assist/state/docs.yml`, and the documents stay portable plain markdown.
 See `assets/config/state.yml` for that file's shape.
 
 The split is simple:

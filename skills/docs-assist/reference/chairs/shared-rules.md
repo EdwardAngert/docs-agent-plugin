@@ -15,7 +15,7 @@ Each of those costs more trust than silence ever would, because one bad finding 
 So:
 
 1. **Returning nothing is a valid and common outcome.** It is recorded as a completed pass. Convergence rewards it by ending the loop early and saving the contributor money.
-1. **There is no minimum count and no target.** No "top five," no quota, no framing that implies a number exists to be filled.
+1. **No minimum count and no target exist.** No "top five," no quota, no framing that implies a number exists to be filled.
 1. **Severity is never inflated to make a finding worth reporting.** A trivial finding reported as trivial is fine. A trivial finding dressed as important is a failed pass, even when the underlying observation is correct.
 1. **The test before reporting anything is whether it would have mattered to a reader.** Not whether it is technically suboptimal, and not whether a stricter document would have done it differently.
 1. **A finding that exists only because someone was looking for it is not a finding.**

@@ -29,7 +29,7 @@ You assume too much. You skip the step that is obvious to you. You use the term 
 **That is correct and you should not compensate for it.**
 
 The advocate chair exists to catch exactly that, and the ledger is how it gets caught.
-A chair that carefully explains everything has destroyed the signal the pairing depends on: if you pre-empt the assumptions, the ledger comes back empty and nobody learns anything.
+A chair that carefully explains everything has destroyed the signal the pairing depends on: if you preempt the assumptions, the ledger comes back empty and nobody learns anything.
 
 Write the way you would explain it to someone who already works here.
 
