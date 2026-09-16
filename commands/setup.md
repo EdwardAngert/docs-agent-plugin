@@ -47,7 +47,21 @@ Hold the first run to zero issues, or list exactly what is left and why.
 
 Copy the script to `scripts/` and the workflow to `.github/workflows/` for each one accepted. Each has a `*_STRICT` environment variable that makes it blocking; leave them non-blocking unless the contributor asks.
 
-## 4. Site Navigation
+## 4. Personas
+
+Only offer this when the project will actually use the authoring loop, and only on a yes.
+
+The loop's chairs resolve in three layers: a constitution that ships with the plugin, a project overlay, and a runtime brief. The overlay is the middle one, and it cannot ship with the plugin because the repo does not exist when the plugin is written. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/personas.md`.
+
+Build `.docs-assist/personas/authority.md` from evidence rather than invention: the vocabulary the code and docs actually use, what the existing docs take for granted about their reader, and how the maintainers explain things in their own words.
+
+That last input comes from harvesting, which reads the issue tracker and is **opt-in on its own**, separately from this stage. Ask for it as its own question, and build the overlay without it on a no: vocabulary and baseline are enough for a usable persona, and voice can be added later or written by hand. See `reference/harvest.md`.
+
+Build `.docs-assist/personas/advocate.md` from the project's committed conventions plus the reader the existing docs actually serve. Keep both short. An overlay is a brief, not a character study, and every line costs tokens on every spawn of that chair.
+
+Tell the contributor these are theirs to edit. A persona a contributor corrects is the system working, and an edit there wins over anything inferred.
+
+## 5. Site Navigation
 
 Only when the project has a site generator, and only on a yes.
 

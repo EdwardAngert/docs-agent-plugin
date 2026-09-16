@@ -28,6 +28,7 @@
     "./agents/chair-authority.md",
     "./agents/chair-advocate.md",
     "./agents/chair-continuity.md",
-    "./agents/cold-reader.md"
+    "./agents/cold-reader.md",
+    "./agents/doc-harvester.md"
   ]
 }
