@@ -8,7 +8,7 @@ It also references third-party material, noted here.
 The built-in documentation template catalog (`assets/templates/gooddocs-catalog.yml`) indexes templates from The Good Docs Project.
 Template bodies are fetched from the project's repository at use time and are not redistributed in this repository.
 
-- Source: https://gitlab.com/tgdp/templates
+- Source: <https://gitlab.com/tgdp/templates>
 - Project: <https://thegooddocsproject.dev/>
 - License: MIT No Attribution (MIT-0), Copyright (c) The Good Docs Project
 
