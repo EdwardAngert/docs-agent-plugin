@@ -9,10 +9,10 @@ The built-in documentation template catalog (`assets/templates/gooddocs-catalog.
 Template bodies are fetched from the project's repository at use time and are not redistributed in this repository.
 
 - Source: https://gitlab.com/tgdp/templates
-- Project: https://thegooddocsproject.dev/
+- Project: <https://thegooddocsproject.dev/>
 - License: MIT No Attribution (MIT-0), Copyright (c) The Good Docs Project
 
 MIT-0 requires no attribution.
 Docs Assist acknowledges the source anyway, and adds this line to any document seeded from a fetched template:
 
-> Based on a template from The Good Docs Project (https://thegooddocsproject.dev/).
+> Based on a template from The Good Docs Project (<https://thegooddocsproject.dev/>).

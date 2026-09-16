@@ -178,7 +178,12 @@ function gitGrepHits(pattern) {
 function gitGrepLiteral(pattern) {
   const key = `lit:${pattern}`;
   if (gitGrepCache.has(key)) return gitGrepCache.get(key);
-  const out = sh(['git', 'grep', '-n', '-F', '-e', pattern, '--', ':!*.md', ':!*.mdx']);
+  // Exclude this checker's own output. claims.json records every claim it
+  // found, so once that directory is committed, every claim resolves by
+  // finding itself and the check reports zero findings forever. Caught by
+  // re-running after committing the artifacts: 20 real findings became 0.
+  const out = sh(['git', 'grep', '-n', '-F', '-e', pattern, '--',
+    ':!*.md', ':!*.mdx', `:!${OUT_DIR}/*`, ':!.docs-assist/claims/*']);
   const hits = out ? out.split('\n').filter(Boolean) : [];
   gitGrepCache.set(key, hits);
   return hits;

@@ -1,5 +1,10 @@
 # Vale packages fetched by `vale sync` (Google, write-good, alex, and any
 # others a project adds). Only the DocsAssist style is this plugin's own and
-# tracked; the rest are synced fresh by CI and by /docs-assist:setup-lint.
+# tracked; the rest are synced fresh by CI and by /docs-assist:setup.
 assets/lint/vale/styles/*/
 !assets/lint/vale/styles/DocsAssist/
+
+# Regenerated check output. Tracking it poisoned check-claims.mjs, which
+# resolves claims by grepping tracked source and began finding them in its
+# own cache.
+.docs-assist/claims/
