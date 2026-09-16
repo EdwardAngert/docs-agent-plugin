@@ -46,7 +46,7 @@ If the contributor has a pile of raw source material (tickets, a PRD, Slack thre
 
 The inventory feeds the plan: clusters become candidate docs, gaps become priorities. If there is no pile, skip this step.
 
-When the inventory's gaps point at knowledge that lives with people who are not in the session, offer intake packets (portable questionnaires, pre-loaded with what the survey and code already reveal) so their answers arrive as more pile. See the async section of `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`.
+When the inventory's gaps point at knowledge that lives with people who are not in the session, offer intake questionnaires (portable questionnaires, pre-loaded with what the survey and code already reveal) so their answers arrive as more pile. See the async section of `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`.
 
 ### 3. Orient and Recommend a Starting Point
 

@@ -74,7 +74,7 @@ When they decline, proceed normally, note in the final review that the dump's cl
 
 Sort the dump's claims into three buckets, and treat each differently:
 
-- **Checkable against the code** (commands, flags, defaults, error text, behavior): check them. The scope is tiered: every claim the eventual doc will state gets hard verification (the draft flow deepens this later); the rest of the dump gets a scan for contradictions, not an exhaustive audit. When a notes file is in use (see "Persist as You Go"), record what you confirm here in its Reconcile section, so the draft flow's verify step and second-opinion pass build on it instead of re-reading the same source to re-derive it.
+- **Checkable against the code** (commands, flags, defaults, error text, behavior): check them. The scope is tiered: every claim the eventual doc will state gets hard verification (the draft flow deepens this later); the rest of the dump gets a scan for contradictions, not an exhaustive audit. Record what you confirm into the packet's provenance rows, typed as a code reference, so the verify step builds on it instead of re-reading the same source to re-derive it.
 - **Checkable against the existing docs**: flag where the dump contradicts something already published. One of them is wrong, and it matters which.
 - **Unverifiable** (intent, history, tribal knowledge, external systems): mark as SME-attested and move on. These are often the most valuable content. Never demand proof for a gotcha; record who attested it instead (see the ledger below).
 
@@ -85,11 +85,11 @@ Deliver the reconciliation as a short read-back, folded into the dig when that f
 When the dump and the code disagree, **ask, never assume**. The contributor misremembering and the contributor having just found a bug look identical from here.
 If they say the code is wrong, offer to record it (a `gh issue` when the repo uses GitHub, a follow-up note otherwise), and write the doc to the intended behavior with the discrepancy flagged.
 
-After the reconcile runs, offer the ledger: claims that survive into a doc on the expert's word alone can be recorded in the doc's `sme-attested` frontmatter (see `frontmatter-spec.md`), so a future reviewer verifies specific claims instead of re-reviewing everything.
-This is a separate yes: not every pipeline accepts unapproved frontmatter fields, and a strict SSG schema can reject a build over one.
-When they decline, keep the attested-claims list in the conversation's review notes (or the saved report) instead of the frontmatter.
+Claims that survive into a doc on the expert's word alone are typed `SME experience` in the packet's provenance rows and recorded in `.docs-assist/state/docs.yml`, so a future reviewer verifies specific claims instead of re-reviewing everything.
+That is where the plugin writes, and it needs no one's permission because it touches nothing the project publishes.
+A project that also wants the list in its frontmatter can have it, on an explicit yes, since not every pipeline accepts unapproved fields and a strict schema can reject a build over one. See `frontmatter-spec.md`.
 
-This move guards every door, not only the conversational dump: `doc-intake` reports code conflicts in its inventory, so corpus piles and returned intake packets arrive pre-reconciled, and the consolidator resolves what they flag.
+This move guards every door, not only the conversational dump: `doc-intake` reports code conflicts in its inventory, so corpus piles and returned intake questionnaires arrive pre-reconciled, and the consolidator resolves what they flag.
 
 ## 6. Dig: Ask the Sharp Questions Now
 
@@ -131,7 +131,7 @@ When the input is a heterogeneous pile rather than one expert's dump (tickets, a
 The knowledge often lives with someone who is not in the session: the engineer who built it, the support lead who fields the tickets.
 Do not make the writer choose between waiting and guessing. Send the questions to the knowledge instead.
 
-- **Generate an intake packet**: a Markdown file of targeted questions the expert can answer in minutes, in any order, as messily as they like. It is the dig step, made portable.
+- **Generate an intake questionnaire**: a Markdown file of targeted questions the expert can answer in minutes, in any order, as messily as they like. It is the dig step, made portable.
 - **Pre-load it from the survey and the code**, so the questions are sharp, not generic: "The retry default is 3; when should someone change it, and to what?" beats "describe the retry behavior." Include what you already know so the expert corrects instead of dictating.
 - **Write it to `.docs-assist/intake/packets/<topic>.md`**, with `<topic>` a kebab-case slug of the doc's working title, and hand it to the writer to send over whatever channel they use. The packet states, at the top, that order and polish do not matter.
 - **Ingest the returned answers** as a pile slice: `doc-intake` reads them into the inventory, and drafting proceeds from there, conversationally or via the fan-out.

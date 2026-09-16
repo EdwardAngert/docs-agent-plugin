@@ -33,7 +33,7 @@ Draft-specific notes for those moves:
 - **Survey**: note the frontmatter field names in use (`tags` vs `keywords`, `type` vs `content-type`) and any SSG fields you'll need to preserve, since this doc will carry frontmatter that matches. Also glob `.docs-assist/loop/*/packet.md` for one matching this topic, or list any with `status: in-progress` if the topic is unclear. If one exists, offer to resume from it instead of starting over.
 - **Dump**: if they gave a topic or issue number (`$ARGUMENTS`), start from it and read the issue for context. If the dump runs long, is many-part, or the contributor signals they'll need to step away, offer to open the packet and write as you go, at the Reflect read-back and never mid-dump (see "Persist as You Go" in `intake.md`). On yes, keep `.docs-assist/loop/<doc-slug>/packet.md` current through every remaining move.
 - **Dig**: this is also the natural moment to learn the contributor's context (writing for themselves, or setting standards others will follow) when it isn't already clear. Calibrate offers accordingly, per the skill's calibration guidance.
-- **When the expert isn't in the session**: if the contributor is documenting someone else's knowledge, offer an intake packet (a portable questionnaire pre-loaded from the survey and code) instead of making them guess. See the async section of `intake.md`. Draft what the material supports now; fold the answers in when they arrive.
+- **When the expert isn't in the session**: if the contributor is documenting someone else's knowledge, offer an intake questionnaire (a portable questionnaire pre-loaded from the survey and code) instead of making them guess. See the async section of `intake.md`. Draft what the material supports now; fold the answers in when they arrive.
 
 ### 7. Verify Against the Code
 
@@ -65,11 +65,11 @@ For anything beyond a short entry, show the outline before writing the full draf
 - Present the sections and headings, a line each on what goes in them, and where code samples will go.
 - Confirm scope and order, and adjust before drafting.
 - Skip it for a very short doc (a single troubleshooting entry). Offer it rather than forcing it.
-- Record the shape decision and outline back to the notes file, if one is in use.
+- Record the shape decision and outline back to the packet.
 
 ### 10. Produce the Draft
 
-Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md` automatically. If a notes file exists, write from it: it already holds the reconciled facts, the SME-attested claims, and the answered dig questions.
+Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md` automatically. Write from the packet: it already holds the reconciled facts, the typed provenance, and the answered dig questions.
 
 - Clear, action-oriented headings
 - Prerequisites section listing only what sits outside the calibrated reader's baseline (per the story's "what they already know"; see `user-stories.md`), not everything the doc happens to touch

@@ -289,7 +289,7 @@ But structure is not behavior: most of what this plugin does is instructions to 
 The claims above should be read with that asterisk, and the list below is the roadmap for removing it, in priority order:
 
 1. **An eval suite.** Claude Code ships a plugin eval harness (`claude plugin eval`), and the load-bearing behaviors deserve cases: does a cold audit catch planted example drift, does the drafter flag gaps instead of inventing facts, does a healthy docs set get told it is healthy?
-1. **Live runs on messy repos.** Fan-out drafting, intake packets, template fetching, and the CI comment flow have not yet run in anger, and this repo is too well-groomed to be a fair test.
+1. **Live runs on messy repos.** Fan-out drafting, intake questionnaires, template fetching, and the CI comment flow have not yet run in anger, and this repo is too well-groomed to be a fair test.
 1. **Real users.** A few solo maintainers running `/docs-assist:health`, a plan, and a fan-out, then reporting where it fell down, would outweigh any amount of self-assessment.
 1. **The deferred backlog.** Docs-impact noise knobs, more site generators, and CI auto-update, tracked in [the plan](docs/plan.md).
 
