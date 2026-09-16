@@ -1,6 +1,6 @@
 ---
 title: "Write Docs With Docs Assist"
-description: "How to use the Docs Assist plugin as a contributor: sharing what you know, starting from a template, reviewing for accuracy, and using the draft, plan, and audit commands."
+description: "How to use the Docs Assist plugin as a contributor: installing it, sharing what you know, reviewing for accuracy, and when to reach for draft, plan, or audit."
 content-type: guide
 audience: contributors
 keywords:
@@ -13,9 +13,23 @@ keywords:
 
 # Write Docs With Docs Assist
 
-If the Docs Assist plugin is installed in your Claude Code setup, Claude Code has documentation expertise built in.
+With the Docs Assist plugin installed, Claude Code has documentation expertise built in.
 You don't need to learn any special syntax or documentation theory.
 Ask for help writing docs the way you normally would, and Claude Code guides you through it.
+
+## Install It First
+
+```text
+/plugin marketplace add EdwardAngert/docs-agent-plugin
+/plugin install docs-assist
+```
+
+Then ask Claude Code for documentation help in plain words. Nothing else is required.
+
+Two optional things make it work better in your repo, and `/docs-assist:setup` offers both:
+
+- **Committed conventions** in `.docs-assist/`, so the plugin holds your docs to your heading style, your terminology, and your example values instead of inferring them each time.
+- **Three lines in `CLAUDE.md`** telling Claude Code to reach for the plugin when work touches your docs. This matters more than it looks: the plugin activates when something matches what you *said*, so work that never mentions documentation never reaches it. A standing instruction in `CLAUDE.md` closes that gap.
 
 ## What the Plugin Does Behind the Scenes
 
@@ -83,20 +97,24 @@ Focus on:
 
 ### Start From a Proven Template
 
-For a new doc, Claude Code can start from a proven structure instead of a blank page, using The Good Docs Project templates.
+For a new doc, Claude Code can start from a proven structure instead of a blank page, using [The Good Docs Project](https://www.thegooddocsproject.dev/) templates.
 Describe the problem in plain words, like "people keep opening tickets about a login loop," and it suggests a matching template and fills it with what you know.
 Take the suggestion, pick another, or decline. It's a head start, not a requirement.
 
-### Use the Draft Command for Guided Walkthroughs
+### Use the Draft Command to Start Somewhere Specific
 
-If you want a more structured experience, use the `/draft` command:
+Plain conversation reaches everything the plugin does.
+The commands are shortcuts into those same workflows, not a more structured alternative, so use one when you already know where you want to start:
 
 ```text
 /docs-assist:draft how to configure webhook retries
 ```
 
-This walks you through a step-by-step intake: what you're documenting, who it's for, what the reader should be able to do, prerequisites, steps, gotchas.
-It's useful when you're starting from scratch on a topic rather than improving something that already exists.
+It opens the same way a conversation does, by asking you to dump what you know.
+The sharp questions (prerequisites, decision points, what goes wrong) come after that, once there is something to ask about.
+A narrow question asked first gets a narrow answer, which is why it waits.
+
+Use it when you're starting from scratch on a topic rather than improving something that already exists.
 
 ### Plan a Full Documentation Set
 
@@ -106,29 +124,39 @@ If you need to document a whole project, not only one page, use the plan command
 /docs-assist:plan
 ```
 
-Claude will read the codebase, ask you about your users and their goals, map out the user journeys, and propose a prioritized list of docs to write before writing any of them.
+Claude will read the codebase, ask about your users and their goals, and map out the user journeys.
+
+Expect it to name the single highest-leverage doc (usually a README or a quickstart) and offer to draft it right away, before the full plan is finished.
+That is deliberate: one good doc shipped in the first ten minutes beats a perfect roadmap nobody has started.
+
 Use this for:
 
 - New projects that have no documentation yet
 - Existing projects with scattered docs that need a coherent structure
 - Onboarding a team to a tool and needing to document it for them
 
-Once you agree on the plan, Claude works through it doc by doc, and drafts the docs whose material already exists in parallel while you review the queue.
+Once you agree on the plan, Claude works through it doc by doc.
+Docs whose material already exists are drafted in parallel, and you review the queue instead of co-writing each one.
+You still see every draft before anything is final; parallel means they are written at the same time, not that they skip your review.
 
-### Add Examples to Existing Docs
+### Review Docs You Already Have
 
-If a doc already exists but is missing code examples, use:
+To check existing docs rather than write new ones:
 
 ```text
-/docs-assist:draft docs/webhooks.md
+/docs-assist:audit docs/
 ```
 
-Claude Code will identify sections that need examples, write safe copy-paste ready code, and ask before inserting them.
-It reuses the variable names already in your docs so examples stay consistent.
+This reconstructs what each doc claims and checks those claims against your code.
+A claim nobody can source is the finding, and it is the kind that survives ordinary review: in finished prose it sits next to twenty sourced claims and reads exactly like them.
+
+For a procedure specifically, `/docs-assist:verify` goes further and runs the steps in an isolated workspace, so you find out whether the doc still works rather than whether it still reads well.
 
 ## What It Won't Do
 
-The plugin doesn't make decisions about *what* to document or *where* it should live in your docs site's navigation.
-It'll suggest a filename and location based on existing conventions in the repo, but if your team has a specific process for that (like a docs review board or a content calendar), you still follow that.
+The plugin won't decide *where* a doc belongs in your site's navigation.
+It suggests a filename and location from the conventions already in your repo, but if your team has a process for that (a docs review board, a content calendar), you still follow it.
+
+It will happily help decide *what* to document: that is most of what `/docs-assist:plan` does.
 
 It also won't write the file without you reviewing the draft first.

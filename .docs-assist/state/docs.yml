@@ -19,3 +19,8 @@ docs/plan.md:
 
 docs/command-reference.md:
   last-verified: 2026-09-16
+
+docs/write-docs-with-docs-assist.md:
+  last-verified: 2026-09-16
+  # Audited by the authority chair and a cold reader, 2026-09-16. Six corrections
+  # applied. Run artifacts: .docs-assist/loop/write-docs-with-docs-assist/
