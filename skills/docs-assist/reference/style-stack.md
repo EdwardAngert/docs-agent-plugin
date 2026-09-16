@@ -32,16 +32,22 @@ Write the record as the decision plus its reason, not as a citation:
 
 Seeded so the chair does not rediscover them.
 
-| Question        | Google                              | GitLab                                             | Resolution                                          |
-| --------------- | ------------------------------------ | --------------------------------------------------- | ---------------------------------------------------- |
-| Em dashes        | Permitted, with guidance             | Forbidden outright                                  | House style forbids. GitLab concurs.                  |
-| Semicolons       | Permitted                            | Forbidden outright                                  | Prefer the stricter rule. Split the sentence.         |
-| Active voice     | Near-absolute                        | Passive allowed when product-as-subject is awkward   | Follow GitLab. The exception is better engineering.   |
-| Contractions     | Conversational and friendly          | Actively encouraged                                 | No conflict. Use them.                                |
-| Pre-announcing   | Do not pre-announce anything         | No future promises, for legal reasons                | Strong agreement. Treat as a hard rule.               |
-| Topic types      | Implicit                             | Mandated                                            | Maps onto `content-types.md`.                         |
+| Question        | Google                                                 | GitLab                                             | Resolution                                          |
+| --------------- | ------------------------------------------------------- | --------------------------------------------------- | ---------------------------------------------------- |
+| Em dashes        | Permitted, with guidance                                | Forbidden outright                                  | House style forbids. GitLab concurs.                  |
+| Semicolons       | "If possible, avoid using semicolons"                   | Forbidden outright                                  | Both discourage. Split the sentence.                  |
+| Active voice     | Near-absolute                                           | Passive allowed when product-as-subject is awkward   | Follow GitLab. The exception is better engineering.   |
+| Contractions     | Recommends them, including negations, for informal tone | Actively encouraged                                 | No conflict. Use them.                                |
+| Serial commas    | Use them                                                | Use them                                            | No conflict.                                          |
+| Pre-announcing   | Do not pre-announce anything                            | No future promises, for legal reasons                | Strong agreement. Treat as a hard rule.               |
 
-The em dash case is worth noting: the house style's ban, which could read as a personal preference, has a major style guide standing behind it.
+Two notes on this table, both learned by checking rather than recalling.
+
+The em dash case is worth keeping in mind: the house style's ban, which could read as a personal preference, has a major style guide standing behind it.
+
+The semicolon row was wrong until it was verified. It said Google "permits" semicolons, which made the row look like a genuine conflict resolved toward the stricter guide. Google actually says to avoid them where possible, so the two guides broadly agree and the resolution never rested on a precedence rule at all. A table of conflicts that invents a conflict is worse than no table, because it teaches the chair that the guides disagree more than they do.
+
+A topic-types row was also removed. GitLab does organize its documentation around topic types, and "mandated" against Google's "implicit" was an assertion made from memory rather than from either guide's text. It is not a punctuation-level rule that belongs in a conflict table, and `content-types.md` already owns the subject.
 
 ## What Both Guides Agree On
 
