@@ -20,6 +20,12 @@ docs/plan.md:
 docs/command-reference.md:
   last-verified: 2026-09-16
 
+docs/how-the-loop-works.md:
+  last-verified: 2026-09-16
+  # Produced by the first end-to-end run of the authoring loop, 2026-09-16.
+  # Artifacts: .docs-assist/loop/how-the-loop-works/
+  # 38 ledger entries, 29 ruled at pass 1: 21 confirmed, 7 corrected, 1 unknowable.
+
 docs/write-docs-with-docs-assist.md:
   last-verified: 2026-09-16
   # Audited by the authority chair and a cold reader, 2026-09-16. Six corrections

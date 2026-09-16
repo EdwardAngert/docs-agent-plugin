@@ -16,7 +16,7 @@ than vagueness does.
 - One sentence per line. Diffs stay readable.
 - `1.` for every ordered list item.
 - Tables column-aligned.
-- Reference files use Title Case headings; `docs/` uses sentence case.
+- Reference files and `docs/` both use AP title case headings, per `config.yml`. (An earlier version of this line said `docs/` uses sentence case. It was written from memory, contradicted both the config and every file in `docs/`, and was caught by the advocate chair reading them. Check the config, not your recollection.)
 - Every non-obvious rule states why, usually with the incident behind it.
 - A rule that came from a real failure names the failure.
 
