@@ -44,7 +44,7 @@ Before reading a single file for structure or style, check `.docs-assist/config.
 
 Scale this step to the target. For a full set or a directory, take the full inventory below. For a few files or a diff, skip the whole-set inventory and work from the edit scope plus the edges in `impact-analysis.md`.
 
-Check the fan-out threshold now, from the inventory you just took: more than 5 files or roughly 2,000 lines total means fanning out across `doc-auditor` subagents (see the Notes section), not auditing inline. Decide this here, before starting content analysis, not partway through.
+Check the fan-out threshold now, from the inventory you just took: more than 5 files or roughly 2,000 lines total means fanning out across `chair-authority` and `chair-advocate` slices (see the Notes section), not auditing inline. Decide this here, before starting content analysis, not partway through.
 
 For a full set, explore the documentation structure:
 
@@ -66,7 +66,7 @@ Docs rot silently when a linked repo, page, or account is renamed, moved, or del
 A redirect that `markdown-link-check` still counts as alive can hide a rename (`github.com/OWNER/REPO` resolving to a different owner or repo name is the common case). If a link looks suspicious (an org/repo name that doesn't match the project, a host that redirects), spot-check that one URL's effective destination (`curl -sIL -o /dev/null -w '%{url_effective}\n' <url>`) and propose the corrected URL; don't do this for every link, only ones flagged as worth a second look.
 
 - For a change-based audit, check only the links touched by or added in the diff, not the whole set (see `impact-analysis.md`).
-- For a large full-set audit, this step runs once against the deduped file list, not per subagent slice: running it inside the `doc-auditor` fan-out described in the Notes below would just duplicate the same network calls.
+- For a large full-set audit, this step runs once against the deduped file list, not per subagent slice: running it inside the chair fan-out described in the Notes below would just duplicate the same network calls.
 
 ### 3. Analyze Content
 
@@ -217,4 +217,4 @@ The conversation is for triage; end with a persist offer, per the skill's feedba
 - Consider context: some "issues" may be intentional choices
 - External link checking prefers, in order: an existing linter/CI setup already in the repo, wiring one up via `/docs-assist:setup-lint` when CI exists, then an ad hoc `npx markdown-link-check` run. It needs `Bash` (for `npx`) or `WebFetch`; if neither is available, skip the check and say so rather than reporting links as clean
 - For large repositories, ask how to handle the files list before outputting
-- Fan out when the scope crosses a concrete threshold, not a feeling: more than 5 files or roughly 2,000 lines total in one audit. Below that, review inline. At or above it, launch the `doc-auditor` subagent in parallel across slices of the set, then consolidate the findings into one prioritized report. Include the resolved conventions in each subagent's brief (the relevant `.docs-assist/config.yml` settings and `style.md` rules, or the inferred conventions when no config exists), so every slice audits against the same standard. Check the threshold explicitly at the start of Take Inventory (step 1), not only when it feels large partway through a long session: a qualitative trigger is easy to talk yourself out of once already deep in the work
+- Fan out when the scope crosses a concrete threshold, not a feeling: more than 5 files or roughly 2,000 lines total in one audit. Below that, review inline. At or above it, run the loop's review passes in parallel across slices of the set: `chair-authority` for whether the docs are true, `chair-advocate` for whether a reader can follow them. Then consolidate the findings into one prioritized report. The loop is the audit; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/loop.md`. Include the resolved conventions in each subagent's brief (the relevant `.docs-assist/config.yml` settings and `style.md` rules, or the inferred conventions when no config exists), so every slice audits against the same standard. Check the threshold explicitly at the start of Take Inventory (step 1), not only when it feels large partway through a long session: a qualitative trigger is easy to talk yourself out of once already deep in the work

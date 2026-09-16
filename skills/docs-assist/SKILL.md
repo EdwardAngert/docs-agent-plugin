@@ -114,9 +114,28 @@ Feedback that exists only in this conversation dies with the session. A solo wri
 - **About the repo** (a full audit, a health scorecard): offer to save it as a report file under `.docs-assist/reports/`, dated, so the next run can compare against it. Reports worth publishing move to the docs tree deliberately. Like intake artifacts, reports are working material: commit them for a shared record, or add `.docs-assist/reports/` to `.gitignore` to keep them local.
 - **The conversation is for triage.** Present findings here to decide what to act on, then end the workflow with the persist offer. Never assume; never skip the offer.
 
+### Run the Authoring Loop
+
+For a doc worth the passes, drafting and review are one mechanism: three chairs in separate contexts, passing artifacts by path. `reference/loop.md` is the full method and you orchestrate it; the chairs never read it.
+
+Your job as orchestrator is five things, and none of them is doing the chairs' work:
+
+1. **Cast.** Place the doc on the two axes in `reference/casting.md` and seat the chairs. If the material needs two casts, it is two documents: say so before writing either.
+1. **Run the deterministic checks first.** `example-continuity.mjs`, `file-path-check.mjs`, `duration-check.mjs`, and the claim checks. Brief the chairs with what they found so no pass is spent rediscovering it.
+1. **Pass paths, never content.** Artifacts live in `.docs-assist/loop/<doc-slug>/`. A chair that returns its artifact in its report has put the whole document back in this conversation, which is the one thing isolating them was for.
+1. **Verify the write boundary.** After each pass, confirm only the expected artifact changed. Tool grants cannot express a path scope, so this check is where that guarantee actually lives.
+1. **Decide when to stop.** Convergence, the pass cap, or an oscillation. An oscillation goes to the contributor rather than getting another pass thrown at it.
+
+Never brief a chair with another chair's reasoning. The advocate chair receives the packet, not why the packet says what it says, and that boundary is what makes the ledger a diff instead of a recollection.
+
+The loop's output for the contributor is `questions.md`, not the draft. Bring them a short list of what genuinely needs them, and the draft alongside it.
+
+When a doc is too short to pay for a full run, use the single cold pass in `reference/second-opinion.md` instead.
+
 ### Draft a Single Doc
 
 Gather before you structure. The full method is in `reference/intake.md`; this is the shape of it.
+Intake fills the same packet the authority chair would emit, so a dump and a generated packet are the same artifact by different hands.
 
 1. **Survey what exists, quietly.** Read `llms.txt` if present, then scan doc directories and frontmatter for related content, and note light feature signals from the repo. This is so your questions land, not a full read of everything. Also check `.docs-assist/intake/notes/` for an unfinished notes file on this topic, and offer to resume it instead of starting over.
 1. **Ask for the dump.** Open with "tell me everything you know about this, don't worry about order or polish, dump it and I'll organize it." Take it however it arrives. If it looks like more than one sitting, offer to keep a running notes file as you go; see `reference/intake.md`.
@@ -136,7 +155,7 @@ Gather before you structure. The full method is in `reference/intake.md`; this i
 1. **Orient and recommend a starting point.** Many people plan a docs set because they don't know where to begin, so tell them what you found rather than quizzing them. Read the project back, name the single highest-leverage first doc (usually a README or quickstart), and offer to draft it now. For a bare repo, offer `/docs-assist:init` so docs are consistent from the first one.
 1. **Confirm scope and direction.** Confirm your read of the users, their goals, and how deep to go. Confirm, don't quiz.
 1. **Propose a plan built to ship and iterate.** Stage the docs: ship now (the smallest useful set), next iteration, later. Keep "ship now" small, and persist the plan to `docs/plan.md`.
-1. **Get buy-in, then ship and iterate.** Do not write until the plan is agreed on. Then ship doc by doc via the drafting workflow, or fan out the docs whose material already exists across the `doc-drafter` subagent and review the queue. End each doc by naming what's next, and plan the next iteration from what readers actually hit.
+1. **Get buy-in, then ship and iterate.** Do not write until the plan is agreed on. Then ship doc by doc via the drafting workflow, or fan out the docs whose material already exists across parallel loop runs and review the queue. End each doc by naming what's next, and plan the next iteration from what readers actually hit.
 
 See the `/docs-assist:plan` command for the full planning methodology.
 

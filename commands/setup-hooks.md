@@ -63,7 +63,7 @@ When chosen:
 - Copy `${CLAUDE_PLUGIN_ROOT}/assets/ci/check-facts.mjs` to `scripts/check-facts.mjs` and `${CLAUDE_PLUGIN_ROOT}/assets/ci/github/check-facts.yml` to `.github/workflows/check-facts.yml`.
 - If either destination exists, show a diff and confirm. Never silently overwrite.
 - Explain the tuning knob: `CHECK_FACTS_STRICT` (fail the check instead of reporting).
-- Tell the user this only checks that a `fact`'s source and a `pointer`'s target still exist; it does not compare a fact's value against its source, since that needs understanding the source language. That deeper check stays something `doc-auditor` and drafting do.
+- Tell the user this only checks that a `fact`'s source and a `pointer`'s target still exist; it does not compare a fact's value against its source, since that needs understanding the source language. That deeper check stays something the authority chair and drafting do.
 
 ### 7. Install the CI Claim Check
 

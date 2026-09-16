@@ -131,7 +131,7 @@ For every command's argument and an example, see the [command reference](docs/co
   Bring the expertise, the plugin handles the writing.
 - `/docs-assist:plan [repo or description]`: plan a full documentation set.
   Reads the codebase, asks about users and goals, maps user journeys, and proposes a prioritized plan before writing anything.
-  Once the plan is approved, docs whose material already exists draft in parallel across the `doc-drafter` subagent, and you review the queue instead of co-writing each one.
+  Once the plan is approved, docs whose material already exists draft in parallel across the authoring loop, and you review the queue instead of co-writing each one.
 - `/docs-assist:make-examples [doc-path]`: add or improve copy-paste safe code examples in an existing doc.
 - `/docs-assist:template [problem or topic]`: start from a proven structure (The Good Docs Project) instead of a blank page.
   Suggests a template from what you describe and fills the skeleton with what you know.
@@ -218,7 +218,7 @@ The plugin then maintains all of it as part of its normal drafting and updating 
 ```text
 docs-assist/
 ├── commands/                  # health, draft, plan, audit, make-examples, update, release-notes, agent-ready, template, init, setup-lint, setup-hooks, setup-site
-├── agents/                    # doc-auditor, doc-updater, doc-intake, doc-recon, doc-drafter subagents
+├── agents/                    # chair-authority/advocate/continuity, cold-reader, doc-updater, doc-intake, doc-recon subagents
 ├── skills/docs-assist/
 │   ├── SKILL.md               # core instructions and role definition
 │   └── reference/

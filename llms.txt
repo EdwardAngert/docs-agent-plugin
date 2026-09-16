@@ -34,11 +34,13 @@
 
 ## Agents
 
-- [doc-auditor](agents/doc-auditor.md): Audits a single doc or slice and returns structured findings. Used to fan out large audits in parallel.
+- [chair-authority](agents/chair-authority.md): The authority chair in the authoring loop. Emits a cold, prose-free packet of what is true, then rules on the ledger entries the advocate chair added. Holds the only web access in the loop.
+- [chair-advocate](agents/chair-advocate.md): The advocate chair. Shapes a packet into a document and declares, as a ledger, everything it added that the packet did not contain.
+- [chair-continuity](agents/chair-continuity.md): The continuity chair. Reconciles example values, naming, and sequencing against the rest of the set, so a reader working straight through meets something coherent.
+- [cold-reader](agents/cold-reader.md): Reads one finished document with no repository access and states what it would do and expect. Divergence names the paragraph at fault.
 - [doc-updater](agents/doc-updater.md): Updates a single doc to match a code change. Used to fan out update-on-change across many files.
 - [doc-intake](agents/doc-intake.md): Reads a pile of raw source material in isolation and returns a compact content inventory. Used to fan out corpus intake without loading the pile into the main conversation.
 - [doc-recon](agents/doc-recon.md): Reads a codebase in isolation and returns a compact project map (what it does, features, entry points, audiences, candidate docs). Used to orient a from-scratch docs effort without reading the whole repo in the main conversation.
-- [doc-drafter](agents/doc-drafter.md): Drafts one planned doc from a plan entry and existing source material, flagging what needs SME verification. Used to fan out drafting across an approved plan stage in parallel.
 - [doc-verifier](agents/doc-verifier.md): Executes one procedural doc's commands in an isolated workspace and reports, step by step, where reality diverges from the doc. Used to fan out verification across a set's procedural docs.
 
 ## Standards and Methodology
