@@ -1,24 +1,46 @@
 # Frontmatter Spec
 
-This document defines the frontmatter schema Docs Assist generates when writing docs.
-The schema is opinionated (it defines recommended fields and what they mean) but not strict.
-Missing fields don't break anything.
-The plugin works with whatever frontmatter exists and fills in what's missing when it writes new docs.
+This document defines the frontmatter schema Docs Assist offers when writing docs, and how it reads frontmatter a project already keeps.
 
-## Why Frontmatter Matters
+## Frontmatter Is Offered, Never Required
 
-Good frontmatter serves three audiences at once:
+**No plugin behavior depends on frontmatter.**
 
-- **AI tools** can scan frontmatter to understand a doc without reading the body. This makes the plugin's "survey existing docs" step fast and accurate.
+Three reasons, and they compound:
+
+- **Site generators disagree.** Docusaurus, MkDocs, Starlight, Hugo, and Jekyll each accept a different schema, and a field one renders is a field another prints into the page body or rejects at build time.
+- **A site generator cannot be assumed at all.** Plenty of documentation is plain markdown in a repository, read on the code host, with no build step to interpret anything.
+- **Frontmatter pays off late.** It helps once a reader has landed on the page, and by then the page itself is in view and more useful than its metadata.
+
+So the plugin keeps what it needs in its own store, `.docs-assist/state/docs.yml`, and the documents stay portable plain markdown.
+See `assets/config/state.yml` for that file's shape.
+
+The split is simple:
+
+- The plugin **writes** state to `.docs-assist/state/`.
+- The plugin **reads** frontmatter when a project already has it, and respects it.
+- Where both carry a value, the store wins.
+
+Reading a project's existing frontmatter is not a compatibility shim.
+A project whose generator renders `last-verified` into the page should have that honored, and a project with an established schema should have the plugin extend it rather than fight it.
+
+When a project has a site generator and wants frontmatter wired up, the plugin offers to do it and explains what each field buys.
+It is a service, not a convention imposed on files the plugin does not own.
+
+## Why Frontmatter Still Helps
+
+When a project does keep it, good frontmatter serves three audiences at once:
+
+- **AI tools** can scan frontmatter to understand a doc without reading the body, which makes the plugin's "survey existing docs" step fast and accurate.
 - **Search engines and docs site search** index frontmatter fields. Keywords, descriptions, and content types improve discoverability.
-- **Human docs teams** can use frontmatter to filter, audit, and understand their content landscape. "Show me all troubleshooting docs aimed at admins" becomes a query, not a manual review.
+- **Human docs teams** can filter, audit, and understand their content landscape. "Show me all troubleshooting docs aimed at admins" becomes a query, not a manual review.
 
 ## Schema
 
-### Required Fields
+### Recommended Fields
 
-These fields should appear on every doc.
-When the plugin writes a doc via `/draft`, it generates all of them.
+These are the fields worth having on every doc in a project that keeps frontmatter.
+When the plugin writes a doc and the project's convention includes frontmatter, it generates all of them.
 
 ```yaml
 ---
@@ -41,7 +63,7 @@ The document's structural category.
 Use one of: `doc`, `guide`, `tutorial`, `concept`, `reference`, `troubleshooting`.
 These map to the content types defined in `content-types.md`.
 
-### Recommended Fields
+### Fields Worth Adding
 
 These fields add significant value for AI tools, search, and docs teams.
 The plugin generates them when it has enough context to do so.
@@ -114,7 +136,12 @@ See `templates.md`.
 
 **`sme-attested`**
 The verification ledger: claims that entered the doc on a subject matter expert's word alone, because they could not be checked against the code or existing docs during the intake reconcile.
-**Opt-in, always.** The plugin never adds this field without the contributor's explicit yes: build pipelines with strict frontmatter schemas can reject unknown fields, and some teams require approval for new metadata. When declined, the attested-claims list lives in the review notes instead.
+
+**The ledger's home is `.docs-assist/state/docs.yml`, under the document's `attested` key.**
+That is where the plugin writes it, and it is the same shape shown below.
+The whole value of this ledger is surviving past one sitting and shrinking over several passes, which a chat transcript cannot do and a frontmatter field cannot do in a project whose pipeline rejects unknown fields.
+
+A project that wants the ledger in frontmatter as well can have it, on an explicit yes, and the plugin reads it there.
 Each entry names the section the claim lives in, the claim itself in a short line, and optionally who attested it.
 
 ```yaml
@@ -124,7 +151,7 @@ sme-attested:
     source: "j.doe, intake 2026-07-10"
 ```
 
-The ledger exists to shrink: a reviewer (human or AI) verifies a claim and deletes its entry, and when the ledger empties, remove the field and bump `last-verified`.
+The ledger exists to shrink: a reviewer (human or AI) verifies a claim and deletes its entry, and when the ledger empties, record a fresh verification date.
 Audits surface docs whose ledgers are large or old.
 This gives reviewers specific claims to check instead of a doc-wide request for review.
 

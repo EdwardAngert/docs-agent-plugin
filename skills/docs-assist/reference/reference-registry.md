@@ -25,11 +25,18 @@ api_key:
   kind: example-variable
   value: "sk_test_EXAMPLE0123456789"
   note: "Fake, never a real key."
+
+region:
+  kind: example-variable
+  value: "us-east-1"
+  variants: ["us-west-2", "eu-central-1"]
+  note: "Older docs used us-west-2."
 ```
 
 - **Read it first.** If an entry exists for what you need, use its value in every sample.
 - **Add what's missing.** When a sample needs a placeholder the registry doesn't have, pick a safe value, use it, and add the entry. Keep values copy-paste safe: reserved example domains (`example.com`), documentation IP ranges (`192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24`), and fake credentials that cannot work.
-- **Checked for**: consistency between docs. An audit flags a code sample whose value drifts from the registry or from another doc's use of the same thing.
+- **Record what it replaced.** The optional `variants` list names exact values that should have been this one, the same way a `term` entry names the spellings to avoid. Add a variant whenever you fix a drifted value, so the next occurrence is caught mechanically instead of by eye.
+- **Checked for**: consistency between docs. An audit flags a code sample whose value drifts from the registry or from another doc's use of the same thing. `assets/ci/example-continuity.mjs` enforces the `variants` half deterministically, including inside code blocks, where Vale does not look by default.
 
 See `code-examples.md` for the rest of writing safe, consistent code examples; this section only covers the registry entry itself.
 
