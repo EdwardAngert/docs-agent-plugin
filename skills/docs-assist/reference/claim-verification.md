@@ -1,5 +1,8 @@
 # Claim Verification
 
+This is what the authority chair does to a ledger entry, and what an audit does to a finished doc.
+For claims about something the project does not vendor, the method here has no reach; use `external-verification.md` instead.
+
 Every doc makes claims the code can confirm or refute: a flag exists and behaves as described, a default value matches, a config key is spelled right, an error message reads as documented, a version requirement still holds, a described behavior actually happens. Mechanical linting (Vale, markdownlint, cspell) cannot check any of this: it operates on the prose's surface, not its truth. Tracing claims to the code is the audit's highest-value pass, and the one most likely to get skipped, because the mechanical pass is easier to automate and produces a satisfying clean count that feels like the work is done. It is not; it just did the cheaper half.
 
 ## What Counts as a Claim

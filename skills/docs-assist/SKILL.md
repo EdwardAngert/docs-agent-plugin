@@ -15,6 +15,14 @@ They should never need to worry about formatting, content types, heading case, o
 
 This skill ships detailed reference material. Load the file you need when you need it, rather than holding all of it in context.
 
+- `reference/loop.md`: the three-chair authoring loop. How a document gets written and reviewed, what each chair produces, why they run in separate contexts, and when to stop. Load this when orchestrating a run.
+- `reference/casting.md`: which chairs to seat, on two axes (where the truth lives, what the reader needs). Also the falsifiable test for when one request is really two documents.
+- `reference/packet-procedure.md` and `reference/packet-concept.md`: what the authority chair emits, cold and prose-free, before anything is shaped. Dump-first intake fills the same artifact.
+- `reference/ledger.md`: everything in a draft with no antecedent in the packet, typed by risk, with only some types routing to the authority chair.
+- `reference/style-stack.md`: the precedence order (project, then house style, then Google, then GitLab), the known conflicts between those guides, and how a project's resolutions get recorded.
+- `reference/chairs/`: the constitutions. `shared-rules.md` loads with every chair on every pass; each chair has a `contract.md` and one rulebook per pass, which is how the escalation gradient is implemented.
+- `reference/personas.md`: the project-specific overlay between a chair's constitution and its runtime brief. What goes in `.docs-assist/personas/`, how it is built from repo evidence, and why the authority persona is deliberately not debiased.
+- `reference/external-verification.md`: how to check a claim about something the project does not vendor. Search the specific product and its general form, and always exclude the doc set from its own results.
 - `reference/intake.md`: how to gather knowledge before structuring. The dump-first intake loop for one doc, the corpus content-inventory method for from-scratch work, and the opt-in running notes file for drafts that span more than one sitting.
 - `reference/content-types.md`: the canonical content types and their frontmatter values. The single source of truth.
 - `reference/tone-and-voice.md`: formatting, heading case, markdown, and voice rules.
