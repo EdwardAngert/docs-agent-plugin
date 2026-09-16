@@ -3,6 +3,57 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
+## 1.0.0 - 2026-09-16
+
+A comprehensive overhaul rather than an increment. The plugin's doctrine survives almost intact; its architecture and surface do not.
+
+The organizing idea: drafting and reviewing are one mechanism, run by three chairs in separate contexts, passing artifacts by path. An authority chair emits a cold, prose-free packet of what is true. A continuity chair reconciles it against the rest of the docs set. An advocate chair shapes it into a document and declares, as a ledger, everything it added that the packet did not contain. That ledger is the point: it is a diff between two artifacts, not a model's recollection of its own reasoning, and it is what a contributor reviews instead of a whole draft.
+
+### Added
+
+- **The authoring loop.** `reference/loop.md`, `casting.md`, `packet-procedure.md`, `packet-concept.md`, `ledger.md`, and the constitutions under `reference/chairs/`. Chairs are cast per document on two axes: where the truth lives, and whether the reader needs to do something or understand something. A subject matter expert and a technical writer suit a procedure; a professor and an instructional designer suit a concept page, because that pair trades depth against learnability rather than truth against clarity.
+- **Four chairs as subagents**: `chair-authority`, `chair-advocate`, `chair-continuity`, and `cold-reader`. Thin wrappers over the constitutions. The isolation is load-bearing rather than an optimization: a single context that produced the packet has already seen the reasoning behind it and cannot reliably tell which of its own claims came from where.
+- **The escalation gradient as rulebook selection.** Each pass loads a different file, so "more keen-eyed" is a fact about which rules are in context rather than an instruction to be stricter. A model told to be grouchy writes grouchy prose and does not read more carefully.
+- **`cold-reader`**, granted only `Read`. It reads one document with no repository and reports what it would do and expect. The isolation is the instrument.
+- **`doc-harvester`** and `reference/harvest.md`: mine issue replies, pull request comments, and commit message bodies for what maintainers already explained. One corpus, three uses: propose a draft from existing material, build the authority persona's voice, and supply real reader language. Opt-in, with privacy rules stricter than the plugin's defaults.
+- **`reference/personas.md`**: a chair resolves through three layers, the same order `config-resolution.md` already defines. Constitution, then a project overlay in `.docs-assist/personas/`, then the runtime brief.
+- **The `writing-task` skill**: a wider net for work that is documentation-shaped without being called documentation. It names what the plugin does not cover and declines to stretch.
+- **`reference/triggering.md`**: what makes the plugin show up and why it sometimes does not. The highest-leverage fix is not a mechanism: three lines in `CLAUDE.md`, which is always in context where a skill description is only matched.
+- **`/docs-assist:merge-prep`**: everything that scales with the whole docs set runs here and nowhere else.
+- **Four deterministic checks**: `file-path-check.mjs`, `example-continuity.mjs`, `duration-check.mjs`, `bundle-drift.mjs`.
+- **`reference/external-verification.md`**, salvaged from the closed PR #13, with the self-citation exclusion promoted from opt-in to always-on.
+- **`docs/how-the-loop-works.md`**, written by the loop itself.
+
+### Changed
+
+- **Frontmatter is no longer load-bearing.** Site generators disagree about what they accept, a site generator cannot be assumed at all, and frontmatter only pays off once a reader has already landed on the page. Plugin state moved to `.docs-assist/state/docs.yml`. The plugin reads a project's frontmatter when it has it, and writes its own bookkeeping elsewhere.
+- **Verification markers are a suggestion, not a mechanic.** Offered with the benefit stated, added on a yes, never written unasked.
+- **Intake and the packet are one artifact.** The intake loop is pass 0 with a person in the authority chair. A packet a human filled and one a chair emitted are interchangeable.
+- **An audit is the loop pointed at a finished document.** Pass 0 reconstructs the packet from what the document claims rather than writing one. A claim nobody can source is the finding, and in finished prose it is invisible: it sits next to twenty sourced claims and reads exactly like them.
+- **Commands: 14 to 9.** The cut is doors against plumbing, not a target number. `init`, `setup-lint`, `setup-hooks`, and `setup-site` merged into `setup`; `make-examples` and `template` into drafting; `agent-ready` into `merge-prep`.
+- **`scripts/validate.mjs`** gained three checks: prose naming an agent or command that no longer exists, every chair having a rulebook per threshold, and reference files resolving. The first found 59 stale references on its first run.
+- **`check-claims.mjs`** now covers `skills/`, `commands/`, and `agents/`, scoped so an instruction file's examples are not read as claims about the repository.
+
+### Removed
+
+- `doc-drafter` and `doc-auditor`, replaced by the chairs.
+- Automatic close-out linting, moved to the preparation gate.
+
+### Fixed
+
+- **`check-claims.mjs` confirmed claims against its own output.** Its cache records the text of every claim found, so tracking that directory made each claim resolve by finding itself: 20 findings became 0 between two runs with nothing fixed. The plugin's working tree is now excluded by rule rather than by the coincidence of a markdown filter.
+- A language-tag check was proposed and cut after firing on a deliberate accommodation, the same lesson `leverage` and `just` already taught the Vale styles.
+
+### Known limits
+
+- The loop has been run end to end once, the run that produced `docs/how-the-loop-works.md`. Cost, convergence, and false-positive rates are unmeasured.
+- No coverage for docstrings and in-source reference, commit message bodies, or architecture decision records. `writing-task` names these rather than bluffing.
+- The proactive layer in `triggering.md` is designed and unbuilt.
+
+### Version Policy
+
+- Bumped to 1.0.0 on the maintainer's explicit instruction. The policy stands: a version bump past 0.9.5 is the maintainer's decision, and 1.0.0 especially so.
+
 ## 0.9.8 - 2026-07-21
 
 ### Added
