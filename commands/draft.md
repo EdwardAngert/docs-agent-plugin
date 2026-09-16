@@ -17,18 +17,21 @@ The contributor might be an engineer, PM, support lead, or anyone with knowledge
 They may not write docs often. That's fine. You're here to make it easy.
 
 Gather before you structure. Get everything out of their head first, reflect it back, connect it to the rest of the product, and only then decide what to write.
-The full method is in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`. Read it and follow it; this file adds only what is specific to drafting one doc.
+
+This command is the authoring loop with a person in the authority chair. Steps 1 through 7 fill the packet by talking to the contributor instead of spawning `chair-authority`; the rest of the loop runs as `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/loop.md` describes. Read that and `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`; this file adds only what is specific to drafting one doc by hand.
+
+Everything you gather goes to `.docs-assist/loop/<doc-slug>/packet.md`, in the schema from `packet-procedure.md` or `packet-concept.md`. A packet a person filled and one a chair emitted are interchangeable, which is what lets a doc start as a conversation and finish through the loop.
 
 ## Process
 
-### 1-6. Run the Intake Loop
+### 1-6. Fill the Packet by Talking
 
 Run the first six intake moves as `intake.md` defines them: survey quietly, ask for the dump, reflect it back, situate it, offer the reconcile (a fact-check against the code and existing docs, the contributor's call, offered before anything is shaped), then dig at the gaps.
 
 Draft-specific notes for those moves:
 
-- **Survey**: note the frontmatter field names in use (`tags` vs `keywords`, `type` vs `content-type`) and any SSG fields you'll need to preserve, since this doc will carry frontmatter that matches. Also glob `.docs-assist/intake/notes/*.md` for a file matching this topic, or list any with `status: in-progress` if the topic is unclear. If one exists, offer to resume from it instead of starting the loop over.
-- **Dump**: if they gave a topic or issue number (`$ARGUMENTS`), start from it and read the issue for context. If the dump runs long, is many-part, or the contributor signals they'll need to step away, offer the running notes file at the Reflect read-back, never mid-dump (see "Persist as You Go" in `intake.md`). On yes, write and keep updating `.docs-assist/intake/notes/<topic>.md` through every remaining move.
+- **Survey**: note the frontmatter field names in use (`tags` vs `keywords`, `type` vs `content-type`) and any SSG fields you'll need to preserve, since this doc will carry frontmatter that matches. Also glob `.docs-assist/loop/*/packet.md` for one matching this topic, or list any with `status: in-progress` if the topic is unclear. If one exists, offer to resume from it instead of starting over.
+- **Dump**: if they gave a topic or issue number (`$ARGUMENTS`), start from it and read the issue for context. If the dump runs long, is many-part, or the contributor signals they'll need to step away, offer to open the packet and write as you go, at the Reflect read-back and never mid-dump (see "Persist as You Go" in `intake.md`). On yes, keep `.docs-assist/loop/<doc-slug>/packet.md` current through every remaining move.
 - **Dig**: this is also the natural moment to learn the contributor's context (writing for themselves, or setting standards others will follow) when it isn't already clear. Calibrate offers accordingly, per the skill's calibration guidance.
 - **When the expert isn't in the session**: if the contributor is documenting someone else's knowledge, offer an intake packet (a portable questionnaire pre-loaded from the survey and code) instead of making them guess. See the async section of `intake.md`. Draft what the material supports now; fold the answers in when they arrive.
 
@@ -36,11 +39,12 @@ Draft-specific notes for those moves:
 
 Confirm the details the draft will state, so it's accurate. This is targeted verification, not a full codebase map.
 
-- If a notes file exists, start from its Reconcile section instead of re-deriving from scratch: it already holds what move 5 confirmed against the code. Read code again only for what's new since Dig, or what the Shape/Outline steps pulled in that Reconcile never saw. Re-reading a file you already reconciled wastes a pass for no new information.
+- If a packet exists, start from what its provenance rows already settled instead of re-deriving: they hold what move 5 confirmed against the code. Read code again only for what's new since Dig, or what the Shape/Outline steps pulled in that Reconcile never saw. Re-reading a file you already reconciled wastes a pass for no new information.
 - Read the specific code behind what you're documenting: the exact command names, flags, defaults, config keys, endpoints, and error messages the doc will mention.
 - Reconcile the dump with the code. Where the contributor's memory and the code disagree, surface it and ask rather than guessing.
 - Pull real values (defaults, limits, error strings) so the draft and its examples are correct.
-- Record anything newly verified here back to the notes file's Reconcile section, if one is in use, so later moves inherit it too.
+- Record anything newly verified into the packet's provenance rows, typed as a code reference, an external source, or the expert's own experience. What cannot be checked is `SME experience` and goes to `.docs-assist/state/docs.yml`, not into the document.
+- Ask for the Limits row directly. What cannot be done, and what looks like it should work and does not, is the highest-value content in most procedures and the row that never fills itself.
 
 ### 8. Shape: One Doc, or Several?
 
@@ -56,7 +60,7 @@ Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/co
 
 For anything beyond a short entry, show the outline before writing the full draft. Changing an outline is cheap; rewriting a draft is not.
 
-- If a notes file exists for this topic, base the outline on it rather than on conversation scrollback: it's had every move folded in, including any that happened in an earlier session.
+- Base the outline on the packet rather than on conversation scrollback: it has had every move folded in, including any from an earlier session.
 - Present the user stories with the outline, and let them earn the structure: each section should serve a named story, and the prerequisites section is whatever the least-prepared story's reader is missing. Stories are cheap to correct here and expensive to discover wrong after publication.
 - Present the sections and headings, a line each on what goes in them, and where code samples will go.
 - Confirm scope and order, and adjust before drafting.
