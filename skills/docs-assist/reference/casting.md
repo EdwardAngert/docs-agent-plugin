@@ -42,6 +42,8 @@ An instructional designer and a technical writer are the same role with a differ
 
 This is why there are two chair definitions and not four.
 
+The continuity chair is not cast at all. It represents the rest of the documentation set, which does not change with the shape of one document, so it has one contract and no variants.
+
 ## Reference Material Is the Exception
 
 Reference pages (API tables, configuration keys, CLI flags) are where this loop earns least.

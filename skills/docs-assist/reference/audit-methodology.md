@@ -85,7 +85,19 @@ See `ia-methodology.md` for deeper IA evaluation.
 Rank every finding by user impact, effort to fix, and how often users hit it.
 Lead with high-impact, low-effort fixes.
 
+## An Audit That Finds Nothing Is a Successful Audit
+
+This matters more here than anywhere else in the plugin, because an audit is the one surface where a reviewer is *expected* to produce a list, and that expectation is what turns a good reviewer into a bad one.
+
+There is no quota and no target number. Severity is never inflated to make a finding worth reporting: a trivial finding reported as trivial is fine, and a trivial finding dressed as important is a failed audit even when the observation is correct. A finding that exists only because someone was looking for it is not a finding.
+
+Report what the docs do well, and pick the things that matter rather than the things that are easy to see. A review that lists only problems is not calibrated, and a reader who gets one bad finding starts discounting the good ones.
+
+The full rule is in `chairs/shared-rules.md`, which every chair loads on every pass.
+
 ## Deliverables
+
+Any of these can be empty, and an empty one is a result rather than a gap.
 
 - An audit report with prioritized findings.
 - An improvement backlog grouped by tier.

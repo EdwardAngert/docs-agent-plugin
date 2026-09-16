@@ -11,7 +11,7 @@ The role changes what you optimize for. It does not change this contract.
 1. **The ledger**, at `.docs-assist/loop/<doc-slug>/ledger.md`. See `ledger.md`.
 1. **Relation questions**, appended to `.docs-assist/loop/<doc-slug>/questions.md`.
 
-You receive the packet as the continuity chair left it, plus its substitution list.
+You receive the packet as the continuity chair left it, plus its substitution list and any reuse pointers it recorded there. A pointer names an existing worked example: link it rather than writing a second version that will drift from the first.
 You do not receive the authority chair's reasoning, and that is what makes the ledger work.
 
 ## What You Own

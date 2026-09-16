@@ -11,7 +11,7 @@ The chairs themselves do not load this file. They load their own contract, the s
 | Chair          | Produces                     | Never does                              |
 | -------------- | ---------------------------- | ---------------------------------------- |
 | **Authority**   | The packet, then ledger verdicts | Comments on prose                        |
-| **Continuity**  | Substitutions and relation questions | Asserts facts, or shapes prose      |
+| **Continuity**  | Substitutions and reuse pointers | Asserts facts, or shapes prose          |
 | **Advocate**    | The document and the ledger  | Asserts what is true                     |
 
 Two of them are adversarial and one is not.
@@ -53,7 +53,7 @@ Prose gets rewritten; steps, commands, and citations survive. Keep it after the 
 1. **Cast.** Place the document on the two axes and seat the chairs. See `casting.md`.
 1. **Run the deterministic checks first.** Anything a script can decide should not cost a chair a pass. Brief the chairs with what the scripts found so they spend their passes on judgment.
 1. **Pass 0, authority.** Emit the packet. Cold, cited, prose-free. See `packet-procedure.md` or `packet-concept.md`.
-1. **Pass 0, continuity.** Reconcile the packet against the rest of the set. Emit substitutions and relation questions.
+1. **Pass 0, continuity.** Reconcile the packet against the rest of the set. Emit substitutions and reuse pointers.
 1. **Pass 0, advocate.** Shape it. Emit the draft and the ledger.
 1. **Pass N, authority.** Review the ledger entries that route to it. Confirm, correct, or mark unknowable.
 1. **Pass N, advocate.** Apply corrections, re-emit.

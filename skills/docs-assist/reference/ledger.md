@@ -32,7 +32,7 @@ Additions are not equally risky, and an expert's attention should not be spent u
 | Analogy                | "Think of it like a mailbox"                              | Always               |
 | Simplification         | A caveat dropped for clarity                              | Always               |
 
-## The Four That Always Route
+## The Ones That Route to the Authority Chair
 
 **Implied fact** is the dangerous category and the reason the ledger exists.
 It is where a fluent writer fills a gap with something plausible, and it is invisible in a finished draft because it reads exactly like everything around it.

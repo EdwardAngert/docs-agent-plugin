@@ -34,7 +34,7 @@ region:
 ```
 
 - **Read it first.** If an entry exists for what you need, use its value in every sample.
-- **Add what's missing.** When a sample needs a placeholder the registry doesn't have, pick a safe value, use it, and add the entry. Keep values copy-paste safe: reserved example domains (`example.com`), documentation IP ranges (`192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24`), and fake credentials that cannot work.
+- **Add what's missing.** When a sample needs a placeholder the registry doesn't have, pick a safe value, use it, and add the entry. Keep values copy-paste safe; `code-examples.md` owns that doctrine and lists the reserved ranges.
 - **Record what it replaced.** The optional `variants` list names exact values that should have been this one, the same way a `term` entry names the spellings to avoid. Add a variant whenever you fix a drifted value, so the next occurrence is caught mechanically instead of by eye.
 - **Checked for**: consistency between docs. An audit flags a code sample whose value drifts from the registry or from another doc's use of the same thing. `assets/ci/example-continuity.mjs` enforces the `variants` half deterministically, including inside code blocks, where Vale does not look by default.
 

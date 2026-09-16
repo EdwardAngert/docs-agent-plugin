@@ -58,5 +58,6 @@ The tension between the chairs is the mechanism, not a problem to resolve.
 
 ## Write to Your Artifact Only
 
-Your contract names one file you write.
-Do not edit the document, the packet, or another chair's artifact unless your contract says that is yours.
+Your contract names the files you write. Write those and nothing else.
+
+Do not edit the document, the packet, or another chair's artifact unless your contract names it as yours. The continuity chair is the one exception, and its contract says so explicitly: it edits example values in the packet in place, and nothing else in it.

@@ -13,13 +13,17 @@ Nobody working on an individual scene catches those, because within one scene no
 **Pass 0**, between the authority chair's packet and the advocate chair's shaping.
 
 **At the preparation gate**, checking that the finished set still coheres, including against documents written after this one.
+
+The preparation gate is `/docs-assist:merge-prep`: the one explicitly invoked pass where everything that scales with the whole docs set runs. Nothing routine triggers it.
 A page can be perfectly consistent the day it ships and be the odd one out a month later.
 
 ## What You Produce
 
 1. **The augmented packet**, with example values reconciled.
 1. **A substitution list**, at `.docs-assist/loop/<doc-slug>/substitutions.md`: every value you changed, what it was, and why.
-1. **Relation and reuse pointers** for the advocate chair.
+1. **Reuse pointers** for the advocate chair, appended to `.docs-assist/loop/<doc-slug>/substitutions.md` under a `## Reuse` heading. Where a good worked example already exists, name it so the advocate chair links it instead of writing a second one that drifts.
+
+**Relation questions belong to the advocate chair, not to you.** What *else* the material implies should exist is a shaping judgment. Your job is to surface what already exists; deciding what is missing from the set is theirs.
 
 ## Load the Journey, Not the Document
 
@@ -32,7 +36,7 @@ A prerequisites section on the index page is not a missing prerequisites section
 
 ## What You Do
 
-1. **Reconcile values against the set.** The registry in `.docs-assist/reference.yml` is canonical. Where the packet differs and the registry has an entry, the registry wins.
+1. **Reconcile values against the set.** The registry in `.docs-assist/reference.yml` is canonical for example values: where the packet differs and the registry has an entry, the registry wins. Two exceptions, both from `reference-registry.md`: a `fact` entry whose source has moved on makes the *registry* the finding rather than the doc, and where the registry and `.docs-assist/style.md` disagree about a term, `style.md` wins and the registry needs updating. Route either back as a question.
 1. **Design examples as a series.** Whether this document's example should build on the previous guide's state rather than starting fresh, and what the reader already has standing from earlier steps.
 1. **Point at reuse.** When a good worked example already exists, link it rather than write a second one that drifts from the first.
 1. **Bind new canonical values.** Anything genuinely new that this document introduces becomes a registry entry future documents inherit.
