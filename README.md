@@ -29,6 +29,20 @@ The rest of this README is the result.
 Its own linter caught a formatting slip in the draft and flagged it, so it fixed that too.
 You review for accuracy. The formatting is already handled.
 
+## Requirements
+
+- Claude Code.
+- Node, for the deterministic checks and the repository validator. Nothing else is required to draft, plan, or audit.
+- The linters are optional and scaffolded only if you ask: Vale, markdownlint, and cspell install when you accept them, and the plugin detects and extends an existing setup rather than replacing it.
+
+## What It Writes
+
+The plugin proposes and you accept. It shows you a draft before a file is written, and multi-file work is offered on a branch rather than committed to your default branch.
+
+Its own bookkeeping lives in `.docs-assist/`: your conventions, the example registry, per-document verification dates, and the working artifacts of a drafting run. Your documents stay portable plain markdown, and nothing the plugin needs is written into them.
+
+Two things reach outside your repo, both on an explicit yes: fetching a template, and checking a claim about something your project does not vendor.
+
 ## Install
 
 1. Open Claude Code:
@@ -49,7 +63,7 @@ You review for accuracy. The formatting is already handled.
    /plugin install docs-assist@docs-assist-marketplace
    ```
 
-1. Restart Claude Code.
+1. Run `/reload-plugins` so the session picks up the new commands and skills.
 
 1. See where your docs stand:
 
@@ -79,8 +93,10 @@ Check `CHANGELOG.md` for what changed since your version.
 
 ## How It Works
 
-The plugin activates automatically when you ask for documentation help.
+The plugin activates when you ask for documentation help, in plain words.
 You don't need to learn any special syntax or documentation theory.
+
+It activates on what you *say*, though, so work that never mentions documentation will not reach it on its own. [Making It Show Up](#making-it-show-up) covers the two ways to close that gap.
 
 The simplest path is to tell Claude what you want to document:
 
@@ -148,7 +164,7 @@ For every command's argument and an example, see the [command reference](docs/co
 - `/docs-assist:draft [topic]`: the primary workflow.
   Guides a contributor through turning their knowledge into a structured draft.
   Bring the expertise, the plugin handles the writing.
-  Behind it, three chairs in separate contexts: one that holds what is true, one that keeps examples coherent across the set, and one that writes and then declares everything it had to assume.
+  Behind it, the work is split across three isolated reviewers: one that holds what is true, one that keeps examples coherent across the whole docs set, and one that writes and then declares every assumption it had to make to write it. That last list is what you review, instead of the whole draft.
 - `/docs-assist:plan [repo or description]`: plan a full documentation set.
   Reads the codebase, asks about users and goals, maps user journeys, and proposes a prioritized plan before writing anything.
   Once the plan is approved, docs whose material already exists draft in parallel, and you review the queue instead of co-writing each one.
@@ -278,6 +294,10 @@ The claims above should be read with that asterisk, and the list below is the ro
 1. **The deferred backlog.** Docs-impact noise knobs, more site generators, and CI auto-update, tracked in [the plan](docs/plan.md).
 
 If you try it and something falls short, [an issue](https://github.com/EdwardAngert/docs-agent-plugin/issues) with what you expected and what happened is the most valuable contribution this project can receive.
+
+## Status
+
+Version 0.9.8, pre-1.0. The command surface and the drafting mechanism both changed substantially in the current release, so anything you pinned against an earlier version is worth re-reading. `CHANGELOG.md` has the detail.
 
 ## Background
 

@@ -21,7 +21,8 @@ Ask for help writing docs the way you normally would, and Claude Code guides you
 
 ```text
 /plugin marketplace add EdwardAngert/docs-agent-plugin
-/plugin install docs-assist
+/plugin install docs-assist@docs-assist-marketplace
+/reload-plugins
 ```
 
 Then ask Claude Code for documentation help in plain words. Nothing else is required.
