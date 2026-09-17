@@ -365,7 +365,9 @@ const SHIP_DIRS = [
 ];
 const SHIP_FILES = new Set([
   '.cspell.json',
+  'CLAUDE.md',
   '.docs-assist/config.yml',
+  '.docs-assist/decisions.md',
   '.docs-assist/reference.yml',
   '.docs-assist/style.md',
   '.gitignore',
