@@ -14,89 +14,105 @@ A continuity chair reconciles it against the rest of the docs set.
 An advocate chair shapes it into a document and declares, as a ledger, everything it added that the packet did not contain.
 That ledger is the point: it is a diff between two artifacts, not a model's recollection of its own reasoning, and it is what a contributor reviews instead of a whole draft.
 
+### Breaking changes
+
+Fourteen commands became nine.
+The old names are removed rather than deprecated, so typing one now does nothing.
+
+| Removed                      | Use instead                                                 |
+| ---------------------------- | ----------------------------------------------------------- |
+| `/docs-assist:init`          | `/docs-assist:setup`                                        |
+| `/docs-assist:setup-lint`    | `/docs-assist:setup`                                        |
+| `/docs-assist:setup-hooks`   | `/docs-assist:setup`                                        |
+| `/docs-assist:setup-site`    | `/docs-assist:setup`                                        |
+| `/docs-assist:make-examples` | `/docs-assist:draft`, which covers examples while drafting  |
+| `/docs-assist:template`      | `/docs-assist:draft`, which offers a template when one fits |
+| `/docs-assist:agent-ready`   | `/docs-assist:merge-prep`                                   |
+
+Each command that remains is something you set out to do, and the ones that went were steps inside something else.
+The four setup commands were one job split four ways, and examples and templates are things you want mid-draft rather than separate errands.
+Nothing else in the upgrade requires action from you.
+
+- **The `doc-drafter` and `doc-auditor` subagents are removed**, replaced by the chairs.
+  This affects you only if you named either one in your own `CLAUDE.md`, a hook, or a script.
+- **The maintainer-facing docs are no longer part of the install.** The two planning docs, both files under `docs/reviews/`, and `docs/plan.md` moved to the `working-notes` branch, so a link into them breaks.
+  They described a pre-1.0 command surface, which meant a reader arriving from `llms.txt` landed on a workflow that could not be run.
+  `docs/plan.md` was also carrying three identities at once: the README linked it as a live backlog, `llms.txt` called it a superseded historical record, and the instruction files use that same path for the forward-looking content plan the plugin writes in your project.
+  Its deferred backlog moved into the README's self-assessment, and the path now means only the last of those. What ships under `docs/` is four reader-facing pages.
+
 ### Added
 
-- **The authoring loop.** `reference/loop.md`, `casting.md`, `packet-procedure.md`, `packet-concept.md`, `ledger.md`, and the constitutions under `reference/chairs/`.
+- **An authoring loop whose output you review as a diff.** Drafting seats three chairs in separate contexts and hands back a ledger: everything the writing chair added that the source packet did not contain.
+  You review the ledger rather than re-reading a whole draft.
   Chairs are cast per document on two axes: where the truth lives, and whether the reader needs to do something or understand something.
   A subject matter expert and a technical writer suit a procedure; a professor and an instructional designer suit a concept page, because that pair trades depth against learnability rather than truth against clarity.
-- **Four chairs as subagents**: `chair-authority`, `chair-advocate`, `chair-continuity`, and `cold-reader`.
-  Thin wrappers over the constitutions.
+  The mechanism is documented in `docs/how-the-loop-works.md`, which the loop wrote about itself, and specified across `reference/loop.md`, `casting.md`, `packet-procedure.md`, `packet-concept.md`, `ledger.md`, and the constitutions under `reference/chairs/`.
+- **Three chairs as subagents**: `chair-authority`, `chair-advocate`, and `chair-continuity`, thin wrappers over the constitutions.
   The isolation is load-bearing rather than an optimization: a single context that produced the packet has already seen the reasoning behind it and cannot reliably tell which of its own claims came from where.
-- **The escalation gradient as rulebook selection.** Each pass loads a different file, so "more keen-eyed" is a fact about which rules are in context rather than an instruction to be stricter.
-  A model told to be grouchy writes grouchy prose and does not read more carefully.
-- **`cold-reader`**, granted only `Read`.
-  It reads one document with no repository and reports what it would do and expect.
-  The isolation is the instrument.
-- **`doc-harvester`** and `reference/harvest.md`: mine issue replies, pull request comments, and commit message bodies for what maintainers already explained.
+- **A cold-read check on whether a document actually teaches.** The new `cold-reader` subagent is granted only `Read`, sees one document with no repository and no conversation, and reports what it would do and what it expects to happen.
+  Where that diverges from what the document intended, the gap names the paragraph at fault.
+- **Drafts proposed from what maintainers already wrote.** The new `doc-harvester` subagent and `reference/harvest.md` mine issue replies, pull request comments, and commit message bodies.
   One corpus, three uses: propose a draft from existing material, build the authority persona's voice, and supply real reader language.
   Opt-in, with privacy rules stricter than the plugin's defaults.
-- **`reference/personas.md`**: a chair resolves through three layers, the same order `config-resolution.md` already defines.
-  Constitution, then a project overlay in `.docs-assist/personas/`, then the runtime brief.
-- **The `writing-task` skill**: a wider net for work that is documentation-shaped without being called documentation.
-  It names what the plugin does not cover and declines to stretch.
+- **`/docs-assist:merge-prep`**: the one place anything expensive runs.
+  Whole-set continuity, `llms.txt` regeneration, bundle drift, link checking, and full linting happen here when you ask, so a single content fix never triggers a regenerate-and-diff pass over your whole docs tree.
+- **A wider net for writing that nobody called documentation.** The `writing-task` skill routes pull request descriptions, release notes, runbooks, and READMEs to the capability that fits, and says plainly when the plugin has nothing for the task rather than stretching.
+- **Per-project chair personas.** `reference/personas.md`: a chair resolves through three layers, the same order `config-resolution.md` already defines, from constitution to a project overlay in `.docs-assist/personas/` to the runtime brief.
+- **Four deterministic checks** you can run without a model: `file-path-check.mjs`, `example-continuity.mjs`, `duration-check.mjs`, and `bundle-drift.mjs`.
+- **Claim checking against sources you do not vendor.** `reference/external-verification.md`, salvaged from the closed PR #13, with the self-citation exclusion promoted from opt-in to always-on.
 - **`reference/triggering.md`**: what makes the plugin show up and why it sometimes does not.
   The highest-leverage fix is not a mechanism: three lines in `CLAUDE.md`, which is always in context where a skill description is only matched.
-- **`/docs-assist:merge-prep`**: everything that scales with the whole docs set runs here and nowhere else.
-- **Four deterministic checks**: `file-path-check.mjs`, `example-continuity.mjs`, `duration-check.mjs`, `bundle-drift.mjs`.
-- **`reference/external-verification.md`**, salvaged from the closed PR #13, with the self-citation exclusion promoted from opt-in to always-on.
-- **`docs/how-the-loop-works.md`**, written by the loop itself.
+- **The escalation gradient as rulebook selection.** Each pass loads a different file, so "more keen-eyed" is a fact about which rules are in context rather than an instruction to be stricter.
+  A model told to be grouchy writes grouchy prose and does not read more carefully.
 
 ### Changed
 
-- **Frontmatter is no longer load-bearing.** Site generators disagree about what they accept, a site generator cannot be assumed at all, and frontmatter only pays off once a reader has already landed on the page.
-  Plugin state moved to `.docs-assist/state/docs.yml`.
-  The plugin reads a project's frontmatter when it has it, and writes its own bookkeeping elsewhere.
+- **Frontmatter is no longer load-bearing, and the plugin's own state moved out of your files.** Site generators disagree about what they accept, a site generator cannot be assumed at all, and frontmatter only pays off once a reader has already landed on the page.
+  Plugin bookkeeping now lives in `.docs-assist/state/docs.yml`, shaped by the new `assets/config/state.yml` scaffold.
+  Frontmatter you already keep is still read and respected, and where both carry a value the store wins, so no migration is needed and nothing is rewritten in your documents.
 - **Verification markers are a suggestion, not a mechanic.** Offered with the benefit stated, added on a yes, never written unasked.
-- **Intake and the packet are one artifact.** The intake loop is pass 0 with a person in the authority chair.
-  A packet a human filled and one a chair emitted are interchangeable.
 - **An audit is the loop pointed at a finished document.** Pass 0 reconstructs the packet from what the document claims rather than writing one.
   A claim nobody can source is the finding, and in finished prose it is invisible: it sits next to twenty sourced claims and reads exactly like them.
-- **Commands: 14 to 9.** The cut is doors against plumbing, not a target number.
-  `init`, `setup-lint`, `setup-hooks`, and `setup-site` merged into `setup`; `make-examples` and `template` into drafting; `agent-ready` into `merge-prep`.
-- **`scripts/validate.mjs`** gained five checks: prose naming an agent or command that no longer exists, every chair having a rulebook per threshold, reference files resolving, every tracked path sitting on the shipping allowlist, and one sentence per line.
-  The first found 59 stale references on its first run.
-- **Working notes no longer ship.** Claude Code has no plugin-level files allowlist: on install it copies the whole repository into `~/.claude/plugins/cache`, so every tracked file reached every user.
-  The design records under `reports/` and the artifacts from the loop's one end-to-end run are archived on the `working-notes` branch and gitignored here, and the allowlist check fails CI if a new working directory appears.
-  The dogfooding config stays: `config.yml`, `style.md`, `reference.yml`, and the personas are project configuration that the linters read.
-- **This repo's own headings moved to sentence case**, matching the default the plugin has shipped since 0.9.x and the Google style guide it lints against.
-  The repo had set `heading_case: title` while leaving `Google.Headings` enabled, so 97 findings in `docs/` alone were suppressed and the rule was decorative.
-  486 headings across 72 files, with frontmatter titles synced again to their H1s.
-- **`.vale.ini` declares a vocabulary** at `styles/config/vocabularies/DocsAssist/accept.txt`, so proper nouns survive a sentence-case heading rule instead of being the reason to switch it off.
+- **Intake and the packet are one artifact.** The intake loop is pass 0 with a person in the authority chair, so a packet a human filled and one a chair emitted are interchangeable.
+- **The style template the plugin scaffolds bans emphasis inside prose.** `assets/config/style.md` now carries the rule as a default your project inherits: bold is for run-in headings and UI labels, a term being defined leads its bullet instead, and a literal value belongs in a code span.
+  GitLab's rule is the one followed: "Do not use bold for keywords or emphasis."
+- **The Vale scaffold declares a vocabulary** at `styles/config/vocabularies/DocsAssist/accept.txt`, so proper nouns survive a sentence-case heading rule instead of being the reason to switch it off.
   Declaring one also enables `Vale.Terms`, which fired only on literal file names, URLs, and id-like values, so it ships off with the reasoning recorded.
-- **One sentence per line, everywhere.** The setting was in `config.yml` from the start with nothing checking it, and had decayed to roughly 500 multi-sentence lines.
-  1208 lines were reflowed across 75 files, hard-wrapped paragraphs unwrapped first, and `validate.mjs` now holds the line.
-  The rule does not apply inside a table, where a cell cannot hold a line break, and the check skips table rows.
-- **No emphasis inside prose.** GitLab's rule is the one followed: bold is for "UI elements with a visible label" and navigation paths, and "Do not use bold for keywords or emphasis."
-  All 82 mid-prose emphasis runs are gone. Stress emphasis was rewritten away, literal values moved into code spans, and a term being defined now leads its bullet as a run-in heading rather than sitting bold mid-sentence, which is the description-list form GitLab points at.
-  Bold at the start of a line or list item is still a run-in heading and still allowed.
-- **Headings are action-oriented in fact, not only in config.** Eleven gerund headings became imperative; the nine that remain are noun section labels.
-  Vale's `HeadingGerund` runs at warning level and so never appeared in a CI gate, which is how they accumulated.
-- **Three rules that were declared but unenforced now fail CI**: one sentence per line, no prose emphasis, and a repeated `1.` for ordered lists.
-  Each had decayed quietly, and each check names the config key it comes from.
-  `validate.mjs`'s prose checks cover `assets/config/` too, so the style template this plugin ships follows the rules it describes.
-- **The maintainer-facing docs stopped shipping.** The two planning docs, both files under `docs/reviews/`, and `docs/plan.md` join the working notes on the `working-notes` branch.
-  The reviews described a pre-1.0 command surface, naming eight commands 1.0 removed, so a reader arriving from `llms.txt` landed on a workflow that could not be run.
-  `docs/plan.md` was carrying three identities at once: the README linked it as a live backlog, `llms.txt` called it a superseded historical record, and the instruction files use that same path for the forward-looking content plan the plugin writes in a user's project.
-  Its deferred backlog moved into the README's self-assessment, which already pointed at it, and the path is now unambiguous.
-  What ships under `docs/` is four reader-facing pages.
-- **`check-claims.mjs`** now covers `skills/`, `commands/`, and `agents/`, scoped so an instruction file's examples are not read as claims about the repository.
-
-### Fixed in the docs
-
-- `reference/llms-txt.md` still assigned the `llms.txt` maintenance contract to `Agent-ready` and `Setup-site`, two commands 1.0 removed, and `reference/templates.md` still listed the standalone `Template` command.
-  They survived the surface reduction because they were written as bold prose names rather than `/docs-assist:` references, which is the only form the stale-command check could see.
-  All three are corrected, the whole list now uses command references, and `validate.mjs` reads a bold run-in heading that names a command too.
-
-### Removed
-
-- `doc-drafter` and `doc-auditor`, replaced by the chairs.
-- Automatic close-out linting, moved to the preparation gate.
+- **Two editorial rules the plugin enforced nowhere.** Phantom negation (ruling out an option that was never live) and an analogy standing in for the fact it should illustrate both now appear in `reference/tone-and-voice.md` and in the style template the plugin scaffolds.
+  The analogy rule also joins the advocate chair's clarity pass, where a draft is actually read for whether a reader can follow it.
+  Both were caught by a reader on this release's own notes, which described a command cut as "doors against plumbing, not a target number": a figure of speech carrying the criterion, and a negation of a target number nobody had proposed.
+- **`DocsAssist.FalseContrast` reads both word orders.** It matched `not X, it's Y` and missed the inverted `Y, not X`, which is the more common form and the one that shipped past it.
+  The inverted token matches about forty-five times on this repository, most of them legitimate contrasts, so it stays a suggestion and the rule now says so: whether the negated alternative was ever real is a judgment no regex makes.
+- **Automatic close-out linting is gone**, moved to `/docs-assist:merge-prep`.
+  Any operation whose cost scales with the whole docs set now runs at that gate and nowhere else.
 
 ### Fixed
 
+- **Instruction files still pointed at commands 1.0 removed.** `reference/llms-txt.md` assigned the `llms.txt` maintenance contract to `Agent-ready` and `Setup-site`, and `reference/templates.md` still listed the standalone `Template` command.
+  They survived the surface reduction because they were written as bold prose names rather than `/docs-assist:` references, which is the only form the stale-command check could see.
+  All three are corrected, the whole list now uses command references, and `validate.mjs` reads a bold run-in heading that names a command too.
 - **`check-claims.mjs` confirmed claims against its own output.** Its cache records the text of every claim found, so tracking that directory made each claim resolve by finding itself: 20 findings became 0 between two runs with nothing fixed.
   The plugin's working tree is now excluded by rule rather than by the coincidence of a markdown filter.
+- The README's file tree left out `skills/writing-task/`, one of the two skills this release ships.
 - A language-tag check was proposed and cut after firing on a deliberate accommodation, the same lesson `leverage` and `just` already taught the Vale styles.
+
+### Repository and CI
+
+Maintainer-facing work, with no effect on an installed plugin except where noted above.
+
+- **Working notes stopped shipping.** Claude Code has no plugin-level files allowlist: on install it copies the whole repository into `~/.claude/plugins/cache`, so every tracked file reached every user.
+  The design records under `reports/` and the artifacts from the loop's one end-to-end run are archived on the `working-notes` branch and gitignored here, and an allowlist check fails CI if a new working directory appears.
+  The dogfooding config stays: `config.yml`, `style.md`, `reference.yml`, and the personas are project configuration that the linters read.
+- **Rules this repo declared and never enforced now fail CI**: one sentence per line, no prose emphasis, and a repeated `1.` for ordered lists.
+  Each had decayed quietly, and each check names the config key it comes from.
+  The cleanup behind them: 1208 lines reflowed across 75 files, all 82 mid-prose emphasis runs rewritten, and 486 headings moved to sentence case across 72 files after the repo had set `heading_case: title` while leaving `Google.Headings` enabled, which suppressed 97 findings in `docs/` alone.
+  Eleven gerund headings became imperative; the nine that remain are noun section labels.
+- **`scripts/validate.mjs` gained five checks**: prose naming an agent or command that no longer exists, every chair having a rulebook per threshold, reference files resolving, every tracked path sitting on the shipping allowlist, and one sentence per line.
+  The first found 59 stale references on its first run.
+  Its prose checks cover `assets/config/` too, so the style template this plugin ships follows the rules it describes.
+- **markdownlint covers the shipped surface.** It linted `README.md`, `CHANGELOG.md`, and `docs/` while `commands/`, `agents/`, and `skills/` had no coverage, though they are the bulk of what installs into a user's plugin cache and Vale and cspell already scanned them.
+  All 73 files already passed, so this closes the gate rather than fixing a backlog.
+- **`check-claims.mjs`** now covers `skills/`, `commands/`, and `agents/`, scoped so an instruction file's examples are not read as claims about the repository.
 
 ### Known limits
 
