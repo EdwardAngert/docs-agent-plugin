@@ -41,7 +41,7 @@ The formatting is already handled.
 - Claude Code.
 - Node, for the deterministic checks and the repository validator.
   Nothing else is required to draft, plan, or audit.
-- The linters are optional and scaffolded only if you ask: Vale, markdownlint, and cspell install when you accept them, and the plugin detects and extends an existing setup rather than replacing it.
+- The linters are optional and scaffolded only if you ask: Vale, markdownlint, and cspell install when you accept them, and their config is generated from the conventions your docs already follow rather than from a fixed template.
 
 ## What it writes
 
@@ -130,12 +130,26 @@ Commit a `.docs-assist/` directory and the whole team writes to the same convent
 
 - `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools).
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
-- `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
 - `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and product terms, so examples and terminology stay consistent across docs.
   The plugin maintains it, and audits flag drift against it.
+- `.docs-assist/decisions.md`: settled calls that none of the above can hold, each with the reason attached.
+  Which file owns a fact that appears in several, what counts as part of the docs and what is working material, and anything else that cost real work to figure out.
 
 Run `/docs-assist:setup` to generate them, pre-filled from what your docs already do.
-Because this config is committed to your repo, it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
+A `templates.yml` joins them if you opt into documentation templates, which happens during drafting rather than setup.
+
+### Why these are committed, not kept in the plugin
+
+Two reasons, and the second is the one people underestimate.
+
+The immediate one: committed config is read on every run, so the plugin writes like your project from the first draft instead of inferring your conventions again each session.
+A `CLAUDE.md` section earns its place the same way, and more cheaply: it is always in context where a skill description is only matched, so a standing instruction there outranks anything the plugin can say about itself.
+
+The durable one: a decision that lives only in a conversation dies with it.
+The next contributor, or the same one in three months, re-derives it and often differently, which is how a docs set ends up with four install procedures that disagree.
+Writing the decision down with its reason turns it into something a reviewer can disagree with, and something a newcomer can act on without asking.
+
+Because all of it is committed to your repo, it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
 
 Writing solo?
 The same config is how the plugin acts as your second reader: it holds your docs to a consistent line and catches the drift in examples and terminology that a team would catch in review.
