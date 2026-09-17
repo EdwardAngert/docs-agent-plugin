@@ -3,7 +3,7 @@ description: Turn a release's worth of changes into reader-facing release notes
 argument-hint: [range, tag, or version]
 ---
 
-# Write Release Notes
+# Write release notes
 
 Turn the changes in a release into notes a reader can act on: what changed, why it matters, and what they must do about it.
 
@@ -13,13 +13,13 @@ Release notes are a reference content type (see `${CLAUDE_PLUGIN_ROOT}/skills/do
 
 ## Process
 
-### 1. Resolve the Range and the Convention
+### 1. Resolve the range and the convention
 
 - Resolve `$ARGUMENTS` to a concrete range and confirm it.
 - Find where this project publishes release notes: a `CHANGELOG.md` (note its format, such as Keep a Changelog or a summary-first layout), a `docs/releases/` directory, or GitHub releases (`gh release list`). Match the existing convention.
 - Starting fresh with no convention? Offer the `release-notes` template from the catalog (see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`), or default to a summary-first entry: a short plain-language summary of what changed and why, with itemized changes below it.
 
-### 2. Read the Changes
+### 2. Read the changes
 
 Gather what actually shipped: `git log` for the range, merged PR titles and bodies (`gh pr list --state merged`) when the repo uses them, and the diff for anything ambiguous.
 
@@ -32,11 +32,11 @@ Extract only what a reader can observe:
 
 Drop internal churn (refactors, CI, test-only changes) unless it changes something observable, like performance.
 
-### 3. Ask for the Why
+### 3. Ask for the why
 
 The diff says what changed; the contributor knows why it matters. One short dig, not a form: what should users notice first, what prompted the headline changes, and is there anything readers must do before or after upgrading? Fold their answer into the summary.
 
-### 4. Write Reader-Facing Notes
+### 4. Write reader-facing notes
 
 - Lead with the story of the release in plain language, then the itemized changes.
 - Breaking changes come first and include the migration step, never a bare "X was removed."

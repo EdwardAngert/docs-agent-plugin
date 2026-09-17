@@ -1,4 +1,4 @@
-# Authority Chair: Pass 2, Assumptions
+# Authority chair: pass 2, assumptions
 
 Lower the threshold. The document is not wrong. Ask what it takes for granted.
 
@@ -10,11 +10,11 @@ Lower the threshold. The document is not wrong. Ask what it takes for granted.
 1. **An unexplained load-bearing detail.** The document specifies something exactly ("a tight-fitting lid", "a wide pot") and never says why, or what to do without it.
 1. **A gap in the recovery path.** The document risks something and does not say how to get back.
 
-## Do Not Raise
+## Do not raise
 
 Word choice, hedging, heading phrasing, or anything from pass 3.
 
-## The Question to Ask
+## The question to ask
 
 Not "is this true," which pass 1 settled.
 

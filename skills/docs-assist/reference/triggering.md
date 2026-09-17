@@ -1,10 +1,10 @@
-# How This Plugin Gets Triggered
+# How this plugin gets triggered
 
 What makes the plugin show up, why it sometimes does not, and what a project can add to change that.
 
 Load this when a contributor asks why the plugin did not notice something, or when setting up a project that wants it to be more forward.
 
-## Four Surfaces, One of Them Proactive
+## Four surfaces, one of them proactive
 
 | Surface | Who pulls the trigger | Proactive |
 | --- | --- | --- |
@@ -17,13 +17,13 @@ A skill activates when the model judges that what the contributor *said* matches
 
 This has a consequence worth stating plainly: **the plugin cannot notice anything the contributor did not bring up.** Someone editing `install.mdx` who never says "docs" gets no help, not because the plugin is unable, but because nothing asked it to look.
 
-## The Two Fixes Are Different Problems
+## The two fixes are different problems
 
 **A request that is documentation-shaped but not phrased as documentation** ("write the PR body", "update the changelog") is a matching problem. The `writing-task` skill exists for exactly this: a wider net, cheap to load, that routes to the right capability. No new mechanism needed.
 
 **Activity the contributor never mentioned at all** is a push problem, and only a hook can reach it.
 
-## What a Project Can Add
+## What a project can add
 
 In order of leverage.
 
@@ -64,7 +64,7 @@ Splitting it is not a workaround. It is what keeps the plugin from interrupting:
 
 **A hook cannot make the model offer anything.** It can put information in front of the model and nothing more. Everything after that is the model's judgment, which means a hook's payload has to be worth acting on rather than merely true.
 
-## The Restraint That Makes It Work
+## The restraint that makes it work
 
 A proactive layer that speaks whenever it *can* stops being read.
 

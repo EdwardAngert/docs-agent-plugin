@@ -12,7 +12,7 @@ Think of it as having a technical writer in every Claude Code session, one who a
 
 **Who it's for:** engineers, support leads, PMs, and repo owners who have knowledge to share but don't want to become documentation experts.
 
-## What It Looks Like
+## What it looks like
 
 This section came out of one such session. Documenting this very plugin, it went like this:
 
@@ -35,7 +35,7 @@ You review for accuracy. The formatting is already handled.
 - Node, for the deterministic checks and the repository validator. Nothing else is required to draft, plan, or audit.
 - The linters are optional and scaffolded only if you ask: Vale, markdownlint, and cspell install when you accept them, and the plugin detects and extends an existing setup rather than replacing it.
 
-## What It Writes
+## What it writes
 
 The plugin proposes and you accept. It shows you a draft before a file is written, and multi-file work is offered on a branch rather than committed to your default branch.
 
@@ -91,7 +91,7 @@ Check `CHANGELOG.md` for what changed since your version.
 - [Write Docs With Docs Assist](docs/write-docs-with-docs-assist.md): for individual contributors. What the plugin does, and how to get the most out of it.
 - [Command reference](docs/command-reference.md): every command with its argument and an example.
 
-## How It Works
+## How it works
 
 The plugin activates when you ask for documentation help, in plain words.
 You don't need to learn any special syntax or documentation theory.
@@ -122,7 +122,7 @@ I just fixed a tricky bug, can we add troubleshooting docs so others don't hit i
 Review this README for clarity and completeness
 ```
 
-## Gather Before You Structure
+## Gather before you structure
 
 The plugin works the way a technical writer does: it gathers before it structures.
 When you document something new, it opens with "tell me everything you know" and takes your brain dump in any order.
@@ -135,7 +135,7 @@ Documenting a whole repo and not sure where to start?
 It reads the codebase, tells you what it found and where it would start, and gets one good doc out the door (usually a README or quickstart) before planning the rest.
 It plans to ship first and iterate, not to boil the ocean.
 
-## Making It Show Up
+## Making it show up
 
 The plugin activates when something asks it to. A skill matches what you *said*, so work that never mentions documentation never reaches it.
 
@@ -159,7 +159,7 @@ writing prose directly. Start with `/docs-assist:health` if the state is unclear
 You rarely need these: the plugin activates from plain conversation, and the commands are optional shortcuts.
 For every command's argument and an example, see the [command reference](docs/command-reference.md).
 
-### Write and Plan
+### Write and plan
 
 - `/docs-assist:draft [topic]`: the primary workflow.
   Guides a contributor through turning their knowledge into a structured draft.
@@ -169,7 +169,7 @@ For every command's argument and an example, see the [command reference](docs/co
   Reads the codebase, asks about users and goals, maps user journeys, and proposes a prioritized plan before writing anything.
   Once the plan is approved, docs whose material already exists draft in parallel, and you review the queue instead of co-writing each one.
 
-### Review and Maintain
+### Review and maintain
 
 - `/docs-assist:health [docs dir]`: a fast docs health check, and the best first command to run.
   Scores coverage, freshness, consistency, and findability, names the highest-leverage fix, and offers to make it.
@@ -189,7 +189,7 @@ For every command's argument and an example, see the [command reference](docs/co
 - `/docs-assist:setup [stage]`: conventions, linting, hooks, and site navigation in one pass. Every stage opt-in.
   Default off.
 
-## Configure for Your Team
+## Configure for your team
 
 Commit a `.docs-assist/` directory and the whole team writes to the same conventions:
 
@@ -203,7 +203,7 @@ Because this config is committed to your repo, it survives plugin updates and is
 
 Writing solo? The same config is how the plugin acts as your second reader: it holds your docs to a consistent line and catches the drift in examples and terminology that a team would catch in review.
 
-## Lint With the Same Rules You Write By
+## Lint with the same rules you write by
 
 Linting is optional and never bundled.
 Run `/docs-assist:setup` to scaffold it, and the plugin generates the linter config from your `.docs-assist/config.yml`.
@@ -217,7 +217,7 @@ That means one source of truth: the same settings drive how the agent writes and
 
 The command detects any linter you already use and extends it rather than replacing it.
 
-## Start From a Proven Template
+## Start from a proven template
 
 When you document something new, the plugin can start you from a proven structure instead of a blank page, using [The Good Docs Project](https://thegooddocsproject.dev/) templates.
 Describe the problem in plain words, for example "people keep opening tickets about a login loop," and it suggests a matching template, then fills the skeleton with what you know.
@@ -227,7 +227,7 @@ Suggesting one is free and offline, so the assistant offers a template in any dr
 Templates are offered during drafting; `/docs-assist:setup` turns the feature on for a team.
 The Good Docs templates are MIT-0; see `THIRD-PARTY-NOTICES.md`.
 
-## Keep Docs in Sync With Code
+## Keep docs in sync with code
 
 When code changes, run `/docs-assist:update` with a git ref, a PR number, or a path.
 The plugin reads the diff, summarizes what changed, finds the docs that reference it, and updates them for your review.
@@ -237,7 +237,7 @@ You can also put the watching on autopilot.
 `/docs-assist:setup` installs a docs-impact check that runs on every pull request: a deterministic, token-free detector that flags diffs riding the change types that break docs (moved files, changed headings, changed code terms the docs mention, large silent source changes) and tells reviewers exactly which `/docs-assist:update` range to run.
 Cheap detection in CI, expensive updating only when it is warranted.
 
-## Make Your Docs Agent-Ready
+## Make your docs agent-ready
 
 Your docs' readers now include AI tools: coding agents, docs assistants, and search systems that read structure before prose.
 
@@ -245,7 +245,7 @@ Your docs' readers now include AI tools: coding agents, docs assistants, and sea
 
 Nothing here depends on frontmatter. Site generators disagree about what frontmatter they accept, plenty of documentation has no site generator at all, and frontmatter only pays off once a reader has already landed on the page. The plugin keeps what it needs in `.docs-assist/`, reads your frontmatter when you have it, and offers to wire more up when you want it.
 
-## What's Inside
+## What's inside
 
 ```text
 docs-assist/
@@ -280,7 +280,7 @@ docs-assist/
 To customize without committing project config, edit `skills/docs-assist/reference/tone-and-voice.md` and `SKILL.md` directly.
 For team-wide, update-safe customization, prefer `/docs-assist:setup`.
 
-## What Would Improve It Most
+## What would improve it most
 
 An honest self-assessment, kept in the open on purpose.
 
@@ -307,7 +307,7 @@ The core philosophy: I just want your knowledge, expertise, and steps.
 I'll deal with putting it in the right order, getting the words right, and making it all work together.
 This plugin brings that same approach to every Claude Code session.
 
-## Renamed From documentation-agent
+## Renamed from documentation-agent
 
 This plugin was `documentation-agent`.
 It is now `docs-assist`, and commands are invoked as `/docs-assist:...`.

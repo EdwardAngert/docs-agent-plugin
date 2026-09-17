@@ -1,4 +1,4 @@
-# Knowledge Intake
+# Knowledge intake
 
 This is how Docs Assist gathers before it structures.
 
@@ -8,7 +8,7 @@ This file is that method, so the plugin works the way a writer at the contributo
 
 Load this whenever someone asks to document something new, whether it is one topic with one expert or a from-scratch pile of raw material.
 
-## The Intake Loop
+## The intake loop
 
 The same eight moves serve one doc or a whole set. Later moves lean on earlier ones, so do not skip ahead.
 
@@ -23,7 +23,7 @@ The same eight moves serve one doc or a whole set. Later moves lean on earlier o
 
 The value is in gathering first. A narrow question asked too early gets a narrow answer and buries the good material. The dump surfaces it.
 
-## 1. Survey First, Quietly
+## 1. Survey first, quietly
 
 Before you say anything, build context so your later questions are sharp, not generic.
 
@@ -32,7 +32,7 @@ Before you say anything, build context so your later questions are sharp, not ge
 - Check for `.docs-assist/example-variables.txt` or `.docs-assist/terms.txt`. These are the pre-`reference.yml` format; the plugin no longer reads them. Note it and keep surveying: the offer to migrate (see "Migrating" in `reference-registry.md`) waits until the registry would actually be consulted, when choosing example values or checking terms during shaping and drafting. The contributor came to share knowledge; a file-format prompt before the dump is the wrong opening. Never silently draft as if no registry existed, but never lead with the migration either.
 - Hold what you find. You will use it to situate the dump and to spot what the expert leaves out.
 
-## 2. Dump: "Tell Me Everything You Know"
+## 2. Dump: "tell me everything you know"
 
 Open with an invitation, not an interrogation. Ask for the brain dump first.
 
@@ -44,7 +44,7 @@ Open with an invitation, not an interrogation. Ask for the brain dump first.
 
 This is the SME-facing version of a writer's pile. It is where the real material lives.
 
-## 3. Reflect: Play It Back
+## 3. Reflect: play it back
 
 Show them you heard it. This is what makes the plugin feel like a person, not a form.
 
@@ -52,7 +52,7 @@ Show them you heard it. This is what makes the plugin feel like a person, not a 
 - Invite correction: "Here is what I have got. What did I get wrong, and what is missing?"
 - Let them add. The read-back almost always jogs more out of them.
 
-## 4. Situate: Connect It Outward
+## 4. Situate: connect it outward
 
 Place the knowledge in the product, using the survey. This is where a writer earns their keep.
 
@@ -62,7 +62,7 @@ Place the knowledge in the product, using the survey. This is where a writer ear
 
 Say the connections out loud. "This overlaps with your Webhooks doc, it is a prerequisite for Scheduled Exports, and users usually hit it right after first setup." It orients the contributor and confirms your model.
 
-## 5. Reconcile: Fact-Check the Dump
+## 5. Reconcile: fact-check the dump
 
 Expert memory is honest and unreliable at the same time: defaults change, behavior shifts between releases, and secondhand knowledge arrives with the same confidence as firsthand.
 Reconcile before you dig, so your questions build on what is true.
@@ -91,7 +91,7 @@ A project that also wants the list in its frontmatter can have it, on an explici
 
 This move guards every door, not only the conversational dump: `doc-intake` reports code conflicts in its inventory, so corpus piles and returned intake questionnaires arrive pre-reconciled, and the consolidator resolves what they flag.
 
-## 6. Dig: Ask the Sharp Questions Now
+## 6. Dig: ask the sharp questions now
 
 Only now, with the dump and the survey in hand, ask the targeted questions. They land because they are specific. Aim at the gaps, not the basics.
 
@@ -103,7 +103,7 @@ Only now, with the dump and the survey in hand, ask the targeted questions. They
 
 Ask two or three at a time, conversationally. Never run down the list like a checklist.
 
-## 7. Shape: One Doc, or Several?
+## 7. Shape: one doc, or several?
 
 Decide the structure using `content-types.md`, and check the scope honestly.
 
@@ -113,7 +113,7 @@ Decide the structure using `content-types.md`, and check the scope honestly.
 
 Do not force a pile into a single page. Splitting early is cheaper than untangling later.
 
-## From-Scratch Corpus: Build an Inventory First
+## From-scratch corpus: build an inventory first
 
 When the input is a heterogeneous pile rather than one expert's dump (tickets, a PRD, Slack threads, interview notes, old docs), lead with a content inventory before any plan.
 
@@ -126,7 +126,7 @@ When the input is a heterogeneous pile rather than one expert's dump (tickets, a
   - Staleness: material that looks out of date.
 - **Hand off to the plan.** The inventory feeds `plan.md`: the clusters become candidate docs, the gaps become priorities.
 
-## Capture Knowledge Asynchronously
+## Capture knowledge asynchronously
 
 The knowledge often lives with someone who is not in the session: the engineer who built it, the support lead who fields the tickets.
 Do not make the writer choose between waiting and guessing. Send the questions to the knowledge instead.
@@ -137,7 +137,7 @@ Do not make the writer choose between waiting and guessing. Send the questions t
 - **Ingest the returned answers** as a pile slice: `doc-intake` reads them into the inventory, and drafting proceeds from there, conversationally or via the fan-out.
 - **Never block on a packet.** Draft what the material already supports and flag the rest; fold the answers in when they arrive.
 
-## Intake Fills the Packet
+## Intake fills the packet
 
 **The intake loop is pass 0 of the authoring loop with a person in the authority chair.**
 
@@ -151,7 +151,7 @@ A packet a human filled and a packet the `chair-authority` subagent emitted are 
 Shape is the one move that does **not** belong to intake.
 Content type, structure, and outline are the advocate chair's decisions, and a packet that makes them has stopped being raw material. When Shape reveals several docs, record that as a note in the packet header and let the orchestrator propose the set.
 
-## Persist as You Go (Opt In)
+## Persist as you go (opt in)
 
 A short dump can live in conversation and go straight into a packet at the end.
 Some do not: a long or many-part dump, a contributor who says "let me check and get back to you," or material that clearly spans more than one sitting.
@@ -198,7 +198,7 @@ Nothing downstream branches on it; it exists so a reviewer knows whether the gap
 
 A team that wants a new session to open already aware of unfinished packets can add that same check to a `SessionStart` hook via setup (default off, like every hook).
 
-## Persist the Synthesis, Not the Raw Pile
+## Persist the synthesis, not the raw pile
 
 Keep what is reusable; do not hoard raw material.
 

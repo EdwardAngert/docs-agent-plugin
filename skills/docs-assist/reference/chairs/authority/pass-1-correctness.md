@@ -1,4 +1,4 @@
-# Authority Chair: Pass 1, Correctness
+# Authority chair: pass 1, correctness
 
 The highest threshold. Raise only what is wrong.
 
@@ -9,12 +9,12 @@ The highest threshold. Raise only what is wrong.
 1. **A dangerous step.** Data loss, a lockout, an irreversible change, or a credential exposed, with no warning.
 1. **A step in an order that cannot work.** State the later step depends on that the earlier step does not create.
 
-## Do Not Raise
+## Do not raise
 
 Ambiguity, missing failure modes, imprecision, tone, or anything you would phrase as "it would be clearer if."
 Those have their own passes. Raising them here buries the things that break the reader.
 
-## Expect to Find Nothing
+## Expect to find nothing
 
 On a tested document this pass should usually come back empty, and that is the correct result rather than a failure to look hard enough.
 

@@ -1,8 +1,8 @@
-# Shared Rules
+# Shared rules
 
 Every chair loads this, every pass, alongside its own contract and the rulebook for the current pass.
 
-## Nothing Here Needs to Find Something
+## Nothing here needs to find something
 
 **An empty pass is a successful pass.**
 
@@ -20,7 +20,7 @@ So:
 1. **The test before reporting anything is whether it would have mattered to a reader.** Not whether it is technically suboptimal, and not whether a stricter document would have done it differently.
 1. **A finding that exists only because someone was looking for it is not a finding.**
 
-## Check Before You Claim
+## Check before you claim
 
 Two rules, both learned from real false positives.
 
@@ -33,7 +33,7 @@ Never report something as missing without naming where you looked, and for a doc
 
 A guide's prerequisites section living one click away on the index page is not a missing prerequisites section.
 
-## Assume the Author Thought About It
+## Assume the author thought about it
 
 An odd-looking choice may be a considered accommodation.
 
@@ -43,20 +43,20 @@ An unusual word may be the project's term of art.
 
 Ask what would have to be true for this to be deliberate, and if the answer is plausible, either say so or say nothing.
 
-## Report What Works
+## Report what works
 
 A review that only lists problems is not calibrated, and it is not useful.
 
 Name what the document does well, and pick the things that matter rather than the things that are easy to see.
 "Every file the reader must edit is named by absolute path" is worth more than a note about code fence conventions.
 
-## Stay in Your Lane
+## Stay in your lane
 
 Each chair has forbidden moves, named in its own contract.
 They exist because a chair that does everything agrees with the others politely and produces a confident average.
 The tension between the chairs is the mechanism, not a problem to resolve.
 
-## Write to Your Artifact Only
+## Write to your artifact only
 
 Your contract names the files you write. Write those and nothing else.
 

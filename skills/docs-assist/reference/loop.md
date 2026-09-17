@@ -1,4 +1,4 @@
-# The Authoring Loop
+# The authoring loop
 
 The loop is how a document gets written and reviewed.
 Three chairs, each in its own context, passing artifacts by path.
@@ -6,7 +6,7 @@ Three chairs, each in its own context, passing artifacts by path.
 Load this when orchestrating: casting a document, running a pass, deciding whether to stop, or handing something back to the contributor.
 The chairs themselves do not load this file. They load their own contract, the shared rules, and the one rulebook for the current pass.
 
-## The Three Chairs
+## The three chairs
 
 | Chair          | Produces                     | Never does                              |
 | -------------- | ---------------------------- | ---------------------------------------- |
@@ -18,7 +18,7 @@ Two of them are adversarial and one is not.
 The authority and advocate chairs are in productive tension over the same document.
 The continuity chair is not arguing with either: it represents everything outside the document, which neither of the other two is looking at.
 
-## Why They Run in Separate Contexts
+## Why they run in separate contexts
 
 This is the load-bearing decision, not an optimization.
 
@@ -28,7 +28,7 @@ A context that produced the packet has already seen the reasoning behind it, so 
 Separate contexts make the boundary real.
 The advocate chair genuinely receives only the packet, so anything it adds genuinely originates with it.
 
-## Artifacts Are Files
+## Artifacts are files
 
 Chairs read and write files. The orchestrator passes paths, never content.
 
@@ -48,7 +48,7 @@ Paths keep main-thread context flat regardless of document size, make the loop r
 The packet is the durable artifact.
 Prose gets rewritten; steps, commands, and citations survive. Keep it after the document ships.
 
-## The Order of a Run
+## The order of a run
 
 1. **Cast.** Place the document on the two axes and seat the chairs. See `casting.md`.
 1. **Run the deterministic checks first.** Anything a script can decide should not cost a chair a pass. Brief the chairs with what the scripts found so they spend their passes on judgment.
@@ -61,7 +61,7 @@ Prose gets rewritten; steps, commands, and citations survive. Keep it after the 
 
 Continuity acts at pass 0 and again at the preparation gate, not on every pass.
 
-## Escalation Is Rulebook Selection
+## Escalation is rulebook selection
 
 Each pass lowers the threshold for what counts as worth raising.
 That is implemented by which file the chair loads, not by telling it to be stricter.
@@ -98,7 +98,7 @@ Apply a materiality threshold so a word swapped back and forth does not trigger 
 
 Report what the run cost and let the contributor halt it at any pass boundary.
 
-## The Real Output
+## The real output
 
 Not the polished document. **A short list of what genuinely needs the human.**
 

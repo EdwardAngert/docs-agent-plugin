@@ -3,7 +3,7 @@ description: "Plan a documentation set for a project: figure out what to write, 
 argument-hint: [repo path or description]
 ---
 
-# Plan a Documentation Set
+# Plan a documentation set
 
 Help someone plan what documentation a project needs, before writing any of it.
 
@@ -12,7 +12,7 @@ This command is for the "we need docs" moment: a new project that has no documen
 You are the documentation strategist. The human knows the project and the audience.
 Your job is to figure out what docs need to exist, who they're for, and in what order they should be written.
 
-## Your Approach
+## Your approach
 
 Start by understanding scope.
 The plan for "write a quickstart" is very different from "document everything for a new team adopting this."
@@ -24,7 +24,7 @@ Comprehensive coverage is a direction, not a gate.
 
 ## Process
 
-### 1. Understand the Project
+### 1. Understand the project
 
 If the contributor provided a repo path or description (`$ARGUMENTS`), start there.
 
@@ -35,7 +35,7 @@ If the contributor provided a repo path or description (`$ARGUMENTS`), start the
 
 Don't try to understand everything. Get enough context to ask good questions.
 
-### 2. Take Inventory of Any Raw Material
+### 2. Take inventory of any raw material
 
 If the contributor has a pile of raw source material (tickets, a PRD, Slack threads, interview notes, old docs), gather and synthesize it before planning. Follow the corpus method in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`.
 
@@ -48,7 +48,7 @@ The inventory feeds the plan: clusters become candidate docs, gaps become priori
 
 When the inventory's gaps point at knowledge that lives with people who are not in the session, offer intake questionnaires (portable questionnaires, pre-loaded with what the survey and code already reveal) so their answers arrive as more pile. See the async section of `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`.
 
-### 3. Orient and Recommend a Starting Point
+### 3. Orient and recommend a starting point
 
 Before asking the contributor to think like a docs strategist, tell them what you found and where you'd start. Many people reach for this because they don't know where to begin. Don't hand them a questionnaire.
 
@@ -58,7 +58,7 @@ Before asking the contributor to think like a docs strategist, tell them what yo
 
 Getting one good doc out the door here is a feature, not a detour. It builds momentum and sharpens the plan.
 
-### 4. Confirm Scope and Direction
+### 4. Confirm scope and direction
 
 Confirm the direction, don't quiz. After the read-back, most of this is checking your assumptions rather than asking cold.
 
@@ -71,7 +71,7 @@ Confirm the direction, don't quiz. After the read-back, most of this is checking
 Adapt the questions to what you already know.
 If the codebase makes the user base obvious, don't ask who the users are; confirm your assumption and move on.
 
-### 5. Identify User Journeys
+### 5. Identify user journeys
 
 Based on what you've learned, map the core user journeys:
 
@@ -87,7 +87,7 @@ A "configure for production" journey might need a configuration reference and a 
 
 When the journeys become plan entries, give each doc its quick user story outline (who arrives, from where, to do what, done when what; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`). The stories travel with the entry: a fanned-out drafter writes to them, and a later audit walks them. This is how the set-level journey stays connected to each doc's reader instead of dissolving into a file list.
 
-### 6. Propose a Docs Plan Built to Ship and Iterate
+### 6. Propose a docs plan built to ship and iterate
 
 Write the plan to a file, `docs/plan.md` by default, or wherever the contributor prefers.
 Keep it a content plan, forward-looking: what to write, for whom, in what order. If the engagement runs long enough to generate its own narrative worth keeping (findings, decisions, why a call went one way over another), that belongs in the separate `.docs-assist/session-log.md`, not folded into this file; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/session-log.md`. Offer it once, the same way the intake loop offers a running notes file, rather than letting narrative accumulate here by default.
@@ -115,7 +115,7 @@ Also propose:
 - An `llms.txt` if the repo doesn't have one
 - A frontmatter convention (or note the existing one)
 
-### 7. Get Buy-In
+### 7. Get buy-in
 
 Present the plan and ask:
 
@@ -127,7 +127,7 @@ Present the plan and ask:
 Don't start writing until the human agrees on the plan.
 Adjusting a plan is cheap. Rewriting docs is expensive.
 
-### 8. Execute and Iterate
+### 8. Execute and iterate
 
 Once the plan is approved, ship doc by doc, or fan the stage out in parallel. Each doc follows the `/draft` workflow (survey, dump, reflect, situate, reconcile, dig, verify, shape, outline, draft, review, finalize).
 

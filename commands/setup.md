@@ -2,7 +2,7 @@
 description: "Set up a project's documentation conventions, linting, hooks, and site navigation, in one pass with one set of questions"
 ---
 
-# Set Up the Project
+# Set up the project
 
 Four things used to be four commands: committing conventions, generating linters, installing hooks, and scaffolding site navigation. They are one job with one set of questions, and asking them four times is how a contributor ends up declining all four.
 
@@ -61,7 +61,7 @@ Build `.docs-assist/personas/advocate.md` from the project's committed conventio
 
 Tell the contributor these are theirs to edit. A persona a contributor corrects is the system working, and an edit there wins over anything inferred.
 
-## 5. Make the Plugin Reachable
+## 5. Make the plugin reachable
 
 The plugin only shows up when something asks it to. A skill matches what the contributor *said*, so work that never mentions documentation never reaches it.
 
@@ -83,7 +83,7 @@ If the repo has no `CLAUDE.md`, offer to create one with just this section rathe
 
 See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/triggering.md` for the full picture, including what hooks can and cannot do.
 
-## 6. Site Navigation
+## 6. Site navigation
 
 Only when the project has a site generator, and only on a yes.
 

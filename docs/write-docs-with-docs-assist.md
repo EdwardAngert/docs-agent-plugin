@@ -1,5 +1,5 @@
 ---
-title: "Write Docs With Docs Assist"
+title: "Write docs with Docs Assist"
 description: "How to use the Docs Assist plugin as a contributor: installing it, sharing what you know, reviewing for accuracy, and when to reach for draft, plan, or audit."
 content-type: guide
 audience: contributors
@@ -11,13 +11,13 @@ keywords:
   - technical writing
 ---
 
-# Write Docs With Docs Assist
+# Write docs with Docs Assist
 
 With the Docs Assist plugin installed, Claude Code has documentation expertise built in.
 You don't need to learn any special syntax or documentation theory.
 Ask for help writing docs the way you normally would, and Claude Code guides you through it.
 
-## Install It First
+## Install it first
 
 ```text
 /plugin marketplace add EdwardAngert/docs-agent-plugin
@@ -32,7 +32,7 @@ Two optional things make it work better in your repo, and `/docs-assist:setup` o
 - **Committed conventions** in `.docs-assist/`, so the plugin holds your docs to your heading style, your terminology, and your example values instead of inferring them each time.
 - **Three lines in `CLAUDE.md`** telling Claude Code to reach for the plugin when work touches your docs. This matters more than it looks: the plugin activates when something matches what you *said*, so work that never mentions documentation never reaches it. A standing instruction in `CLAUDE.md` closes that gap.
 
-## What the Plugin Does Behind the Scenes
+## What the plugin does behind the scenes
 
 When you ask Claude Code to help with documentation, the plugin:
 
@@ -47,9 +47,9 @@ When you ask Claude Code to help with documentation, the plugin:
 You focus on the content.
 The plugin handles the structure and polish.
 
-## Get the Most Out of It
+## Get the most out of it
 
-### Start Talking
+### Start talking
 
 You don't need to know what "content type" your doc should be, or whether it's a "guide" or a "tutorial."
 Tell Claude Code what you want to document, and it opens by asking you to share everything you know:
@@ -68,7 +68,7 @@ Help me write up how the deployment pipeline works for new engineers.
 
 Claude Code will figure out the right structure.
 
-### Give Messy Input
+### Give messy input
 
 If you have a rough brain dump, paste it in.
 If your steps are out of order, that's fine.
@@ -76,7 +76,7 @@ If you're not sure about one part, say so. Claude Code will mark it for verifica
 
 The plugin is designed to work with how people actually share knowledge, not how finished docs look.
 
-### Mention What Goes Wrong
+### Mention what goes wrong
 
 When Claude Code asks you about a process, don't only describe the happy path.
 The most valuable parts of documentation are often the gotchas: what breaks, what's confusing, what everyone gets wrong the first time.
@@ -84,7 +84,7 @@ The most valuable parts of documentation are often the gotchas: what breaks, wha
 If Claude Code asks "what do people commonly get wrong here?", that's the plugin prompting you.
 Your answer often becomes the note or warning that saves someone an hour of debugging.
 
-### Review for Accuracy, Not Style
+### Review for accuracy, not style
 
 When Claude Code shows you a draft, your job is to check whether it's technically correct and complete.
 You don't need to worry about heading case, markdown formatting, or whether the tone is right.
@@ -96,13 +96,13 @@ Focus on:
 - Is anything missing?
 - Would this make sense to the intended reader?
 
-### Start From a Proven Template
+### Start from a proven template
 
 For a new doc, Claude Code can start from a proven structure instead of a blank page, using [The Good Docs Project](https://www.thegooddocsproject.dev/) templates.
 Describe the problem in plain words, like "people keep opening tickets about a login loop," and it suggests a matching template and fills it with what you know.
 Take the suggestion, pick another, or decline. It's a head start, not a requirement.
 
-### Use the Draft Command to Start Somewhere Specific
+### Use the draft command to start somewhere specific
 
 Plain conversation reaches everything the plugin does.
 The commands are shortcuts into those same workflows, not a more structured alternative, so use one when you already know where you want to start:
@@ -117,7 +117,7 @@ A narrow question asked first gets a narrow answer, which is why it waits.
 
 Use it when you're starting from scratch on a topic rather than improving something that already exists.
 
-### Plan a Full Documentation Set
+### Plan a full documentation set
 
 If you need to document a whole project, not only one page, use the plan command:
 
@@ -140,7 +140,7 @@ Once you agree on the plan, Claude works through it doc by doc.
 Docs whose material already exists are drafted in parallel, and you review the queue instead of co-writing each one.
 You still see every draft before anything is final; parallel means they are written at the same time, not that they skip your review.
 
-### Review Docs You Already Have
+### Review docs you already have
 
 To check existing docs rather than write new ones:
 
@@ -153,7 +153,7 @@ A claim nobody can source is the finding, and it is the kind that survives ordin
 
 For a procedure specifically, `/docs-assist:verify` goes further and runs the steps in an isolated workspace, so you find out whether the doc still works rather than whether it still reads well.
 
-## What It Won't Do
+## What it won't do
 
 The plugin won't decide *where* a doc belongs in your site's navigation.
 It suggests a filename and location from the conventions already in your repo, but if your team has a process for that (a docs review board, a content calendar), you still follow it.

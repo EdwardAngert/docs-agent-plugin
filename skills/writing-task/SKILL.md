@@ -3,19 +3,19 @@ name: writing-task
 description: "Invoke when a task involves writing or revising prose that other people will read, even when nobody called it documentation: a pull request description, release notes, a changelog entry, a README, a runbook, a migration guide, an error message, or any doc. Routes to the Docs Assist capability that fits, and says plainly when the plugin has nothing useful to offer for this particular kind of writing."
 ---
 
-# This Looks Like a Writing Task
+# This looks like a writing task
 
 Docs Assist is installed. This skill exists to notice that, and to point at the part of it that fits.
 
 It is a routing table, not a workflow. Read it, take the one line that applies, and go.
 
-## Why This Exists Separately
+## Why this exists separately
 
 The main `docs-assist` skill describes itself in terms of *technical documentation*, so a request like "write the PR body" or "update the changelog" does not match it. The plugin then sits there, fully able to help, and never loads.
 
 That is a phrasing problem, not a capability problem. This skill is the wider net.
 
-## Where to Go
+## Where to go
 
 | The task | What to use |
 | --- | --- |
@@ -32,7 +32,7 @@ That is a phrasing problem, not a capability problem. This skill is the wider ne
 
 Whatever the task, two things always apply: the style stack in `docs-assist`'s `reference/style-stack.md`, and the rule that a file the reader must edit is named by full path on the block itself.
 
-## What This Plugin Does Not Cover
+## What this plugin does not cover
 
 Say so. Do not stretch.
 
@@ -40,7 +40,7 @@ Nothing here helps with commit message subjects, docstrings or in-source API ref
 
 **Finding nothing is a successful outcome.** If the task is writing but none of the rows above fit, say the plugin has nothing for this and get out of the way. The same rule the chairs work under, for the same reason: a router that needs to route will route badly.
 
-## How Loudly to Say It
+## How loudly to say it
 
 Once, in one line, inside whatever you were already going to say. Not a banner, not a separate turn, not a second time in the same session for the same task.
 

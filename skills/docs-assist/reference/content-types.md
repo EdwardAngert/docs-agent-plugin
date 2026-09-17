@@ -1,4 +1,4 @@
-# Content Types
+# Content types
 
 This is the canonical list of content types Docs Assist uses.
 Every other file in the plugin points here instead of redefining them, so there is one source of truth for the categories and their frontmatter values.
@@ -7,7 +7,7 @@ When you draft or audit a doc, pick the type that best serves the reader, then s
 The contributor never needs to know these categories. You choose.
 When the right type is genuinely ambiguous, default to `doc` (task-oriented) and let the reviewer restructure.
 
-## How to Choose
+## How to choose
 
 | If the contributor is | Use | `content-type` value |
 | --- | --- | --- |
@@ -67,7 +67,7 @@ A guided learning journey, usually a set of guides in sequence.
 - Placement: standalone pages, or a section within a related doc.
 - Example: "Resolve Connection Timeout Errors"
 
-## Procedural Hierarchy
+## Procedural hierarchy
 
 Doc, Guide, and Tutorial form a hierarchy of task-oriented content that scales with scope:
 
@@ -77,7 +77,7 @@ Doc, Guide, and Tutorial form a hierarchy of task-oriented content that scales w
 
 Start at the smallest type that fits. Split upward only when a single page tries to do too much (see the Everything Document antipattern in `documentation-patterns.md`).
 
-## Templates for a Starting Structure
+## Templates for a starting structure
 
 A content type says what shape a doc should take.
 A template gives the contributor that shape as a fillable skeleton, so they start from a proven structure instead of a blank page.

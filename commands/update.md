@@ -3,7 +3,7 @@ description: Find and update the docs affected by a code change (a diff, a PR, o
 argument-hint: [git ref, PR number, or path]
 ---
 
-# Update Docs for a Change
+# Update docs for a change
 
 Keep documentation in sync with the code. Given a change, find the docs it affects and update them. This is the workflow that most benefits from running inside Claude Code, where the diff and the docs are both at hand.
 
@@ -11,11 +11,11 @@ The argument (`$ARGUMENTS`) can be a git ref or range (`HEAD~3`, `main..feature`
 
 ## Process
 
-### 1. Resolve the Config
+### 1. Resolve the config
 
 Read `.docs-assist/config.yml` and `.docs-assist/style.md` if present, so updates match the project's conventions. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/config-resolution.md`.
 
-### 2. Get the Change Set
+### 2. Get the change set
 
 Resolve `$ARGUMENTS` to a concrete diff:
 
@@ -24,7 +24,7 @@ Resolve `$ARGUMENTS` to a concrete diff:
 - A path: `git diff -- <path>`, or read the file if it is uncommitted.
 - Nothing: `git diff` plus `git diff --staged` against the base branch.
 
-### 3. Summarize What Changed
+### 3. Summarize what changed
 
 From the diff, extract the things docs describe:
 
@@ -35,7 +35,7 @@ From the diff, extract the things docs describe:
 
 Write a short change summary. This is what drives the doc search and the updates.
 
-### 4. Find Affected Docs
+### 4. Find affected docs
 
 Locate the docs that reference what changed:
 
@@ -45,7 +45,7 @@ Locate the docs that reference what changed:
 
 Separate confident matches (a doc documents a flag you renamed) from weak matches (a doc mentions a term in passing). Do not touch the weak matches without reason.
 
-### 5. Update the Docs
+### 5. Update the docs
 
 Before editing, check the branch. If the working tree is on the default branch and the update will touch more than a file or two, offer to do the pass on a docs branch so the result arrives as a reviewable change set. Never commit to the default branch unless asked. The contributor's existing workflow (they may already be on a feature branch) wins.
 
@@ -60,7 +60,7 @@ For every update:
 - Bump `last-verified` in frontmatter when you confirm the doc against the new behavior.
 - Where a change alters meaning and you cannot confirm intent from the diff, flag it for subject matter expert review instead of guessing.
 
-### 6. Review and Finalize
+### 6. Review and finalize
 
 - Before showing the result, run the second-opinion pass batched across the touched docs, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/second-opinion.md`. It matters most here: an update can run entirely off a diff with no contributor conversation to catch drift, so this pass is the only check standing between the edits and landing wrong. Keep it blind to the diff as well as the conversation, and fold judgment findings into the follow-ups list below.
 - Show the user the result as a diff (`git diff` on the docs) so they review the substance, not the formatting.

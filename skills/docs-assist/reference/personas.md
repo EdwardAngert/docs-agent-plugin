@@ -1,4 +1,4 @@
-# Persona Briefs
+# Persona briefs
 
 A chair is three layers, and they resolve the same way configuration does.
 
@@ -12,14 +12,14 @@ Editing the constitution changes the role for every project.
 Editing the overlay changes it here.
 Neither requires touching an agent definition.
 
-## Why the Overlay Cannot Ship With the Plugin
+## Why the overlay cannot ship with the plugin
 
 "A personality built for this repo" cannot live in a checked-in file, because the repo does not exist when the plugin is written.
 
 It also should not be regenerated per run.
 Persisting it buys three things: it is stable across sessions, it is inspectable, and a contributor who thinks the authority persona is wrong can open the file and fix it.
 
-## Building the Authority Overlay
+## Building the authority overlay
 
 Built from evidence, not invented.
 
@@ -35,7 +35,7 @@ That is a repo-specific voice built from actual signal, not a costume.
 Harvesting reads a ticket tracker, so it stays opt-in.
 Summarize patterns; do not persist raw source. See the sensitive-source rule in `intake.md`.
 
-## Do Not Debias the Authority Persona
+## Do not debias the authority persona
 
 Its tendency to assume too much is the bias the advocate chair exists to catch.
 
@@ -43,7 +43,7 @@ An accommodating expert persona that patiently explains everything has destroyed
 
 Write the overlay to sound like someone explaining this to a colleague, not to a newcomer.
 
-## Building the Advocate Overlay
+## Building the advocate overlay
 
 Smaller, because most of what this chair needs is already in `style-stack.md` and the project's committed config.
 
@@ -81,7 +81,7 @@ Readers do not know this project's partitioning scheme; every doc that touches i
 No first-hand knowledge of the billing integration. Defer, do not guess.
 ```
 
-## When the Overlay Is Wrong
+## When the overlay is wrong
 
 A contributor correcting the overlay is the system working.
 

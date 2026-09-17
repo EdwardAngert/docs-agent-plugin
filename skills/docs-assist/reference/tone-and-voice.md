@@ -1,11 +1,11 @@
-# Tone and Voice
+# Tone and voice
 
 - Use a **direct, clear, and instructional tone**
 - Assume a **developer or technical admin** as your reader when nothing more specific is known; calibrate below that floor for a beginner-facing doc and above it for an expert one, per each doc's own user story (see `user-stories.md`)
 - Jargon and term explanations follow the same calibration: an expert-audience doc uses the field's own vocabulary without apology; a beginner-audience doc explains a term the first time it appears. Explaining what the calibrated reader already knows is the expert tax, the same failure as skipping what they don't
 - Prioritize **user actions** and outcomes
 
-## Avoid AI Voice
+## Avoid AI voice
 
 Documentation states and instructs; it does not hedge, sell, or perform confidence. The patterns below are the reliable tells of generated-sounding prose. Cut them on sight, the same way an em dash gets cut, and rewrite what was there into a direct statement rather than leaving a gap.
 
@@ -15,7 +15,7 @@ Documentation states and instructs; it does not hedge, sell, or perform confiden
 - **Throat-clearing openers**: `it's worth noting that`, `it's important to understand`, `let's dive into`, `needless to say`. Cut the preamble and start with the instruction or fact it was stalling in front of.
 - **Stacked inflated transitions**: `furthermore`, `moreover`, `that said`, used as connective tissue between every sentence rather than where a real logical turn exists. A period is usually enough.
 
-## Markdown Formatting Rules
+## Markdown formatting rules
 
 ### Headings
 
@@ -50,7 +50,7 @@ Documentation states and instructs; it does not hedge, sell, or perform confiden
 > Some teams prefer explicit numbering (`1.`, `2.`, `3.`).
 > The `1.` approach simplifies reordering and diffs.
 
-### Code and Inline Elements
+### Code and inline elements
 
 - Use backticks for:
   - File names (`manifest.json`)
@@ -75,9 +75,9 @@ Surround headings and lists with blank lines (markdownlint rules MD022 and MD032
 - Avoid linking directly to headings, unless persistent
 - Use link text that describes the destination purpose
 
-## Visual Standards
+## Visual standards
 
-### Alerts and Admonitions
+### Alerts and admonitions
 
 - Use GitHub-flavored Markdown extensions:
 
@@ -86,13 +86,13 @@ Surround headings and lists with blank lines (markdownlint rules MD022 and MD032
   > This feature requires version 2.1.0 or later.
   ```
 
-## Terminology Consistency
+## Terminology consistency
 
 Use the same term for the same concept in every doc.
 When the project has `term` entries in `.docs-assist/reference.yml`, its canonical terms are authoritative; see `terminology.md`.
 For general style questions beyond this file, `style-guides.md` covers choosing and applying an external guide such as the [Google developer documentation style guide](https://developers.google.com/style/).
 
-## Document Hygiene
+## Document hygiene
 
 - Avoid TODOs or placeholders in merged docs
 - Check anchor links if you rename headings or move files

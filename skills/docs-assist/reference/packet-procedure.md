@@ -1,18 +1,18 @@
-# The Procedure Packet
+# The procedure packet
 
 What the authority chair emits when the reader needs to do something.
 
 Steps, code, and citations, with as little prose as it can manage.
 Written to `.docs-assist/loop/<doc-slug>/packet.md`.
 
-## Why It Is Cold
+## Why it is cold
 
 The packet is not a draft. It is the raw material a draft gets made from.
 
 Everything left out of it is a *writer's* decision, and a packet that makes those decisions blurs the line between ground truth and framing before the advocate chair ever sees the material.
 That line is what makes the ledger a clean diff instead of a self-report, so keeping the packet cold is what makes the whole mechanism work.
 
-## The Rows
+## The rows
 
 ### Prerequisites and environment
 
@@ -69,13 +69,13 @@ Marked as such rather than smoothed over.
 "I do not know what happens when the token expires mid-run" is a useful packet entry.
 An invented answer is not.
 
-## Not in the Packet
+## Not in the packet
 
 Transitions, motivation, audience address, analogies, hedges, and editorializing headings.
 
 These are the advocate chair's decisions. Supplying them here is the one way to break the loop.
 
-## A Human Can Fill This In
+## A human can fill this in
 
 The packet is the one format an expert can produce or correct directly without pain.
 

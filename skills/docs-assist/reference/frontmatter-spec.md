@@ -1,8 +1,8 @@
-# Frontmatter Spec
+# Frontmatter spec
 
 This document defines the frontmatter schema Docs Assist offers when writing docs, and how it reads frontmatter a project already keeps.
 
-## Frontmatter Is Offered, Never Required
+## Frontmatter is offered, never required
 
 **No plugin behavior depends on frontmatter.**
 
@@ -27,7 +27,7 @@ A project whose generator renders `last-verified` into the page should have that
 When a project has a site generator and wants frontmatter wired up, the plugin offers to do it and explains what each field buys.
 It is a service, not a convention imposed on files the plugin does not own.
 
-## Why Frontmatter Still Helps
+## Why frontmatter still helps
 
 When a project does keep it, good frontmatter serves three audiences at once:
 
@@ -37,7 +37,7 @@ When a project does keep it, good frontmatter serves three audiences at once:
 
 ## Schema
 
-### Recommended Fields
+### Recommended fields
 
 These are the fields worth having on every doc in a project that keeps frontmatter.
 When the plugin writes a doc and the project's convention includes frontmatter, it generates all of them.
@@ -63,7 +63,7 @@ The document's structural category.
 Use one of: `doc`, `guide`, `tutorial`, `concept`, `reference`, `troubleshooting`.
 These map to the content types defined in `content-types.md`.
 
-### Fields Worth Adding
+### Fields worth adding
 
 These fields add significant value for AI tools, search, and docs teams.
 The plugin generates them when it has enough context to do so.
@@ -107,7 +107,7 @@ Other docs that cover adjacent topics.
 Use relative paths.
 These become cross-references in the doc and help the plugin maintain connective tissue across the docs set.
 
-### Optional Fields
+### Optional fields
 
 Use these when they apply.
 The plugin adds them when relevant context is available.
@@ -163,9 +163,9 @@ Use when a doc is specific to one SDK in a multi-SDK project.
 Programming languages covered in the doc's examples.
 Helps AI tools and search filter by language.
 
-## How the Plugin Uses Frontmatter
+## How the plugin uses frontmatter
 
-### Write Docs with `/draft`
+### Write docs with `/draft`
 
 In the finalize step, the plugin generates frontmatter for the new doc:
 
@@ -175,7 +175,7 @@ In the finalize step, the plugin generates frontmatter for the new doc:
 - `keywords` are extracted from the doc's content, the terms the plugin identifies as significant
 - `prerequisites` and `related` come from the survey step: the plugin already knows what other docs exist
 
-### Survey Existing Docs
+### Survey existing docs
 
 During the survey step of any workflow, the plugin scans existing docs.
 If docs have frontmatter, the plugin reads it instead of reading full doc bodies.
@@ -197,13 +197,13 @@ The audit command checks frontmatter as part of its review:
 - Broken `prerequisites` and `related` paths are reported
 - Inconsistent `content-type` usage is identified
 
-## Adapt to Existing Repos
+## Adapt to existing repos
 
 Most repos already have some frontmatter.
 SSGs like Docusaurus, Hugo, Jekyll, and Astro each have their own conventions and required fields.
 The plugin must work with what's there, not fight it.
 
-### How the Plugin Detects Existing Conventions
+### How the plugin detects existing conventions
 
 During the survey step, the plugin reads frontmatter from multiple existing docs (not just one) to identify patterns:
 
@@ -214,7 +214,7 @@ During the survey step, the plugin reads frontmatter from multiple existing docs
 
 This survey produces a mental model of the repo's frontmatter conventions that the plugin uses for all subsequent work in the session.
 
-### Rules for Conflict Resolution
+### Rules for conflict resolution
 
 1. **Never overwrite existing fields.** If a doc already has `title`, `description`, or `tags`, they stay as they are. The contributor or SSG config put them there for a reason.
 1. **Match existing field names.** If the repo uses `tags`, the plugin uses `tags`, not `keywords`. If it uses `type`, the plugin uses `type`, not `content-type`. The repo's convention wins.
@@ -226,7 +226,7 @@ This survey produces a mental model of the repo's frontmatter conventions that t
 1. **Add missing fields alongside existing ones.** If a doc has `title` and `description` but no content type or keywords equivalent, the plugin adds those using the repo's naming convention (or its own defaults if no convention exists).
 1. **Don't duplicate semantics.** If the repo already has `tags` and the plugin would add `keywords`, it uses `tags`. One field per concept.
 
-### Document the Mapping
+### Document the mapping
 
 If the repo uses non-standard field names, note the mapping in `llms.txt` so the next session (or a different AI tool) doesn't have to re-derive it.
 For example:

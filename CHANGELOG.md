@@ -50,7 +50,7 @@ The organizing idea: drafting and reviewing are one mechanism, run by three chai
 - No coverage for docstrings and in-source reference, commit message bodies, or architecture decision records. `writing-task` names these rather than bluffing.
 - The proactive layer in `triggering.md` is designed and unbuilt.
 
-### Version Policy
+### Version policy
 
 - Bumped to 1.0.0 on the maintainer's explicit instruction. The policy stands: a version bump past 0.9.5 is the maintainer's decision, and 1.0.0 especially so.
 
@@ -60,7 +60,7 @@ The organizing idea: drafting and reviewing are one mechanism, run by three chai
 
 - `reference/pr-descriptions.md`: when a PR's commits aren't independently reviewable (a later commit fixes something an earlier one touched, common in docs work), restructure the description by file or area instead of by commit, say so explicitly near the top, and write for a human reviewer whose first pass is already automated (spend words on judgment calls and verification, not on what a linter or bot first-pass already covers). Cross-linked from `SKILL.md`'s "Deliver on a Branch" and `/docs-assist:update`'s own-PR path.
 
-### Version Policy
+### Version policy
 
 - Bumped to 0.9.8 on the maintainer's explicit call, the same policy as 0.9.6 and 0.9.7: agent-driven work caps at 0.9.5 by default, and a version bump past that is always the maintainer's decision, not the agent's.
 
@@ -75,7 +75,7 @@ The organizing idea: drafting and reviewing are one mechanism, run by three chai
   `/docs-assist:setup-hooks` gained a CI claim check (`assets/ci/github/check-claims.yml`), the same sticky-PR-comment pattern as the reference-registry check, non-strict by default since a "missing" result can also mean the claim's target is real but gitignored.
   Born from a real cross-project run: extracted and mechanically resolved 453 candidate claims from a 14-doc corpus in seconds, fanned the 192 that needed judgment out to 14 parallel agents, and found 6 real drifted or inconsistent claims a lint pass alone would have missed.
 
-### Version Policy
+### Version policy
 
 - Bumped to 0.9.7 on the maintainer's explicit call, the same policy as 0.9.6: agent-driven work caps at 0.9.5 by default, and a version bump past that is always the maintainer's decision, not the agent's.
 
@@ -137,7 +137,7 @@ The staged plan behind this release is committed at `docs/plan.md`.
 - `MarketingLanguage.yml`'s `leverage` token collided with this plugin's own vocabulary ("highest-leverage fix"); removed with a comment explaining why, a live example of why bare-word bans need contextual judgment.
 - `scripts/validate.mjs` now checks that the shipped Vale styles do not fire on the plugin's own docs, catching both of the above during review instead of after merge, and checks that every registered command is discoverable from `llms.txt`, `docs/command-reference.md`, and `README.md`.
 
-### Version Policy
+### Version policy
 
 - Bumped to 0.9.6 on the maintainer's explicit call. Agent-driven work otherwise caps at 0.9.5; the version bump is always the maintainer's decision, not the agent's.
 

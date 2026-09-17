@@ -1,11 +1,11 @@
-# Information Architecture Methodology
+# Information architecture methodology
 
 How to design and evaluate the structure of a documentation set: how docs are grouped, named, and connected so readers can find what they need.
 
 The design principles below are what you apply when planning or restructuring docs.
 The validation methods at the end need real users, so treat them as recommendations to the docs lead, not steps you run yourself.
 
-## Design Principles You Apply
+## Design principles you apply
 
 Use these when proposing a structure in `/docs-assist:plan` or recommending changes in `/docs-assist:audit`.
 
@@ -15,7 +15,7 @@ Use these when proposing a structure in `/docs-assist:plan` or recommending chan
 - **Consistent patterns**: similar things live in similar places and follow the same shape.
 - **Logical grouping**: related topics sit together, connected by cross-references.
 
-## Choose an Organization Pattern
+## Choose an organization pattern
 
 Pick the pattern that fits how readers approach the content:
 
@@ -24,7 +24,7 @@ Pick the pattern that fits how readers approach the content:
 - **Reference**: alphabetical or categorized for lookup.
 - **Hybrid**: task-based navigation with a reference section, chosen per content type.
 
-## Design Navigation
+## Design navigation
 
 - **Global navigation**: always accessible, covers the top-level structure.
 - **Local navigation**: context-specific, shows where the reader is within a section.
@@ -32,7 +32,7 @@ Pick the pattern that fits how readers approach the content:
 - **Breadcrumbs**: show location within the hierarchy.
 - **Search**: well-indexed and filterable, supported by good frontmatter (see `frontmatter-spec.md`).
 
-## Plan a Migration
+## Plan a migration
 
 When restructuring an existing set:
 
@@ -42,7 +42,7 @@ When restructuring an existing set:
 1. Communicate the change to readers and contributors.
 1. Monitor for broken links and lost traffic.
 
-## Validate With Real Users (Reference)
+## Validate with real users (reference)
 
 These methods confirm a structure works, but they need participants and analytics you do not have in a session. Recommend them to the docs lead when the stakes justify it.
 

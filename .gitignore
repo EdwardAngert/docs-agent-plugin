@@ -3,6 +3,7 @@
 # tracked; the rest are synced fresh by CI and by /docs-assist:setup.
 assets/lint/vale/styles/*/
 !assets/lint/vale/styles/DocsAssist/
+!assets/lint/vale/styles/config/
 
 # Regenerated check output. Tracking it poisoned check-claims.mjs, which
 # resolves claims by grepping tracked source and began finding them in its

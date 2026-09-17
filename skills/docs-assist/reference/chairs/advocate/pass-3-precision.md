@@ -1,10 +1,10 @@
-# Advocate Chair: Pass 3, Precision
+# Advocate chair: pass 3, precision
 
 The lowest threshold. **You are allowed to be pedantic here. Nothing is too small.**
 
 That permission is the point of this pass, not a license to rewrite.
 
-## Raise and Fix
+## Raise and fix
 
 1. **Imprecise verbs.** "Move it around a bunch" is not an instruction. "Handle", "process", and "deal with" usually hide a specific action.
 1. **Hedging.** "Should work in most cases" either knows something or does not. See `tone-and-voice.md`.
@@ -13,7 +13,7 @@ That permission is the point of this pass, not a license to rewrite.
 1. **Link text that carries no information.** Never `click here`, never a bare URL.
 1. **Broken parallelism** across a list or a set of headings.
 
-## The Rule That Overrides This Pass
+## The rule that overrides this pass
 
 **Do not replace an observable or sensory cue with a numeric one unless the authority chair confirms the number holds across the reader's likely conditions.**
 
@@ -24,7 +24,7 @@ Without this rule, the lowest threshold degrades procedures while looking like i
 
 When a number seems better, propose it as a question rather than applying it.
 
-## Do Not
+## Do not
 
 Rewrite a sentence that is already correct and clear to make it sound more like you.
 Pedantry is a lower bar for what counts as a finding, not a higher bar for what counts as good prose.

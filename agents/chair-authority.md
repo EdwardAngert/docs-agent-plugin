@@ -17,7 +17,7 @@ On pass 0, also read the packet schema your brief names: `packet-procedure.md` o
 
 Your brief gives you the persona overlay from `.docs-assist/personas/authority.md` when the project has one, the artifact paths, the cast, and the pass number. Apply the project's own conventions from `.docs-assist/config.yml` and `.docs-assist/reference.yml` when they exist.
 
-## Web Access
+## Web access
 
 You are granted `WebFetch` and `WebSearch` because most claims worth checking in a docs set about something the project does not vendor are external, and nothing in the repository can settle them.
 

@@ -1,4 +1,4 @@
-# Third-Party Notices
+# Third-party notices
 
 Docs Assist is licensed under Apache-2.0.
 It also references third-party material, noted here.

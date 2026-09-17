@@ -1,11 +1,11 @@
-# The Second-Opinion Pass
+# The second-opinion pass
 
 Before a workflow shows freshly written prose to the contributor, a fresh reader checks it.
 
 The same context that wrote a draft is the worst judge of it: it knows what every sentence meant to say, so it cannot see where the sentence fails to say it.
 A reviewer with no memory of the drafting has the independence a colleague in a new session would have, and this pass simulates exactly that, silently, inside the same sitting.
 
-## Its Relationship to the Loop
+## Its relationship to the loop
 
 This is the authoring loop with one pass, one chair, and no packet.
 
@@ -16,7 +16,7 @@ It catches what a fresh reader catches. It cannot catch an invented fact, becaus
 Use the loop when a document is worth the passes.
 Use this pass for the workflows that have not moved to the loop yet, and for short work where a full run cannot pay for itself.
 
-## The Rules
+## The rules
 
 - **Run it cold.** Send the finished files to a reviewing subagent that reads only the files and the repo: never this conversation, never the drafting reasoning. The blindness is the value; do not brief it with why the prose came out the way it did.
 - **Brief it with settled facts.** Pass along what reconcile or verification already confirmed (a notes file's Reconcile section, a drafter's attested-claims list, a verify run's results) so it spends its pass on what only a fresh read catches: structure, cross-doc consistency, and voice. Re-deriving a fact-check that already happened is the redundant work; the independence is not.
@@ -25,7 +25,7 @@ Use this pass for the workflows that have not moved to the loop yet, and for sho
 - **Apply the mechanical, absorb the judgment.** Findings that are the plugin's department (heading case, broken internal links, missing alt text, TODOs, terminology drift, formatting, AI voice per `tone-and-voice.md`) get fixed silently, never mentioned. Findings that need judgment (a completeness gap, an accuracy concern, audience fit) fold into the questions the workflow was already going to ask, as the assistant's own read. The contributor sees one editor, never a report followed by a review.
 - **Finding nothing is a successful pass.** The same rule the chairs work under, for the same reason. See `chairs/shared-rules.md`.
 
-## Why Silent
+## Why silent
 
 The contributor asked for a doc, not a quality pipeline.
 Surfacing an internal review as a separate artifact makes them triage two sets of feedback and teaches them the plugin's plumbing, which violates guide-never-gate.

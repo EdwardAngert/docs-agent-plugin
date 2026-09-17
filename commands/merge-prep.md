@@ -2,7 +2,7 @@
 description: "Get a docs change ready to merge: whole-set generation, linting, link and drift checks, in one deliberate pass you ask for"
 ---
 
-# Get the Docs Ready to Merge
+# Get the docs ready to merge
 
 Everything expensive that scales with the whole docs set runs here, and nowhere else.
 
@@ -12,7 +12,7 @@ A single content fix should not trigger a regenerate-and-diff pass over an eleve
 Run this when the contributor says some version of "let's get this ready to merge."
 Offer it when a multi-file change is finishing and they have not asked, once, in one line.
 
-## What Runs Here
+## What runs here
 
 Skip any step the project has not set up. Say what you skipped and why.
 
@@ -25,7 +25,7 @@ Skip any step the project has not set up. Say what you skipped and why.
 1. **Site metadata**, when the project has a site generator: navigation generated from the docs' own metadata, and structured data where the generator renders it. Offered, never imposed.
 1. **Open questions.** Read `.docs-assist/loop/*/questions.md` and `.docs-assist/state/docs.yml`. Anything unresolved that the change depends on is a merge blocker; anything unresolved that it does not is a note for the pull request description.
 
-## Trust Signals
+## Trust signals
 
 If the changed docs carry claims about things that decay (a vendor's behavior, a version, an external service), this is the moment to offer a freshness signal, with the benefit stated plainly: it is how a reader decides whether to trust the page, and how a retrieval system decides whether to cite it.
 
@@ -42,7 +42,7 @@ One summary, in this order:
 
 Then offer the pull request description, per `reference/pr-descriptions.md`.
 
-## What This Is Not
+## What this is not
 
 Not a quality gate that has to pass before anything else can happen.
 Not something that runs automatically at the end of an unrelated workflow.

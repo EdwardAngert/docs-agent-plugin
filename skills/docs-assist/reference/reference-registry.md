@@ -1,14 +1,14 @@
-# The Reference Registry
+# The reference registry
 
 `.docs-assist/reference.yml` is the single canonical registry Docs Assist checks against when drafting or auditing: example values, verified facts, pointers to existing worked examples, and product terminology, in one file instead of scattered across several.
 
 Load this whenever you read, write, or maintain the registry, from `/docs-assist:draft`, `/docs-assist:audit`, or `/docs-assist:setup`.
 
-## Why One File
+## Why one file
 
 Inconsistency across a docs set takes a few shapes, and they used to live in separate registries: a code sample using a different placeholder value than its neighbor, a value that quietly drifted from what the code actually does, a worked example rewritten from scratch instead of reused, and a product concept called two different things. They are the same underlying problem (nothing kept the docs checked against a shared source of truth) so they now share one file and one maintenance contract.
 
-## The Four Kinds
+## The four kinds
 
 Each entry is tagged with a `kind`, and the kind decides how it gets checked.
 
@@ -84,13 +84,13 @@ workspace:
 - **Checked for**: prose using a listed variant instead of the canonical term, and the same concept under different terms across docs even when neither is registered yet (flag the outliers against dominant usage, and offer to record the winner).
 - **The only kind Vale also checks.** `/docs-assist:setup` compiles every `term` entry into a generated Vale `substitution` rule, so the canonical-vs-variant check also runs as a deterministic lint, not only during a drafting or audit conversation. The other three kinds stay agent-only: Vale doesn't check inside code blocks by default (ruling out `example-variable` and `fact`), and it can't follow a link to resolve a `pointer`.
 
-## Maintaining the Registry
+## Maintaining the registry
 
 - **Offer to create it.** If `.docs-assist/reference.yml` doesn't exist and you're about to write a sample, or you find terminology drift during an audit or survey, offer to create it seeded from what the existing docs already use. Scaffold from `${CLAUDE_PLUGIN_ROOT}/assets/config/reference.yml`.
 - **Maintain it as you draft.** When you introduce a placeholder, a fact worth tracking, a worked example worth pointing to, or a term readers will see again, add the entry. This is the plugin's responsibility, not the contributor's.
 - **Keep it in sync.** If a doc changes a value the registry holds, or a term gets renamed, update the registry and follow the repeated-value or term-rename edge in `impact-analysis.md` to every other occurrence.
 
-## Migrating From `example-variables.txt` and `terms.txt`
+## Migrating from `example-variables.txt` and `terms.txt`
 
 Versions before this registry shipped two separate files: `.docs-assist/example-variables.txt` (`key = value` pairs) and `.docs-assist/terms.txt` (`canonical = variants` pairs). `reference.yml` replaces both; the plugin no longer reads the old two-file format.
 

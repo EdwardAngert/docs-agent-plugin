@@ -1,8 +1,8 @@
-# Advocate Chair: Pass 2, Clarity
+# Advocate chair: pass 2, clarity
 
 Lower the threshold. The shape is right. Ask whether a reader can follow it.
 
-## Raise and Fix
+## Raise and fix
 
 1. **Ambiguity.** A sentence with two readings, where acting on the wrong one costs the reader. "Cover immediately" after two instructions: immediately after which?
 1. **A term used before it is defined.** First use carries the definition or a link.
@@ -11,11 +11,11 @@ Lower the threshold. The shape is right. Ask whether a reader can follow it.
 1. **A step whose outcome is unstated.** How does the reader know it worked?
 1. **Assumed tooling.** The document uses something it never told the reader to install.
 
-## Do Not Raise
+## Do not raise
 
 Imprecise verbs, hedging, rhythm, parallelism. Pass 3.
 
-## Ledger Discipline
+## Ledger discipline
 
 Every fix here that adds information adds a ledger entry.
 

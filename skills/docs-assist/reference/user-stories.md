@@ -1,10 +1,10 @@
-# User Story Outlines
+# User story outlines
 
 A doc serves a reader on a journey, and most doc defects are invisible until you name that reader: a "complete" reference that strands a beginner, a polished tutorial nobody can find from where they actually start, a troubleshooting entry that resolves the error but not the task the reader was in the middle of. The story outline makes the reader explicit so drafting can aim at them and audits can test against them.
 
 This is the quick, per-doc version. It is not the plan-level journey map (`/docs-assist:plan` builds that across the whole set) and not persona research (`audit-methodology.md` defers that to work with real users). One to three lines, written in minutes, kept with the working material.
 
-## The Shape of a Story
+## The shape of a story
 
 One line per story, four parts:
 
@@ -15,7 +15,7 @@ One line per story, four parts:
 
 Most docs carry one to three stories. More than three is the "one doc or several?" signal from the shape move: each extra reader is diluting every other reader's doc.
 
-## Calibrate the Baseline, Don't Assume It
+## Calibrate the baseline, don't assume it
 
 "With what they already know" is the part of the story that goes wrong by default, in both directions: explaining a terminal to someone who already runs one all day is the expert tax, and skipping a step because "everyone knows that" is the assumption gap. Neither comes from thinking about the reader; both come from writing at a fixed posture (always beginner-friendly, or always assuming fluency) instead of reading the actual signals.
 
@@ -33,11 +33,11 @@ Once set, the baseline does two concrete things to the draft, not just the tone:
 - **Prerequisites list only what sits outside the baseline, but a version or compatibility fact is never padding.** An SDK for backend engineers doesn't need "install Node" (how to get the runtime is inside their baseline); it does need "requires Node 18+" (that specific fact is not something the baseline implies, and getting it wrong breaks the reader). The line is teaching versus stating: don't teach what the baseline covers, but never drop a fact the reader has no other way to know just because it's short.
 - **Failure modes anticipate what that reader actually hits.** The dig's failure-modes question (`intake.md`) should be answered for the calibrated reader, not a generic one: an expert audience trips on edge cases, version mismatches, and interactions with other advanced tools; a beginner audience trips on setup and terminology. The same tool can need both, in different docs, for different stories.
 
-## How Drafting Uses It
+## How drafting uses it
 
 Write the stories at the Shape move, from what the dump and the dig already surfaced (the audience and usage questions are the raw material), and show them with the outline: stories are cheap to correct at outline time and expensive to discover wrong after publication. Then let them earn the structure: each section justifies itself by serving a named story, the prerequisites section is whatever the least-prepared story's reader is missing, and the doc ends where its stories end (the "done when" plus the next step each reader takes). Record them in the notes file's Shape section when one is in use, and in a fan-out, the plan entry carries each doc's stories into the drafter's brief.
 
-## How Audits Use It
+## How audits use it
 
 Walk each story through the doc, end to end, and report where the journey breaks:
 

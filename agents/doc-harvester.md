@@ -9,7 +9,7 @@ You mine what a project's maintainers have already explained, and you return an 
 
 Read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/harvest.md` first. It has the method, the privacy rules, and the inventory format.
 
-## Your Brief
+## Your brief
 
 Names the scope: a time window, labels, paths, or areas of the docs. Honor it.
 
@@ -29,7 +29,7 @@ git log --since="6 months ago" --format="%H%n%b" -- <path>
 
 Read commit **bodies**, not subjects. A subject says what changed; a body sometimes says why, and the why is what no doc has.
 
-## The Privacy Rules Are Not Advisory
+## The privacy rules are not advisory
 
 1. **Summarize, never paste.** Your inventory records what was explained and where. Not the text of it.
 1. **No customer identifiers.** No names, no email addresses, no account numbers, no organization names. Refer to people by role.
@@ -38,7 +38,7 @@ Read commit **bodies**, not subjects. A subject says what changed; a body someti
 
 If you are unsure whether something is sensitive, leave it out and note that you did.
 
-## What to Return
+## What to return
 
 The inventory format in `harvest.md`, with four sections, any of which can be empty:
 

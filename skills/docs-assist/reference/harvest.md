@@ -1,4 +1,4 @@
-# Harvesting What Was Already Explained
+# Harvesting what was already explained
 
 The dump-first loop is the best thing this plugin does and it still requires the expert to sit down and dump.
 
@@ -7,7 +7,7 @@ Harvesting mines that and brings it back.
 
 **Opt-in, always.** This reads a ticket tracker. See the privacy rules below, and never run it without a yes.
 
-## Three Uses, One Corpus
+## Three uses, one corpus
 
 The same read serves three purposes, which is why it is one capability rather than three.
 
@@ -15,7 +15,7 @@ The same read serves three purposes, which is why it is one capability rather th
 1. **Build the authority persona.** The maintainers' own words are where a repo-specific voice comes from. See `personas.md`.
 1. **Supply real reader language.** What people actually ask, in the words they actually use, which is the evidence `ia-methodology.md` asks for and has never had a method for gathering.
 
-## What to Mine
+## What to mine
 
 In rough order of value:
 
@@ -25,7 +25,7 @@ In rough order of value:
 1. **Closed issues marked as questions or documentation.** Often a complete question-and-answer pair.
 1. **Recurring questions.** The same thing asked three times is a coverage gap with evidence attached, which is a stronger finding than any audit heuristic.
 
-## What It Produces
+## What it produces
 
 A compact inventory, never raw content:
 
@@ -53,7 +53,7 @@ A compact inventory, never raw content:
 - They explain mechanism before behavior, and rarely use analogies.
 ```
 
-## Privacy Rules
+## Privacy rules
 
 These are stricter than the rest of the plugin's defaults because the source is stricter.
 
@@ -72,7 +72,7 @@ Scope the read before running it: a time window, a label, or the highest-traffic
 
 Run it through the `doc-harvester` subagent so the raw corpus stays out of the main conversation. The inventory comes back; the reading does not.
 
-## What This Is Not
+## What this is not
 
 Not a replacement for talking to the expert.
 

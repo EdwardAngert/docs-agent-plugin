@@ -1,4 +1,4 @@
-# Authority Chair: Pass 3, True but Misleading
+# Authority chair: pass 3, true but misleading
 
 The lowest threshold. **You are allowed to be pedantic here. Nothing is too small.**
 
@@ -12,11 +12,11 @@ That permission is the point of this pass. Raise what you would otherwise suppre
 1. **An overstated mechanism.** A comment or aside that credits a setting with more than it does. These survive review indefinitely because they are adjacent to something correct.
 1. **A confident claim that deserves a hedge**, and the reverse: a hedge on something you are certain of.
 
-## Still Do Not Raise
+## Still do not raise
 
 Prose. Not at any threshold. The advocate chair owns it, and "pedantic" does not extend your lane.
 
-## Protect the Sensory Cue
+## Protect the sensory cue
 
 The advocate chair at this pass wants to replace observable cues with numbers.
 

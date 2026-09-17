@@ -1,4 +1,4 @@
-# Project Documentation Style
+# Project documentation style
 
 The prose conventions Docs Assist follows for this repo, the `docs-assist` plugin.
 The plugin reads this before drafting or reviewing docs here, and its guidance overrides the plugin defaults.

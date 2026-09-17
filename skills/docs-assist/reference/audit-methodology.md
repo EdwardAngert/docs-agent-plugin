@@ -1,8 +1,8 @@
-# Audit Methodology
+# Audit methodology
 
 Systematic evaluation of existing documentation to find gaps, inconsistencies, and improvement opportunities.
 
-## An Audit Is the Loop Pointed at a Finished Doc
+## An audit is the loop pointed at a finished doc
 
 No separate audit mechanism exists.
 Reviewing an existing document and reviewing a fresh draft are the same job with the same chairs, and running them as two systems produced two sets of standards that drifted.
@@ -26,13 +26,13 @@ Everything below is what the chairs apply, and what to do when a document is too
 
 The first half is what you do in a session. The second half is research that needs real users, which you cannot run yourself: recommend it to the docs lead when the scope warrants it.
 
-## Match the Audit to the Target
+## Match the audit to the target
 
 A full set, a directory, a few changed files, and a diff are different jobs. For a full set, work through the steps below. For changed files or a diff, audit the change and its blast radius: the edit scope is small, but the impact scope follows dependency edges out from it. See `impact-analysis.md` for the change-type-to-edge map, the traversal budget, and how to report residual risk.
 
-## What You Do in a Session
+## What you do in a session
 
-### 1. Take Inventory
+### 1. Take inventory
 
 - List every documentation file (`*.md`, `*.mdx`, `*.rst`).
 - Categorize each by content type using `content-types.md`.
@@ -40,7 +40,7 @@ A full set, a directory, a few changed files, and a diff are different jobs. For
 - List image assets and flag ones not referenced by any doc.
 - Check for `.docs-assist/example-variables.txt` or `.docs-assist/terms.txt`. These predate `reference.yml` and are no longer read. If either exists, flag it and offer the one-time migration in `reference-registry.md` rather than auditing as if no registry existed.
 
-### 2. Check External Links
+### 2. Check external links
 
 A page can go stale with no word in the doc itself changing: the linked repo gets renamed, the page moves, the account is deleted.
 Check against the live target, not the page text.
@@ -53,7 +53,7 @@ A redirect can still hide a rename even though the linter treats it as alive: th
 Spot-check suspicious-looking links individually (`curl -sIL -w '%{url_effective}'`) and propose the corrected URL rather than re-requesting everything by hand.
 For a scoped audit, check only the links in the edit scope.
 
-### 3. Analyze Each Document
+### 3. Analyze each document
 
 Evaluate against six dimensions:
 
@@ -64,7 +64,7 @@ Evaluate against six dimensions:
 - **Consistency**: does it match the style and terminology of its neighbors?
 - **Journeys**: outline the user stories the doc serves and walk each through it: arrival, entry, path, exit. A doc whose reader cannot be inferred is a finding in itself. See `user-stories.md`.
 
-### 4. Evaluate Information Architecture
+### 4. Evaluate information architecture
 
 - Does the structure match how users think, not the org chart?
 - Are related topics grouped together?
@@ -73,7 +73,7 @@ Evaluate against six dimensions:
 
 See `ia-methodology.md` for deeper IA evaluation.
 
-### 5. Identify Gaps
+### 5. Identify gaps
 
 - Missing documentation for known user journeys.
 - Outdated content and stale `last-verified` dates.
@@ -85,7 +85,7 @@ See `ia-methodology.md` for deeper IA evaluation.
 Rank every finding by user impact, effort to fix, and how often users hit it.
 Lead with high-impact, low-effort fixes.
 
-## An Audit That Finds Nothing Is a Successful Audit
+## An audit that finds nothing is a successful audit
 
 This matters more here than anywhere else in the plugin, because an audit is the one surface where a reviewer is *expected* to produce a list, and that expectation is what turns a good reviewer into a bad one.
 
@@ -104,7 +104,7 @@ Any of these can be empty, and an empty one is a result rather than a gap.
 - Proposed IA changes when structure is part of the problem.
 - Content templates or style fixes where patterns repeat.
 
-## Human-Led Research (Reference)
+## Human-led research (reference)
 
 These methods produce the user understanding that makes an audit accurate, but they need real participants. You cannot run them in a session. Recommend them to the docs lead and use their results as input.
 

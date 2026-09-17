@@ -1,5 +1,5 @@
 ---
-title: "Standalone CLI Packaging Plan"
+title: "Standalone CLI packaging plan"
 description: "A plan for adding an npx-run CLI to this repository so Docs Assist reaches people who don't use Claude Code, without forking the plugin into a second codebase."
 content-type: reference
 audience: maintainers
@@ -11,21 +11,21 @@ keywords:
   - multi-tool
 ---
 
-# Standalone CLI Packaging Plan
+# Standalone CLI packaging plan
 
 The goal is reach, not telemetry.
 Right now Docs Assist only works inside Claude Code, because every command and skill is a markdown instruction that only Claude Code's runtime knows how to execute.
 This plan adds an `npx`-run CLI to the same repository so people who use a different AI tool, or no AI tool at all for parts of the workflow, can still get value from it.
 It does not propose moving anything out of this repository or replacing the Claude Code plugin.
 
-## Goal and Non-Goals
+## Goal and non-goals
 
 - Goal: one repository, two entry points. Claude Code users keep installing the plugin exactly as today. Everyone else runs `npx docs-assist`.
 - Goal: a single source of truth for the actual instructions (`commands/`, `skills/docs-assist/`), so a change to how `/docs-assist:audit` works doesn't need to be hand-copied into a second format.
 - Non-goal (v1): a full multi-provider agent framework that reimplements Claude Code's tool-use loop. That's a real product, not a packaging change, and should stay out of scope unless explicitly decided otherwise.
 - Non-goal: changing how the Claude Code plugin is distributed or versioned today.
 
-## The Split That Drives Everything Else
+## The split that drives everything else
 
 Docs Assist's commands fall into two tiers, and the tiers need different amounts of new engineering.
 
@@ -41,7 +41,7 @@ This tier cannot become a plain Node script; it needs an LLM in the loop one way
 
 Any plan that treats these two tiers the same will either overbuild Tier 1 or underbuild Tier 2. Keep them as separate workstreams.
 
-## Repository Layout
+## Repository layout
 
 Keep everything that exists today untouched, and add a `cli/` package alongside it.
 
@@ -65,7 +65,7 @@ docs-agent-plugin/
 
 `assets/` and `skills/`/`commands/` do not move. The CLI reads from them; it does not duplicate them.
 
-## What the CLI Actually Does
+## What the CLI actually does
 
 1. `npx docs-assist init` is the Tier 1 entry point. It detects the docs directory, frontmatter field names, heading case, and list style the way `commands/setup.md` describes, then scaffolds `.docs-assist/config.yml`, `style.md`, lint configs, and CI workflows from `assets/`.
    It's fully deterministic and makes zero LLM calls, matching this repo's existing no-dependencies philosophy (see `scripts/validate.mjs`'s header comment).
@@ -73,7 +73,7 @@ docs-agent-plugin/
    The narrative "here's the one fix, want me to make it" step stays Tier 2 and is explicitly out of scope for this command.
 1. `npx docs-assist agent` is the Tier 2 entry point. It detects what's already installed (Claude Code plugin, Cursor, a generic `AGENTS.md` convention) and either points the user at the matching Claude Code command, or writes/refreshes an adapter file so another tool can use the same instructions.
 
-## Tier 2 Adapter Strategy
+## Tier 2 adapter strategy
 
 This is the part that actually earns the phrase "more people can use it," and it's worth being explicit about what degrades.
 
@@ -86,13 +86,13 @@ This is the part that actually earns the phrase "more people can use it," and it
 Whichever adapters ship, subagent fan-out (parallel drafting) has no equivalent outside Claude Code.
 Document that as a known capability gap in each adapter's output rather than silently running sequentially and looking broken.
 
-## Source-of-Truth Rule
+## Source-of-truth rule
 
 `commands/*.md` and `skills/docs-assist/**` stay the only place Tier 2 instructions are written.
 Adapters transform that content at generation time; they never fork a second hand-maintained copy.
 Extend `scripts/validate.mjs` (it already checks that the two plugin manifests agree on version) to also confirm adapter output is regenerated from current source rather than committed and drifting.
 
-## Packaging Details
+## Packaging details
 
 - Add a root `package.json`: check `docs-assist` is available on npm before committing to the name, since a mismatch between the Claude Code plugin name and the npm package name would confuse install instructions.
 - `"bin": {"docs-assist": "./cli/index.mjs"}`.
@@ -100,7 +100,7 @@ Extend `scripts/validate.mjs` (it already checks that the two plugin manifests a
 - Keep the new `package.json` version in sync with `.claude-plugin/plugin.json` and `marketplace.json`, and extend the existing manifest-version check in `scripts/validate.mjs` to include it.
 - Apply the same version-bump discipline already in place for the plugin (Edward alone bumps to 1.0.0, agent-driven bumps cap at 0.9.5) to the npm package version too.
 
-## Phased Rollout
+## Phased rollout
 
 **Phase 0.** Get these decisions from Edward before any code is written:
 

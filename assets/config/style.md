@@ -1,4 +1,4 @@
-# Project Documentation Style
+# Project documentation style
 
 This file holds the prose conventions Docs Assist follows for this project.
 Edit it to match how your team writes. The plugin reads it before drafting or reviewing docs, and its guidance overrides the plugin defaults.

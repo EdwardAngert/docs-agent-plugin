@@ -1,11 +1,11 @@
-# Style Guides
+# Style guides
 
 How to detect, choose, and apply a writing style guide, and how teams enforce one.
 
 In a session your job is to follow the project's style: detect it, apply it, and stay consistent.
 The catalog and enforcement sections are reference for when a team is choosing or formalizing a guide.
 
-## Detect and Apply a Style Guide
+## Detect and apply a style guide
 
 Before writing, figure out which style the project already follows:
 
@@ -15,7 +15,7 @@ Before writing, figure out which style the project already follows:
 
 Consistency with the surrounding docs matters more than any single guide's rules. Do not impose a style the rest of the set does not use.
 
-## Choose a Style Guide (Reference)
+## Choose a style guide (reference)
 
 When a team is selecting a guide, these are the common starting points:
 
@@ -27,7 +27,7 @@ When a team is selecting a guide, these are the common starting points:
 
 Choose based on product type, audience, industry norms, the team's capacity to enforce it, and how much existing content would need to change.
 
-## Style Guide Components (Reference)
+## Style guide components (reference)
 
 A complete guide usually covers:
 
@@ -36,7 +36,7 @@ A complete guide usually covers:
 - **Formatting**: heading case, list conventions, code formatting, UI element references, file paths.
 - **Mechanics**: punctuation, numbers, dates and times, link text, alt text.
 
-## Enforce a Style Guide (Reference)
+## Enforce a style guide (reference)
 
 Style holds up when it is checked automatically and reviewed by humans:
 
@@ -44,7 +44,7 @@ Style holds up when it is checked automatically and reviewed by humans:
 - **Human review**: peer review, an editorial pass, and subject matter expert review for accuracy.
 - **Accessible rules**: keep the guide easy to find, give an example for each rule, and document the exception process.
 
-## Common Issues
+## Common issues
 
 - **Inconsistent terminology**: the same concept under different terms. Fix with a terms list and automated checks.
 - **Style drift**: new writers unaware of the standard. Fix with onboarding docs and templates.

@@ -18,13 +18,13 @@ Then `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/reference-registry.md`,
 
 Your brief gives you the artifact paths, the docs directory, and what the deterministic checks already found.
 
-## Load the Journey First
+## Load the journey first
 
 Before any claim, resolve the full navigational neighborhood: previous and next pages, the overview or index page, and anything linked as a prerequisite.
 
 **Never report something as missing without naming where you looked.** Presence can be established from one file; absence cannot, and a prerequisites section one click away on an index page is not a missing prerequisites section.
 
-## The Cheap Half Ran Already
+## The cheap half ran already
 
 `assets/ci/example-continuity.mjs` catches declared-variant drift and placeholder spelling mechanically, and your brief carries its output. Do not re-derive it.
 

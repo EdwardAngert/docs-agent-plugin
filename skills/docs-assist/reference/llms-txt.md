@@ -4,7 +4,7 @@
 An agent answering questions about a project does it well or badly depending on whether it can find the right doc without reading all of them.
 This file single-sources the format, the ordering, and the maintenance contract; every workflow that touches docs follows it.
 
-## The Format
+## The format
 
 Follow the llms.txt convention ([llmstxt.org](https://llmstxt.org/)): a Markdown file at the repo root, structured so both humans and machines can parse it.
 
@@ -27,13 +27,13 @@ Follow the llms.txt convention ([llmstxt.org](https://llmstxt.org/)): a Markdown
 One section name is reserved by the convention: a section titled `Optional` marks content a tool may skip when context is short.
 Use it for genuinely skippable depth, and use descriptive names (`For Docs Leads`, `Internals`) for everything else, so the skip signal keeps its meaning.
 
-## Ordering and Descriptions
+## Ordering and descriptions
 
 - **Order by reader priority, not alphabetically.** The start-here doc leads. Within a section, the order answers "what should someone (or something) read first?"
 - **Descriptions say what the doc covers and who it serves**, in the voice you would use to point a coworker at it. Honest beats complete: a wrong description misleads every agent that reads it.
 - **Every doc is listed or intentionally excluded.** Working artifacts (`.docs-assist/intake/`, `.docs-assist/reports/`) stay out; published docs go in.
 
-## The Mapping Note
+## The mapping note
 
 When the repo uses nonstandard frontmatter field names, record the mapping as prose near the top so no tool has to re-derive it:
 
@@ -44,7 +44,7 @@ When the repo uses nonstandard frontmatter field names, record the mapping as pr
 
 Pointing at the registry tells an agent which values and terms are canonical, which makes its answers consistent with the docs.
 
-## The Maintenance Contract
+## The maintenance contract
 
 `llms.txt` is only useful while it is true. Each workflow holds up its part:
 
@@ -55,7 +55,7 @@ Pointing at the registry tells an agent which values and terms are canonical, wh
 - **Setup-site** reads it as the source of navigation order.
 - **Fan-out subagents never edit it.** Parallel writers would collide, so `chair-advocate` reports its proposed entry and the main conversation writes them all.
 
-## llms-full.txt
+## Llms-full.txt
 
 For a small docs set, a companion `llms-full.txt` (the full content of every listed doc, concatenated) lets a tool ingest everything in one read.
 Offer it when the whole set fits comfortably in a model's context; skip it for large sets, where the map plus selective reading serves better.

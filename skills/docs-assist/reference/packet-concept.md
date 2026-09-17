@@ -1,11 +1,11 @@
-# The Concept Packet
+# The concept packet
 
 What the authority chair emits when the reader needs to understand something.
 
 The same discipline as `packet-procedure.md`: cold material, no prose, written to `.docs-assist/loop/<doc-slug>/packet.md`.
 What changes is the shape, because an explanation is not a sequence.
 
-## The Rows
+## The rows
 
 ### The model
 
@@ -60,7 +60,7 @@ Two different things, both worth recording.
 An unknown is something the expert does not know.
 A contested point is something the field disagrees about, and saying so is more useful than picking a side silently.
 
-## Not in the Packet
+## Not in the packet
 
 Analogies, motivation, pedagogical ordering, and audience calibration.
 

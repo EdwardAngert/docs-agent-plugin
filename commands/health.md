@@ -3,7 +3,7 @@ description: "One-command docs health check: coverage, freshness, consistency, a
 argument-hint: [docs directory]
 ---
 
-# Check Documentation Health
+# Check documentation health
 
 Give the contributor a fast, honest read on the state of their documentation, and one clear place to start.
 
@@ -16,7 +16,7 @@ The optional argument (`$ARGUMENTS`) is the docs directory. Detect it if not giv
 
 ## Process
 
-### 1. Establish What the Project Is
+### 1. Establish what the project is
 
 Speed matters more than completeness here. Sample; do not read everything.
 
@@ -24,7 +24,7 @@ Speed matters more than completeness here. Sample; do not read everything.
 - For a large repo, fan out the `doc-recon` subagent and work from its project map instead of reading inline.
 - Resolve `.docs-assist/` config if present (`${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/config-resolution.md`).
 
-### 2. Score Four Dimensions
+### 2. Score four dimensions
 
 Assess each dimension from samples and cheap signals, not an exhaustive pass. Rate each **solid**, **needs work**, or **missing**, with one line of evidence.
 
@@ -37,7 +37,7 @@ Assess each dimension from samples and cheap signals, not an exhaustive pass. Ra
 
 With no committed config, the standard is the set's own internal consistency, per the skill's cold-invocation default.
 
-### 3. Deliver the Scorecard
+### 3. Deliver the scorecard
 
 Before writing it, check `.docs-assist/reports/` for a previous health scorecard. When one exists, note what moved: a dimension that improved or regressed since the last check is more useful than any absolute rating.
 
@@ -56,7 +56,7 @@ Keep the scorecard small enough to read in thirty seconds:
 **Start here**: <the single highest-leverage fix, and why it beats the others>
 ```
 
-### 4. Offer to Fix the First Thing Now
+### 4. Offer to fix the first thing now
 
 End with an offer, not homework. Match the offer to the finding:
 

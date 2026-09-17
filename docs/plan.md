@@ -1,5 +1,5 @@
 ---
-title: "Docs Assist Pre-1.0 Build Record"
+title: "Docs Assist pre-1.0 build record"
 description: "What was built through 0.9.8 and why: fan-out drafting, async SME capture, feedback surfaces, and a publishing scaffold. A historical record, superseded by the 1.0 overhaul."
 content-type: reference
 audience: maintainers
@@ -10,7 +10,7 @@ keywords:
   - fan-out drafting
 ---
 
-# Docs Assist Pre-1.0 Build Record
+# Docs Assist pre-1.0 build record
 
 **This is a historical record, not the current plan.**
 It documents what was built through 0.9.8 and the reasoning behind each piece, which is worth keeping: several decisions here were expensive to reach and cheap to forget.
@@ -23,7 +23,7 @@ Named below in the present tense, they describe what was true at 0.9.8.
 
 The original goal statement, which the overhaul kept: a single person or small team should feel like they can get a documentation team's worth of work done with this plugin.
 
-## Workstream 1: Fan-Out Drafting
+## Workstream 1: fan-out drafting
 
 Drafting scaled linearly (a 15-doc plan meant 15 sequential conversations) while audit and update already fanned out.
 
@@ -38,27 +38,27 @@ Drafting scaled linearly (a 15-doc plan meant 15 sequential conversations) while
 - Added: `/docs-assist:setup` now also generates a root `.markdownlint-cli2.jsonc` for the target project, extending the rules config with the same glob CI uses. Without it, a bare `npx markdownlint-cli2` falls back to markdownlint's stock defaults and a different scope than CI checks, exactly the trap this plugin's own repo fell into before fixing it on itself.
 - Added: `docs-decay.mjs`, a deterministic detector that ranks every doc by accumulated staleness risk: related-source churn since the doc last changed, `last-verified` age, doc age, and open `sme-attested` claims, with the scoring weights documented in the script so the ranking is explainable. The per-PR docs-impact check catches drift one change at a time; this catches what built up across many. `/docs-assist:health` runs it for the Freshness dimension (no installation needed; it runs from the plugin's assets), and full-set audits use it for the outdated-information pass.
 
-## Workstream 2: Async SME Capture
+## Workstream 2: async SME capture
 
 The solo writer's other bottleneck is knowledge in other people's heads, and the SME had to be in the session.
 
 - Shipped in 0.9.5: intake questionnaires. The plugin generates a targeted questionnaire as a Markdown file, pre-loaded with what the code already reveals, that the writer sends to the expert over any channel. Returned answers are ingested through `doc-intake` into `.docs-assist/intake/`, where drafting picks them up.
 - Added: an opt-in running notes file for single-doc drafts that outlast one sitting. Offered when a dump is long, many-part, or the contributor needs to step away, it persists every intake move to `.docs-assist/intake/notes/<topic>.md` so a later session (or `/docs-assist:draft` run again) can resume instead of starting over. See "Persist as You Go" in `skills/docs-assist/reference/intake.md`.
 
-## Workstream 3: Feedback Surfaces
+## Workstream 3: feedback surfaces
 
 Feedback that lives only in the conversation dies with the session. A solo writer has no teammate holding state between sessions.
 
 - Shipped in 0.9.5: feedback is delivered by scope. Change-scoped results (docs-impact, change-based audits, PR updates) go to a sticky, upserted pull-request comment, summary first with detail collapsed. Repo-scoped results (full audits, health scorecards) are offered as report files under `.docs-assist/reports/`. The conversation is for triage, and every workflow ends with a persist offer.
 - Shipped in 0.9.5: the CI docs-impact check upserts its report as a sticky PR comment, and `/docs-assist:health` compares against the previous saved scorecard when one exists.
 
-## Workstream 4: Publishing Scaffold
+## Workstream 4: publishing scaffold
 
 The plugin wrote rich frontmatter and `llms.txt` but never helped stand up the site.
 
 - Shipped in 0.9.5: `/docs-assist:setup` detects an existing static site generator and generates navigation from the metadata the plugin already maintains (`llms.txt` order becomes sidebar order), or scaffolds a minimal Docusaurus or MkDocs setup when none exists. Deliberately not a site builder.
 
-## Cross-Cutting: Verified Docs
+## Cross-cutting: verified docs
 
 Everything above makes the docs better written; none of it knew whether the docs actually work. A tutorial whose step 3 broke two releases ago reads perfectly.
 
@@ -66,7 +66,7 @@ Everything above makes the docs better written; none of it knew whether the docs
 - Added: `last-verified` now has an evidence-backed meaning. A clean verify pass offers the bump, so the date can mean "a machine ran this procedure" rather than "someone eyeballed it." The decay detector reads the field, so verified docs sink down the re-verification queue and the freshness loop closes: `docs-decay.mjs` ranks cheaply, an audit reads carefully, verify actually runs the steps, and each feeds the next.
 - Wired in where procedures surface: draft's finalize offers verification before a procedural doc ships, audits recommend it for load-bearing procedures instead of trusting a read-through, and health routes the decay queue's worst procedural docs to it.
 
-## Cross-Cutting: User Stories as the Reader Contract
+## Cross-cutting: user stories as the reader contract
 
 Journeys existed at the set level (`/docs-assist:plan` maps them) but dissolved into a file list by the time individual docs were drafted or audited; nothing carried "who is this for, arriving from where, done when what" down to the doc.
 
@@ -74,29 +74,29 @@ Journeys existed at the set level (`/docs-assist:plan` maps them) but dissolved 
 - Added: audits walk each story through the doc (arrival, entry, path, exit) as a sixth per-doc dimension, and the auditing subagent (retired) infers the stories cold, which doubles as the audience-clarity test: a doc whose reader cannot be inferred is a finding before any walking starts. The second-opinion pass inherits the check for free, since it runs on the auditing subagent (retired).
 - Added: the reader's baseline is calibrated from evidence, not asserted from a fixed posture. `tone-and-voice.md`'s "developer or technical admin" became a floor rather than a rule; each doc reads its own baseline from what the project's docs already assume, what kind of tool it is, and the ecosystem it lives in, per "Calibrate the Baseline" in `user-stories.md`. Once set, it does two concrete things: prerequisites list only what sits outside it, and failure modes anticipate what that specific reader trips on, not a generic list. the drafting subagent (retired) (which cannot ask a contributor) and the auditing subagent (retired) (which reads cold) both infer it from the same evidence and report the inference so a wrong guess can be corrected.
 
-## Cross-Cutting: Examples That Compose, and Examples That Fail Safe
+## Cross-cutting: examples that compose, and examples that fail safe
 
 Two different failure modes were sharing one vague rule ("never include a destructive command without a guard"), and neither had a real mechanism behind it.
 
 - Added: `code-examples.md`'s "Compose Across the Docs Set" makes cross-doc example cohesion a named requirement, not an implication of value consistency. A reader who follows every example across a journey's docs should reach one working result; the same resource named and reused across docs, not just the same-looking placeholder values. `/docs-assist:verify` gained a journey mode: an ordered sequence of docs verified in one shared workspace instead of independent ones, so composition is proven by execution, not just read for plausibility. A journey that fails on a resource-name mismatch between docs, with every individual doc passing alone, is exactly the failure per-doc checks were structurally blind to.
 - Added: destructive, upgrade, and troubleshooting examples now have a concrete, opposite rule from setup examples. Setup examples must work exactly as copy-pasted; a destructive example must not, on purpose, because the reader most likely to paste first and read second is the one mid-incident. A warning above a real-looking `prod-cluster` protects nobody who skips it; an unresolvable `<YOUR_CLUSTER_NAME>` protects everyone. `doc-verifier` already refused to run this category; it now also reports a real-looking target as a doc safety finding even when it can't execute to check, and the auditing subagent (retired) and the full audit checklist flag it as Critical, since this is where a reader gets hurt rather than merely confused.
 
-## Cross-Cutting: Managed Vale Packages, Not a Comprehensive House Style
+## Cross-cutting: managed Vale packages, not a comprehensive house style
 
 General prose quality (weasel words, passive voice, wordiness, clichés, inclusive language, heading and punctuation conventions) was being hand-maintained in `DocsAssist`'s own Vale style, duplicating what Vale's own actively maintained package ecosystem already covers, and covers better: write-good's `Weasel.yml` alone is more complete than this plugin's version ever was.
 
 - Added: `.vale.ini` now declares `Packages = Google, write-good, alex`, fetched with `vale sync`. `DocsAssist` is stripped down to only what those packages do not cover: AI voice (hedging, marketing language, false-contrast framing, throat-clearing openers) and this plugin's own opinionated defaults (no em dashes, descriptive link text, imperative headings). `Weasel.yml` is retired outright, superseded by write-good's own, more complete version of the same rule.
 - Added: two coordination points where a managed package would otherwise fight a project's own config, handled in the generated `.vale.ini`: `Google.Headings` (assumes sentence case) is toggled against `heading_case`, and `Google.EmDash` (a formatting check, not a ban) is disabled when `DocsAssist.EmDash`'s harder ban is already active via `no_em_dashes`, so a project never gets two conflicting findings on the same em dash.
-- Changed: `heading_case`'s default flipped from `title` to `sentence`, matching what the new default managed package (Google's developer documentation style guide) itself recommends. Title case (AP or Chicago) stays a fully supported alternative for a project whose own convention already uses it; `/docs-assist:setup`'s detect-before-default rule is unaffected; this repo's own docs keep their already-established title case, since a real detected convention still wins over the plugin default.
+- Changed: `heading_case`'s default flipped from `title` to `sentence`, matching what the new default managed package (Google's developer documentation style guide) itself recommends. Title case (AP or Chicago) stays a fully supported alternative for a project whose own convention already uses it; `/docs-assist:setup`'s detect-before-default rule is unaffected. This repo's own docs kept their already-established title case at the time, since a real detected convention still wins over the plugin default; 1.0 later moved them to sentence case to match the shipped default.
 - Added: both CI templates (this repo's own `ci.yml` and the shipped `docs-lint.yml`) gained an explicit `vale sync` step. Vale never fetches declared packages on its own outside its LSP mode; without the sync step, the next CI run would have started failing the moment the packages were declared but never downloaded.
 
-## Cross-Cutting: llms.txt as Core Functionality
+## Cross-cutting: llms.txt as core functionality
 
 Surfacing docs for AI readers is core, so its rules are single-sourced.
 
 - Shipped in 0.9.5: `reference/llms-txt.md` defines the format (per the llms.txt convention), entry ordering, description rules, the mapping note, and the maintenance contract every workflow follows.
 
-## Cross-Cutting: The Reference Registry
+## Cross-cutting: the reference registry
 
 Example values, verified facts, worked-example pointers, and terminology used to live in two separate files (`example-variables.txt`, `terms.txt`), checked only by the agent. Consolidated into one, with a real deterministic check for the part of it that's checkable that way.
 
@@ -116,7 +116,7 @@ Deliberately deferred, in rough priority order:
 - Navigation generation for Astro, Hugo, and Jekyll (0.9.5 covers Docusaurus and MkDocs).
 - Audit and audit-methodology consolidation (duplication is partly load-bearing; see `reviews/0.8.0-findings.md`).
 
-## Version Policy
+## Version policy
 
 Work in this plan ships no higher than 0.9.5.
 The 1.0.0 bump is the maintainer's call, made by hand.

@@ -1,10 +1,10 @@
-# The Ledger
+# The ledger
 
 Everything in the draft that has no antecedent in the packet.
 
 Written by the advocate chair to `.docs-assist/loop/<doc-slug>/ledger.md`, reviewed by the authority chair.
 
-## It Is a Diff, Not a Self-Report
+## It is a diff, not a self-report
 
 This is the distinction the whole loop rests on.
 
@@ -17,7 +17,7 @@ A diff does not.
 
 This only works because the packet is prose-free. See `packet-procedure.md`.
 
-## Entry Types
+## Entry types
 
 Additions are not equally risky, and an expert's attention should not be spent uniformly.
 
@@ -32,7 +32,7 @@ Additions are not equally risky, and an expert's attention should not be spent u
 | Analogy                | "Think of it like a mailbox"                              | Always               |
 | Simplification         | A caveat dropped for clarity                              | Always               |
 
-## The Ones That Route to the Authority Chair
+## The ones that route to the authority chair
 
 **Implied fact** is the dangerous category and the reason the ledger exists.
 It is where a fluent writer fills a gap with something plausible, and it is invisible in a finished draft because it reads exactly like everything around it.
@@ -63,7 +63,7 @@ The authority chair marks each routed entry:
 The authority chair must cite repository evidence, an external source, or explicitly mark the verdict as its own experience.
 An unsupported assertion becomes a human question rather than an applied edit, because neither chair holds ground truth and two agents can agree confidently and both be wrong.
 
-## What Does Not Belong Here
+## What does not belong here
 
 Style, word choice, heading case, and formatting.
 Those are the advocate chair's own business, and routing them to the authority chair is how the loop turns into two agents arguing about commas.

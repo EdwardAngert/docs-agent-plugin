@@ -3,14 +3,14 @@ description: "Draft a new document with guided help: bring your expertise, the p
 argument-hint: [topic or issue number]
 ---
 
-# Draft a Document
+# Draft a document
 
 Help a subject matter expert turn their knowledge into a well-structured document.
 
 You are the documentation expert. The human has the domain knowledge.
 Your job is to get what they know out of their head and into a clear draft. They should never need to worry about formatting, content types, or documentation best practices.
 
-## Your Approach
+## Your approach
 
 Be conversational and low-pressure.
 The contributor might be an engineer, PM, support lead, or anyone with knowledge to share.
@@ -24,7 +24,7 @@ Everything you gather goes to `.docs-assist/loop/<doc-slug>/packet.md`, in the s
 
 ## Process
 
-### 1-6. Fill the Packet by Talking
+### 1-6. Fill the packet by talking
 
 Run the first six intake moves as `intake.md` defines them: survey quietly, ask for the dump, reflect it back, situate it, offer the reconcile (a fact-check against the code and existing docs, the contributor's call, offered before anything is shaped), then dig at the gaps.
 
@@ -35,7 +35,7 @@ Draft-specific notes for those moves:
 - **Dig**: this is also the natural moment to learn the contributor's context (writing for themselves, or setting standards others will follow) when it isn't already clear. Calibrate offers accordingly, per the skill's calibration guidance.
 - **When the expert isn't in the session**: if the contributor is documenting someone else's knowledge, offer an intake questionnaire (a portable questionnaire pre-loaded from the survey and code) instead of making them guess. See the async section of `intake.md`. Draft what the material supports now; fold the answers in when they arrive.
 
-### 7. Verify Against the Code
+### 7. Verify against the code
 
 Confirm the details the draft will state, so it's accurate. This is targeted verification, not a full codebase map.
 
@@ -46,7 +46,7 @@ Confirm the details the draft will state, so it's accurate. This is targeted ver
 - Record anything newly verified into the packet's provenance rows, typed as a code reference, an external source, or the expert's own experience. What cannot be checked is `SME experience` and goes to `.docs-assist/state/docs.yml`, not into the document.
 - Ask for the Limits row directly. What cannot be done, and what looks like it should work and does not, is the highest-value content in most procedures and the row that never fills itself.
 
-### 8. Shape: One Doc, or Several?
+### 8. Shape: one doc, or several?
 
 Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/content-types.md`, and check the scope honestly:
 
@@ -56,7 +56,7 @@ Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/co
 - If it's genuinely ambiguous, default to a doc (task-oriented).
 - Offer a starting template where one fits. Suggesting one is free and offline, so do it even if `.docs-assist/templates.yml` is absent; only fetch on the contributor's yes. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. A template is a head start, never a requirement.
 
-### 9. Propose the Outline
+### 9. Propose the outline
 
 For anything beyond a short entry, show the outline before writing the full draft. Changing an outline is cheap; rewriting a draft is not.
 
@@ -67,7 +67,7 @@ For anything beyond a short entry, show the outline before writing the full draf
 - Skip it for a very short doc (a single troubleshooting entry). Offer it rather than forcing it.
 - Record the shape decision and outline back to the packet.
 
-### 10. Produce the Draft
+### 10. Produce the draft
 
 Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md` automatically. Write from the packet: it already holds the reconciled facts, the typed provenance, and the answered dig questions.
 

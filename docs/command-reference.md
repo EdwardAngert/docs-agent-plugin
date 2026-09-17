@@ -1,5 +1,5 @@
 ---
-title: "Docs Assist Command Reference"
+title: "Docs Assist command reference"
 description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, plan, audit, verify, update, release-notes, setup, and merge-prep."
 content-type: reference
 audience: users
@@ -11,14 +11,14 @@ keywords:
   - plan
 ---
 
-# Docs Assist Command Reference
+# Docs Assist command reference
 
 Every Docs Assist command, with its argument and an example.
 
 You rarely need these. The plugin activates from plain conversation ("help me document X"), and the commands are optional shortcuts into the same workflows.
 Every command also works with no argument: it asks for what it needs.
 
-## At a Glance
+## At a glance
 
 | Command                      | What it does                                  | Argument                             |
 | ---------------------------- | --------------------------------------------- | ------------------------------------ |
@@ -32,9 +32,9 @@ Every command also works with no argument: it asks for what it needs.
 | `/docs-assist:setup`         | Conventions, linting, hooks, and navigation   | `[stage]`                            |
 | `/docs-assist:merge-prep`    | Ready a docs change to merge                  | `[branch or path]`                   |
 
-## Write and Plan
+## Write and plan
 
-### /docs-assist:draft
+### /Docs-assist:draft
 
 `/docs-assist:draft [topic or issue number]`
 
@@ -47,7 +47,7 @@ For a topic that will take more than one sitting, it can offer to keep a running
 /docs-assist:draft how to configure webhook retries
 ```
 
-### /docs-assist:plan
+### /Docs-assist:plan
 
 `/docs-assist:plan [repo path or description]`
 
@@ -59,9 +59,9 @@ Use it for a new project with no docs, a project with scattered docs, or onboard
 /docs-assist:plan
 ```
 
-## Review and Maintain
+## Review and maintain
 
-### /docs-assist:health
+### /Docs-assist:health
 
 `/docs-assist:health [docs directory]`
 
@@ -73,7 +73,7 @@ Use `/docs-assist:audit` when you want the full findings list instead of a score
 /docs-assist:health
 ```
 
-### /docs-assist:audit
+### /Docs-assist:audit
 
 `/docs-assist:audit [path]`
 
@@ -85,7 +85,7 @@ Use it to assess a docs set before a cleanup, or to review the ripple of a chang
 /docs-assist:audit docs/
 ```
 
-### /docs-assist:update
+### /Docs-assist:update
 
 `/docs-assist:update [git ref, PR number, or path]`
 
@@ -97,7 +97,7 @@ Use it after a code change so the docs keep pace.
 /docs-assist:update 42
 ```
 
-### /docs-assist:verify
+### /Docs-assist:verify
 
 `/docs-assist:verify [doc path or directory]`
 
@@ -111,7 +111,7 @@ Use it on quickstarts and tutorials, the docs where a broken step costs the most
 /docs-assist:verify docs/quickstart.md
 ```
 
-### /docs-assist:release-notes
+### /Docs-assist:release-notes
 
 `/docs-assist:release-notes [range, tag, or version]`
 
@@ -123,9 +123,9 @@ Use it when cutting a release, so the notes describe outcomes readers care about
 /docs-assist:release-notes v0.8.0..HEAD
 ```
 
-## Configure Your Project
+## Configure your project
 
-### /docs-assist:setup
+### /Docs-assist:setup
 
 `/docs-assist:setup [stage]`
 
@@ -136,7 +136,7 @@ Conventions, linting, hooks, and site navigation, in one pass with one set of qu
 /docs-assist:setup lint
 ```
 
-### /docs-assist:merge-prep
+### /Docs-assist:merge-prep
 
 `/docs-assist:merge-prep [branch or path]`
 

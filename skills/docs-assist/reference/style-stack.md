@@ -1,4 +1,4 @@
-# The Style Stack
+# The style stack
 
 Which rules the advocate chair follows, and what happens when they disagree.
 
@@ -14,7 +14,7 @@ Highest wins.
 A project that has decided something has decided it.
 Never correct a project's committed convention toward an external guide.
 
-## When Layers 3 and 4 Disagree
+## When layers 3 and 4 disagree
 
 Prefer the more restrictive option, and **record the conflict as a project style decision** in `.docs-assist/style.md`.
 
@@ -28,7 +28,7 @@ Write the record as the decision plus its reason, not as a citation:
   Google permits them; GitLab forbids them. Resolved toward the stricter rule.
 ```
 
-## Known Conflicts
+## Known conflicts
 
 Seeded so the chair does not rediscover them.
 
@@ -49,7 +49,7 @@ The semicolon row was wrong until it was verified. It said Google "permits" semi
 
 A topic-types row was also removed. GitLab does organize its documentation around topic types, and "mandated" against Google's "implicit" was an assertion made from memory rather than from either guide's text. It is not a punctuation-level rule that belongs in a conflict table, and `content-types.md` already owns the subject.
 
-## What Both Guides Agree On
+## What both guides agree on
 
 Promote these to hard rules rather than treating them as suggestions.
 
@@ -62,14 +62,14 @@ Promote these to hard rules rather than treating them as suggestions.
 1. **Serial commas.**
 1. **Numbered lists for sequences, bulleted for everything else.**
 
-## GitLab Rules Worth Borrowing
+## GitLab rules worth borrowing
 
 Distinctive enough to name, and good.
 
 1. **Do not write "GitLab allows you to."** Address the reader directly: "use merge requests to compare code," not "GitLab allows you to compare code." The permission framing puts the product between the reader and the task.
 1. **Documentation is the single source of truth.** When an answer exists in the docs, link to it rather than restating it. Restating is how two versions of the same answer start drifting.
 
-## Where This Applies
+## Where this applies
 
 The advocate chair, every pass.
 The main conversation, when making a quick inline edit without running the loop.

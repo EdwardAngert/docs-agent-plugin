@@ -1,4 +1,4 @@
-# External Verification
+# External verification
 
 `claim-verification.md` traces a doc's claims to the code: does the flag exist, does the config key still default to what the doc says.
 That method has no reach into a claim about something outside the repo: a vendor's API behavior, a third party's protocol, a described limitation of a system the project does not control.
@@ -9,7 +9,7 @@ For a docs set about hardware, a vendor, or a service the project does not vendo
 The authority chair uses this method whenever its brief grants web access.
 It also backs `/docs-assist:verify`'s external-claim mode.
 
-## When a Claim Names a Specific Thing, Search Its General Form Too
+## When a claim names a specific thing, search its general form too
 
 When a claim names a specific product, brand, or implementation, ask whether it sits on top of a more general technology, protocol, or class of thing, and search that too.
 Not instead of the specific search: alongside it.
@@ -26,7 +26,7 @@ This is judgment, not a lookup.
 Recognizing that a claim has a useful general form takes reading the claim rather than pattern-matching a keyword, and plenty of claims have no broader form worth searching.
 Treat it as a search you should think to run, not a step a script can perform for you.
 
-## Exclude the Doc Set Under Verification From Its Own Results
+## Exclude the doc set under verification from its own results
 
 **Always on.** Not a mode, not an option, and not something to remember.
 
@@ -38,7 +38,7 @@ Treat any result whose URL matches the repo, site, or project under verification
 Name the rule when you apply it.
 A habit that is never stated is a habit that lapses silently, and this one has already produced a real false confirmation: an AI search summary claimed a blocklist project's repository had vanished, sourced from a blend that included the doc set's own well-ranking content.
 
-## Recording the Result
+## Recording the result
 
 Every claim checked gets one of three outcomes, and all three are legitimate.
 A pass is not the only acceptable one.
@@ -52,7 +52,7 @@ That third outcome is the one a human author never remembers to write down by ha
 Results go to `.docs-assist/state/docs.yml`, against the document.
 A contradicted or unverifiable claim is not a verification date; it is a finding, and in a loop run it belongs in the ledger review or `questions.md`.
 
-## What This Cannot Settle
+## What this cannot settle
 
 An external source can be wrong, out of date, or itself downstream of the doc under review.
 

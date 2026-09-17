@@ -1,4 +1,4 @@
-# Code Examples
+# Code examples
 
 This is how Docs Assist writes code examples: safe, and consistent with the examples already in the docs.
 
@@ -6,7 +6,7 @@ Inconsistent examples are a quiet source of confusion. When one doc uses `api.ex
 
 Load this whenever you add or improve code samples, from `/docs-assist:draft` or drafting.
 
-## Reuse Before You Invent
+## Reuse before you invent
 
 Before you write a new example, look at what the docs already do.
 
@@ -14,7 +14,7 @@ Before you write a new example, look at what the docs already do.
 - Reuse a value that already appears rather than inventing a new one. The goal is that a reader moving between docs sees the same names throughout.
 - Follow any example conventions the repo already has (a fixture project, a demo account, a standard region).
 
-## Compose Across the Docs Set
+## Compose across the docs set
 
 Matching values is not the same as a working path. A reader who follows the quickstart, then the configuration guide, then the deployment guide should end up with one working deployment, not three disconnected snippets that each ran fine on their own. When a set of docs forms a journey (install, then configure, then deploy, then integrate), their examples are one running example, not independent illustrations, and should be written and checked that way.
 
@@ -23,7 +23,7 @@ Matching values is not the same as a working path. A reader who follows the quic
 - **Verify the sequence, not just each doc.** `/docs-assist:verify` can run a journey's docs in one continuous workspace, in order, to prove the examples actually compose end to end; a single doc passing in isolation does not prove this. See "Verifying a Journey" in `commands/verify.md`.
 - **Flag it when a set doesn't compose.** If two docs in the same journey use different project names, regions, or resource IDs for what is supposed to be the same thing, that is a Critical audit finding: a reader following the docs in order hits a wall the individual docs never showed.
 
-## The Reference Registry
+## The reference registry
 
 `.docs-assist/reference.yml` holds the canonical placeholder values for the project, as `example-variable` entries, alongside terminology and other registered facts. Read it first, use its values, and keep it current. The full format, including the other entry kinds, is single-sourced in `reference-registry.md`; this section only covers what's specific to code samples.
 
@@ -34,7 +34,7 @@ Matching values is not the same as a working path. A reader who follows the quic
 
 An audit checks this too: `/docs-assist:audit` flags code samples whose values drift from the registry or from each other.
 
-## Keep Every Example Safe
+## Keep every example safe
 
 Whether or not a registry exists, examples must be copy-paste safe. This means two different things depending on what the example does, and they call for opposite defaults.
 
