@@ -39,7 +39,7 @@ Treat any result whose URL matches the repo, site, or project under verification
 Name the rule when you apply it.
 A habit that is never stated is a habit that lapses silently, and this one has already produced a real false confirmation: an AI search summary claimed a blocklist project's repository had vanished, sourced from a blend that included the doc set's own well-ranking content.
 
-## Recording the result
+## Record the result
 
 Every claim checked gets one of three outcomes, and all three are legitimate.
 A pass is not the only acceptable one.

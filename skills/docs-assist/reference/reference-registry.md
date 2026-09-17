@@ -93,7 +93,7 @@ workspace:
 - **The only kind Vale also checks.** `/docs-assist:setup` compiles every `term` entry into a generated Vale `substitution` rule, so the canonical-vs-variant check also runs as a deterministic lint, not only during a drafting or audit conversation.
   The other three kinds stay agent-only: Vale doesn't check inside code blocks by default (ruling out `example-variable` and `fact`), and it can't follow a link to resolve a `pointer`.
 
-## Maintaining the registry
+## Maintain the registry
 
 - **Offer to create it.** If `.docs-assist/reference.yml` doesn't exist and you're about to write a sample, or you find terminology drift during an audit or survey, offer to create it seeded from what the existing docs already use.
   Scaffold from `${CLAUDE_PLUGIN_ROOT}/assets/config/reference.yml`.
@@ -101,7 +101,7 @@ workspace:
   This is the plugin's responsibility, not the contributor's.
 - **Keep it in sync.** If a doc changes a value the registry holds, or a term gets renamed, update the registry and follow the repeated-value or term-rename edge in `impact-analysis.md` to every other occurrence.
 
-## Migrating from `example-variables.txt` and `terms.txt`
+## Migrate from `example-variables.txt` and `terms.txt`
 
 Versions before this registry shipped two separate files: `.docs-assist/example-variables.txt` (`key = value` pairs) and `.docs-assist/terms.txt` (`canonical = variants` pairs).
 `reference.yml` replaces both; the plugin no longer reads the old two-file format.

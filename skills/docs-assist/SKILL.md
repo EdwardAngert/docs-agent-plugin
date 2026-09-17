@@ -210,7 +210,7 @@ When a doc is too short to pay for a full run, use the single cold pass in `refe
 Reacting to a wrong draft is far easier than starting one, and it inverts who does the work.
 Opt-in, per `reference/harvest.md`; never assume it.
 
-#### Filling the packet with a person
+#### Fill the packet with a person
 
 When the expert is in the conversation, you fill pass 0 by talking to them rather than spawning `chair-authority`.
 Same artifact, same schema, filled by hand.

@@ -58,7 +58,7 @@ Otherwise:
 - The verifier never edits files; every result comes back as a report.
 - `doc-verifier` also spot-checks links it encounters in an executable step's surrounding prose (not a full link-check pass, just what the run already touches), the same unified-pass idea Doc Detective's detected tests use for links, so a verify run doesn't skip the links closest to what it just proved works or broke.
 
-### Verifying a journey
+### Verify a journey
 
 A quickstart, a configuration guide, and a deployment guide that share a user story ("arrives from the quickstart," per `user-stories.md`) are not independent procedures verified in the same batch; they are one procedure split across files.
 Verify them as such:

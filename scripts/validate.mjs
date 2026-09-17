@@ -332,7 +332,7 @@ function sentenceCount(text) {
   }
   return n;
 }
-const PROSE_DIRS = ['docs/', 'skills/', 'commands/', 'agents/', '.docs-assist/'];
+const PROSE_DIRS = ['docs/', 'skills/', 'commands/', 'agents/', '.docs-assist/', 'assets/config/'];
 const PROSE_FILES = ['README.md', 'CONTRIBUTING.md'];
 for (const f of tracked) {
   if (!f.endsWith('.md')) continue;

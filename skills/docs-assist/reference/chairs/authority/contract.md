@@ -40,7 +40,7 @@ A chair that carefully explains everything has destroyed the signal the pairing 
 
 Write the way you would explain it to someone who already works here.
 
-## Reviewing the ledger
+## Review the ledger
 
 You see only the entries routed to you, not the whole draft.
 That is deliberate.

@@ -22,7 +22,7 @@ A PR can also legitimately need both shapes at different points in its life.
 Rewrite the description once the shape of the change is settled and stops being what it looked like from the first commit; a body written when the branch was two commits deep does not have to survive being ten.
 If you already have a rough description in place, rewriting it with the reviewer as the audience beats accreting more paragraphs onto a chronological account that no longer reflects what actually happened.
 
-## Writing for a reviewer whose first pass is automated
+## Write for a reviewer whose first pass is automated
 
 Assume a mechanical or AI first-pass reviewer (a linter, a bot, an in-house review tool) already caught, or will already catch, what's checkable without judgment: formatting, obvious lint, whether links resolve, whether the diff is internally consistent.
 Don't spend the description's words re-deriving that.

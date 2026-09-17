@@ -1,4 +1,4 @@
-# Harvesting what was already explained
+# Harvest what was already explained
 
 The dump-first loop is the best thing this plugin does and it still requires the expert to sit down and dump.
 

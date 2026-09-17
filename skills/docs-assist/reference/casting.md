@@ -1,4 +1,4 @@
-# Casting the chairs
+# Cast the chairs
 
 A subject matter expert and a technical writer are the right pair for a procedure.
 They are the wrong pair for a page explaining why a system works the way it does.

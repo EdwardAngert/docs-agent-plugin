@@ -24,7 +24,7 @@ Neither requires touching an agent definition.
 It also should not be regenerated per run.
 Persisting it buys three things: it is stable across sessions, it is inspectable, and a contributor who thinks the authority persona is wrong can open the file and fix it.
 
-## Building the authority overlay
+## Build the authority overlay
 
 Built from evidence, not invented.
 
@@ -51,7 +51,7 @@ An accommodating expert persona that patiently explains everything has destroyed
 
 Write the overlay to sound like someone explaining this to a colleague, not to a newcomer.
 
-## Building the advocate overlay
+## Build the advocate overlay
 
 Smaller, because most of what this chair needs is already in `style-stack.md` and the project's committed config.
 

@@ -111,7 +111,7 @@ The plugin activates when you ask for documentation help, in plain words.
 You don't need to learn any special syntax or documentation theory.
 
 It activates on what you say, though, so work that never mentions documentation will not reach it on its own.
-[Making It Show Up](#making-it-show-up) covers the two ways to close that gap.
+[Making It Show Up](#make-it-show-up) covers the two ways to close that gap.
 
 The simplest path is to tell Claude what you want to document:
 
@@ -150,7 +150,7 @@ Documenting a whole repo and not sure where to start?
 It reads the codebase, tells you what it found and where it would start, and gets one good doc out the door (usually a README or quickstart) before planning the rest.
 It plans to ship first and iterate, not to boil the ocean.
 
-## Making it show up
+## Make it show up
 
 The plugin activates when something asks it to.
 A skill matches what you said, so work that never mentions documentation never reaches it.
