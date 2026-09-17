@@ -9,11 +9,11 @@ Reviewing an existing document and reviewing a fresh draft are the same job with
 
 The difference is only where pass 0 comes from:
 
-|        | Drafting                                        | Auditing                                                           |
-| ------ | ----------------------------------------------- | ------------------------------------------------------------------ |
+|        | Drafting                                        | Auditing                                                         |
+| ------ | ----------------------------------------------- | ---------------------------------------------------------------- |
 | Pass 0 | The packet is written, then shaped into a draft | The document already exists; the packet is reconstructed from it |
-| Ledger | What the advocate chair added                   | What the document asserts that its packet cannot support           |
-| Output | A draft plus questions                          | Findings plus questions                                            |
+| Ledger | What the advocate chair added                   | What the document asserts that its packet cannot support         |
+| Output | A draft plus questions                          | Findings plus questions                                          |
 
 Reconstructing the packet is the move that makes an audit find things.
 Read the finished document and write down what it claims, as cold rows, exactly as `packet-procedure.md` describes.

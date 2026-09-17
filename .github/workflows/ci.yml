@@ -34,12 +34,19 @@ jobs:
           node-version: "20"
 
       # Structural rules, using the markdownlint config this plugin ships.
+      # The glob covers the shipped surface, not just the reader-facing docs:
+      # `commands/`, `agents/`, and `skills/` are the bulk of what installs
+      # into a user's plugin cache, and they were unlinted while Vale and
+      # cspell already scanned them. Widening it is the same fix this release
+      # made for one-sentence-per-line and prose emphasis, a rule declared
+      # and then left without a gate.
       - name: markdownlint (own docs)
         if: always()
         run: >
           npx --yes markdownlint-cli2
           --config assets/lint/markdownlint/.markdownlint.jsonc
-          "README.md" "CHANGELOG.md" "docs/**/*.md"
+          "README.md" "CHANGELOG.md" "CONTRIBUTING.md" "THIRD-PARTY-NOTICES.md"
+          "docs/**/*.md" "commands/**/*.md" "agents/**/*.md" "skills/**/*.md"
 
       # Vale never fetches Packages (Google, write-good, alex) on its own;
       # only `vale sync` does, and only its LSP mode runs that automatically.

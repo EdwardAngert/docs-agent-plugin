@@ -301,6 +301,7 @@ docs-assist/
 │       ├── llms-txt.md            # the llms.txt format and maintenance contract
 │       ├── impact-analysis.md     # scope a change-based audit or update
 │       └── ...                    # registry, config resolution, IA, patterns, style guides
+├── skills/writing-task/       # routes writing that nobody called documentation
 ├── assets/ci/                 # deterministic checks: drift, continuity, paths, claims, decay
 ├── assets/                    # config templates, doc templates, lint scaffolds, CI, hook recipes
 └── scripts/validate.mjs       # repository validator (run in CI)

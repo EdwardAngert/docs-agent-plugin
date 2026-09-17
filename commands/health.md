@@ -67,12 +67,12 @@ Keep the scorecard small enough to read in thirty seconds:
 ```markdown
 ## Docs Health: <repo name>
 
-| Dimension   | Rating     | Why                                            |
-| ----------- | ---------- | ---------------------------------------------- |
+| Dimension   | Rating     | Why                                              |
+| ----------- | ---------- | ------------------------------------------------ |
 | Coverage    | needs work | No quickstart; 3 of 5 core features undocumented |
-| Freshness   | solid      | Docs track recent code changes                 |
-| Consistency | needs work | Two API base URLs used across examples         |
-| Findability | missing    | No llms.txt, no cross-references               |
+| Freshness   | solid      | Docs track recent code changes                   |
+| Consistency | needs work | Two API base URLs used across examples           |
+| Findability | missing    | No llms.txt, no cross-references                 |
 
 **Start here**: <the single highest-leverage fix, and why it beats the others>
 ```
