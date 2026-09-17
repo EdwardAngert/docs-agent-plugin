@@ -247,7 +247,7 @@ If you try it and something falls short, [an issue](https://github.com/EdwardAng
 ## Status
 
 Version 1.0.0.
-The command surface and the drafting mechanism both changed substantially in this release, so anything you pinned against 0.9.x is worth re-reading.
+The command surface and the drafting mechanism both changed substantially, so anything you pinned against 0.9.x is worth re-reading.
 `CHANGELOG.md` has the detail, including a Known limits section.
 
 ## Background
