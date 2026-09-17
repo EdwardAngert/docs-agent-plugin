@@ -17,6 +17,7 @@ assets/lint/vale/styles/*/
 reports/
 docs/1.0-release-plan.md
 docs/standalone-cli-plan.md
+docs/reviews/
 .docs-assist/loop/
 .docs-assist/session-log.md
 .docs-assist/state/

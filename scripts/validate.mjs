@@ -426,12 +426,8 @@ for (const f of tracked) {
 // lists explicitly is not wrong; only a generated per-project config narrows it
 // to `one`. This repo lints itself with the unmodified template, so nothing
 // caught its own rule being broken until this check existed.
-//
-// `docs/reviews/` is excluded: those files quote prompts and findings verbatim
-// from past sessions, and renumbering a quotation edits the record.
 for (const f of tracked) {
   if (!f.endsWith('.md')) continue;
-  if (f.startsWith('docs/reviews/')) continue;
   if (!PROSE_FILES.includes(f) && !PROSE_DIRS.some((d) => f.startsWith(d))) continue;
   const lines = readFileSync(rel(f), 'utf8').split('\n');
   let fence = false;

@@ -74,7 +74,9 @@ That ledger is the point: it is a diff between two artifacts, not a model's reco
 - **Three rules that were declared but unenforced now fail CI**: one sentence per line, no prose emphasis, and a repeated `1.` for ordered lists.
   Each had decayed quietly, and each check names the config key it comes from.
   `validate.mjs`'s prose checks cover `assets/config/` too, so the style template this plugin ships follows the rules it describes.
-- **The maintainer planning docs stopped shipping.** `docs/1.0-release-plan.md` and `docs/standalone-cli-plan.md` join the working notes on the `working-notes` branch.
+- **The maintainer-facing docs stopped shipping.** `docs/1.0-release-plan.md`, `docs/standalone-cli-plan.md`, and both files under `docs/reviews/` join the working notes on the `working-notes` branch.
+  The two reviews described a pre-1.0 command surface, naming eight commands 1.0 removed, so a reader arriving from `llms.txt` landed on a workflow that could not be run.
+  What ships under `docs/` is now the five reader-facing pages and the build record.
 - **`check-claims.mjs`** now covers `skills/`, `commands/`, and `agents/`, scoped so an instruction file's examples are not read as claims about the repository.
 
 ### Removed
@@ -135,7 +137,7 @@ A new `/docs-assist:verify` executes a procedural doc's steps in an isolated wor
 Every doc now carries a quick user story (who arrives, from where, to do what, done when what), calibrated from evidence instead of a fixed posture, so drafting can write to a reader instead of a guess and audits can walk the journey end to end.
 Two registries that used to duplicate each other's territory (`example-variables.txt`, `terms.txt`) merge into one `reference.yml`, with two new entry kinds: facts tied to a real source, and pointers to a worked example instead of a rewritten one.
 And general prose quality stops being something this plugin maintains its own copy of: `Google`, `write-good`, and `alex` are now the managed Vale packages doing that work, actively maintained upstream, with the plugin's own style stripped down to only what they do not cover.
-A field report from a real end-to-end run (`docs/reviews/0.9.5-field-report-reformatters-session.md`) then closed the gap between what this plugin claims by default and what it actually does: mechanical checks are now wired into `audit` and `health` instead of stated as a principle, `setup-lint` runs and triages its first pass instead of stopping at scaffolding, and a mandatory claim-to-code trace (`reference/claim-verification.md`) makes "improve the docs" reach further than a clean lint run.
+A [field report from a real end-to-end run](https://github.com/EdwardAngert/docs-agent-plugin/blob/working-notes/docs/reviews/0.9.5-field-report-reformatters-session.md) then closed the gap between what this plugin claims by default and what it actually does: mechanical checks are now wired into `audit` and `health` instead of stated as a principle, `setup-lint` runs and triages its first pass instead of stopping at scaffolding, and a mandatory claim-to-code trace (`reference/claim-verification.md`) makes "improve the docs" reach further than a clean lint run.
 `/docs-assist:verify` also now defers to [Doc Detective](https://docs.doc-detective.com/) when it's present in the target repo, since it's a purpose-built execution engine for the same job; the plugin's own `doc-verifier` remains the default otherwise.
 The staged plan behind this release is committed at `docs/plan.md`.
 
@@ -275,7 +277,7 @@ Rounding out the release: a terminology registry (`.docs-assist/terms.txt`) give
 ## 0.8.0 - 2026-07-10
 
 One plugin, every team size.
-A full product review (`docs/reviews/0.8.0-findings.md`) found that team framing had leaked into paths that should serve a solo maintainer equally, that the core intake loop was duplicated across three files, and that the plugin wrote docs straight to whatever branch the user was on while teaching branch-based review as the docs-as-code workflow.
+A full product review ([0.8.0 findings](https://github.com/EdwardAngert/docs-agent-plugin/blob/working-notes/docs/reviews/0.8.0-findings.md)) found that team framing had leaked into paths that should serve a solo maintainer equally, that the core intake loop was duplicated across three files, and that the plugin wrote docs straight to whatever branch the user was on while teaching branch-based review as the docs-as-code workflow.
 This release fixes all three: the plugin now calibrates to the contributor's context inside the conversation instead of assuming a team, a cold command invocation defaults to a solo writer held to full-documentation-team rigor, and docs work is offered on a branch by default.
 The review's remaining recommendations are preserved in the findings report.
 
@@ -288,7 +290,7 @@ The review's remaining recommendations are preserved in the findings report.
   When a command runs cold, with no `.docs-assist/` config and no prior conversation, it defaults to acting as a solo writer held to the rigor of a full documentation team, using the docs set's own internal consistency as the standard.
 - A "Deliver on a Branch" convention in `SKILL.md`, applied in `/docs-assist:draft` and `/docs-assist:update`: in a git repository, multi-file docs work is offered on a docs branch, and the plugin never commits to the default branch unless asked.
 - A root `NOTICE` file, so attribution to the author travels with every copy and derivative under Apache 2.0 section 4(d).
-- The 0.8.0 product review findings, committed at `docs/reviews/0.8.0-findings.md`, including the prioritized recommendations that did not ship in this release (a terminology registry, a release-notes workflow, audit-file consolidation).
+- The [0.8.0 product review findings](https://github.com/EdwardAngert/docs-agent-plugin/blob/working-notes/docs/reviews/0.8.0-findings.md), including the prioritized recommendations that did not ship in this release (a terminology registry, a release-notes workflow, audit-file consolidation).
 
 ### Changed
 

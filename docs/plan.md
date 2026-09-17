@@ -164,7 +164,7 @@ Deliberately deferred, in rough priority order:
   The trust cliff: the sticky-comment loop should earn confidence first.
 - Docs-impact noise knobs: a per-repo ignore list in `.docs-assist/config.yml`, and requiring term matches in code-ish doc contexts (inline backticks) rather than anywhere in prose.
 - Navigation generation for Astro, Hugo, and Jekyll (0.9.5 covers Docusaurus and MkDocs).
-- Audit and audit-methodology consolidation (duplication is partly load-bearing; see `reviews/0.8.0-findings.md`).
+- Audit and audit-methodology consolidation (duplication is partly load-bearing; see the [0.8.0 findings](https://github.com/EdwardAngert/docs-agent-plugin/blob/working-notes/docs/reviews/0.8.0-findings.md)).
 
 ## Version policy
 
