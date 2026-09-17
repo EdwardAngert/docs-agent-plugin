@@ -66,9 +66,9 @@ That ledger is the point: it is a diff between two artifacts, not a model's reco
 - **One sentence per line, everywhere.** The setting was in `config.yml` from the start with nothing checking it, and had decayed to roughly 500 multi-sentence lines.
   1208 lines were reflowed across 75 files, hard-wrapped paragraphs unwrapped first, and `validate.mjs` now holds the line.
   The rule does not apply inside a table, where a cell cannot hold a line break, and the check skips table rows.
-- **No emphasis inside prose.** Google allows bold "only for UI elements and run-in headings"; GitLab bans emphasis outright in favor of prose clear enough not to need it.
-  82 mid-prose emphasis runs are down to 11: stress emphasis is gone, literal values moved into code spans, and bold survives only on a term where it is defined.
-  `tone-and-voice.md` records where this diverges from Google, which prefers italics for a defined term.
+- **No emphasis inside prose.** GitLab's rule is the one followed: bold is for "UI elements with a visible label" and navigation paths, and "Do not use bold for keywords or emphasis."
+  All 82 mid-prose emphasis runs are gone. Stress emphasis was rewritten away, literal values moved into code spans, and a term being defined now leads its bullet as a run-in heading rather than sitting bold mid-sentence, which is the description-list form GitLab points at.
+  Bold at the start of a line or list item is still a run-in heading and still allowed.
 - **Headings are action-oriented in fact, not only in config.** Eleven gerund headings became imperative; the nine that remain are noun section labels.
   Vale's `HeadingGerund` runs at warning level and so never appeared in a CI gate, which is how they accumulated.
 - **Three rules that were declared but unenforced now fail CI**: one sentence per line, no prose emphasis, and a repeated `1.` for ordered lists.
@@ -80,6 +80,12 @@ That ledger is the point: it is a diff between two artifacts, not a model's reco
   Its deferred backlog moved into the README's self-assessment, which already pointed at it, and the path is now unambiguous.
   What ships under `docs/` is four reader-facing pages.
 - **`check-claims.mjs`** now covers `skills/`, `commands/`, and `agents/`, scoped so an instruction file's examples are not read as claims about the repository.
+
+### Fixed in the docs
+
+- `reference/llms-txt.md` still assigned the `llms.txt` maintenance contract to `Agent-ready` and `Setup-site`, two commands 1.0 removed, and `reference/templates.md` still listed the standalone `Template` command.
+  They survived the surface reduction because they were written as bold prose names rather than `/docs-assist:` references, which is the only form the stale-command check could see.
+  All three are corrected, the whole list now uses command references, and `validate.mjs` reads a bold run-in heading that names a command too.
 
 ### Removed
 

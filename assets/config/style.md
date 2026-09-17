@@ -32,7 +32,7 @@ Terminology's product-name and preferred-term entries are inherently project-spe
 - Product names and capitalization: spell out the exact casing (for example, "GitHub", not "Github").
   [project-specific: fill in]
 - No emphasis inside prose.
-Bold is for run-in headings, UI labels, and a term where it is defined; neither bold nor italics is for stress.
+Bold is for run-in headings and UI labels, and nothing else, including a term being defined: a glossary entry leads its bullet instead.
 A sentence that needs emphasis to land is a sentence to rewrite, and a literal value belongs in a code span.
 - Banned phrases: words that weaken docs (for example, `simply`, `easily`, `obviously`, `basically`) and AI-voice tells (for example, `seamless`, `powerful`, `it's worth noting`).
 

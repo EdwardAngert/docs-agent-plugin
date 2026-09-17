@@ -20,7 +20,7 @@ This page explains that mechanism and why it is built this way.
 You do not need any of it to use the plugin.
 Read it if you want to know what a draft's assumptions list is worth before you trust one.
 
-The plugin calls these reviewers **chairs** in its own files and in this page, because that is the word you will see if you open `agents/` or the reference material.
+The plugin calls these reviewers chairs in its own files and in this page, because that is the word you will see if you open `agents/` or the reference material.
 Reviewer and chair mean the same thing here.
 
 ## What has actually been run
@@ -43,7 +43,7 @@ Both halves carry weight differently: a rule in a constitution is a request, and
 ### The authority chair
 
 Holds what is true about the subject.
-It writes the **packet**: a cold, prose-free statement of the model, the claims, the causal chains, the constraints, the rationale, the misconceptions readers arrive with, and what is not known.
+It writes the packet: a cold, prose-free statement of the model, the claims, the causal chains, the constraints, the rationale, the misconceptions readers arrive with, and what is not known.
 
 It may not comment on prose.
 Not word choice, not structure, not heading case, not tone.

@@ -26,4 +26,4 @@ Pass 3.
 Every fix here that adds information adds a ledger entry.
 
 "How does the reader know it worked?" is a clarity finding.
-The answer you write is an **implied fact**, and it routes to the authority chair even when you are confident.
+The answer you write is an implied fact, and it routes to the authority chair even when you are confident.

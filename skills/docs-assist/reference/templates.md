@@ -125,6 +125,7 @@ The repository-level notice lives in `THIRD-PARTY-NOTICES.md`.
 
 ## Where this plugs in
 
-- **Draft** (`/docs-assist:draft`): after the content type is chosen, suggest a template and, if accepted, draft on its skeleton.
-- **Plan** (`/docs-assist:plan`): note the suggested template for each planned doc, so the plan and the eventual drafts line up.
-- **Template** (drafting): scaffold a chosen template on demand, and turn the feature on for a project.
+- `/docs-assist:draft`: after the content type is chosen, suggest a template and, if accepted, draft on its skeleton.
+  Scaffolding a chosen template on demand happens here too; 1.0 folded the standalone template command into drafting.
+- `/docs-assist:plan`: note the suggested template for each planned doc, so the plan and the eventual drafts line up.
+- `/docs-assist:setup`: turn the feature on for a project.

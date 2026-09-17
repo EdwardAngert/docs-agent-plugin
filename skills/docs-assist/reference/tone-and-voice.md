@@ -78,17 +78,23 @@ Cut them on sight, the same way an em dash gets cut, and rewrite what was there 
 
 ### Emphasis
 
-- Use bold for run-in headings, for UI labels a reader looks for on screen, and for a term at the point it is defined.
-- Use neither bold nor italics to stress a word mid-sentence.
+- Use bold for run-in headings and for UI labels a reader looks for on screen.
+- Use nothing else: no bold or italics mid-sentence, including on a term you are defining.
 - Put a literal value in a code span, not in bold: `solid`, not bold "solid".
 
-Google's guide allows bold "only for UI elements and run-in headings" and notes that "usually, your words can carry the emphasis without adding italics."
-GitLab's goes further and bans emphasis outright, asking for "content that is clear enough that emphasis is not needed."
-Both land in the same place: a sentence that needs emphasis to land is a sentence to rewrite.
+Google allows bold "only for UI elements and run-in headings" and notes that "usually, your words can carry the emphasis without adding italics."
+GitLab is stricter, permitting bold only for "UI elements with a visible label" and navigation paths, and stating plainly: "Do not use bold for keywords or emphasis."
+A sentence that needs emphasis to land is a sentence to rewrite.
 
-The one place this guide diverges from Google is defining a term, where Google prefers italics.
-Bold is used here instead, because GitLab's point about italics carries: in a sans-serif face, italics barely register, and a definition that fails to announce itself is not doing its job.
-Italics are left for a word quoted as a word, which is rare.
+Defining a term is the case people argue for, and it does not survive either guide.
+A defined term is a keyword, and GitLab points at a description list instead of bold.
+A glossary entry therefore leads its bullet, where the term is a run-in heading and the definition follows:
+
+```md
+- **Ledger.** The diff between the packet and the draft.
+```
+
+That is not the same as bolding the word where it happens to appear in a sentence, which is the thing to avoid.
 
 ### Separators
 

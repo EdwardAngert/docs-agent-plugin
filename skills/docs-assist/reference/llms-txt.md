@@ -52,11 +52,11 @@ Pointing at the registry tells an agent which values and terms are canonical, wh
 `llms.txt` is only useful while it is true.
 Each workflow holds up its part:
 
-- **Draft** adds an entry for every new doc it finalizes, placed by reader priority.
-- **Update** reconciles entries whenever its edits add, remove, rename, move, or re-describe a doc.
-- **Audit** and **health** flag drift: entries whose files are gone, docs with no entry, and titles, descriptions, or paths that no longer match.
-- **Agent-ready** creates the file when missing and repairs it wholesale.
-- **Setup-site** reads it as the source of navigation order.
+- `/docs-assist:draft` adds an entry for every new doc it finalizes, placed by reader priority.
+- `/docs-assist:update` reconciles entries whenever its edits add, remove, rename, move, or re-describe a doc.
+- `/docs-assist:audit` and `/docs-assist:health` flag drift: entries whose files are gone, docs with no entry, and titles, descriptions, or paths that no longer match.
+- `/docs-assist:merge-prep` creates the file when missing and repairs it wholesale.
+- `/docs-assist:setup` reads it as the source of navigation order when it generates site navigation.
 - **Fan-out subagents never edit it.** Parallel writers would collide, so `chair-advocate` reports its proposed entry and the main conversation writes them all.
 
 ## Llms-full.txt

@@ -211,6 +211,11 @@ const liveCommands = new Set(
 const HISTORY = new Set(['CHANGELOG.md']);
 // Third-party tools whose names match the agent shape but are not ours.
 const EXTERNAL = new Set(['doc-detective']);
+// Commands 1.0 removed. Named here so prose that still calls them out as
+// run-in headings fails, rather than reading as ordinary English.
+const DEAD_COMMANDS = new Set([
+  'agent-ready', 'setup-lint', 'setup-hooks', 'setup-site', 'make-examples',
+]);
 
 for (const f of allMdFiles('.')) {
   // Dated records of what was true then: a changelog, a field report, a design
@@ -226,6 +231,20 @@ for (const f of allMdFiles('.')) {
   for (const m of text.matchAll(/`(doc-[a-z-]+|chair-[a-z-]+|cold-reader)`/g)) {
     if (EXTERNAL.has(m[1])) continue;
     check(liveAgents.has(m[1]), `${f} references removed agent \`${m[1]}\``);
+  }
+  // A command named in prose as a bold run-in heading, which is how
+  // `Agent-ready` and `Setup-site` outlived the commands they named: the check
+  // above only saw the `/docs-assist:` form. Only hyphenated or known
+  // single-word command names count, so a bullet leading with a normal English
+  // word is not read as a command claim.
+  for (const m of text.matchAll(/^- \*\*([A-Z][a-z]+(?:-[a-z]+)+)\*\*/gm)) {
+    const name = m[1].toLowerCase();
+    if (!liveCommands.has(name) && !DEAD_COMMANDS.has(name)) continue;
+    check(
+      liveCommands.has(name),
+      `${f} names removed command "${m[1]}" as a run-in heading. ` +
+        `Refer to a command as \`/docs-assist:<name>\` so this check can see it.`,
+    );
   }
 }
 
@@ -366,23 +385,12 @@ for (const f of tracked) {
 // `gh` and `git log`. Parsing the line here avoids that.
 //
 // Bold at the start of a line or list item is a run-in heading and always
-// allowed. The one legitimate mid-prose use is bold on a term where it is
-// defined, which no regular expression can tell from stress, so those are
-// listed by the exact phrase rather than by line number.
-const EMPHASIS_OK = new Set([
-  '.docs-assist/personas/authority.md::chairs',
-  '.docs-assist/personas/authority.md::packet',
-  '.docs-assist/personas/authority.md::ledger',
-  '.docs-assist/personas/authority.md::door',
-  '.docs-assist/personas/authority.md::plumbing',
-  'docs/how-the-loop-works.md::chairs',
-  'docs/how-the-loop-works.md::packet',
-  'commands/plan.md::content inventory',
-  'skills/docs-assist/reference/chairs/advocate/pass-2-clarity.md::implied fact',
-  'skills/docs-assist/reference/llms-txt.md::health',
-  // "A body that explains why is packet material" garbles without the italics.
-  'skills/docs-assist/reference/harvest.md::why',
-]);
+// allowed. Nothing else is: GitLab permits bold only for "UI elements with a
+// visible label" and navigation paths, and says plainly "Do not use bold for
+// keywords or emphasis", pointing at a description list for a glossary
+// instead. A term being defined is a keyword, so it leads its bullet as a
+// run-in heading rather than sitting bold mid-sentence.
+const EMPHASIS_OK = new Set([]);
 for (const f of tracked) {
   if (!f.endsWith('.md')) continue;
   if (!PROSE_FILES.includes(f) && !PROSE_DIRS.some((d) => f.startsWith(d))) continue;

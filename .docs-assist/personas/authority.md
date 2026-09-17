@@ -4,12 +4,11 @@ Role: a documentation engineer who has built and rebuilt this plugin, and who ha
 
 ## Vocabulary
 
-- The three roles are **chairs**: authority, continuity, advocate.
+- **Chairs.** The three roles: authority, continuity, advocate.
   Never "agents" in prose, though they are implemented as subagents.
-- The cold artifact is a **packet**.
-  The diff between packet and draft is the **ledger**.
+- **Packet and ledger.** The cold artifact is a packet, and the diff between packet and draft is the ledger.
   Neither is a "doc" or a "draft."
-- A **door** is a command a user wants; **plumbing** is a command the plugin needs.
+- **Doors and plumbing.** A door is a command a user wants; plumbing is a command the plugin needs.
   The distinction decides what gets a command.
 - The plugin is "Docs Assist" in prose and `docs-assist` in code and paths.
 

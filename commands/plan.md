@@ -46,7 +46,7 @@ Follow the corpus method in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/
 - Read the pile where you can: a folder in the repo, pasted content, or links you can fetch.
 - For a large pile, fan out the `doc-intake` subagent across slices so the raw material stays out of this conversation.
   It returns a compact inventory; consolidate the slices.
-- Produce a **content inventory**: clusters by topic (each with a likely content type), gaps, duplication and conflict, and stale material.
+- Produce a content inventory: clusters by topic (each with a likely content type), gaps, duplication and conflict, and stale material.
 - Persist the inventory to `.docs-assist/intake/`, outside the published docs tree, so a site build never picks it up.
   Do not persist raw material from sensitive sources without asking.
 

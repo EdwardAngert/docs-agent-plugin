@@ -27,7 +27,7 @@ In rough order of value:
 1. **Issue replies from maintainers.** Especially long ones, and especially answers to "how do I", "why does", and "is it possible to." A maintainer writing four paragraphs into an issue has written a doc and filed it where nobody will find it again.
 1. **Pull request review comments.** Where the reasoning behind a decision gets recorded, and the single richest source of rationale for a concept page.
 1. **Commit message bodies.** Not subjects.
-   A body that explains *why* is packet material.
+   A body that gives the reasoning behind the change is packet material.
 1. **Closed issues marked as questions or documentation.** Often a complete question-and-answer pair.
 1. **Recurring questions.** The same thing asked three times is a coverage gap with evidence attached, which is a stronger finding than any audit heuristic.
 
