@@ -48,7 +48,8 @@ Terminology's product-name and preferred-term entries are inherently project-spe
   One step per code block, and two unrelated commands belong in two blocks.
   When a step genuinely takes two commands, chain them with `&& \` and a line break rather than inline, so the reader can see and copy the halves.
   A block that edits an existing file shows its surrounding context, or marks the omission with `...`, so nobody has to guess where it goes.
-  A destructive example must fail as written: a warning a copy-paste skips past protects nobody.
+  A destructive example must fail as written, with an unresolvable placeholder in the slot that would do the damage, and prose saying it is set to fail on purpose.
+  Never ask the reader to edit a command in their head ("run it again with `-f`"); show the second command as its own block.
 - Where new docs of each type should live.
   [project-specific: fill in]
 - How to refer to internal tools, teams, or environments.

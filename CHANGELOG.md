@@ -78,6 +78,10 @@ Nothing else in the upgrade requires action from you.
   A block that edits an existing file now has to show its surrounding context or mark the omission with `...`, rather than leaving the reader to guess where it goes.
   The rule ships in `assets/config/style.md` as a default your project inherits, and `validate.mjs` gates the `&&` half, which is the only part a regex can judge.
   The repo's own illustrative block was `npm install && npm run build`, the shape the rule warns about.
+- **The destructive-example rule stops asking readers to edit commands in their head.** It used to say to show the dry-run form and name the real flag in prose, which leaves the reader retyping a command they cannot see, and a flag swap is easy to mistype on a keyboard laid out differently from the author's.
+  The rule now follows the pattern these docs' sibling pi-hole guide already uses: show the real command with an unresolvable placeholder in the slot that would do the damage, say in prose that it is set to fail on purpose and what the failure saves the reader from, name what replaces each placeholder and where to find it, and say how to recover if it goes wrong anyway.
+  A dry run became a step of its own with its own block, rather than a mode of the real command.
+- Each command in a chain starts flush, with indentation reserved for the wrapped arguments of a single command, so the two cases stay visually distinct.
   It reaches the drafting path rather than only the review one: `tone-and-voice.md` carries the essentials, which the advocate chair loads on every pass, and the chair now picks up `code-examples.md` when the document will carry commands.
 - **The style template the plugin scaffolds bans emphasis inside prose.** `assets/config/style.md` now carries the rule as a default your project inherits: bold is for run-in headings and UI labels, a term being defined leads its bullet instead, and a literal value belongs in a code span.
   GitLab's rule is the one followed: "Do not use bold for keywords or emphasis."

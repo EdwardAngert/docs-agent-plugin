@@ -61,9 +61,16 @@ This means two different things depending on what the example does, and they cal
 **A destructive, upgrade, or troubleshooting example must not run as literal copy-paste, on purpose.** A reader in an incident, following a troubleshooting doc or an upgrade guide, is exactly the reader most likely to paste first and read second.
 A command that would delete, drop, overwrite, force-push, or otherwise act on whatever the reader already has must be written so blind copy-paste fails safe, not just carry a warning above it:
 
-- Use a placeholder that cannot resolve to anything real if pasted as-is (angle brackets the shell will reject, `<YOUR_CLUSTER_NAME>`, not a plausible real-looking value like `prod-cluster`) rather than a fake-but-syntactically valid one.
-- Prefer showing the dry-run or read-only form by default (`--dry-run`, a status or diff command) and naming the real flag in prose, rather than showing the destructive form and warning about it.
-- When the destructive form must be shown directly, break it: a comment line the reader must delete first, an intentionally invalid token in place of the real target, or split across a "first confirm this is what you mean to affect" step and a separate "then run this" step.
+- **Show the real command, and break it where it is dangerous.** Put an unresolvable placeholder in the slot that would do the damage, so pasting it verbatim fails.
+  `YOUR-PI-IP` and `YOUR-GATEWAY-IP` are the shape: screaming caps, hyphenated, obviously not a value, and invalid where they land.
+  A plausible-looking `prod-cluster` is the failure mode, because it runs.
+- **Say that it is set to fail, and what the failure saves the reader from.** "This example is intentionally set to fail if you don't adjust `YOUR-PI-IP` and `YOUR-GATEWAY-IP`.
+  This way you're less likely to get locked out if you don't change the example first." The reader now knows the error is the doc working, not the doc being broken.
+- **Name what replaces each placeholder, one by one, and where to find it.** A placeholder the reader cannot resolve is a dead end rather than a safeguard.
+- **Do not ask the reader to edit a command in their head.** "Run it again, replacing `-n` with `-f`" makes the reader retype a command they cannot see, and a flag swap is easy to get wrong and easy to mistype on a keyboard laid out differently from yours.
+  Show the second command as its own block, in full.
+- **Say what to do if it goes wrong anyway.** The pi-hole static-IP step ends with how to recover from a lockout, on a monitor and keyboard, because the command it just gave you can cut off your own access.
+- A dry run is a step of its own, not a mode of the real command: show `--dry-run` in one block, and the real invocation in the next, each with its own prose.
 - State what the command does and what it affects before showing it, but treat that as backup, not the safeguard.
   A warning a copy-paste skips past protects nobody; a command that fails when pasted verbatim protects everyone.
 - `doc-verifier` already refuses to run anything in this category (see its safety tiers); this rule is the same discipline applied for the human reader, who has no safety tier at all.
@@ -81,11 +88,20 @@ Break the line so the shape of the step is visible:
 
 ```bash
 mkdir -p demo-widgets && \
-  cd demo-widgets
+cd demo-widgets
 ```
 
 Not `mkdir -p demo-widgets && cd demo-widgets`.
 It still pastes as one working chain, and the reader can now see two commands, run them separately, or stop after the first.
+
+Each new command in the chain starts flush.
+Indentation means something else: the wrapped arguments of a single command, which is the one case where a continued line is not a command of its own.
+
+```bash
+sudo nmcli con mod "$CON" \
+  ipv4.addresses YOUR-PI-IP/24 \
+  ipv4.gateway YOUR-GATEWAY-IP
+```
 
 **Only chain what is genuinely one step.** "Create the directory and switch to it" is one step that would be pedantic as two.
 "Install the dependencies" and "run the test suite" are two.

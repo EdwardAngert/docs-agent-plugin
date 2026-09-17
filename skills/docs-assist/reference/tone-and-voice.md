@@ -84,14 +84,16 @@ Cut them on sight, the same way an em dash gets cut, and rewrite what was there 
   One step per block; two unrelated commands belong in two blocks.
 - Chain a step's commands with `&& \` and a line break, never inline, so the reader can see and copy the halves.
   Only chain what is genuinely one step, and never commands meant to run regardless of each other.
+- Each command in a chain starts flush; indentation is reserved for the wrapped arguments of one command.
 - Show a block that edits an existing file in place: include the real surrounding context, or mark the omission with `...`.
-- A destructive example must fail when pasted verbatim.
+- A destructive example must fail when pasted verbatim, with an unresolvable placeholder in the slot that would do the damage.
+  Never ask the reader to edit a command in their head: show the second command as its own block, in full.
   `code-examples.md` has the full rule, including safe placeholder values.
 - Examples:
 
   ```bash
   npm install && \
-    npm run build
+  npm run build
   ```
 
 ### Emphasis
