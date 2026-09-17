@@ -11,8 +11,10 @@
 //   6. Prose does not name an agent or command that no longer exists.
 //   7. Every chair has a contract and a rulebook per threshold.
 //   8. A reference file named inside another reference file resolves.
+//   9. Every tracked path is on the shipping allowlist.
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -256,6 +258,55 @@ for (const f of allMdFiles(refDir)) {
       `${f} names reference file \`${name}\`, which does not exist`,
     );
   }
+}
+
+// 9. Every tracked path is on the shipping allowlist.
+// Claude Code has no plugin-level files allowlist: on install it copies the
+// whole repository into ~/.claude/plugins/cache. Anything tracked here lands
+// in every user's cache, so the allowlist below is the only thing standing
+// between a new working directory and shipping it to everyone. Working notes
+// are archived on the `working-notes` branch and gitignored here.
+const SHIP_DIRS = [
+  '.claude-plugin/',
+  '.docs-assist/personas/',
+  '.github/',
+  'agents/',
+  'assets/',
+  'commands/',
+  'docs/',
+  'scripts/',
+  'skills/',
+];
+const SHIP_FILES = new Set([
+  '.cspell.json',
+  '.docs-assist/config.yml',
+  '.docs-assist/reference.yml',
+  '.docs-assist/style.md',
+  '.gitignore',
+  '.markdownlint-cli2.jsonc',
+  'CHANGELOG.md',
+  'CONTRIBUTING.md',
+  'LICENSE',
+  'NOTICE',
+  'README.md',
+  'THIRD-PARTY-NOTICES.md',
+  'llms.txt',
+]);
+let tracked = [];
+try {
+  tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8' })
+    .split('\0')
+    .filter(Boolean);
+} catch {
+  // Not a git checkout (a published plugin cache, for instance). Skip.
+}
+for (const f of tracked) {
+  check(
+    SHIP_FILES.has(f) || SHIP_DIRS.some((d) => f.startsWith(d)),
+    `${f} is tracked but not on the shipping allowlist in scripts/validate.mjs. ` +
+      `It would be copied into every user's plugin cache. Add it to the allowlist ` +
+      `if it belongs in the plugin, or gitignore it and archive it on \`working-notes\`.`,
+  );
 }
 
 if (errors.length) {

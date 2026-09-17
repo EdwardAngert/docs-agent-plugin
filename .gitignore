@@ -8,3 +8,12 @@ assets/lint/vale/styles/*/
 # resolves claims by grepping tracked source and began finding them in its
 # own cache.
 .docs-assist/claims/
+
+# Working files that must not ship. Claude Code copies the whole repository
+# into ~/.claude/plugins/cache on install, so anything tracked here lands in
+# every user's cache. These are kept locally and archived on the
+# `working-notes` branch; scripts/validate.mjs enforces the allowlist.
+reports/
+.docs-assist/loop/
+.docs-assist/session-log.md
+.docs-assist/state/
