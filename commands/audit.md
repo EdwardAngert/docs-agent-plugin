@@ -47,7 +47,9 @@ See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/impact-analysis.md`.
 
 Before reading a single file for structure or style, check `.docs-assist/config.yml`'s `lint.tools`:
 
-- **Configured**: run each listed tool against the audit scope (`npx markdownlint-cli2`, `vale`, `npx cspell`, per what's listed) and fold its output straight into Structure Issues and Style Issues below.
+- **Configured**: run each listed tool against the audit scope (`npx markdownlint-cli2`, `vale`, `npx cspell`, per what's listed).
+  Their output belongs on the Mechanics line of the report, which is one line.
+  It does not become a section: a clean lint run is a precondition for the audit, not a result of it.
   A heading-level skip, a missing blank line, an untagged fence, a weasel word: these are findings the linter already found, not things to re-derive by reading.
 - **Not configured**: say so explicitly in the report, and offer `/docs-assist:setup` before doing any manual mechanical checking.
   Do one-off ad hoc runs only if the user wants findings now and declines setup (`npx --yes markdownlint-cli2 <scope>` is enough for a single pass; no config to generate first).
@@ -94,14 +96,39 @@ If a link looks suspicious (an org/repo name that doesn't match the project, a h
 
 For each document, evaluate:
 
-#### Structure issues
+Analyze in the order you will report in, so nothing has to be re-sorted later.
+
+#### Is it true
+
+- **Trace claims to the code.** This is not optional for a full-set or directory audit, and it is the highest-value part of the audit, not a nice-to-have layered on top of the mechanical checks: for every doc, walk each command, flag, config key, default value, endpoint, version requirement, and described behavior out to the actual source and confirm it still matches.
+  Run `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/check-claims.mjs` first: it resolves the identifier-shaped claims (paths, flags, function/class names, config keys) deterministically across the whole set in one pass, so the trace below spends judgment only on what a lookup can't settle (described behavior, numeric assertions).
+  See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/claim-verification.md` for the full method, what counts as a claim, and how to classify what you find (matches, drifted, missing, needs `/docs-assist:verify`).
+  A pass that runs the mechanical linters, gets them clean, and stops there has finished the cheaper half of the audit and skipped the half a reader depends on.
+- Outdated information (check dates and version references; for a full-set audit in a git repo, `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/docs-decay.mjs` ranks every doc by staleness risk in one deterministic pass, prioritizing which docs get the claim trace above first)
+- Unverified claims: docs whose `sme-attested` frontmatter ledger is large or old.
+  Surface the specific claims so a reviewer can verify and delete entries (the ledger exists to shrink; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`)
+- Incomplete instructions (missing steps).
+  Reading can only catch so much here: for a load-bearing procedural doc, recommend `/docs-assist:verify`, which executes the steps in an isolated workspace and finds the break a read-through misses
+- Broken reader journeys: a story whose arrival, entry, path, or exit fails when walked through the doc, and docs whose intended reader cannot be inferred at all.
+  See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`
+- Assumption gaps (undefined terms, missing prerequisites)
+- Duplicated content
+
+#### Can a reader get what they came for: structure
 
 - Multiple H1 headings
 - Heading hierarchy violations (skipping levels)
 - Missing introductory context
 - No clear content type (tutorial vs how-to vs reference vs explanation)
 
-#### Style issues
+#### Can a reader get what they came for: findability
+
+- Missing navigation entries
+- Poor link text (`click here`)
+- No cross-references to related content
+- Stale or missing `llms.txt`: if the repo has one, check its entries against the current docs (titles, descriptions, paths, and reader-priority order) per the contract in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/llms-txt.md`, and note a missing one when the docs would benefit
+
+#### Does it read well
 
 - Inconsistent formatting
 - Missing code block language tags
@@ -124,29 +151,6 @@ For each document, evaluate:
 - AI voice: hedging, marketing language, false-contrast framing (`it's not X, it's Y`), and throat-clearing openers.
   See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md`'s "Avoid AI Voice" section
 
-#### Content issues
-
-- **Trace claims to the code.** This is not optional for a full-set or directory audit, and it is the highest-value part of the audit, not a nice-to-have layered on top of the mechanical checks: for every doc, walk each command, flag, config key, default value, endpoint, version requirement, and described behavior out to the actual source and confirm it still matches.
-  Run `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/check-claims.mjs` first: it resolves the identifier-shaped claims (paths, flags, function/class names, config keys) deterministically across the whole set in one pass, so the trace below spends judgment only on what a lookup can't settle (described behavior, numeric assertions).
-  See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/claim-verification.md` for the full method, what counts as a claim, and how to classify what you find (matches, drifted, missing, needs `/docs-assist:verify`).
-  A pass that runs the mechanical linters, gets them clean, and stops there has finished the cheaper half of the audit and skipped the half a reader depends on.
-- Outdated information (check dates and version references; for a full-set audit in a git repo, `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/docs-decay.mjs` ranks every doc by staleness risk in one deterministic pass, prioritizing which docs get the claim trace above first)
-- Unverified claims: docs whose `sme-attested` frontmatter ledger is large or old.
-  Surface the specific claims so a reviewer can verify and delete entries (the ledger exists to shrink; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`)
-- Incomplete instructions (missing steps).
-  Reading can only catch so much here: for a load-bearing procedural doc, recommend `/docs-assist:verify`, which executes the steps in an isolated workspace and finds the break a read-through misses
-- Broken reader journeys: a story whose arrival, entry, path, or exit fails when walked through the doc, and docs whose intended reader cannot be inferred at all.
-  See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`
-- Assumption gaps (undefined terms, missing prerequisites)
-- Duplicated content
-
-#### Findability issues
-
-- Missing navigation entries
-- Poor link text (`click here`)
-- No cross-references to related content
-- Stale or missing `llms.txt`: if the repo has one, check its entries against the current docs (titles, descriptions, paths, and reader-priority order) per the contract in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/llms-txt.md`, and note a missing one when the docs would benefit
-
 ### 4. Assess information architecture
 
 Evaluate overall structure:
@@ -158,80 +162,95 @@ Evaluate overall structure:
 
 ### 5. Format output
 
-Provide findings in this structure:
+The order below is the point, not a preference.
+It is how technical writing ranks: a wrong doc is worse than an ugly one, and a doc nobody can find is worse than one that reads awkwardly.
+Report in this order even when the interesting findings are further down, because a reader who stops after the first section should still have the answer that matters most.
+
+Lead with a verdict, in one or two sentences, that says whether this set is in good shape.
+Say so plainly when it is.
+An audit that finds nothing is a successful audit, and a list of manufactured findings is the failure mode, not a sign of thoroughness.
 
 ```markdown
 ## Audit summary
 
-**Scope**: [path audited]
-**Files reviewed**: [count]
-**Date**: [today]
+**Scope**: [path audited] · **Files**: [count] · **Date**: [today]
 
-## Critical issues
+[One or two sentences: is this set in good shape, and what is the single thing
+that most needs attention. Not a list. If nothing needs attention, say that.]
 
-[High-impact problems that should be fixed immediately]
+## Is it true
 
-## Structure issues
+[Claims traced to the code that should back them: commands, flags, defaults,
+config keys, endpoints, version requirements, described behavior. A claim
+nobody can source is the finding, and in finished prose it is invisible because
+it reads exactly like the twenty sourced claims around it.
 
-[Problems with organization, navigation, or IA]
+Also: examples that would not run, destructive examples that do not fail safe,
+and anything stated as shipped that is designed and unbuilt.
 
-## Content issues
+This section is first because everything below it is cosmetic by comparison.]
 
-[Quality problems in individual documents]
+## Can a reader get what they came for
 
-## Style issues
+[Information architecture, findability, and whether the set coheres.
 
-[Formatting and style guide violations]
+Reader journeys that break: arrival, entry, path, exit. Prerequisites the
+reader cannot satisfy. A missing verification step, so nobody knows whether it
+worked. Pages nothing links to. The same fact told differently in two places.
+Docs a reader needs that do not exist.
 
-## Quick wins
+This is where an audit earns most of its keep after correctness, and it is the
+part a linter cannot reach at all.]
 
-[Low-effort fixes with good impact]
+## Does it read well
 
-## Warnings
+[Prose: ambiguity that costs the reader, terms used before they are defined,
+an analogy standing where the fact belongs, the wrong reader level, AI voice.
 
-### Orphaned images
+Secondary to both sections above. A confusing sentence in a true, findable doc
+is a smaller problem than a false sentence or an unreachable page.]
 
-The following images exist but are not linked from any documentation file.
-These may be intentionally linked from external sources or may be unused.
+## Mechanics
 
-- `path/to/image1.png`
-- `path/to/image2.svg`
+[One line. Which linters ran and what they found, or that none are configured
+and `/docs-assist:setup` would wire them up.
 
-### Unverifiable links
+A clean lint run is a precondition, not a result. Do not expand this into a
+section: if the linters found something, the fix is to run them, not to
+transcribe their output here.]
 
-The following external links could not be checked (network error, timeout, or auth-gated).
-Not reported as broken, just unconfirmed.
+## What I did not check
 
-- `path/to/doc.md`: `https://example.com/page`
+[Only when something was out of scope: a change-based audit's unfollowed edges,
+links that could not be reached, files skipped and why. Omit when the pass
+covered everything.]
 
-## Residual risk
+## What to do first
 
-[For a scoped or change-based audit, state what you did not check: the change types found and the edges followed for each, plus the edges you did not follow and why. Omit this section for a full-set audit that covered everything.]
-
-## Recommendations
-
-[Prioritized list of suggested improvements]
-
-## Files reviewed
-
-[Handle based on user preference - ask if not specified]
-
-Options:
-1. **Full list**: Show all files with notes
-1. **Output to file**: Write to `audit-files.md` in the audited directory
-1. **Critical only**: Show only files with critical issues
-1. **Skip**: Omit this section entirely
+[The smallest number of actions that move this set the most, in order. Each
+names the file and what to change. Prefer one real fix over ten suggestions.]
 ```
+
+Rank findings by that hierarchy before ranking them by severity.
+A correctness finding outranks a prose finding at the same severity, and the report should already be in that order rather than leaving a reader to sort it.
+
+Where a section has nothing, say so in one line and move on.
+Empty sections are a valid and common result.
 
 ### 6. Prioritize issues
 
-Rank all issues by:
+Rank by kind first, then by cost within a kind.
 
-- **User impact**: How much does this hurt users?
-- **Effort**: How hard is it to fix?
-- **Frequency**: How often do users encounter this?
+The kinds are the report's own order: something untrue, then something a reader
+cannot reach or follow, then something that reads poorly, then mechanics.
+A false claim outranks an awkward sentence even when the sentence is cheaper to
+fix, because effort is a tiebreaker and not a ranking.
 
-Focus on issues that are high-impact and low-effort first.
+Within a kind, prefer what hurts more readers, more often, for less work.
+
+Resist the pull of the cheap fix.
+A list led by typo corrections reads as thorough and leaves the expensive,
+important findings at the bottom where they do not get done.
 
 ### 7. Deliver the report by scope
 

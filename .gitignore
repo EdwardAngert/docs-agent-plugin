@@ -15,6 +15,10 @@ assets/lint/vale/styles/*/
 # every user's cache. These are kept locally and archived on the
 # `working-notes` branch; scripts/validate.mjs enforces the allowlist.
 reports/
+# Parked: a scenario harness for `claude plugin eval`. Kept on disk, not
+# shipped. It belongs near the end of a docs process, answering "did we do
+# good docs", rather than in front of the work as a prerequisite.
+evals/
 docs/1.0-release-plan.md
 docs/standalone-cli-plan.md
 docs/reviews/
