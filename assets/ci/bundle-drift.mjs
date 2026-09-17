@@ -47,6 +47,7 @@
 // Env:
 //   DOCS_ASSIST_CONFIG      config path (default: .docs-assist/config.yml)
 //   BUNDLE_DRIFT_STRICT     "1" exits nonzero when drift is found
+//   DOCS_ASSIST_REPORT_FILE    when set, the full report is written there too
 //   GITHUB_STEP_SUMMARY     when set, the report is appended there too
 
 import { execSync } from 'node:child_process';
@@ -57,6 +58,11 @@ const configPath = process.argv[2] || process.env.DOCS_ASSIST_CONFIG || '.docs-a
 
 function report(text) {
   console.log(text);
+  // The screen gets the judgment; a file gets the detail when a run is long
+  // enough to scroll past. See reference/reports.md for the contract.
+  if (process.env.DOCS_ASSIST_REPORT_FILE) {
+    appendFileSync(process.env.DOCS_ASSIST_REPORT_FILE, text + '\n');
+  }
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, text + '\n');
 }
 

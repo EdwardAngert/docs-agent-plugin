@@ -22,6 +22,7 @@
 //                          .docs-assist/config.yml, else "docs")
 //   CHECK_CLAIMS_OUT       output directory (default: ".docs-assist/claims")
 //   CHECK_CLAIMS_STRICT    "1" exits nonzero when any claim resolves "missing"
+//   DOCS_ASSIST_REPORT_FILE    when set, the full report is written there too
 //   GITHUB_STEP_SUMMARY    when set, the report is appended there too
 //
 // A claim that resolves "missing" means grep found nothing anywhere in the
@@ -102,6 +103,11 @@ function isRealClaimFor(file, claim) {
 
 function report(text) {
   console.log(text);
+  // The screen gets the judgment; a file gets the detail when a run is long
+  // enough to scroll past. See reference/reports.md for the contract.
+  if (process.env.DOCS_ASSIST_REPORT_FILE) {
+    appendFileSync(process.env.DOCS_ASSIST_REPORT_FILE, text + '\n');
+  }
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, text + '\n');
 }
 

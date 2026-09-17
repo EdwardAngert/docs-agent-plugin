@@ -180,7 +180,9 @@ that most needs attention. Not a list. If nothing needs attention, say that.]
 
 ## Is it true
 
-[Claims traced to the code that should back them: commands, flags, defaults,
+[Findings as `T1`, `T2`, each with where it is, the evidence, and the fix.
+
+Claims traced to the code that should back them: commands, flags, defaults,
 config keys, endpoints, version requirements, described behavior. A claim
 nobody can source is the finding, and in finished prose it is invisible because
 it reads exactly like the twenty sourced claims around it.
@@ -192,7 +194,9 @@ This section is first because everything below it is cosmetic by comparison.]
 
 ## Can a reader get what they came for
 
-[Information architecture, findability, and whether the set coheres.
+[Findings as `R1`, `R2`.
+
+Information architecture, findability, and whether the set coheres.
 
 Reader journeys that break: arrival, entry, path, exit. Prerequisites the
 reader cannot satisfy. A missing verification step, so nobody knows whether it
@@ -204,7 +208,9 @@ part a linter cannot reach at all.]
 
 ## Does it read well
 
-[Prose: ambiguity that costs the reader, terms used before they are defined,
+[Findings as `P1`, `P2`.
+
+Prose: ambiguity that costs the reader, terms used before they are defined,
 an analogy standing where the fact belongs, the wrong reader level, AI voice.
 
 Secondary to both sections above. A confusing sentence in a true, findable doc
@@ -230,6 +236,25 @@ covered everything.]
 [The smallest number of actions that move this set the most, in order. Each
 names the file and what to change. Prefer one real fix over ten suggestions.]
 ```
+
+Give every finding an identifier: `T1`, `R2`, `P3`, `M1`, numbered within its
+section, so it can be referred to in a commit, a pull request, or a handoff
+without quoting it.
+Attach the evidence to the finding rather than to the run, so a reader who has
+only the report can act on it.
+
+Three things make a finding actionable, and leaving any one out sends the
+reader back to the source:
+
+- **Quote the literal text**, not what it means.
+  A search for a paraphrase finds nothing.
+- **Carry the material that fills a gap.** If the fix is to add a verification
+  step, the report contains the command's actual output, not just the
+  observation that it is missing.
+- **Say which to do first**, rather than leaving it to be inferred from the
+  identifiers.
+`reference/reports.md` is the full contract, and it applies whether this goes on
+the screen or into a file.
 
 Rank findings by that hierarchy before ranking them by severity.
 A correctness finding outranks a prose finding at the same severity, and the report should already be in that order rather than leaving a reader to sort it.
@@ -259,6 +284,7 @@ The conversation is for triage; end with a persist offer, per the skill's feedba
 - A change-based audit of a PR: offer to post the report as a sticky PR comment (`gh pr comment`), summary first with detail collapsed in a `details` element.
   Update the existing comment on a re-run rather than adding another.
 - A full-set or directory audit: offer to save it to `.docs-assist/reports/audit-<date>.md`, so the next audit can be compared against it.
+  Follow `reference/reports.md` for the shape: identifiers per finding, evidence attached to each, and a record of where you looked.
 - Either way, present the findings here first and let the user choose.
   Never persist without the offer.
 - If `.docs-assist/session-log.md` is in use (check for it if this audit is one stage of a broader pass), append what this stage found and decided rather than letting that narrative dissolve into the audit report.

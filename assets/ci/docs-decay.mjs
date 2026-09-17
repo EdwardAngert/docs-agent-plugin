@@ -22,6 +22,7 @@
 //   DOCS_DECAY_STRICT       "1" exits nonzero when any doc scores at or
 //                           above DOCS_DECAY_THRESHOLD (default: 10)
 //   DOCS_DECAY_THRESHOLD    score that counts as decayed (default: 10)
+//   DOCS_ASSIST_REPORT_FILE    when set, the full report is written there too
 //   GITHUB_STEP_SUMMARY     when set, the report is appended there too
 
 import { execSync } from 'node:child_process';
@@ -88,6 +89,11 @@ if (existsSync('README.md')) docs.push('README.md');
 
 function report(text) {
   console.log(text);
+  // The screen gets the judgment; a file gets the detail when a run is long
+  // enough to scroll past. See reference/reports.md for the contract.
+  if (process.env.DOCS_ASSIST_REPORT_FILE) {
+    appendFileSync(process.env.DOCS_ASSIST_REPORT_FILE, text + '\n');
+  }
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, text + '\n');
 }
 

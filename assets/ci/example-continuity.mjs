@@ -40,6 +40,7 @@
 //   DOCS_ASSIST_DOCS_DIR        docs root (default: docs)
 //   DOCS_ASSIST_REFERENCE       registry path (default: .docs-assist/reference.yml)
 //   EXAMPLE_CONTINUITY_STRICT   "1" exits nonzero when anything is flagged
+//   DOCS_ASSIST_REPORT_FILE    when set, the full report is written there too
 //   GITHUB_STEP_SUMMARY         when set, the report is appended there too
 
 import { execSync } from 'node:child_process';
@@ -51,6 +52,11 @@ const registryPath = process.env.DOCS_ASSIST_REFERENCE || '.docs-assist/referenc
 
 function report(text) {
   console.log(text);
+  // The screen gets the judgment; a file gets the detail when a run is long
+  // enough to scroll past. See reference/reports.md for the contract.
+  if (process.env.DOCS_ASSIST_REPORT_FILE) {
+    appendFileSync(process.env.DOCS_ASSIST_REPORT_FILE, text + '\n');
+  }
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, text + '\n');
 }
 

@@ -64,6 +64,8 @@ Load the file you need when you need it, rather than holding all of it in contex
   Suggesting is free; fetching is on the contributor's yes.
 - `reference/ia-methodology.md`: information architecture design and evaluation.
 - `reference/style-guides.md`: style guide selection and enforcement.
+- `reference/reports.md`: what a run leaves behind, and what it puts on the screen.
+  The screen gets the judgment; the file gets the detail, addressable and complete enough for the next agent to act on without re-running anything.
 - `reference/session-log.md`: the opt-in running narrative log for an engagement spanning several commands, distinct from `docs/plan.md`'s forward-looking content plan.
 - `reference/pr-descriptions.md`: how to write a PR description that helps a reviewer, including when to restructure it by file or area instead of by commit.
 
