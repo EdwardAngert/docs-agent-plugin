@@ -37,6 +37,10 @@ A linter whose rules disagree with `.docs-assist/config.yml` is worse than no li
 
 Offer the managed packages (Google's style, write-good, alex) plus the plugin's own styles for the house rules: em dashes, weasel words, marketing language, filler phrases, false contrast, and the terminology substitutions compiled from `reference.yml`'s `term` entries.
 
+Seed a Vale vocabulary at `styles/config/vocabularies/DocsAssist/accept.txt` from `reference.yml`'s `term` entries and the product names already in the docs.
+Without one, the sentence-case heading rule flags every proper noun the project uses, and the usual response is to switch the rule off rather than list six words.
+Declaring a vocabulary also switches on `Vale.Terms`, which polices the exact casing of each term everywhere, including literal file names and URLs; leave it off unless the project wants that.
+
 Generate a root `.markdownlint-cli2.jsonc` with the same glob CI uses.
 Without it, a bare `npx markdownlint-cli2` falls back to stock defaults and a different scope than CI checks, which is a trap this plugin's own repo fell into before fixing it on itself.
 

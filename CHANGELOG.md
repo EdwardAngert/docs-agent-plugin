@@ -53,8 +53,18 @@ That ledger is the point: it is a diff between two artifacts, not a model's reco
   A claim nobody can source is the finding, and in finished prose it is invisible: it sits next to twenty sourced claims and reads exactly like them.
 - **Commands: 14 to 9.** The cut is doors against plumbing, not a target number.
   `init`, `setup-lint`, `setup-hooks`, and `setup-site` merged into `setup`; `make-examples` and `template` into drafting; `agent-ready` into `merge-prep`.
-- **`scripts/validate.mjs`** gained three checks: prose naming an agent or command that no longer exists, every chair having a rulebook per threshold, and reference files resolving.
+- **`scripts/validate.mjs`** gained five checks: prose naming an agent or command that no longer exists, every chair having a rulebook per threshold, reference files resolving, every tracked path sitting on the shipping allowlist, and one sentence per line.
   The first found 59 stale references on its first run.
+- **Working notes no longer ship.** Claude Code has no plugin-level files allowlist: on install it copies the whole repository into `~/.claude/plugins/cache`, so every tracked file reached every user.
+  The design records under `reports/` and the artifacts from the loop's one end-to-end run are archived on the `working-notes` branch and gitignored here, and the allowlist check fails CI if a new working directory appears.
+  The dogfooding config stays: `config.yml`, `style.md`, `reference.yml`, and the personas are project configuration that the linters read.
+- **This repo's own headings moved to sentence case**, matching the default the plugin has shipped since 0.9.x and the Google style guide it lints against.
+  The repo had set `heading_case: title` while leaving `Google.Headings` enabled, so 97 findings in `docs/` alone were suppressed and the rule was decorative.
+  486 headings across 72 files, with frontmatter titles synced again to their H1s.
+- **`.vale.ini` declares a vocabulary** at `styles/config/vocabularies/DocsAssist/accept.txt`, so proper nouns survive a sentence-case heading rule instead of being the reason to switch it off.
+  Declaring one also enables `Vale.Terms`, which fired only on literal file names, URLs, and id-like values, so it ships off with the reasoning recorded.
+- **One sentence per line, everywhere.** The setting was in `config.yml` from the start with nothing checking it, and had decayed to roughly 500 multi-sentence lines.
+  1208 lines were reflowed across 75 files, hard-wrapped paragraphs unwrapped first, and `validate.mjs` now holds the line.
 - **`check-claims.mjs`** now covers `skills/`, `commands/`, and `agents/`, scoped so an instruction file's examples are not read as claims about the repository.
 
 ### Removed
