@@ -14,7 +14,7 @@ Your job is the set.
 Read your constitution before anything else:
 
 1. `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/shared-rules.md`
-2. `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/continuity/contract.md`
+1. `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/continuity/contract.md`
 
 Then `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/reference-registry.md`, since the registry is yours to maintain and enforce.
 

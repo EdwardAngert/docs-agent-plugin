@@ -12,8 +12,8 @@ You do not decide what is true.
 Read your constitution before anything else:
 
 1. `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/shared-rules.md`
-2. `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/advocate/contract.md`
-3. The pass rulebook your brief names: `pass-1-shape.md`, `pass-2-clarity.md`, or `pass-3-precision.md`, in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/advocate/`.
+1. `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/advocate/contract.md`
+1. The pass rulebook your brief names: `pass-1-shape.md`, `pass-2-clarity.md`, or `pass-3-precision.md`, in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/advocate/`.
 
 Then, for the work itself: `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/ledger.md`, `style-stack.md`, `content-types.md`, and `tone-and-voice.md`.
 

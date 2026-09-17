@@ -65,6 +65,16 @@ That ledger is the point: it is a diff between two artifacts, not a model's reco
   Declaring one also enables `Vale.Terms`, which fired only on literal file names, URLs, and id-like values, so it ships off with the reasoning recorded.
 - **One sentence per line, everywhere.** The setting was in `config.yml` from the start with nothing checking it, and had decayed to roughly 500 multi-sentence lines.
   1208 lines were reflowed across 75 files, hard-wrapped paragraphs unwrapped first, and `validate.mjs` now holds the line.
+  The rule does not apply inside a table, where a cell cannot hold a line break, and the check skips table rows.
+- **No emphasis inside prose.** Google allows bold "only for UI elements and run-in headings"; GitLab bans emphasis outright in favor of prose clear enough not to need it.
+  82 mid-prose emphasis runs are down to 11: stress emphasis is gone, literal values moved into code spans, and bold survives only on a term where it is defined.
+  `tone-and-voice.md` records where this diverges from Google, which prefers italics for a defined term.
+- **Headings are action-oriented in fact, not only in config.** Eleven gerund headings became imperative; the nine that remain are noun section labels.
+  Vale's `HeadingGerund` runs at warning level and so never appeared in a CI gate, which is how they accumulated.
+- **Three rules that were declared but unenforced now fail CI**: one sentence per line, no prose emphasis, and a repeated `1.` for ordered lists.
+  Each had decayed quietly, and each check names the config key it comes from.
+  `validate.mjs`'s prose checks cover `assets/config/` too, so the style template this plugin ships follows the rules it describes.
+- **The maintainer planning docs stopped shipping.** `docs/1.0-release-plan.md` and `docs/standalone-cli-plan.md` join the working notes on the `working-notes` branch.
 - **`check-claims.mjs`** now covers `skills/`, `commands/`, and `agents/`, scoped so an instruction file's examples are not read as claims about the repository.
 
 ### Removed

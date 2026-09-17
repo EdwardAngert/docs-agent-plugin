@@ -218,9 +218,9 @@ Not reported as broken, just unconfirmed.
 
 Options:
 1. **Full list**: Show all files with notes
-2. **Output to file**: Write to `audit-files.md` in the audited directory
-3. **Critical only**: Show only files with critical issues
-4. **Skip**: Omit this section entirely
+1. **Output to file**: Write to `audit-files.md` in the audited directory
+1. **Critical only**: Show only files with critical issues
+1. **Skip**: Omit this section entirely
 ```
 
 ### 6. Prioritize issues

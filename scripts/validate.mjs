@@ -14,6 +14,7 @@
 //   9. Every tracked path is on the shipping allowlist.
 //  10. Prose keeps one sentence per line, per .docs-assist/config.yml.
 //  11. Prose does not use bold or italics to stress a word.
+//  12. Ordered lists repeat `1.`, per .docs-assist/config.yml.
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -416,6 +417,32 @@ for (const f of tracked) {
           `Rewrite the sentence, or add it to EMPHASIS_OK if it is a word quoted as a word.`,
       );
     }
+  }
+}
+
+// 12. Ordered lists repeat `1.`.
+// `ordered_list_style: repeated-one` in config.yml. The shipped markdownlint
+// template sets MD029 to `one_or_ordered`, because a project that numbers its
+// lists explicitly is not wrong; only a generated per-project config narrows it
+// to `one`. This repo lints itself with the unmodified template, so nothing
+// caught its own rule being broken until this check existed.
+//
+// `docs/reviews/` is excluded: those files quote prompts and findings verbatim
+// from past sessions, and renumbering a quotation edits the record.
+for (const f of tracked) {
+  if (!f.endsWith('.md')) continue;
+  if (f.startsWith('docs/reviews/')) continue;
+  if (!PROSE_FILES.includes(f) && !PROSE_DIRS.some((d) => f.startsWith(d))) continue;
+  const lines = readFileSync(rel(f), 'utf8').split('\n');
+  let fence = false;
+  for (let i = 0; i < lines.length; i++) {
+    if (/^\s*(```|~~~)/.test(lines[i])) { fence = !fence; continue; }
+    if (fence) continue;
+    check(
+      !/^[ ]*[2-9]\d*[.)] /.test(lines[i]),
+      `${f}:${i + 1} numbers an ordered list item explicitly. ` +
+        `Use a repeated \`1.\` (ordered_list_style in .docs-assist/config.yml): "${lines[i].trim().slice(0, 60)}"`,
+    );
   }
 }
 

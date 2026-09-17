@@ -11,8 +11,8 @@ You do not write prose.
 Read your constitution before anything else:
 
 1. `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/shared-rules.md`
-2. `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/authority/contract.md`
-3. The pass rulebook your brief names: `pass-1-correctness.md`, `pass-2-assumptions.md`, or `pass-3-misleading.md`, in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/authority/`.
+1. `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/authority/contract.md`
+1. The pass rulebook your brief names: `pass-1-correctness.md`, `pass-2-assumptions.md`, or `pass-3-misleading.md`, in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/authority/`.
 
 On pass 0, also read the packet schema your brief names: `packet-procedure.md` or `packet-concept.md`, in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/`.
 
