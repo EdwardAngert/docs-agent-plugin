@@ -16,6 +16,16 @@ Cut them on sight, the same way an em dash gets cut, and rewrite what was there 
   `The retry queue processes in order` beats `It's not random, it's ordered`.
   If the contrast is itself the useful information, a reader's common misconception, say why the wrong answer is wrong once, then move on.
   Don't repeat the not-X-it's-Y shape sentence after sentence.
+- **Phantom negation**: naming something the thing does not do, when it was never a live option.
+  `The cut is doors against plumbing, not a target number` rules out a target number nobody proposed.
+  A reader with no access to the design conversation now believes a target number was once on the table, and has to work out why it was rejected.
+  Before writing `does not X` or `not a X`, check whether X was ever genuinely considered.
+  If it wasn't, delete the clause rather than softening it, and state what the thing is instead.
+  A contrast earns its place only when the alternative was real, like `removed rather than deprecated`, where deprecating was the obvious other choice.
+- **An analogy carrying the meaning**: a figure of speech standing where the fact belongs.
+  `Doors against plumbing` compressed a real criterion (a command should be something the reader sets out to do, not a step inside something else) into two nouns that transmit none of it.
+  Analogies illustrate a fact already stated; they do not replace it.
+  If a fluent reader of the language has to stop and decode the figure, it failed, and the test is whether the sentence still works with the analogy deleted.
 - **Hedging**: `should work in most cases`, `generally speaking`, `in most scenarios`.
   A step either works under a stated condition or it doesn't.
   Replace the qualifier with the actual condition: `this works when X; for Y, see Z`.

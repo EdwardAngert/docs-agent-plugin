@@ -9,6 +9,9 @@ Ask whether a reader can follow it.
 1. **Ambiguity.** A sentence with two readings, where acting on the wrong one costs the reader.
    "Cover immediately" after two instructions: immediately after which?
 1. **A term used before it is defined.** First use carries the definition or a link.
+1. **An analogy doing the work of the fact.** A metaphor or figure standing where the criterion, definition, or reason belongs.
+   Delete the figure and read the sentence again: if the meaning goes with it, the reader never had the meaning.
+   Write the plain statement, then keep the figure only if it still illustrates something.
 1. **Wrong reader level.** Calibrate from evidence, not posture: what the project's other docs already assume without explaining, what kind of tool this is, what ecosystem it lives in.
    An SDK for working engineers does not need a terminal explained; a first-touch onboarding doc does.
    See "Calibrate the Baseline" in `user-stories.md`.

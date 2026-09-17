@@ -21,6 +21,10 @@ Terminology's product-name and preferred-term entries are inherently project-spe
 - Explain a term the first time it appears.
 - No AI voice: no hedging (`should work in most cases`), no marketing language (`seamless`, `powerful`, `robust`), no false-contrast framing (`it's not X, it's Y`), no throat-clearing openers (`it's worth noting that`).
   State the fact; don't perform confidence or sell it.
+- No phantom negation: don't rule out something that was never a live option.
+  Before writing `not a X`, check that X was genuinely considered; if it wasn't, state what the thing is and delete the clause.
+- No analogy standing in for the fact.
+  A figure of speech illustrates a point already made in plain words, and if the sentence stops working when you delete the figure, the figure was doing work it cannot do.
 - Know your audience; don't assume it.
   Calibrate the reader's baseline from evidence (what the project's own docs already assume, what kind of tool this is), per doc, not a fixed posture.
   See `user-stories.md`.
@@ -32,8 +36,8 @@ Terminology's product-name and preferred-term entries are inherently project-spe
 - Product names and capitalization: spell out the exact casing (for example, "GitHub", not "Github").
   [project-specific: fill in]
 - No emphasis inside prose.
-Bold is for run-in headings and UI labels, and nothing else, including a term being defined: a glossary entry leads its bullet instead.
-A sentence that needs emphasis to land is a sentence to rewrite, and a literal value belongs in a code span.
+  Bold is for run-in headings and UI labels, and nothing else, including a term being defined: a glossary entry leads its bullet instead.
+  A sentence that needs emphasis to land is a sentence to rewrite, and a literal value belongs in a code span.
 - Banned phrases: words that weaken docs (for example, `simply`, `easily`, `obviously`, `basically`) and AI-voice tells (for example, `seamless`, `powerful`, `it's worth noting`).
 
 ## Conventions
