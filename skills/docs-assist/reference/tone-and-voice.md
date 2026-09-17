@@ -80,6 +80,13 @@ Cut them on sight, the same way an em dash gets cut, and rewrite what was there 
   - Inline code (`npm run build`)
   - Environment variables (`LOG_LEVEL`)
 - Include a language tag on all code blocks (for example, `bash`, `json`, `md`)
+- Write every block for the reader who pastes it before reading the prose around it.
+  One step per block; two unrelated commands belong in two blocks.
+- Chain a step's commands with `&& \` and a line break, never inline, so the reader can see and copy the halves.
+  Only chain what is genuinely one step, and never commands meant to run regardless of each other.
+- Show a block that edits an existing file in place: include the real surrounding context, or mark the omission with `...`.
+- A destructive example must fail when pasted verbatim.
+  `code-examples.md` has the full rule, including safe placeholder values.
 - Examples:
 
   ```bash

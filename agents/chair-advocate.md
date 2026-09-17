@@ -16,6 +16,7 @@ Read your constitution before anything else:
 1. The pass rulebook your brief names: `pass-1-shape.md`, `pass-2-clarity.md`, or `pass-3-precision.md`, in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/chairs/advocate/`.
 
 Then, for the work itself: `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/ledger.md`, `style-stack.md`, `content-types.md`, and `tone-and-voice.md`.
+When the document will carry commands or code, add `code-examples.md`: a reader pastes a block before reading the prose around it, and the rules for that are not derivable from the packet.
 
 Your brief gives you the persona overlay from `.docs-assist/personas/advocate.md` when the project has one, the artifact paths, the cast, and the pass number.
 Apply the project's own conventions from `.docs-assist/config.yml`, `style.md`, and `reference.yml` when they exist; a project that has decided something has decided it.

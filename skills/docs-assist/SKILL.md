@@ -313,6 +313,8 @@ The essentials:
 - `1.` for ordered lists, `-` for unordered.
   A language tag on every code block.
   Copy-paste safe examples with placeholder values.
+- Write code blocks for the reader who pastes before reading: one step per block, a step's commands chained with `&& \` and a line break rather than inline, surrounding context (or `...`) on a block that edits an existing file, and a destructive example that fails when pasted verbatim.
+  See `reference/code-examples.md`.
 - No em dashes.
   Use a comma, a colon, parentheses, or rewrite the sentence.
 - No TODOs or placeholders in finished docs.

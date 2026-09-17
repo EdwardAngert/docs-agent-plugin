@@ -78,6 +78,7 @@ Nothing else in the upgrade requires action from you.
   A block that edits an existing file now has to show its surrounding context or mark the omission with `...`, rather than leaving the reader to guess where it goes.
   The rule ships in `assets/config/style.md` as a default your project inherits, and `validate.mjs` gates the `&&` half, which is the only part a regex can judge.
   The repo's own illustrative block was `npm install && npm run build`, the shape the rule warns about.
+  It reaches the drafting path rather than only the review one: `tone-and-voice.md` carries the essentials, which the advocate chair loads on every pass, and the chair now picks up `code-examples.md` when the document will carry commands.
 - **The style template the plugin scaffolds bans emphasis inside prose.** `assets/config/style.md` now carries the rule as a default your project inherits: bold is for run-in headings and UI labels, a term being defined leads its bullet instead, and a literal value belongs in a code span.
   GitLab's rule is the one followed: "Do not use bold for keywords or emphasis."
 - **The Vale scaffold declares a vocabulary** at `styles/config/vocabularies/DocsAssist/accept.txt`, so proper nouns survive a sentence-case heading rule instead of being the reason to switch it off.
