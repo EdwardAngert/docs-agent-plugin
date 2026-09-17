@@ -5,10 +5,10 @@
 
 ## Docs
 
-- [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): For docs leads and devrel. Why to install, what changes for contributors, and how to customize.
-- [Write Docs With Docs Assist](docs/write-docs-with-docs-assist.md): For individual contributors. What the plugin does, and tips for getting the most out of it.
-- [Docs Assist Command Reference](docs/command-reference.md): Every command with its argument and an example.
-- [How the Authoring Loop Works](docs/how-the-loop-works.md): What happens when the plugin drafts for you, and why it is built that way. Three reviewers in separate contexts, and the ledger of assumptions you review instead of a whole draft.
+- [Set up documentation standards for your team](docs/set-up-documentation-standards-for-your-team.md): For docs leads and devrel. Why to install, what changes for contributors, and how to customize.
+- [Write docs with Docs Assist](docs/write-docs-with-docs-assist.md): For individual contributors. What the plugin does, and tips for getting the most out of it.
+- [Docs Assist command reference](docs/command-reference.md): Every command with its argument and an example.
+- [How the authoring loop works](docs/how-the-loop-works.md): What happens when the plugin drafts for you, and why it is built that way. Three reviewers in separate contexts, and the ledger of assumptions you review instead of a whole draft.
 
 ## Plugin Configuration
 

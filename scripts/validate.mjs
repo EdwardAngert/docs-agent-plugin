@@ -7,8 +7,11 @@
 //   2. Every command, agent, and skill referenced by the manifest exists.
 //   3. Command, agent, and skill files have the required frontmatter.
 //   4. docs/ files carry the required frontmatter (title, description, content-type).
-//   5. Relative links in llms.txt resolve to real files.
-//   6. Prose does not name an agent or command that no longer exists.
+//   5. Relative links in llms.txt resolve, and each docs/ entry's title
+//      matches the title that doc declares in its frontmatter.
+//   6. Prose does not name an agent or command that no longer exists, in any
+//      of its forms: a /docs-assist: reference, a bare code span, or a bold
+//      run-in heading. Scoped to tracked files.
 //   7. Every chair has a contract and a rulebook per threshold.
 //   8. A reference file named inside another reference file resolves.
 //   9. Every tracked path is on the shipping allowlist.
@@ -122,7 +125,13 @@ if (existsSync(rel(catalogPath))) {
   }
 }
 
-// 5. llms.txt relative links resolve.
+// 5. llms.txt relative links resolve, and each entry's title matches the title
+// the doc itself declares. `reference/llms-txt.md` puts "titles, descriptions,
+// or paths that no longer match" on the audit's drift list and says a wrong
+// description misleads every agent that reads it, but nothing checked the
+// repo's own file: all four `docs/` entries were still carrying the title-case
+// names they had before 1.0 re-cased every heading, so llms.txt named four
+// documents that no longer existed under those titles.
 if (existsSync(rel('llms.txt'))) {
   const llms = readFileSync(rel('llms.txt'), 'utf8');
   for (const m of llms.matchAll(/\]\(([^)]+)\)/g)) {
@@ -130,6 +139,18 @@ if (existsSync(rel('llms.txt'))) {
     if (/^https?:/.test(link) || link.startsWith('#')) continue;
     const path = link.split('#')[0];
     check(existsSync(rel(path)), `llms.txt broken relative link: ${link}`);
+  }
+  for (const m of llms.matchAll(/^- \[([^\]]+)\]\((docs\/[^)]+\.md)\)/gm)) {
+    const [, entryTitle, path] = m;
+    const fm = frontmatter(path);
+    const declared = fm && fm.match(/^title\s*:\s*["']?(.*?)["']?\s*$/m);
+    if (!declared) continue;
+    check(
+      declared[1] === entryTitle,
+      `llms.txt lists ${path} as "${entryTitle}", but the doc's frontmatter ` +
+        `title is "${declared[1]}". An entry that misnames its doc misleads ` +
+        `every agent that reads the map.`,
+    );
   }
 }
 
@@ -207,6 +228,20 @@ const liveCommands = new Set(
   readdirSync(rel('commands')).filter((f) => f.endsWith('.md')).map((f) => f.replace(/\.md$/, '')),
 );
 
+// What git tracks. Every prose check below scopes to this rather than to the
+// working tree: the archived working notes (`reports/`, `docs/plan.md`, the two
+// planning docs) are gitignored but still sit on a maintainer's disk, and a
+// validator that reports on files the plugin does not ship is reporting noise.
+let tracked = [];
+try {
+  tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8' })
+    .split('\0')
+    .filter(Boolean);
+} catch {
+  // Not a git checkout (a published plugin cache, for instance). Skip.
+}
+const isTracked = new Set(tracked);
+
 // CHANGELOG records what was true at the time and is allowed to name the dead.
 const HISTORY = new Set(['CHANGELOG.md']);
 // Third-party tools whose names match the agent shape but are not ours.
@@ -216,11 +251,21 @@ const EXTERNAL = new Set(['doc-detective']);
 const DEAD_COMMANDS = new Set([
   'agent-ready', 'setup-lint', 'setup-hooks', 'setup-site', 'make-examples',
 ]);
+// Removed commands whose name in a bare code span is unambiguously a command
+// claim rather than ordinary English or a third-party CLI. `init` is on this
+// list: `git init` and `npm init` are two-token spans, so a lone `init` span
+// in this repo's prose only ever meant the command 1.0 folded into `setup`.
+// `template` is deliberately absent: it is a live frontmatter field name.
+const DEAD_COMMAND_SPANS = new Set([
+  'init', 'setup-lint', 'setup-hooks', 'setup-site', 'make-examples', 'agent-ready',
+]);
 
 for (const f of allMdFiles('.')) {
   // Dated records of what was true then: a changelog, a field report, a design
   // report. They are allowed to name the dead, because that is their job.
   if (HISTORY.has(f) || f.startsWith('reports/') || f.startsWith(join('docs', 'reviews'))) continue;
+  // Untracked working notes never reach a user's plugin cache; see isTracked.
+  if (tracked.length && !isTracked.has(f)) continue;
   const text = readFileSync(rel(f), 'utf8');
 
   for (const m of text.matchAll(/\/docs-assist:([a-z][a-z-]*)/g)) {
@@ -231,6 +276,18 @@ for (const f of allMdFiles('.')) {
   for (const m of text.matchAll(/`(doc-[a-z-]+|chair-[a-z-]+|cold-reader)`/g)) {
     if (EXTERNAL.has(m[1])) continue;
     check(liveAgents.has(m[1]), `${f} references removed agent \`${m[1]}\``);
+  }
+  // A removed command named in a bare code span, which is the form that
+  // carried `init` and `setup-lint` through 1.0's surface reduction and into
+  // SKILL.md's routing instructions: neither the `/docs-assist:` check above
+  // nor the run-in-heading check below could see them, so the flagship skill
+  // shipped telling the model to run two commands that no longer exist.
+  for (const m of text.matchAll(/`([a-z][a-z-]*)`/g)) {
+    check(
+      !DEAD_COMMAND_SPANS.has(m[1]),
+      `${f} names removed command \`${m[1]}\` in a code span. ` +
+        `Name a live command as \`/docs-assist:<name>\`, or rewrite the sentence.`,
+    );
   }
   // A command named in prose as a bold run-in heading, which is how
   // `Agent-ready` and `Setup-site` outlived the commands they named: the check
@@ -314,14 +371,6 @@ const SHIP_FILES = new Set([
   'THIRD-PARTY-NOTICES.md',
   'llms.txt',
 ]);
-let tracked = [];
-try {
-  tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8' })
-    .split('\0')
-    .filter(Boolean);
-} catch {
-  // Not a git checkout (a published plugin cache, for instance). Skip.
-}
 for (const f of tracked) {
   check(
     SHIP_FILES.has(f) || SHIP_DIRS.some((d) => f.startsWith(d)),

@@ -107,7 +107,7 @@ For each document, evaluate:
 - Missing code block language tags
 - Broken internal links
 - Broken or redirecting external links: dead pages, and links that 301/302 to a different URL than the one in the doc (a common sign the target repo, page, or account was renamed or moved).
-  See "Check External Links" above.
+  See "Check external links" above.
 - Missing alt text on images
 - TODOs or placeholders
 - Inconsistent example values: code samples that use different placeholder values for the same thing across docs, or values that do not match an `example-variable` entry in `.docs-assist/reference.yml` when it exists.
@@ -161,35 +161,35 @@ Evaluate overall structure:
 Provide findings in this structure:
 
 ```markdown
-## Audit Summary
+## Audit summary
 
 **Scope**: [path audited]
-**Files Reviewed**: [count]
+**Files reviewed**: [count]
 **Date**: [today]
 
-## Critical Issues
+## Critical issues
 
 [High-impact problems that should be fixed immediately]
 
-## Structural Issues
+## Structure issues
 
 [Problems with organization, navigation, or IA]
 
-## Content Issues
+## Content issues
 
 [Quality problems in individual documents]
 
-## Style Issues
+## Style issues
 
 [Formatting and style guide violations]
 
-## Quick Wins
+## Quick wins
 
 [Low-effort fixes with good impact]
 
 ## Warnings
 
-### Orphaned Images
+### Orphaned images
 
 The following images exist but are not linked from any documentation file.
 These may be intentionally linked from external sources or may be unused.
@@ -197,14 +197,14 @@ These may be intentionally linked from external sources or may be unused.
 - `path/to/image1.png`
 - `path/to/image2.svg`
 
-### Unverifiable Links
+### Unverifiable links
 
 The following external links could not be checked (network error, timeout, or auth-gated).
 Not reported as broken, just unconfirmed.
 
 - `path/to/doc.md`: `https://example.com/page`
 
-## Residual Risk
+## Residual risk
 
 [For a scoped or change-based audit, state what you did not check: the change types found and the edges followed for each, plus the edges you did not follow and why. Omit this section for a full-set audit that covered everything.]
 
@@ -212,7 +212,7 @@ Not reported as broken, just unconfirmed.
 
 [Prioritized list of suggested improvements]
 
-## Files Reviewed
+## Files reviewed
 
 [Handle based on user preference - ask if not specified]
 

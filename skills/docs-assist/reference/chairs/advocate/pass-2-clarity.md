@@ -14,7 +14,7 @@ Ask whether a reader can follow it.
    Write the plain statement, then keep the figure only if it still illustrates something.
 1. **Wrong reader level.** Calibrate from evidence, not posture: what the project's other docs already assume without explaining, what kind of tool this is, what ecosystem it lives in.
    An SDK for working engineers does not need a terminal explained; a first-touch onboarding doc does.
-   See "Calibrate the Baseline" in `user-stories.md`.
+   See "Calibrate the baseline" in `user-stories.md`.
 1. **An unexplained decision point.** The reader is asked to choose and given nothing to choose on.
 1. **A step whose outcome is unstated.** How does the reader know it worked?
 1. **Assumed tooling.** The document uses something it never told the reader to install.

@@ -59,7 +59,7 @@ Each workflow holds up its part:
 - `/docs-assist:setup` reads it as the source of navigation order when it generates site navigation.
 - **Fan-out subagents never edit it.** Parallel writers would collide, so `chair-advocate` reports its proposed entry and the main conversation writes them all.
 
-## Llms-full.txt
+## Offer an llms-full.txt companion
 
 For a small docs set, a companion `llms-full.txt` (the full content of every listed doc, concatenated) lets a tool ingest everything in one read.
 Offer it when the whole set fits comfortably in a model's context; skip it for large sets, where the map plus selective reading serves better.

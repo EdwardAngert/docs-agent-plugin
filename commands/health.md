@@ -65,7 +65,7 @@ When one exists, note what moved: a dimension that improved or regressed since t
 Keep the scorecard small enough to read in thirty seconds:
 
 ```markdown
-## Docs Health: <repo name>
+## Docs health: <repo name>
 
 | Dimension   | Rating     | Why                                              |
 | ----------- | ---------- | ------------------------------------------------ |

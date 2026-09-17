@@ -1,6 +1,6 @@
 # Session log
 
-A long engagement (`init` into `audit` into `plan` into `health` into `setup-lint`, or any run that spans many turns and files) generates a second kind of record besides the docs themselves: what was found, what was decided, and why a call was made one way and not another.
+A long engagement (`/docs-assist:setup` into `/docs-assist:audit` into `/docs-assist:plan` into `/docs-assist:health`, or any run that spans many turns and files) generates a second kind of record besides the docs themselves: what was found, what was decided, and why a call was made one way and not another.
 That record has nowhere to live today, and without a designated place for it, it leaks into whatever file happens to be open, usually `docs/plan.md`, mixing forward-looking content plan with after-the-fact narrative until neither reads cleanly.
 
 ## What it is, and isn't

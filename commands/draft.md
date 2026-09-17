@@ -166,7 +166,7 @@ When the contributor is satisfied:
 - Messy, out-of-order information is normal and good.
   You sort it out.
 - If they're unsure about something, note it as needing verification rather than skipping it.
-- Match the technical depth to the calibrated baseline, not a fixed posture: read it from the project's own docs, what the tool is, and the ecosystem it lives in before defaulting to anything (see "Calibrate the Baseline" in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`).
+- Match the technical depth to the calibrated baseline, not a fixed posture: read it from the project's own docs, what the tool is, and the ecosystem it lives in before defaulting to anything (see "Calibrate the baseline" in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`).
   An SDK for experienced engineers doesn't need a terminal explained; a first-touch onboarding doc for non-engineers does.
   Both are correct for their reader; the failure is applying either posture to the wrong one.
 - Follow existing repo conventions (frontmatter fields, directory structure, naming).

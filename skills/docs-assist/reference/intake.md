@@ -37,7 +37,7 @@ Before you say anything, build context so your later questions are sharp, not ge
   Do not do a deep code analysis; you want enough to connect the dots, not a source audit.
 - Check for `.docs-assist/example-variables.txt` or `.docs-assist/terms.txt`.
   These are the pre-`reference.yml` format; the plugin no longer reads them.
-  Note it and keep surveying: the offer to migrate (see "Migrating" in `reference-registry.md`) waits until the registry would actually be consulted, when choosing example values or checking terms during shaping and drafting.
+  Note it and keep surveying: the offer to migrate (see "Migrate from" in `reference-registry.md`) waits until the registry would actually be consulted, when choosing example values or checking terms during shaping and drafting.
   The contributor came to share knowledge; a file-format prompt before the dump is the wrong opening.
   Never silently draft as if no registry existed, but never lead with the migration either.
 - Hold what you find.
@@ -128,7 +128,7 @@ Only now, with the dump and the survey in hand, ask the targeted questions.
 They land because they are specific.
 Aim at the gaps, not the basics.
 
-- **Prerequisites** the expert takes for granted (the assumption gap): read against the reader's calibrated baseline (see "Calibrate the Baseline" in `user-stories.md`), not a generic checklist, since what counts as taken-for-granted depends entirely on who's arriving.
+- **Prerequisites** the expert takes for granted (the assumption gap): read against the reader's calibrated baseline (see "Calibrate the baseline" in `user-stories.md`), not a generic checklist, since what counts as taken-for-granted depends entirely on who's arriving.
 - **Decision points** where the path forks by context, role, or setup.
 - **Failure modes**: what breaks, what is confusing, what people get wrong the first time, for that reader specifically.
   An expert audience trips on edge cases and version interactions; a beginner audience trips on setup and terminology.
@@ -177,18 +177,20 @@ Send the questions to the knowledge instead.
 - **Generate an intake questionnaire**: a Markdown file of targeted questions the expert can answer in minutes, in any order, as messily as they like.
   It is the dig step, made portable.
 - **Pre-load it from the survey and the code**, so the questions are sharp, not generic: "The retry default is 3; when should someone change it, and to what?" beats "describe the retry behavior." Include what you already know so the expert corrects instead of dictating.
-- **Write it to `.docs-assist/intake/packets/<topic>.md`**, with `<topic>` a kebab-case slug of the doc's working title, and hand it to the writer to send over whatever channel they use.
-  The packet states, at the top, that order and polish do not matter.
+- **Write it to `.docs-assist/intake/questionnaires/<topic>.md`**, with `<topic>` a kebab-case slug of the doc's working title, and hand it to the writer to send over whatever channel they use.
+  The questionnaire states, at the top, that order and polish do not matter.
+  It is an instrument for collecting answers, not a packet; the answers it brings back are what fills the packet.
 - **Ingest the returned answers** as a pile slice: `doc-intake` reads them into the inventory, and drafting proceeds from there, conversationally or via the fan-out.
-- **Never block on a packet.** Draft what the material already supports and flag the rest; fold the answers in when they arrive.
+- **Never block on a questionnaire.** Draft what the material already supports and flag the rest; fold the answers in when they arrive.
 
 ## Intake fills the packet
 
 **The intake loop is pass 0 of the authoring loop with a person in the authority chair.**
 
 The moves above are how a human fills a packet: Dump and Dig gather the rows, Reconcile types the provenance, Survey and Situate are what the continuity chair does when no human is doing it.
-No separate notes format and no separate directory exist.
-Everything lands in `.docs-assist/loop/<doc-slug>/packet.md`, in the schema from `packet-procedure.md` or `packet-concept.md`.
+No separate notes format and no second packet directory exist.
+Everything a human gathers lands in `.docs-assist/loop/<doc-slug>/packet.md`, in the schema from `packet-procedure.md` or `packet-concept.md`.
+The two artifacts under `.docs-assist/intake/` are instruments rather than packets: a questionnaire that collects answers, and a corpus inventory that spans a whole docs set instead of one doc.
 
 This matters beyond tidiness.
 A packet a human filled and a packet the `chair-authority` subagent emitted are interchangeable, so a doc can start conversationally and finish with the loop, or start automated and get corrected by hand, and nothing downstream needs to know which happened.

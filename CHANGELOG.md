@@ -91,6 +91,19 @@ Nothing else in the upgrade requires action from you.
 - **Instruction files still pointed at commands 1.0 removed.** `reference/llms-txt.md` assigned the `llms.txt` maintenance contract to `Agent-ready` and `Setup-site`, and `reference/templates.md` still listed the standalone `Template` command.
   They survived the surface reduction because they were written as bold prose names rather than `/docs-assist:` references, which is the only form the stale-command check could see.
   All three are corrected, the whole list now uses command references, and `validate.mjs` reads a bold run-in heading that names a command too.
+- **`SKILL.md` still routed to two commands 1.0 removed.** Its multi-stage batching section named `init` and `setup-lint` as stages to run, and `reference/session-log.md` opened on the same chain.
+  These are bare code spans, the one form neither the `/docs-assist:` check nor the bold run-in heading check could see, so the flagship skill shipped telling the model to run commands that no longer exist.
+  Both now name live commands, and `validate.mjs` reads a bare code span too.
+- **`llms.txt` misnamed every doc it lists.** All four `docs/` entries carried the title-case names they had before this release re-cased every heading, so the map an AI tool reads first named four documents that no longer existed under those titles.
+  `reference/llms-txt.md` already put title drift on the audit's list; nothing checked the repo's own file, and `validate.mjs` now does.
+- **The heading sweep renamed sections and left the pointers behind.** Nine cross-references still quoted pre-1.0 section names: "Verifying a Journey", "Calibrate the Baseline", "Migrating", "Check External Links", and "Compose Across the Docs Set".
+  A quoted section name is a claim that the section exists under that name, and each one sent a reader or a chair looking for a heading that had been renamed.
+- **The shipped report templates emitted title case.** The audit report and the health scorecard the plugin tells a model to produce carried ten title-case headings between them, against the sentence case this repo configures and the release re-cased everything else to.
+  The example document titles in `reference/content-types.md` and `reference/frontmatter-spec.md` did the same, modeling the form `reference/tone-and-voice.md` gives as its bad example.
+- **`reference/intake.md` contradicted itself on its own page.** It stated that no separate directory exists and that everything lands in the loop's packet, two moves after writing the async questionnaire to `.docs-assist/intake/packets/`, and it called that questionnaire a packet, which is the name collision this release set out to clear.
+  The questionnaire is now named as an instrument that collects answers rather than a packet, and the claim says what is actually true: one home for a filled packet, with the questionnaire and the corpus inventory as the two instruments beside it.
+- `SKILL.md` sent content inventories to `.docs-assist/inventory/`, a path no other file uses; the inventory lives in `.docs-assist/intake/`.
+- A bulk rename left `reference/config-resolution.md` with a sentence starting in lower case.
 - **`check-claims.mjs` confirmed claims against its own output.** Its cache records the text of every claim found, so tracking that directory made each claim resolve by finding itself: 20 findings became 0 between two runs with nothing fixed.
   The plugin's working tree is now excluded by rule rather than by the coincidence of a markdown filter.
 - The README's file tree left out `skills/writing-task/`, one of the two skills this release ships.
@@ -113,6 +126,8 @@ Maintainer-facing work, with no effect on an installed plugin except where noted
 - **markdownlint covers the shipped surface.** It linted `README.md`, `CHANGELOG.md`, and `docs/` while `commands/`, `agents/`, and `skills/` had no coverage, though they are the bulk of what installs into a user's plugin cache and Vale and cspell already scanned them.
   All 73 files already passed, so this closes the gate rather than fixing a backlog.
 - **`check-claims.mjs`** now covers `skills/`, `commands/`, and `agents/`, scoped so an instruction file's examples are not read as claims about the repository.
+- **`validate.mjs` gained two more checks and lost a blind spot.** A removed command named in a bare code span now fails, and an `llms.txt` entry whose title disagrees with the doc's own frontmatter now fails.
+  Its stale-name check also walked the working tree rather than the index, so it reported on the archived working notes that are gitignored but still sit on a maintainer's disk; every prose check now scopes to what git tracks, which is what actually reaches a user's plugin cache.
 
 ### Known limits
 

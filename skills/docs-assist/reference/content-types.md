@@ -35,7 +35,7 @@ A set of related docs, not a single page.
 - Use when: the reader is pursuing a larger goal and the path branches based on their context (operating system, environment, role).
 - Structure: an entry point plus multiple docs that diverge by context, each following the Doc structure.
 - Outcome: the reader accomplishes the larger goal along the path that fits them.
-- Example: "Set Up Your Development Environment" with branches for macOS, Windows, and Linux.
+- Example: "Set up your development environment" with branches for macOS, Windows, and Linux.
 
 ## Tutorial
 
@@ -44,7 +44,7 @@ A guided learning journey, usually a set of guides in sequence.
 - Use when: someone new needs to go from zero to competent, and concepts and implementation should build on each other in order.
 - Structure: ordered sections that combine just-enough concept with hands-on steps, each building on the last.
 - Outcome: the reader gains working competency with the product.
-- Example: "Get Started" (spans account setup through first deployment).
+- Example: "Get started" (spans account setup through first deployment).
 
 ## Concept
 
@@ -52,7 +52,7 @@ A guided learning journey, usually a set of guides in sequence.
   The reader needs to understand how or why something works before the tasks make sense.
 - Structure: explanation supported by examples, analogies, and diagrams where they clarify.
 - Outcome: the reader understands the what and the why.
-- Example: "Understand Workspace Architecture"
+- Example: "Understand workspace architecture"
 
 ## Reference
 
@@ -69,7 +69,7 @@ A guided learning journey, usually a set of guides in sequence.
   One entry per failure mode.
 - Outcome: the reader resolves their issue.
 - Placement: standalone pages, or a section within a related doc.
-- Example: "Resolve Connection Timeout Errors"
+- Example: "Resolve connection timeout errors"
 
 ## Procedural hierarchy
 

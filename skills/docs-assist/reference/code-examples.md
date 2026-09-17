@@ -28,7 +28,7 @@ When a set of docs forms a journey (install, then configure, then deploy, then i
   A resource a later doc references should be a resource an earlier doc actually created.
 - **Carry state forward deliberately.** A step that depends on a prior doc's output (a resource ID, a generated key, a config file's path) should say so and use the value that step actually produces, not a plausible-looking placeholder that silently diverges from it.
 - **Verify the sequence, not just each doc.** `/docs-assist:verify` can run a journey's docs in one continuous workspace, in order, to prove the examples actually compose end to end; a single doc passing in isolation does not prove this.
-  See "Verifying a Journey" in `commands/verify.md`.
+  See "Verify a journey" in `commands/verify.md`.
 - **Flag it when a set doesn't compose.** If two docs in the same journey use different project names, regions, or resource IDs for what is supposed to be the same thing, that is a Critical audit finding: a reader following the docs in order hits a wall the individual docs never showed.
 
 ## The reference registry

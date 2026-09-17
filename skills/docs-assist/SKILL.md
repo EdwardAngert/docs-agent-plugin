@@ -138,17 +138,17 @@ You do the navigating.
 
 ### Batch confirmations across a multi-stage engagement
 
-`init`, `audit`, `plan`, `health`, and `setup-lint` each confirm before acting, correctly, in isolation.
+`/docs-assist:setup`, `/docs-assist:audit`, `/docs-assist:plan`, and `/docs-assist:health` each confirm before acting, correctly, in isolation.
 Chained in one continuous engagement ("set this repo up properly," "get the docs into good shape"), one confirmation per stage boundary adds up to several round trips for what the contributor experiences as a single task.
 
 When a request spans more than one of these stages, say so up front and ask once: name the stages you intend to run and roughly what each will do (detected conventions to confirm, the plan's scope, which linters), then execute through to completion without pausing at each internal boundary, stopping early only for something genuinely ambiguous, destructive, or outside what was scoped.
 A value that needs a real decision (an ambiguous config field, ownership of a risky rewrite) still gets its own question; this collapses the procedural stage-to-stage check-ins, not judgment calls.
 
 A vague, open-ended request ("improve the docs," "get this repo's docs in shape") is the common case this applies to.
-Read it as a multi-stage engagement by default rather than a single command: run `/docs-assist:health` first for orientation, then route into whichever of `init`, `audit`, `plan`, and `setup-lint` the scorecard actually calls for, batching their confirmations into the one upfront question above.
-At that same upfront point, if the work looks likely to span more than one sitting or touch more than a handful of files, offer the running `.docs-assist/session-log.md` (see `reference/session-log.md`) rather than waiting until a plan exists to bring it up: an `init` or `audit` stage can generate log-worthy findings before `plan` ever runs.
+Read it as a multi-stage engagement by default rather than a single command: run `/docs-assist:health` first for orientation, then route into whichever of `/docs-assist:setup`, `/docs-assist:audit`, and `/docs-assist:plan` the scorecard actually calls for, batching their confirmations into the one upfront question above.
+At that same upfront point, if the work looks likely to span more than one sitting or touch more than a handful of files, offer the running `.docs-assist/session-log.md` (see `reference/session-log.md`) rather than waiting until a plan exists to bring it up: a setup or audit stage can generate log-worthy findings before planning ever starts.
 
-"Improve the docs" is not satisfied by `setup-lint` plus a clean `health` scorecard.
+"Improve the docs" is not satisfied by `/docs-assist:setup` plus a clean `/docs-assist:health` scorecard.
 Those confirm the docs are well-formed and internally consistent; they say nothing about whether the docs are still true.
 Route a genuine improvement request into a full `/docs-assist:audit`, which is where the claim-to-code trace lives (`reference/claim-verification.md`), not just the mechanical and cosmetic layer.
 Say so as part of the upfront framing: name that the pass will include tracing claims (commands, flags, defaults, config, described behavior) out to the code, not only linting and structure, so the contributor knows both halves are coming.
@@ -242,7 +242,7 @@ If the packet is really several docs, say so and propose the set rather than out
 1. **Understand the project.** Read the codebase, existing docs, README, and issues.
    For a large repo, fan out the `doc-recon` subagent for a compact project map so the reading stays out of this conversation.
 1. **Take inventory of any raw material.** If there is a pile (tickets, a PRD, notes, old docs), synthesize it into a content inventory before planning: clusters by topic and content type, gaps, duplication, and stale material.
-   Send a large pile to the `doc-intake` subagent so it stays out of this conversation, and persist the inventory to `.docs-assist/inventory/`.
+   Send a large pile to the `doc-intake` subagent so it stays out of this conversation, and persist the inventory to `.docs-assist/intake/`.
    See `reference/intake.md`.
 1. **Orient and recommend a starting point.** Many people plan a docs set because they don't know where to begin, so tell them what you found rather than quizzing them.
    Read the project back, name the single highest-leverage first doc (usually a README or quickstart), and offer to draft it now.
@@ -287,7 +287,7 @@ Work like a seasoned writer sitting beside the contributor, not a form they fill
 - **Know your audience; don't assume it.** A fixed posture (always beginner-friendly, always assuming expertise) fails half the docs it touches.
   Read the actual reader from evidence: what the project's own docs already assume, what kind of tool this is, and what ecosystem it lives in, before defaulting to anything.
   An SDK for experienced engineers doesn't need a terminal explained; a first-touch onboarding doc does, and applying either posture to the other reader is the failure.
-  See "Calibrate the Baseline" in `reference/user-stories.md`.
+  See "Calibrate the baseline" in `reference/user-stories.md`.
 - **Maintainable and findable.** Single-source content, and make sure readers can reach it through navigation, search, or cross-references.
 
 ## Choose a content type

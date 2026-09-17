@@ -46,7 +46,7 @@ When the plugin writes a doc and the project's convention includes frontmatter, 
 
 ```yaml
 ---
-title: "Configure Webhook Retries"
+title: "Configure webhook retries"
 description: "Set up automatic retry logic for failed webhook deliveries, including backoff intervals and failure thresholds."
 content-type: doc
 ---
@@ -69,7 +69,7 @@ The plugin generates them when it has enough context to do so.
 
 ```yaml
 ---
-title: "Configure Webhook Retries"
+title: "Configure webhook retries"
 description: "Set up automatic retry logic for failed webhook deliveries, including backoff intervals and failure thresholds."
 content-type: doc
 audience: developers
@@ -138,7 +138,7 @@ Each entry names the section the claim lives in, the claim itself in a short lin
 
 ```yaml
 sme-attested:
-  - section: "Recover From a Split Brain"
+  - section: "Recover from a split brain"
     claim: "Rejoining nodes replay from the last checkpoint, not from zero"
     source: "j.doe, intake 2026-07-10"
 ```

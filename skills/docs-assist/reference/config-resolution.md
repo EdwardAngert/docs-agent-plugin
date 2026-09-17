@@ -21,7 +21,8 @@ A configured project has a `.docs-assist/` directory at its root:
   See `reference-registry.md`.
   Replaces the older separate `example-variables.txt` and `terms.txt` files; the plugin no longer reads either.
 
-`/docs-assist:setup` scaffolds `config.yml` and `style.md`, pre-filled from the repo's existing conventions. drafting scaffolds `templates.yml` when a project opts into templates.
+`/docs-assist:setup` scaffolds `config.yml` and `style.md`, pre-filled from the repo's existing conventions.
+Drafting scaffolds `templates.yml` when a project opts into templates.
 
 ## Resolution order
 
