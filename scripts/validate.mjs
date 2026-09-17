@@ -110,12 +110,18 @@ if (existsSync(rel(catalogPath))) {
   check(ids === urls, `template catalog: ${ids} entries but ${urls} template_url fields`);
 }
 
-// 4c. Every registered command is discoverable: it must appear in llms.txt,
-// docs/command-reference.md, and README.md. Catches the drift where a new
-// command gets wired internally but never surfaced where users look
-// (verify was missing from README when this check was written).
+// 4c. Every registered command is discoverable: it must appear in llms.txt and
+// docs/command-reference.md. Catches the drift where a new command gets wired
+// internally but never surfaced where users look (verify was missing from a
+// surface when this check was written).
+//
+// README.md was a third surface here and is not one any more. Commands are a
+// shortcut, not the interface: `SKILL.md` says a contributor never needs to
+// know one, and "offer the doors in plain words, not command names". A README
+// that had to name all nine to pass CI was enforcing the opposite, so the
+// catalogue moved to the reference that owns it and the README links there.
 {
-  const surfaces = ['llms.txt', 'docs/command-reference.md', 'README.md']
+  const surfaces = ['llms.txt', 'docs/command-reference.md']
     .filter((f) => existsSync(rel(f)))
     .map((f) => ({ file: f, text: readFileSync(rel(f), 'utf8') }));
   for (const f of plugin.commands || []) {

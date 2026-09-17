@@ -77,7 +77,7 @@ The plugin ships with defaults (sentence-case headings, action-oriented headings
    /plugin install docs-assist@docs-assist-marketplace
    ```
 
-1. Restart Claude Code.
+1. Run `/reload-plugins` so the session picks up the new commands and skills.
 
 Once installed, the plugin activates automatically whenever someone asks for documentation help.
 No special commands required.
@@ -87,13 +87,13 @@ A few commands are worth knowing:
   The best first command after installing, and the periodic pulse check afterward.
 - `/docs-assist:draft`: guided intake for a single document.
   It opens by asking the contributor to share everything they know, then shapes it into a draft.
+  When a proven structure fits, it offers a template from The Good Docs Project rather than starting from a blank page.
 - `/docs-assist:plan`: for "we need docs for this project" moments.
   Reads the codebase, tells you what it found and where to start, and produces a plan built to ship the useful docs first and iterate.
   Start here when rolling out documentation for a new project or team.
-- `/docs-assist:setup`: start a doc from a proven structure (The Good Docs Project) instead of a blank page.
-- `/docs-assist:setup`: scaffold your team's configuration so everyone writes to the same conventions.
+- `/docs-assist:setup`: scaffold your team's configuration so everyone writes to the same conventions, then generate linting from it that checks the same rules the plugin writes by.
   Run this first.
-- `/docs-assist:setup`: add optional linting that checks the same rules the plugin writes by.
+  It also covers hooks, CI, and site navigation, each stage opt-in.
 - `/docs-assist:update`: update the docs affected by a code change.
 
 ## Customize for your team

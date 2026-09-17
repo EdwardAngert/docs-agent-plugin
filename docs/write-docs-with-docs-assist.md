@@ -101,7 +101,7 @@ Focus on:
 
 ### Start from a proven template
 
-For a new doc, Claude Code can start from a proven structure instead of a blank page, using [The Good Docs Project](https://www.thegooddocsproject.dev/) templates.
+For a new doc, Claude Code can start from a proven structure instead of a blank page, using [The Good Docs Project](https://thegooddocsproject.dev/) templates.
 Describe the problem in plain words, like "people keep opening tickets about a login loop," and it suggests a matching template and fills it with what you know.
 Take the suggestion, pick another, or decline.
 It's a head start, not a requirement.

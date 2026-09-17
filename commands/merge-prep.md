@@ -1,5 +1,6 @@
 ---
 description: "Get a docs change ready to merge: whole-set generation, linting, link and drift checks, in one deliberate pass you ask for"
+argument-hint: [branch or path]
 ---
 
 # Get the docs ready to merge

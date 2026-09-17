@@ -126,6 +126,16 @@ Nothing else in the upgrade requires action from you.
   The plugin's working tree is now excluded by rule rather than by the coincidence of a markdown filter.
 - **The README documented `[stage]` for `/docs-assist:setup` and the command never read an argument.** Every other command resolves `$ARGUMENTS`; this one did not, so `/docs-assist:setup linting` ran the full pass.
   The stage argument is implemented now, and the command reference names the six stages rather than showing one example and leaving the rest to guesswork.
+- **The README named all nine commands, and CI required it to.** `SKILL.md` says a contributor never needs to know a command and to "offer the doors in plain words, not command names", while `validate.mjs` failed the build unless the README listed every one.
+  The catalogue is gone, the reference that owns argument shapes is the only place that carries them, and the check no longer treats the README as a command surface.
+  This also closed the `merge-prep` argument drift by removing the second place it was written down.
+- **Install, setup, and triggering moved to `docs/get-started.md`.** They were the README's spine and four other sections sat between the last two, including a maintenance task.
+  The README answers whether the plugin is worth adopting; the new page owns the path from nothing to working.
+- **The README described a feature that does not exist, in the present tense.** Its triggering section stated the proactive layer's restraint rules as shipped behavior, and the Known limits section of this entry says that layer is designed and unbuilt.
+  What actually ships is one hook recipe, and the page now says so.
+- **Four more README claims did not survive tracing.** Setup was said to scaffold a site when none exists (`commands/setup.md` does the opposite), to generate `templates.yml` (no templates stage exists), and to detect and extend an existing linter (it detects conventions, not linters); MegaLinter was described as offered and appears in no command or skill.
+- **`/docs-assist:setup` was listed three times as three different commands** in `docs/set-up-documentation-standards-for-your-team.md`, the page the README sends docs leads to: the old `template`, `init`, and `setup-lint` with the new name pasted over all three.
+- `commands/setup.md` and `commands/merge-prep.md` were the only commands with no `argument-hint`, though both document an argument.
 - **The heading sweep mangled nine command names.** `docs/command-reference.md` carried `### /Docs-assist:draft` and eight more, where sentence-casing capitalized a literal command that is spelled lower case everywhere it is typed.
 - The README's file tree left out `skills/writing-task/`, one of the two skills this release ships.
 - A language-tag check was proposed and cut after firing on a deliberate accommodation, the same lesson `leverage` and `just` already taught the Vale styles.

@@ -12,7 +12,9 @@
     "**/*.min.*",
     "**/package-lock.json",
     "**/pnpm-lock.yaml",
-    "**/yarn.lock"
+    "**/yarn.lock",
+    "reports/**",
+    ".docs-assist/loop/**"
   ],
   "ignoreRegExpList": [
     "Urls",

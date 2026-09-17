@@ -1,5 +1,6 @@
 ---
 description: "Set up a project's documentation conventions, linting, hooks, and site navigation, in one pass with one set of questions"
+argument-hint: [stage]
 ---
 
 # Set up the project

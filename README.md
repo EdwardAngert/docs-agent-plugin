@@ -51,87 +51,23 @@ It shows you a draft before a file is written, and multi-file work is offered on
 Its own bookkeeping lives in `.docs-assist/`: your conventions, the example registry, per-document verification dates, and the working artifacts of a drafting run.
 Your documents stay portable plain markdown, and nothing the plugin needs is written into them.
 
-Two things reach outside your repo, both on an explicit yes: fetching a template, and checking a claim about something your project does not vendor.
+A few things reach outside your repo, every one on an explicit yes: fetching a template, checking a claim about something your project does not vendor, mining your issue tracker for explanations maintainers already wrote, and the linters and link checkers you choose to install.
 
-## Install
-
-1. Open Claude Code:
-
-   ```bash
-   claude
-   ```
-
-1. Add this repository as a [plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces):
-
-   ```bash
-   /plugin marketplace add EdwardAngert/docs-agent-plugin
-   ```
-
-1. Install the plugin:
-
-   ```bash
-   /plugin install docs-assist@docs-assist-marketplace
-   ```
-
-1. Run `/reload-plugins` so the session picks up the new commands and skills.
-
-1. See where your docs stand:
-
-   ```text
-   /docs-assist:health
-   ```
-
-   You get a thirty-second scorecard (coverage, freshness, consistency, findability), the single highest-leverage fix, and an offer to make it now.
-
-If step 5 comes back "unknown command", the session is still running the plugin list it started with.
-Run `/reload-plugins` again, and if the commands still do not appear, run `/plugin` and check that `docs-assist` is listed and enabled.
-
-Prefer the terminal to the in-session commands?
-`claude plugin marketplace add EdwardAngert/docs-agent-plugin` and `claude plugin install docs-assist@docs-assist-marketplace` do the same two steps from a shell.
-
-## Set up your project
-
-Installing gives you the plugin.
-Setting up is what makes it write like your project instead of like its defaults, and makes it show up when it should.
-
-One command walks all of it, and every stage is opt-in with nothing written until you say yes:
+## Get started
 
 ```text
-/docs-assist:setup
+/plugin marketplace add EdwardAngert/docs-agent-plugin
+/plugin install docs-assist@docs-assist-marketplace
 ```
 
-It runs six stages, and you can name one to run it alone (`/docs-assist:setup linting`):
+Then ask for a health check, or run `/docs-assist:health`, and you get a thirty-second scorecard and the single highest-leverage fix.
 
-1. **Conventions.** Reads your existing docs and proposes a `.docs-assist/config.yml` and `style.md` that match what they already do, as a summary to correct rather than a questionnaire.
-   See [Configure for your team](#configure-for-your-team).
-1. **Linting.** Generates Vale, markdownlint, and cspell config from that config, so one source of truth drives both how the plugin writes and how the linter checks.
-   See [Lint with the same rules you write by](#lint-with-the-same-rules-you-write-by).
-1. **Hooks and CI.** Offers a git pre-commit lint, an in-session doc lint, and CI checks for docs impact, the reference registry, and claims.
-   Every one default off, installed only on an explicit choice.
-1. **Personas.** Only when the project will use the authoring loop: a short per-project brief for the chairs that write and review.
-1. **Reachability.** Offers the `CLAUDE.md` line described in [Make it show up](#make-it-show-up), adjusted to your layout.
-1. **Site navigation.** Generates nav from your docs' own metadata for Docusaurus or MkDocs, and scaffolds a minimal setup when no site exists.
-
-The minimum worth doing is stages 1 and 5: conventions so the plugin writes like your project, and the `CLAUDE.md` line so it gets asked in the first place.
-
-Everything it writes is committed to your repo, so it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
-
-## Update
-
-Claude Code doesn't auto-update installed plugins.
-
-To update the plugin, open Claude Code, then:
-
-1. Run `/plugin`, select `docs-assist`, and choose the update option.
-   `/plugin` also tells you if you're already on the latest version, so this is safe to run just to check.
-
-1. Run `/reload-plugins` so the running session picks up the new version.
-   Skipping this step leaves the session on the old commands and skill instructions even though the update installed cleanly.
-
-Check `CHANGELOG.md` for what changed since your version.
+[Get started with Docs Assist](docs/get-started.md) has the full path: installing, setting it up so it writes like your project, and making sure it shows up when it should.
 
 ## Documentation
 
+- [Get started](docs/get-started.md): install, set up, and make sure it fires.
+  Start here.
 - [Set up documentation standards for your team](docs/set-up-documentation-standards-for-your-team.md): for docs leads and devrel.
   Why to install, what changes for contributors, and how to customize.
 - [Write docs with Docs Assist](docs/write-docs-with-docs-assist.md): for individual contributors.
@@ -146,7 +82,7 @@ The plugin activates when you ask for documentation help, in plain words.
 You don't need to learn any special syntax or documentation theory.
 
 It activates on what you say, though, so work that never mentions documentation will not reach it on its own.
-[Make it show up](#make-it-show-up) covers the two ways to close that gap.
+[Make sure it shows up](docs/get-started.md#make-sure-it-shows-up) covers the two ways to close that gap, and the three lines in `CLAUDE.md` that do most of the work.
 
 The simplest path is to tell Claude what you want to document:
 
@@ -172,6 +108,9 @@ I just fixed a tricky bug, can we add troubleshooting docs so others don't hit i
 Review this README for clarity and completeness
 ```
 
+Nine commands exist too, but they are a shortcut rather than the way in: anything they do, you can ask for in plain words.
+The [command reference](docs/command-reference.md) lists them if you want the full surface.
+
 ## Gather before you structure
 
 The plugin works the way a technical writer does: it gathers before it structures.
@@ -184,102 +123,6 @@ It reads the pile in an isolated pass and hands back a content inventory (cluste
 Documenting a whole repo and not sure where to start?
 It reads the codebase, tells you what it found and where it would start, and gets one good doc out the door (usually a README or quickstart) before planning the rest.
 It plans to ship first and iterate, not to boil the ocean.
-
-## Make it show up
-
-The plugin has four ways in, and only one of them can start on its own:
-
-| Surface  | Who pulls the trigger                                  | Starts on its own |
-| -------- | ------------------------------------------------------ | ----------------- |
-| Skill    | The model, matching your request against a description | No                |
-| Command  | You, typing `/docs-assist:...`                         | No                |
-| Subagent | The model, when a workflow fans work out               | No                |
-| Hook     | The event itself                                       | Yes               |
-
-That table has one consequence worth stating plainly: the plugin cannot notice anything you did not bring up.
-Someone editing `install.mdx` who never says "docs" gets no help, not because the plugin is unable, but because nothing asked it to look.
-
-Two different problems hide behind "it didn't fire", and they have different fixes.
-
-**Your request was documentation-shaped but not phrased as documentation** ("write the PR body", "update the changelog").
-That is a matching problem, and the second skill, `writing-task`, exists for it: a wider net that routes to the capability that fits, and that is allowed to find nothing and say so, which is what keeps it from becoming noise.
-Nothing to configure.
-
-**You never mentioned it at all.** That is a push problem, and no skill description can solve it.
-Fix it in this order.
-
-### Add three lines to `CLAUDE.md`
-
-The highest-leverage fix, and the cheapest.
-`CLAUDE.md` is always in context where a skill description is only matched, so a standing instruction there outranks anything the plugin can say about itself:
-
-```markdown
-## Documentation
-
-This repo uses the Docs Assist plugin. When work touches anything under `docs/`,
-the README, a release note, or a pull request description, use it rather than
-writing prose directly. Start with `/docs-assist:health` if the state is unclear.
-```
-
-Keep it short and specific about where.
-A vague instruction competes with everything else in that file and loses.
-`/docs-assist:setup` offers to add it, adjusted to your layout.
-
-### Commit your configuration
-
-A `.docs-assist/` directory does not trigger anything by itself, and it changes what happens once the plugin is running: the conventions are yours rather than inferred.
-Pair it with the `CLAUDE.md` line.
-One gets the plugin invoked, the other makes the invocation behave like your project.
-
-### Add hooks, if you want a genuine push
-
-Hooks are the only surface that fires without anyone asking, and they are default off.
-`/docs-assist:setup` offers them one at a time.
-
-A hook can put information in front of the model and nothing more; it cannot make the model offer anything, so everything after that is judgment.
-The plugin holds that judgment to one rule: a proactive layer that speaks whenever it can stops being read.
-At most one notice per turn, once per task, and declined means dropped for the session.
-Nothing to say is the common case, and saying nothing is the correct behavior rather than a missed opportunity.
-
-The full reasoning, including why the useful hook shape is two events rather than one, is in [`reference/triggering.md`](skills/docs-assist/reference/triggering.md).
-
-## Commands
-
-You rarely need these: the plugin activates from plain conversation, and the commands are optional shortcuts.
-For every command's argument and an example, see the [command reference](docs/command-reference.md).
-
-### Write and plan
-
-- `/docs-assist:draft [topic]`: the primary workflow.
-  Guides a contributor through turning their knowledge into a structured draft.
-  Bring the expertise, the plugin handles the writing.
-  Behind it, the work is split across three isolated reviewers: one that holds what is true, one that keeps examples coherent across the whole docs set, and one that writes and then declares every assumption it had to make to write it.
-  That last list is what you review, instead of the whole draft.
-- `/docs-assist:plan [repo or description]`: plan a full documentation set.
-  Reads the codebase, asks about users and goals, maps user journeys, and proposes a prioritized plan before writing anything.
-  Once the plan is approved, docs whose material already exists draft in parallel, and you review the queue instead of co-writing each one.
-
-### Review and maintain
-
-- `/docs-assist:health [docs dir]`: a fast docs health check, and the best first command to run.
-  Scores coverage, freshness, consistency, and findability, names the highest-leverage fix, and offers to make it.
-- `/docs-assist:audit [path]`: review existing docs by reconstructing what each one claims and ruling on it.
-  A claim nobody can source is the finding, and in finished prose it is invisible: it sits next to twenty sourced claims and reads exactly like them.
-- `/docs-assist:update [ref, PR, or path]`: find and update the docs affected by a code change.
-  Reads the diff, locates the docs that reference what changed, and updates them for review.
-- `/docs-assist:verify [doc path or directory]`: verify a procedural doc by executing it.
-  Runs the steps in an isolated workspace, reports every divergence and missing prerequisite, and records a fresh verification date on a clean pass.
-- `/docs-assist:release-notes [range, tag, or version]`: turn a release's worth of changes into reader-facing release notes.
-  Reads the commits and PRs, asks you for the why, and writes notes that lead with what readers must know.
-- `/docs-assist:merge-prep [branch]`: get a docs change ready to merge.
-  Whole-set continuity, `llms.txt`, bundle drift, the deterministic checks, linting, and link checking, in one pass you ask for.
-  Nothing expensive runs without being asked.
-
-### Configure
-
-- `/docs-assist:setup [stage]`: conventions, linting, hooks, and site navigation in one pass.
-  Every stage opt-in.
-  Default off.
 
 ## Configure for your team
 
@@ -307,10 +150,9 @@ That means one source of truth: the same settings drive how the agent writes and
   General prose quality is a solved, maintained problem; this plugin doesn't keep its own copy of it.
 - markdownlint covers the structural rules.
 - cspell and a link checker cover spelling and links.
-- MegaLinter is offered for teams that want one aggregated tool.
 - An optional GitHub Actions workflow runs the checks on pull requests.
 
-The command detects any linter you already use and extends it rather than replacing it.
+Setup reads the conventions your docs already follow and generates config to match, rather than prescribing a house style your repo already decided against.
 
 ## Start from a proven template
 
@@ -319,7 +161,7 @@ Describe the problem in plain words, for example "people keep opening tickets ab
 
 Templates supplement the content types; they never replace them.
 Suggesting one is free and offline, so the assistant offers a template in any drafting conversation, and only fetches it when you accept.
-Templates are offered during drafting; `/docs-assist:setup` turns the feature on for a team.
+Templates are offered during drafting, and the settings file that records your choices is scaffolded then too.
 The Good Docs templates are MIT-0; see `THIRD-PARTY-NOTICES.md`.
 
 ## Keep docs in sync with code
