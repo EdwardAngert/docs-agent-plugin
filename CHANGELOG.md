@@ -82,6 +82,9 @@ Nothing else in the upgrade requires action from you.
   The rule now follows the pattern these docs' sibling pi-hole guide already uses: show the real command with an unresolvable placeholder in the slot that would do the damage, say in prose that it is set to fail on purpose and what the failure saves the reader from, name what replaces each placeholder and where to find it, and say how to recover if it goes wrong anyway.
   A dry run became a step of its own with its own block, rather than a mode of the real command.
 - Each command in a chain starts flush, with indentation reserved for the wrapped arguments of a single command, so the two cases stay visually distinct.
+- **A code block says which file it is and where it runs.** A reader working through a multi-step page loses track of which file they are in and which machine they are on, and every wrong guess costs them a step.
+  The portable carrier is a path comment at the top of the block; a language with no comment syntax, JSON being the common case, uses the renderer's filename feature instead, and prose naming the exact path when neither exists.
+  Syntax highlighting, line numbers, and line highlighting get the same treatment: use what the project's stack supports, and never let a rendering feature be the only thing carrying something the reader needs.
   It reaches the drafting path rather than only the review one: `tone-and-voice.md` carries the essentials, which the advocate chair loads on every pass, and the chair now picks up `code-examples.md` when the document will carry commands.
 - **The style template the plugin scaffolds bans emphasis inside prose.** `assets/config/style.md` now carries the rule as a default your project inherits: bold is for run-in headings and UI labels, a term being defined leads its bullet instead, and a literal value belongs in a code span.
   GitLab's rule is the one followed: "Do not use bold for keywords or emphasis."

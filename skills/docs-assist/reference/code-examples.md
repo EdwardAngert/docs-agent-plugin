@@ -123,6 +123,20 @@ lint:
   spelling: true
 ```
 
+**Name the file, and name where the command runs.** A reader working through a multi-step page loses track of which file they are in and which machine they are on, and every wrong guess costs them a step.
+Say both wherever they are not obvious from the step's prose.
+
+Carry it wherever the reader will actually see it, in this order:
+
+- A comment line at the top of the block holding the path, where the language has comments.
+  This survives every renderer, plain markdown on a code host, and an agent reading the raw file, and it stays attached when someone copies the block.
+- The renderer's own filename or title feature, where the project's stack has one.
+  It is the tidiest option and the reader cannot paste it by accident, so prefer it for a language with no comment syntax: JSON is the common case, and a `json` block cannot carry its own path without becoming invalid.
+- The line of prose immediately above, naming the exact path, when neither is available.
+
+Use whichever the project already does rather than introducing a second convention.
+Treat syntax highlighting, line numbers, and line highlighting the same way: use what the stack supports, and never let a rendering feature be the only thing carrying information the reader needs.
+
 ## Formatting
 
 - A language tag on every fenced code block.

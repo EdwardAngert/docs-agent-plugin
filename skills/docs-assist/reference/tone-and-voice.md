@@ -86,6 +86,8 @@ Cut them on sight, the same way an em dash gets cut, and rewrite what was there 
   Only chain what is genuinely one step, and never commands meant to run regardless of each other.
 - Each command in a chain starts flush; indentation is reserved for the wrapped arguments of one command.
 - Show a block that edits an existing file in place: include the real surrounding context, or mark the omission with `...`.
+- Name the file a block belongs to, and the machine a command runs on, whenever the step's prose leaves either unclear.
+  A path comment at the top of the block is the portable carrier; use the renderer's filename feature for a language with no comments, such as JSON.
 - A destructive example must fail when pasted verbatim, with an unresolvable placeholder in the slot that would do the damage.
   Never ask the reader to edit a command in their head: show the second command as its own block, in full.
   `code-examples.md` has the full rule, including safe placeholder values.
