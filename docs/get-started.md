@@ -75,6 +75,34 @@ Conventions so the plugin writes like your project, and reachability so it gets 
 
 Everything it writes is committed to your repo, so it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
 
+## What setup writes, and how to remove it
+
+Every row is opt-in, nothing is written before you say yes, and everything lands in your repository rather than in the plugin.
+
+| Stage        | Path                                        | Committed | To remove                     |
+| ------------ | ------------------------------------------- | --------- | ----------------------------- |
+| Conventions  | `.docs-assist/config.yml`                   | Yes       | Delete the file               |
+| Conventions  | `.docs-assist/style.md`                     | Yes       | Delete the file               |
+| Conventions  | `.docs-assist/reference.yml`                | Yes       | Delete the file               |
+| Linting      | `.vale.ini` and `styles/`                   | Yes       | Delete both                   |
+| Linting      | `.markdownlint-cli2.jsonc`                  | Yes       | Delete the file               |
+| Hooks and CI | `.git/hooks/pre-commit`                     | No        | Delete the hook               |
+| Hooks and CI | `scripts/*.mjs`                             | Yes       | Delete the scripts you took   |
+| Hooks and CI | `.github/workflows/*.yml`                   | Yes       | Delete the workflows you took |
+| Personas     | `.docs-assist/personas/*.md`                | Yes       | Delete the directory          |
+| Reachability | A `## Documentation` section in `CLAUDE.md` | Yes       | Delete the section            |
+| Site nav     | Your generator's nav config                 | Yes       | Revert the file               |
+
+Two things this table is telling you.
+
+Nothing here is load-bearing for your documents.
+Delete all of it and your docs are unchanged plain markdown; you lose the conventions the plugin writes by and the checks that enforce them, and nothing else.
+
+The git pre-commit hook is the one row that is not committed.
+It lives in `.git/hooks/`, which git does not track, so it is per-clone: a teammate who clones the repo does not get it, and deleting your clone takes it with you.
+
+Uninstalling the plugin itself is Claude Code's job rather than this plugin's: `/plugin` lists what you have installed and removes it.
+
 ## Make sure it shows up
 
 The plugin has four ways in, and only one of them starts without anyone asking:
