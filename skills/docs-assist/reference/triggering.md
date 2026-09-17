@@ -13,9 +13,10 @@ Load this when a contributor asks why the plugin did not notice something, or wh
 | Subagent | The model, via the Agent tool                           | No        |
 | Hook     | The event itself                                        | Yes       |
 
-A skill activates when the model judges that what the contributor *said* matches what the skill says it is for.
+A skill activates when the model judges that what the contributor said matches what the skill says it is for.
 
-This has a consequence worth stating plainly: **the plugin cannot notice anything the contributor did not bring up.** Someone editing `install.mdx` who never says "docs" gets no help, not because the plugin is unable, but because nothing asked it to look.
+This has a consequence worth stating plainly: the plugin cannot notice anything the contributor did not bring up.
+Someone editing `install.mdx` who never says "docs" gets no help, not because the plugin is unable, but because nothing asked it to look.
 
 ## The two fixes are different problems
 
@@ -34,7 +35,7 @@ In order of leverage.
 The highest-leverage thing, and the cheapest.
 
 `CLAUDE.md` is always in context.
-A skill description is only *matched*.
+A skill description is only matched.
 A standing instruction in `CLAUDE.md` therefore outranks any description this plugin can write, and it works with no hooks, no configuration, and no mechanism at all.
 
 Three lines is enough:
@@ -47,7 +48,7 @@ the README, a release note, or a pull request description, use it rather than
 writing prose directly. Start with `/docs-assist:health` if the state is unclear.
 ```
 
-Keep it short and specific about *where*.
+Keep it short and specific about where.
 A vague instruction competes with everything else in the file and loses.
 
 ### 2. Committed configuration
@@ -76,7 +77,7 @@ Everything after that is the model's judgment, which means a hook's payload has 
 
 ## The restraint that makes it work
 
-A proactive layer that speaks whenever it *can* stops being read.
+A proactive layer that speaks whenever it can stops being read.
 
 - Once per turn, at most.
 - Once per task.

@@ -155,7 +155,8 @@ The staged plan behind this release is committed at `docs/plan.md`.
 - `docs-decay.mjs`: a deterministic, dependency-free detector that ranks every doc by accumulated staleness risk (related-source churn, `last-verified` age, doc age, open `sme-attested` claims), run by `/docs-assist:health` for the Freshness dimension.
 - `check-facts.mjs`: a deterministic, opt-in (via `/docs-assist:setup-hooks`) checker for `reference.yml`'s mechanical parts: does a `fact`'s source still contain its identifier, does a `pointer`'s target still resolve.
 - External link checking in both audit paths: prefers existing CI tooling, then `/docs-assist:setup-lint`, then an ad hoc `markdown-link-check` run, with a spot-check for redirects that hide a rename.
-- A standalone `npx` CLI packaging plan (`docs/standalone-cli-plan.md`), deferred pending a maintainer decision on naming and which adapters ship first.
+- A standalone `npx` CLI packaging plan, deferred pending a maintainer decision on naming and which adapters ship first.
+  It is kept on the `working-notes` branch rather than shipped with the plugin.
 - `reference/claim-verification.md`: the method for tracing a doc claim (a command, flag, config key, default, endpoint, version requirement, or described behavior) to its source and classifying the result.
   Mandatory for a full-set `/docs-assist:audit`, named by `health.md`'s Freshness dimension, and routed to by default from a vague "improve the docs" request in `SKILL.md`, rather than something a contributor has to ask for by name.
 - `reference/session-log.md` and an opt-in `.docs-assist/session-log.md`: an append-only, backward-looking narrative log for a multi-stage engagement, distinct from `docs/plan.md`'s forward-looking content plan.

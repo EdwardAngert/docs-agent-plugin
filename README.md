@@ -110,7 +110,7 @@ Check `CHANGELOG.md` for what changed since your version.
 The plugin activates when you ask for documentation help, in plain words.
 You don't need to learn any special syntax or documentation theory.
 
-It activates on what you *say*, though, so work that never mentions documentation will not reach it on its own.
+It activates on what you say, though, so work that never mentions documentation will not reach it on its own.
 [Making It Show Up](#making-it-show-up) covers the two ways to close that gap.
 
 The simplest path is to tell Claude what you want to document:
@@ -153,7 +153,7 @@ It plans to ship first and iterate, not to boil the ocean.
 ## Making it show up
 
 The plugin activates when something asks it to.
-A skill matches what you *said*, so work that never mentions documentation never reaches it.
+A skill matches what you said, so work that never mentions documentation never reaches it.
 
 Two things close that gap:
 

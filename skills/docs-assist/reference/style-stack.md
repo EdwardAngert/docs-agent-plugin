@@ -16,7 +16,7 @@ Never correct a project's committed convention toward an external guide.
 
 ## When layers 3 and 4 disagree
 
-Prefer the more restrictive option, and **record the conflict as a project style decision** in `.docs-assist/style.md`.
+Prefer the more restrictive option, and record the conflict as a project style decision in `.docs-assist/style.md`.
 
 Recording matters as much as resolving.
 A project that gets written for accumulates its own resolved style guide as a byproduct, which is better than adopting one guide wholesale or hand-authoring conventions up front.

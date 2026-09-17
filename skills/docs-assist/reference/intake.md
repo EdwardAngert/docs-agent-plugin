@@ -111,7 +111,7 @@ Deliver the reconciliation as a short read-back, folded into the dig when that f
 > "Confirmed against the code: X and Y. One conflict: you said the retry default is 3, but `config.ts` sets 5.
 > Which is right?"
 
-When the dump and the code disagree, **ask, never assume**.
+When the dump and the code disagree, ask, never assume.
 The contributor misremembering and the contributor having just found a bug look identical from here.
 If they say the code is wrong, offer to record it (a `gh issue` when the repo uses GitHub, a follow-up note otherwise), and write the doc to the intended behavior with the discrepancy flagged.
 
@@ -130,7 +130,7 @@ Aim at the gaps, not the basics.
 
 - **Prerequisites** the expert takes for granted (the assumption gap): read against the reader's calibrated baseline (see "Calibrate the Baseline" in `user-stories.md`), not a generic checklist, since what counts as taken-for-granted depends entirely on who's arriving.
 - **Decision points** where the path forks by context, role, or setup.
-- **Failure modes**: what breaks, what is confusing, what people get wrong the first time, for *that* reader specifically.
+- **Failure modes**: what breaks, what is confusing, what people get wrong the first time, for that reader specifically.
   An expert audience trips on edge cases and version interactions; a beginner audience trips on setup and terminology.
   Often the most valuable content.
 - **Usage and audience**: who this is for, what they already know coming in, and what they should be able to do afterward.
@@ -193,7 +193,7 @@ Everything lands in `.docs-assist/loop/<doc-slug>/packet.md`, in the schema from
 This matters beyond tidiness.
 A packet a human filled and a packet the `chair-authority` subagent emitted are interchangeable, so a doc can start conversationally and finish with the loop, or start automated and get corrected by hand, and nothing downstream needs to know which happened.
 
-Shape is the one move that does **not** belong to intake.
+Shape is the one move that does not belong to intake.
 Content type, structure, and outline are the advocate chair's decisions, and a packet that makes them has stopped being raw material.
 When Shape reveals several docs, record that as a note in the packet header and let the orchestrator propose the set.
 

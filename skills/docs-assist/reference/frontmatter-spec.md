@@ -17,8 +17,8 @@ See `assets/config/state.yml` for that file's shape.
 
 The split is simple:
 
-- The plugin **writes** state to `.docs-assist/state/`.
-- The plugin **reads** frontmatter when a project already has it, and respects it.
+- The plugin writes state to `.docs-assist/state/`.
+- The plugin reads frontmatter when a project already has it, and respects it.
 - Where both carry a value, the store wins.
 
 Reading a project's existing frontmatter is not a compatibility shim.

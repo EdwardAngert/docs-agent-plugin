@@ -29,7 +29,7 @@ Sample; do not read everything.
 ### 2. Score four dimensions
 
 Assess each dimension from samples and cheap signals, not an exhaustive pass.
-Rate each **solid**, **needs work**, or **missing**, with one line of evidence.
+Rate each `solid`, `needs work`, or `missing`, with one line of evidence.
 
 - **Coverage**: does a doc exist for each thing users need?
   Compare the project's main features and entry points against the docs that exist.

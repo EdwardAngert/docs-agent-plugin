@@ -138,13 +138,13 @@ Entries are typed, and the type decides whether an entry is worth an expert's at
 
 Implied facts are the reason the ledger exists.
 A fluent writer fills a gap with something that reads exactly like the sourced sentences around it, which is why nobody catches it in review.
-Analogies always route as well, and the authority chair signs off specifically on **where the analogy breaks**, because that is the part that belongs in the document.
+Analogies always route as well, and the authority chair signs off specifically on where the analogy breaks, because that is the part that belongs in the document.
 Simplifications always route so that a caveat dropped for clarity becomes an approved loss rather than a silent one.
 
 Style, word choice, heading case, and formatting never enter the ledger.
 Those belong to the advocate chair, and routing them would turn the loop into two agents arguing about commas.
 
-The authority chair returns one of three verdicts on each routed entry: **confirmed**, **corrected**, or **unknowable**.
+The authority chair returns one of three verdicts on each routed entry: `confirmed`, `corrected`, or `unknowable`.
 A correction must carry a citation: a file and line, a commit, an external source, or an explicit statement that it is the chair's own experience.
 An uncited correction is not applied and becomes a question for you instead, because neither chair holds ground truth and two agents can agree confidently and both be wrong.
 
@@ -220,4 +220,5 @@ Two things sit outside the pass sequence.
 
 1. [Write Docs With Docs Assist](write-docs-with-docs-assist.md): what using the plugin looks like from your side, including what to bring and what to check.
 1. [Command reference](command-reference.md): every command, its argument, and an example.
-1. [Docs Assist 1.0 release plan](1.0-release-plan.md): the maintainer-facing build order for this design, written in the future tense as a plan rather than a description of what runs today.
+1. [Docs Assist 1.0 release plan](https://github.com/EdwardAngert/docs-agent-plugin/blob/working-notes/docs/1.0-release-plan.md): the maintainer-facing build order for this design, written in the future tense as a plan rather than a description of what runs today.
+   It is kept on the `working-notes` branch rather than shipped with the plugin.

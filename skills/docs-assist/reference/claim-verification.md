@@ -25,7 +25,7 @@ Committing `.docs-assist/claims/` took `check-claims.mjs` from 20 findings to 0 
 **Whether a project tracks these artifacts is its own call.** Committing them gives a team a shared record so the same claim is not re-litigated by the next contributor; gitignoring them keeps the working tree quiet.
 Both are fine, and the checks must be immune either way.
 
-What is worth tracking is not the raw output but the **resolutions**.
+What is worth tracking is not the raw output but the resolutions.
 A claim that needed judgment and got settled becomes a `fact` entry in `.docs-assist/reference.yml`, with a `source` so it stays re-checkable, or an attested-claim entry in `.docs-assist/state/docs.yml` when nothing can source it.
 Those are small, hand-editable, and survive a merge.
 The JSON is a cache, and a cache in version control is diff noise that nobody can resolve by hand.

@@ -75,7 +75,7 @@ See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/personas.md`.
 
 Build `.docs-assist/personas/authority.md` from evidence rather than invention: the vocabulary the code and docs actually use, what the existing docs take for granted about their reader, and how the maintainers explain things in their own words.
 
-That last input comes from harvesting, which reads the issue tracker and is **opt-in on its own**, separately from this stage.
+That last input comes from harvesting, which reads the issue tracker and is opt-in on its own, separately from this stage.
 Ask for it as its own question, and build the overlay without it on a no: vocabulary and baseline are enough for a usable persona, and voice can be added later or written by hand.
 See `reference/harvest.md`.
 
@@ -89,7 +89,7 @@ A persona a contributor corrects is the system working, and an edit there wins o
 ## 5. Make the plugin reachable
 
 The plugin only shows up when something asks it to.
-A skill matches what the contributor *said*, so work that never mentions documentation never reaches it.
+A skill matches what the contributor said, so work that never mentions documentation never reaches it.
 
 Offer the `CLAUDE.md` line, which is the highest-leverage fix and the cheapest.
 `CLAUDE.md` is always in context, where a skill description is only matched, so a standing instruction there outranks anything this plugin can say about itself.

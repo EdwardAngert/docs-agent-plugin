@@ -10,7 +10,7 @@ This is the distinction the whole loop rests on.
 
 The advocate chair does not introspect about what it thinks it assumed.
 It compares two artifacts: the packet it was given, and the prose it produced.
-Any claim in the prose that cannot be traced back to a line in the packet is a ledger entry **by construction**.
+Any claim in the prose that cannot be traced back to a line in the packet is a ledger entry by construction.
 
 Self-reporting would depend on a model accurately recalling its own reasoning, which is not reliable.
 A diff does not.
@@ -44,7 +44,7 @@ The expert never said it, it is almost certainly right, and a reader holding bro
 
 **Analogy** is a factual claim that two things are alike in some respect, wearing a teaching costume.
 It is where conceptual writing goes wrong most often.
-The authority chair signs off on every analogy, and specifically on **where it breaks**, which is the part that belongs in the document.
+The authority chair signs off on every analogy, and specifically on where it breaks, which is the part that belongs in the document.
 
 **Simplification** is a caveat dropped to reduce load.
 The advocate chair will frequently be right to drop it.

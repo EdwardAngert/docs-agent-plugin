@@ -32,7 +32,7 @@ Two optional things make it work better in your repo, and `/docs-assist:setup` o
 
 - **Committed conventions** in `.docs-assist/`, so the plugin holds your docs to your heading style, your terminology, and your example values instead of inferring them each time.
 - **Three lines in `CLAUDE.md`** telling Claude Code to reach for the plugin when work touches your docs.
-  This matters more than it looks: the plugin activates when something matches what you *said*, so work that never mentions documentation never reaches it.
+  This matters more than it looks: the plugin activates when something matches what you said, so work that never mentions documentation never reaches it.
   A standing instruction in `CLAUDE.md` closes that gap.
 
 ## What the plugin does behind the scenes
@@ -159,9 +159,9 @@ For a procedure specifically, `/docs-assist:verify` goes further and runs the st
 
 ## What it won't do
 
-The plugin won't decide *where* a doc belongs in your site's navigation.
+The plugin won't decide where a doc belongs in your site's navigation.
 It suggests a filename and location from the conventions already in your repo, but if your team has a process for that (a docs review board, a content calendar), you still follow it.
 
-It will happily help decide *what* to document: that is most of what `/docs-assist:plan` does.
+It will happily help decide what to document: that is most of what `/docs-assist:plan` does.
 
 It also won't write the file without you reviewing the draft first.

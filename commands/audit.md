@@ -9,7 +9,7 @@ Perform a systematic documentation audit on the specified path: `$ARGUMENTS`
 
 ## Your role
 
-Focus on **content and strategy**, the things that require judgment:
+Focus on content and strategy, the things that require judgment:
 
 - Is this the right content type for the user's goal?
 - Does the information architecture match how users think?

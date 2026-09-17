@@ -34,7 +34,14 @@ Judgment-based guidance lives here.
   Use a comma, a colon, parentheses, or rewrite the sentence.
 - One sentence per line.
   `scripts/validate.mjs` enforces it, because the rule decayed silently while nothing did.
+  It does not apply inside a table: a cell cannot hold a line break, so a multi-sentence cell stays one line.
+  The check skips table rows for that reason, and so should you.
 - Tables are column-aligned in the source, padded so the pipes line up.
   It costs nothing to write and keeps a one-cell edit legible in a diff.
+- No emphasis inside prose.
+  Bold is for run-in headings, UI labels, and a term where it is defined.
+  Neither bold nor italics is for stress: if a sentence needs emphasis to land, rewrite the sentence.
+  Google's style guide says "usually, your words can carry the emphasis without adding italics," and GitLab's bans emphasis outright in favor of "content that is clear enough that emphasis is not needed."
+  A literal value belongs in a code span, not bold.
 - Reuse the placeholder values in `reference.yml` for code samples.
 - Keep examples copy-paste safe: reserved example domains, documentation IP ranges, and fake credentials that cannot work.

@@ -15,7 +15,7 @@ keywords:
 **This is a historical record, not the current plan.** It documents what was built through 0.9.8 and the reasoning behind each piece, which is worth keeping: several decisions here were expensive to reach and cheap to forget.
 
 1.0 is a comprehensive overhaul that supersedes much of what follows.
-For what 1.0 actually is and the order it gets built in, see [the 1.0 release plan](1.0-release-plan.md).
+For what 1.0 actually is and the order it gets built in, see [the 1.0 release plan](https://github.com/EdwardAngert/docs-agent-plugin/blob/working-notes/docs/1.0-release-plan.md) on the `working-notes` branch.
 
 Specifically superseded: the drafting and auditing subagents are retired and replaced by the authoring loop's chairs; the standalone second-opinion pass is subsumed by that loop; frontmatter is no longer load-bearing; and the four setup commands are merged into one.
 Named below in the present tense, they describe what was true at 0.9.8.
@@ -158,7 +158,7 @@ This repo's own `.docs-assist/reference.yml` is migrated from its former `exampl
 Deliberately deferred, in rough priority order:
 
 - A standalone `npx` CLI so the plugin reaches people who don't use Claude Code, without forking the instructions into a second codebase.
-  See [Standalone CLI Packaging Plan](standalone-cli-plan.md) for the tiered scope (static scaffolding vs. agentic coaching) and the phased rollout.
+  See [Standalone CLI packaging plan](https://github.com/EdwardAngert/docs-agent-plugin/blob/working-notes/docs/standalone-cli-plan.md) on the `working-notes` branch for the tiered scope (static scaffolding vs. agentic coaching) and the phased rollout.
   Blocked on a maintainer decision on npm naming and which Tier 2 adapters ship first.
 - Auto-running `/docs-assist:update` from CI on detector hits, committing docs changes to the PR.
   The trust cliff: the sticky-comment loop should earn confidence first.

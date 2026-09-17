@@ -23,6 +23,6 @@ Word choice, hedging, heading phrasing, or anything from pass 3.
 
 Not "is this true," which pass 1 settled.
 
-Ask: **what would have to be true about the reader's setup for this to work, that the document never says?**
+Ask: what would have to be true about the reader's setup for this to work, that the document never says?
 
 That is the question only you can answer, because it is a question about what you stopped noticing years ago.

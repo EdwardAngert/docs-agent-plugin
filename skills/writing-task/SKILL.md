@@ -13,7 +13,7 @@ Read it, take the one line that applies, and go.
 
 ## Why this exists separately
 
-The main `docs-assist` skill describes itself in terms of *technical documentation*, so a request like "write the PR body" or "update the changelog" does not match it.
+The main `docs-assist` skill describes itself in terms of technical documentation, so a request like "write the PR body" or "update the changelog" does not match it.
 The plugin then sits there, fully able to help, and never loads.
 
 That is a phrasing problem, not a capability problem.

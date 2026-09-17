@@ -26,7 +26,7 @@ Use this pass for the workflows that have not moved to the loop yet, and for sho
 - **Once per artifact, batched across a set.** Run it when the draft is done, not after every refinement turn.
   The one exception: if refinement substantially rewrote the doc (new sections, a restructure, a changed audience), the version shipping is no longer the version that was checked, and one more pass before finalize is warranted.
   Wording tweaks and small corrections are not that.
-  For a fanned-out set, one batched call across the siblings: the batch is also the only vantage point that sees terminology and example values drifting *between* docs that each drafted in isolation.
+  For a fanned-out set, one batched call across the siblings: the batch is also the only vantage point that sees terminology and example values drifting between docs that each drafted in isolation.
 - **Skip it when it cannot pay for itself.** A very short single-entry doc (the same threshold as skipping an outline) gets no round trip.
 - **Apply the mechanical, absorb the judgment.** Findings that are the plugin's department (heading case, broken internal links, missing alt text, TODOs, terminology drift, formatting, AI voice per `tone-and-voice.md`) get fixed silently, never mentioned.
   Findings that need judgment (a completeness gap, an accuracy concern, audience fit) fold into the questions the workflow was already going to ask, as the assistant's own read.

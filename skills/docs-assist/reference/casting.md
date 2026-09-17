@@ -23,8 +23,8 @@ The bottom left cell is real and uncommon: implement-this-correctly material, wh
 
 ## What the pairs trade
 
-The SME and writer pair trades **truth against clarity**.
-The professor and instructional designer pair trades **depth against learnability**, which is not the same problem and is why reusing the first pair on a concept page fails.
+The SME and writer pair trades truth against clarity.
+The professor and instructional designer pair trades depth against learnability, which is not the same problem and is why reusing the first pair on a concept page fails.
 
 A professor's failure mode is teaching at their own level and digressing into what is interesting rather than what is needed.
 An instructional designer contributes prerequisite sequencing, cognitive load, and knowing when an analogy helps and when it quietly lies.

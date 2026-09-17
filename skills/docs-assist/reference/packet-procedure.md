@@ -10,7 +10,7 @@ Written to `.docs-assist/loop/<doc-slug>/packet.md`.
 The packet is not a draft.
 It is the raw material a draft gets made from.
 
-Everything left out of it is a *writer's* decision, and a packet that makes those decisions blurs the line between ground truth and framing before the advocate chair ever sees the material.
+Everything left out of it is a writer's decision, and a packet that makes those decisions blurs the line between ground truth and framing before the advocate chair ever sees the material.
 That line is what makes the ledger a clean diff instead of a self-report, so keeping the packet cold is what makes the whole mechanism work.
 
 ## The rows

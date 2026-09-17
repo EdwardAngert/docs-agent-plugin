@@ -33,7 +33,7 @@ gh pr list --state merged --limit 50 --json number,title,reviews
 git log --since="6 months ago" --format="%H%n%b" -- <path>
 ```
 
-Read commit **bodies**, not subjects.
+Read commit bodies, not subjects.
 A subject says what changed; a body sometimes says why, and the why is what no doc has.
 
 ## The privacy rules are not advisory

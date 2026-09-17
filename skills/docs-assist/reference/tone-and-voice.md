@@ -1,10 +1,10 @@
 # Tone and voice
 
-- Use a **direct, clear, and instructional tone**
-- Assume a **developer or technical admin** as your reader when nothing more specific is known; calibrate below that floor for a beginner-facing doc and above it for an expert one, per each doc's own user story (see `user-stories.md`)
+- Use a direct, clear, and instructional tone
+- Assume a developer or technical admin as your reader when nothing more specific is known; calibrate below that floor for a beginner-facing doc and above it for an expert one, per each doc's own user story (see `user-stories.md`)
 - Jargon and term explanations follow the same calibration: an expert-audience doc uses the field's own vocabulary without apology; a beginner-audience doc explains a term the first time it appears.
   Explaining what the calibrated reader already knows is the expert tax, the same failure as skipping what they don't
-- Prioritize **user actions** and outcomes
+- Prioritize user actions and outcomes
 
 ## Avoid AI voice
 
@@ -34,14 +34,14 @@ Cut them on sight, the same way an em dash gets cut, and rewrite what was there 
 - Use `#`, `##`, `###`; avoid going deeper than `####`
 - Top-level headings (H1) should only appear once per file
 - Prefer heading structure over bold for organization
-- **Do not use emojis in headings**
-- Use **sentence case** for headings by default: capitalize only the first word and proper nouns
+- Do not use emojis in headings
+- Use sentence case for headings by default: capitalize only the first word and proper nouns
   - Good: "Install the plugin", "Configure authentication"
   - Bad: "Install The Plugin", "Configure Authentication"
-- Write **action-oriented headings**: use imperative verbs, not gerunds
+- Write action-oriented headings: use imperative verbs, not gerunds
   - Good: "Install the plugin", "Configure authentication"
   - Bad: "Installing the plugin", "Configuring authentication"
-- Make headings **SEO-friendly**: use keywords users would search for
+- Make headings SEO-friendly: use keywords users would search for
   - Good: "Troubleshoot connection errors"
   - Bad: "When things go wrong"
 
@@ -52,8 +52,8 @@ Cut them on sight, the same way an em dash gets cut, and rewrite what was there 
 
 ### Lists
 
-- Use `1.` for **ordered lists** (Markdown auto-numbers)
-- Use `-` for **unordered lists**
+- Use `1.` for ordered lists (Markdown auto-numbers)
+- Use `-` for unordered lists
 - Do not use emojis to start list items
 - Keep list items as short as possible; use full sentences only when needed
 
@@ -75,6 +75,22 @@ Cut them on sight, the same way an em dash gets cut, and rewrite what was there 
   ```bash
   npm install && npm run build
   ```
+
+### Emphasis
+
+- Use bold for run-in headings, for UI labels a reader looks for on screen, and for a term at the point it is defined.
+- Use neither bold nor italics to stress a word mid-sentence.
+- Put a literal value in a code span, not in bold: `solid`, not bold "solid".
+
+Google's guide allows bold "only for UI elements and run-in headings" and notes that "usually, your words can carry the emphasis without adding italics."
+GitLab's goes further and bans emphasis outright, asking for "content that is clear enough that emphasis is not needed."
+Both land in the same place: a sentence that needs emphasis to land is a sentence to rewrite.
+
+The one place this guide diverges from Google is defining a term, where Google prefers italics.
+Bold is used here instead, because GitLab's point about italics carries: in a sans-serif face, italics barely register, and a definition that fails to announce itself is not doing its job.
+Italics are left for a word quoted as a word, which is rare.
+
+### Separators
 
 The separator `---` is for identifying YAML frontmatter only.
 Do not use it to separate sections.

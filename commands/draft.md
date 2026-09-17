@@ -115,7 +115,7 @@ Draft-specific notes:
 
 - The skip threshold is the same as skipping the outline in step 9: a very short single-entry doc gets no round trip.
 - Brief it with the notes file's Reconcile section when one exists; that is this workflow's record of settled facts.
-- Judgment findings fold into the **Do** list below, as your own read of the draft.
+- Judgment findings fold into the Do list below, as your own read of the draft.
 
 **Do not** ask the contributor to review your formatting choices, heading case, or markdown conventions.
 Apply them.

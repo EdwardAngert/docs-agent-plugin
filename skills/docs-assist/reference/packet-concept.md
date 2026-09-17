@@ -64,7 +64,7 @@ A contested point is something the field disagrees about, and saying so is more 
 
 Analogies, motivation, pedagogical ordering, and audience calibration.
 
-Same logic as the procedure packet, with one addition that matters more here: **a professor supplying the analogy makes it impossible to tell load-bearing truth from teaching scaffolding.**
+Same logic as the procedure packet, with one addition that matters more here: a professor supplying the analogy makes it impossible to tell load-bearing truth from teaching scaffolding.
 
 Analogies are the advocate chair's to propose and the authority chair's to approve, in that order.
 See `ledger.md`.

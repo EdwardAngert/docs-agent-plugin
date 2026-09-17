@@ -11,14 +11,14 @@ The difference is only where pass 0 comes from:
 
 |        | Drafting                                        | Auditing                                                           |
 | ------ | ----------------------------------------------- | ------------------------------------------------------------------ |
-| Pass 0 | The packet is written, then shaped into a draft | The document already exists; the packet is *reconstructed* from it |
+| Pass 0 | The packet is written, then shaped into a draft | The document already exists; the packet is reconstructed from it |
 | Ledger | What the advocate chair added                   | What the document asserts that its packet cannot support           |
 | Output | A draft plus questions                          | Findings plus questions                                            |
 
 Reconstructing the packet is the move that makes an audit find things.
 Read the finished document and write down what it claims, as cold rows, exactly as `packet-procedure.md` describes.
 Then ask the authority chair to rule on those rows.
-A claim nobody can source is a finding, and it is invisible when you read the prose straight through, because in prose it sits next to twenty claims that *are* sourced and looks identical to them.
+A claim nobody can source is a finding, and it is invisible when you read the prose straight through, because in prose it sits next to twenty claims that are sourced and looks identical to them.
 
 Run `${CLAUDE_PLUGIN_ROOT}/assets/ci/file-path-check.mjs`, `duration-check.mjs`, `example-continuity.mjs`, and the claim checks before any of this, and brief the chairs with what they found.
 
@@ -100,7 +100,7 @@ Lead with high-impact, low-effort fixes.
 
 ## An audit that finds nothing is a successful audit
 
-This matters more here than anywhere else in the plugin, because an audit is the one surface where a reviewer is *expected* to produce a list, and that expectation is what turns a good reviewer into a bad one.
+This matters more here than anywhere else in the plugin, because an audit is the one surface where a reviewer is expected to produce a list, and that expectation is what turns a good reviewer into a bad one.
 
 No quota and no target number exist.
 Severity is never inflated to make a finding worth reporting: a trivial finding reported as trivial is fine, and a trivial finding dressed as important is a failed audit even when the observation is correct.

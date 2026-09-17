@@ -15,6 +15,8 @@ assets/lint/vale/styles/*/
 # every user's cache. These are kept locally and archived on the
 # `working-notes` branch; scripts/validate.mjs enforces the allowlist.
 reports/
+docs/1.0-release-plan.md
+docs/standalone-cli-plan.md
 .docs-assist/loop/
 .docs-assist/session-log.md
 .docs-assist/state/

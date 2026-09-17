@@ -3,7 +3,7 @@
 A chair is three layers, and they resolve the same way configuration does.
 
 1. **The constitution.** Ships with the plugin, in `reference/chairs/`.
-   What a role *is*, in every project: its contract, its forbidden moves, the artifact it owes.
+   What a role is, in every project: its contract, its forbidden moves, the artifact it owes.
    Versioned and reviewed.
 1. **The persona overlay.** Lives in the project, at `.docs-assist/personas/`.
    What this repo's expert knows and sounds like.
@@ -32,7 +32,7 @@ Built from evidence, not invented.
    Pulled from the code and the existing docs.
 1. **Behavior.** What the code does, so the chair can contradict a draft with something other than instinct.
 1. **Prior explanations.** The maintainers' own words: issue replies, pull request review comments, commit message bodies.
-   **This is where the personality comes from.**
+   This is where the personality comes from.
 1. **Assumed baseline.** What the existing docs already take for granted about their reader, inferred from what they explain and what they do not.
 
 The third item is the one that makes this real rather than decorative.

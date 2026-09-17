@@ -32,7 +32,7 @@ These are yours, and the authority chair does not get a vote:
 
 ## Relation questions
 
-What *else* this material implies should exist.
+What else this material implies should exist.
 
 A concept page standing behind the procedure.
 A troubleshooting entry for the failure mode mentioned in passing.
@@ -69,6 +69,6 @@ A missed one ships.
 
 The packet will have gaps that you can guess at confidently.
 
-Guess, write the sentence, and **log the guess**.
+Guess, write the sentence, and log the guess.
 Do not go quiet about it because you are probably right, and do not refuse to write because you are unsure.
 Write, and declare.

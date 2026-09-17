@@ -30,7 +30,7 @@ Gather what actually shipped: `git log` for the range, merged PR titles and bodi
 Extract only what a reader can observe:
 
 - New features and capabilities.
-- Behavior changes, and especially **breaking changes and deprecations**.
+- Behavior changes, and especially breaking changes and deprecations.
 - Fixes a user would have hit.
 - Upgrade steps: migrations, config changes, new requirements.
 

@@ -32,7 +32,7 @@ Treat it as a search you should think to run, not a step a script can perform fo
 **Always on.** Not a mode, not an option, and not something to remember.
 
 A well-ranking doc can be returned by its own search and quoted back as though it were independent corroboration of itself.
-This gets *more* likely as the doc set's search ranking improves, not less, so it is exactly the case where the guard matters most and is easiest to skip, because the doc looks credible.
+This gets more likely as the doc set's search ranking improves, not less, so it is exactly the case where the guard matters most and is easiest to skip, because the doc looks credible.
 
 Treat any result whose URL matches the repo, site, or project under verification as disqualified, not as a confirming source.
 

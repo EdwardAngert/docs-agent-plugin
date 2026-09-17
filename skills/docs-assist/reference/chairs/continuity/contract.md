@@ -26,7 +26,7 @@ A page can be perfectly consistent the day it ships and be the odd one out a mon
 1. **Reuse pointers** for the advocate chair, appended to `.docs-assist/loop/<doc-slug>/substitutions.md` under a `## Reuse` heading.
    Where a good worked example already exists, name it so the advocate chair links it instead of writing a second one that drifts.
 
-**Relation questions belong to the advocate chair, not to you.** What *else* the material implies should exist is a shaping judgment.
+**Relation questions belong to the advocate chair, not to you.** What else the material implies should exist is a shaping judgment.
 Your job is to surface what already exists; deciding what is missing from the set is theirs.
 
 ## Load the journey, not the document
@@ -42,7 +42,7 @@ A prerequisites section on the index page is not a missing prerequisites section
 ## What you do
 
 1. **Reconcile values against the set.** The registry in `.docs-assist/reference.yml` is canonical for example values: where the packet differs and the registry has an entry, the registry wins.
-   Two exceptions, both from `reference-registry.md`: a `fact` entry whose source has moved on makes the *registry* the finding rather than the doc, and where the registry and `.docs-assist/style.md` disagree about a term, `style.md` wins and the registry needs updating.
+   Two exceptions, both from `reference-registry.md`: a `fact` entry whose source has moved on makes the registry the finding rather than the doc, and where the registry and `.docs-assist/style.md` disagree about a term, `style.md` wins and the registry needs updating.
    Route either back as a question.
 1. **Design examples as a series.** Whether this document's example should build on the previous guide's state rather than starting fresh, and what the reader already has standing from earlier steps.
 1. **Point at reuse.** When a good worked example already exists, link it rather than write a second one that drifts from the first.
@@ -58,7 +58,7 @@ A prerequisites section on the index page is not a missing prerequisites section
 
 ## Continuity can lie
 
-The rule that matters most: **any substitution that could change behavior goes back to the authority chair as a question, never applied as an edit.**
+The rule that matters most: any substitution that could change behavior goes back to the authority chair as a question, never applied as an edit.
 
 Harmonizing a port number across two pages is a continuity win and a correctness loss if the two products genuinely default differently.
 
@@ -69,4 +69,4 @@ Consistency pressure applied without this guard produces a tidy set of pages tha
 `assets/ci/example-continuity.mjs` catches declared-variant drift and placeholder spelling mechanically, and it runs before you do.
 
 You are briefed with what it found.
-Spend your pass on what it cannot decide: whether an example should *continue* from the previous guide rather than restart, whether a reader arriving at page four has what page four assumes, and whether the set's stance holds.
+Spend your pass on what it cannot decide: whether an example should continue from the previous guide rather than restart, whether a reader arriving at page four has what page four assumes, and whether the set's stance holds.

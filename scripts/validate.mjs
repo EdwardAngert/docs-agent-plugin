@@ -13,6 +13,7 @@
 //   8. A reference file named inside another reference file resolves.
 //   9. Every tracked path is on the shipping allowlist.
 //  10. Prose keeps one sentence per line, per .docs-assist/config.yml.
+//  11. Prose does not use bold or italics to stress a word.
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -353,6 +354,68 @@ for (const f of tracked) {
       `${f}:${i + 1} has more than one sentence on a line ` +
         `(one_sentence_per_line in .docs-assist/config.yml): "${text.slice(0, 70)}..."`,
     );
+  }
+}
+
+// 11. Prose does not use bold or italics to stress a word.
+// Google allows bold "only for UI elements and run-in headings"; GitLab bans
+// emphasis outright in favor of prose clear enough not to need it. This is not
+// a Vale rule because Vale masks inline code spans before a style sees the
+// text, and the mask itself contains asterisks, which made the regex fire on
+// `gh` and `git log`. Parsing the line here avoids that.
+//
+// Bold at the start of a line or list item is a run-in heading and always
+// allowed. The one legitimate mid-prose use is bold on a term where it is
+// defined, which no regular expression can tell from stress, so those are
+// listed by the exact phrase rather than by line number.
+const EMPHASIS_OK = new Set([
+  '.docs-assist/personas/authority.md::chairs',
+  '.docs-assist/personas/authority.md::packet',
+  '.docs-assist/personas/authority.md::ledger',
+  '.docs-assist/personas/authority.md::door',
+  '.docs-assist/personas/authority.md::plumbing',
+  'docs/how-the-loop-works.md::chairs',
+  'docs/how-the-loop-works.md::packet',
+  'commands/plan.md::content inventory',
+  'skills/docs-assist/reference/chairs/advocate/pass-2-clarity.md::implied fact',
+  'skills/docs-assist/reference/llms-txt.md::health',
+  // "A body that explains why is packet material" garbles without the italics.
+  'skills/docs-assist/reference/harvest.md::why',
+]);
+for (const f of tracked) {
+  if (!f.endsWith('.md')) continue;
+  if (!PROSE_FILES.includes(f) && !PROSE_DIRS.some((d) => f.startsWith(d))) continue;
+  const lines = readFileSync(rel(f), 'utf8').split('\n');
+  let fence = false, fm = false;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (i === 0 && line.trim() === '---') { fm = true; continue; }
+    if (fm) { if (line.trim() === '---') fm = false; continue; }
+    if (/^\s*(```|~~~)/.test(line)) { fence = !fence; continue; }
+    if (fence || /^\s*#{1,6}\s/.test(line) || /^\s*\|/.test(line)) continue;
+
+    // Blank out inline code so asterisks inside it are not read as emphasis.
+    const masked = line.replace(/`[^`]*`/g, (m) => ' '.repeat(m.length));
+    const body = masked.replace(/^(\s*(?:>\s?)+)/, '');
+    const after = body.replace(/^\s*([-*+]\s+|\d+[.)]\s+)/, '');
+    const lead = masked.length - body.length + (body.length - after.length);
+
+    for (const m of masked.matchAll(/\*\*([^*]+)\*\*/g)) {
+      if (m.index === lead) continue; // run-in heading
+      check(
+        EMPHASIS_OK.has(`${f}::${m[1]}`),
+        `${f}:${i + 1} uses bold to stress "${m[1]}" mid-sentence. ` +
+          `Bold is for run-in headings, UI labels, and a term where it is defined; ` +
+          `rewrite the sentence, use a code span for a literal, or add it to EMPHASIS_OK.`,
+      );
+    }
+    for (const m of masked.matchAll(/(?<![*\w])\*([^*\s][^*]*)\*(?!\*)/g)) {
+      check(
+        EMPHASIS_OK.has(`${f}::${m[1]}`),
+        `${f}:${i + 1} uses italics to stress "${m[1]}". ` +
+          `Rewrite the sentence, or add it to EMPHASIS_OK if it is a word quoted as a word.`,
+      );
+    }
   }
 }
 
