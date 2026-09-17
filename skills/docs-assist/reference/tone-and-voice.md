@@ -2,18 +2,30 @@
 
 - Use a **direct, clear, and instructional tone**
 - Assume a **developer or technical admin** as your reader when nothing more specific is known; calibrate below that floor for a beginner-facing doc and above it for an expert one, per each doc's own user story (see `user-stories.md`)
-- Jargon and term explanations follow the same calibration: an expert-audience doc uses the field's own vocabulary without apology; a beginner-audience doc explains a term the first time it appears. Explaining what the calibrated reader already knows is the expert tax, the same failure as skipping what they don't
+- Jargon and term explanations follow the same calibration: an expert-audience doc uses the field's own vocabulary without apology; a beginner-audience doc explains a term the first time it appears.
+  Explaining what the calibrated reader already knows is the expert tax, the same failure as skipping what they don't
 - Prioritize **user actions** and outcomes
 
 ## Avoid AI voice
 
-Documentation states and instructs; it does not hedge, sell, or perform confidence. The patterns below are the reliable tells of generated-sounding prose. Cut them on sight, the same way an em dash gets cut, and rewrite what was there into a direct statement rather than leaving a gap.
+Documentation states and instructs; it does not hedge, sell, or perform confidence.
+The patterns below are the reliable tells of generated-sounding prose.
+Cut them on sight, the same way an em dash gets cut, and rewrite what was there into a direct statement rather than leaving a gap.
 
-- **False contrast** (`it's not X, it's Y`, `this isn't just X, it's Y`): state the fact instead of the frame. `The retry queue processes in order` beats `It's not random, it's ordered`. If the contrast is itself the useful information, a reader's common misconception, say why the wrong answer is wrong once, then move on. Don't repeat the not-X-it's-Y shape sentence after sentence.
-- **Hedging**: `should work in most cases`, `generally speaking`, `in most scenarios`. A step either works under a stated condition or it doesn't. Replace the qualifier with the actual condition: `this works when X; for Y, see Z`.
-- **Marketing language**: `powerful`, `seamless`, `robust`, `cutting-edge`, `effortless`, `unlock`, `elevate`, `empower`, `game-changing`, `revolutionize`, `best-in-class`. Documentation describes what something does, not how impressed the reader should be. A word can be a legitimate technical term in one project's vocabulary and marketing filler in another (this plugin's own docs use "leverage" as a compound noun, "highest-leverage fix," not the verb cliché); judge usage in context rather than banning by word alone.
-- **Throat-clearing openers**: `it's worth noting that`, `it's important to understand`, `let's dive into`, `needless to say`. Cut the preamble and start with the instruction or fact it was stalling in front of.
-- **Stacked inflated transitions**: `furthermore`, `moreover`, `that said`, used as connective tissue between every sentence rather than where a real logical turn exists. A period is usually enough.
+- **False contrast** (`it's not X, it's Y`, `this isn't just X, it's Y`): state the fact instead of the frame.
+  `The retry queue processes in order` beats `It's not random, it's ordered`.
+  If the contrast is itself the useful information, a reader's common misconception, say why the wrong answer is wrong once, then move on.
+  Don't repeat the not-X-it's-Y shape sentence after sentence.
+- **Hedging**: `should work in most cases`, `generally speaking`, `in most scenarios`.
+  A step either works under a stated condition or it doesn't.
+  Replace the qualifier with the actual condition: `this works when X; for Y, see Z`.
+- **Marketing language**: `powerful`, `seamless`, `robust`, `cutting-edge`, `effortless`, `unlock`, `elevate`, `empower`, `game-changing`, `revolutionize`, `best-in-class`.
+  Documentation describes what something does, not how impressed the reader should be.
+  A word can be a legitimate technical term in one project's vocabulary and marketing filler in another (this plugin's own docs use "leverage" as a compound noun, "highest-leverage fix," not the verb cliché); judge usage in context rather than banning by word alone.
+- **Throat-clearing openers**: `it's worth noting that`, `it's important to understand`, `let's dive into`, `needless to say`.
+  Cut the preamble and start with the instruction or fact it was stalling in front of.
+- **Stacked inflated transitions**: `furthermore`, `moreover`, `that said`, used as connective tissue between every sentence rather than where a real logical turn exists.
+  A period is usually enough.
 
 ## Markdown formatting rules
 
@@ -97,7 +109,7 @@ For general style questions beyond this file, `style-guides.md` covers choosing 
 - Avoid TODOs or placeholders in merged docs
 - Check anchor links if you rename headings or move files
 - Break lines after each period.
-Markdown renders it as a single line, but line breaks help human editors scan content.
+  Markdown renders it as a single line, but line breaks help human editors scan content.
 
 > [!NOTE]
 > Line breaks after periods is a style choice.

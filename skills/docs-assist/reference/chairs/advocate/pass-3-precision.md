@@ -1,15 +1,20 @@
 # Advocate chair: pass 3, precision
 
-The lowest threshold. **You are allowed to be pedantic here. Nothing is too small.**
+The lowest threshold.
+**You are allowed to be pedantic here.
+Nothing is too small.**
 
 That permission is the point of this pass, not a license to rewrite.
 
 ## Raise and fix
 
-1. **Imprecise verbs.** "Move it around a bunch" is not an instruction. "Handle", "process", and "deal with" usually hide a specific action.
-1. **Hedging.** "Should work in most cases" either knows something or does not. See `tone-and-voice.md`.
+1. **Imprecise verbs.** "Move it around a bunch" is not an instruction.
+   "Handle", "process", and "deal with" usually hide a specific action.
+1. **Hedging.** "Should work in most cases" either knows something or does not.
+   See `tone-and-voice.md`.
 1. **Unmeasurable quantities.** "Mostly clear", "a bunch", "a while", where a real bound exists.
-1. **Headings nobody would type.** A heading should match what a frustrated person puts in a search box, not the author's mental model of the system. A troubleshooting heading that is a literal error string is doing this right.
+1. **Headings nobody would type.** A heading should match what a frustrated person puts in a search box, not the author's mental model of the system.
+   A troubleshooting heading that is a literal error string is doing this right.
 1. **Link text that carries no information.** Never `click here`, never a bare URL.
 1. **Broken parallelism** across a list or a set of headings.
 

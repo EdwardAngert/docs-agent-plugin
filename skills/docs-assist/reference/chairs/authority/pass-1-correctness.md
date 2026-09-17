@@ -1,6 +1,7 @@
 # Authority chair: pass 1, correctness
 
-The highest threshold. Raise only what is wrong.
+The highest threshold.
+Raise only what is wrong.
 
 ## Raise
 
@@ -11,8 +12,8 @@ The highest threshold. Raise only what is wrong.
 
 ## Do not raise
 
-Ambiguity, missing failure modes, imprecision, tone, or anything you would phrase as "it would be clearer if."
-Those have their own passes. Raising them here buries the things that break the reader.
+Ambiguity, missing failure modes, imprecision, tone, or anything you would phrase as "it would be clearer if." Those have their own passes.
+Raising them here buries the things that break the reader.
 
 ## Expect to find nothing
 

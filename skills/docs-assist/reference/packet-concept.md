@@ -42,10 +42,10 @@ A reader who knows which alternative was considered and dropped understands the 
 
 The wrong mental models people actually arrive holding.
 
-**This is the highest-value row and the one only a teacher produces.**
-Knowing which wrong model a learner shows up with is what teaching a subject for years buys, and dismantling it is most of what a good concept page does.
+**This is the highest-value row and the one only a teacher produces.** Knowing which wrong model a learner shows up with is what teaching a subject for years buys, and dismantling it is most of what a good concept page does.
 
-Ask for it directly. It does not arrive on its own.
+Ask for it directly.
+It does not arrive on its own.
 
 ### Provenance, typed
 
@@ -66,4 +66,5 @@ Analogies, motivation, pedagogical ordering, and audience calibration.
 
 Same logic as the procedure packet, with one addition that matters more here: **a professor supplying the analogy makes it impossible to tell load-bearing truth from teaching scaffolding.**
 
-Analogies are the advocate chair's to propose and the authority chair's to approve, in that order. See `ledger.md`.
+Analogies are the advocate chair's to propose and the authority chair's to approve, in that order.
+See `ledger.md`.

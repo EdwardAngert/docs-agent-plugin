@@ -15,22 +15,23 @@ keywords:
 
 Every Docs Assist command, with its argument and an example.
 
-You rarely need these. The plugin activates from plain conversation ("help me document X"), and the commands are optional shortcuts into the same workflows.
+You rarely need these.
+The plugin activates from plain conversation ("help me document X"), and the commands are optional shortcuts into the same workflows.
 Every command also works with no argument: it asks for what it needs.
 
 ## At a glance
 
-| Command                      | What it does                                  | Argument                             |
-| ---------------------------- | --------------------------------------------- | ------------------------------------ |
-| `/docs-assist:health`        | Fast docs health scorecard and first fix      | `[docs directory]`                   |
-| `/docs-assist:draft`         | Write a document through the authoring loop   | `[topic or issue number]`            |
-| `/docs-assist:plan`          | Plan a documentation set, built to ship first | `[repo path or description]`         |
-| `/docs-assist:audit`         | Review existing docs by reconstructing claims | `[path]`                             |
-| `/docs-assist:verify`        | Execute a procedural doc's steps and report   | `[doc path or directory]`            |
-| `/docs-assist:update`        | Update the docs affected by a code change     | `[git ref, PR number, or path]`      |
-| `/docs-assist:release-notes` | Write reader-facing notes for a release       | `[range, tag, or version]`           |
-| `/docs-assist:setup`         | Conventions, linting, hooks, and navigation   | `[stage]`                            |
-| `/docs-assist:merge-prep`    | Ready a docs change to merge                  | `[branch or path]`                   |
+| Command                      | What it does                                  | Argument                        |
+| ---------------------------- | --------------------------------------------- | ------------------------------- |
+| `/docs-assist:health`        | Fast docs health scorecard and first fix      | `[docs directory]`              |
+| `/docs-assist:draft`         | Write a document through the authoring loop   | `[topic or issue number]`       |
+| `/docs-assist:plan`          | Plan a documentation set, built to ship first | `[repo path or description]`    |
+| `/docs-assist:audit`         | Review existing docs by reconstructing claims | `[path]`                        |
+| `/docs-assist:verify`        | Execute a procedural doc's steps and report   | `[doc path or directory]`       |
+| `/docs-assist:update`        | Update the docs affected by a code change     | `[git ref, PR number, or path]` |
+| `/docs-assist:release-notes` | Write reader-facing notes for a release       | `[range, tag, or version]`      |
+| `/docs-assist:setup`         | Conventions, linting, hooks, and navigation   | `[stage]`                       |
+| `/docs-assist:merge-prep`    | Ready a docs change to merge                  | `[branch or path]`              |
 
 ## Write and plan
 
@@ -78,7 +79,8 @@ Use `/docs-assist:audit` when you want the full findings list instead of a score
 `/docs-assist:audit [path]`
 
 Audit documentation for quality, structure, findability, and gaps, and produce a prioritized report.
-Point it at a directory, a file, or a set of changed files. For a change or a diff, it audits the change and its blast radius rather than the files in isolation.
+Point it at a directory, a file, or a set of changed files.
+For a change or a diff, it audits the change and its blast radius rather than the files in isolation.
 Use it to assess a docs set before a cleanup, or to review the ripple of a change.
 
 ```text
@@ -129,7 +131,9 @@ Use it when cutting a release, so the notes describe outcomes readers care about
 
 `/docs-assist:setup [stage]`
 
-Conventions, linting, hooks, and site navigation, in one pass with one set of questions. Every stage is opt-in and nothing is written without a yes. The plugin also offers this inline at the moment it would help, so you rarely need to type it.
+Conventions, linting, hooks, and site navigation, in one pass with one set of questions.
+Every stage is opt-in and nothing is written without a yes.
+The plugin also offers this inline at the moment it would help, so you rarely need to type it.
 
 ```text
 /docs-assist:setup
@@ -140,7 +144,8 @@ Conventions, linting, hooks, and site navigation, in one pass with one set of qu
 
 `/docs-assist:merge-prep [branch or path]`
 
-Everything expensive that scales with the whole docs set: whole-set continuity, `llms.txt` and `llms-full.txt`, bundle drift, the deterministic checks, the configured linters, and link checking. Routine workflows never do this, so a single content fix does not trigger a full regenerate-and-diff pass.
+Everything expensive that scales with the whole docs set: whole-set continuity, `llms.txt` and `llms-full.txt`, bundle drift, the deterministic checks, the configured linters, and link checking.
+Routine workflows never do this, so a single content fix does not trigger a full regenerate-and-diff pass.
 
 ```text
 /docs-assist:merge-prep

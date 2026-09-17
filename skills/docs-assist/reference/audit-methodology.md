@@ -9,11 +9,11 @@ Reviewing an existing document and reviewing a fresh draft are the same job with
 
 The difference is only where pass 0 comes from:
 
-| | Drafting | Auditing |
-| --- | --- | --- |
+|        | Drafting                                        | Auditing                                                           |
+| ------ | ----------------------------------------------- | ------------------------------------------------------------------ |
 | Pass 0 | The packet is written, then shaped into a draft | The document already exists; the packet is *reconstructed* from it |
-| Ledger | What the advocate chair added | What the document asserts that its packet cannot support |
-| Output | A draft plus questions | Findings plus questions |
+| Ledger | What the advocate chair added                   | What the document asserts that its packet cannot support           |
+| Output | A draft plus questions                          | Findings plus questions                                            |
 
 Reconstructing the packet is the move that makes an audit find things.
 Read the finished document and write down what it claims, as cold rows, exactly as `packet-procedure.md` describes.
@@ -24,11 +24,15 @@ Run `${CLAUDE_PLUGIN_ROOT}/assets/ci/file-path-check.mjs`, `duration-check.mjs`,
 
 Everything below is what the chairs apply, and what to do when a document is too small to justify a full run.
 
-The first half is what you do in a session. The second half is research that needs real users, which you cannot run yourself: recommend it to the docs lead when the scope warrants it.
+The first half is what you do in a session.
+The second half is research that needs real users, which you cannot run yourself: recommend it to the docs lead when the scope warrants it.
 
 ## Match the audit to the target
 
-A full set, a directory, a few changed files, and a diff are different jobs. For a full set, work through the steps below. For changed files or a diff, audit the change and its blast radius: the edit scope is small, but the impact scope follows dependency edges out from it. See `impact-analysis.md` for the change-type-to-edge map, the traversal budget, and how to report residual risk.
+A full set, a directory, a few changed files, and a diff are different jobs.
+For a full set, work through the steps below.
+For changed files or a diff, audit the change and its blast radius: the edit scope is small, but the impact scope follows dependency edges out from it.
+See `impact-analysis.md` for the change-type-to-edge map, the traversal budget, and how to report residual risk.
 
 ## What you do in a session
 
@@ -38,7 +42,9 @@ A full set, a directory, a few changed files, and a diff are different jobs. For
 - Categorize each by content type using `content-types.md`.
 - Note last-updated dates and any ownership signals.
 - List image assets and flag ones not referenced by any doc.
-- Check for `.docs-assist/example-variables.txt` or `.docs-assist/terms.txt`. These predate `reference.yml` and are no longer read. If either exists, flag it and offer the one-time migration in `reference-registry.md` rather than auditing as if no registry existed.
+- Check for `.docs-assist/example-variables.txt` or `.docs-assist/terms.txt`.
+  These predate `reference.yml` and are no longer read.
+  If either exists, flag it and offer the one-time migration in `reference-registry.md` rather than auditing as if no registry existed.
 
 ### 2. Check external links
 
@@ -57,12 +63,19 @@ For a scoped audit, check only the links in the edit scope.
 
 Evaluate against six dimensions:
 
-- **Accuracy**: does it still match the code? This is not a date check. Trace every command, flag, config key, default, endpoint, version requirement, and described behavior out to its actual source and confirm it still holds; see `claim-verification.md` for the method. This is the dimension most likely to get skipped in favor of the mechanical checks, and it's the one a reader actually depends on.
-- **Completeness**: are steps missing? Does it assume prerequisites without linking them?
-- **Clarity**: are explanations confusing? Is the content type right for the goal?
+- **Accuracy**: does it still match the code?
+  This is not a date check.
+  Trace every command, flag, config key, default, endpoint, version requirement, and described behavior out to its actual source and confirm it still holds; see `claim-verification.md` for the method.
+  This is the dimension most likely to get skipped in favor of the mechanical checks, and it's the one a reader actually depends on.
+- **Completeness**: are steps missing?
+  Does it assume prerequisites without linking them?
+- **Clarity**: are explanations confusing?
+  Is the content type right for the goal?
 - **Findability**: can a reader locate it through navigation, search, or cross-references?
 - **Consistency**: does it match the style and terminology of its neighbors?
-- **Journeys**: outline the user stories the doc serves and walk each through it: arrival, entry, path, exit. A doc whose reader cannot be inferred is a finding in itself. See `user-stories.md`.
+- **Journeys**: outline the user stories the doc serves and walk each through it: arrival, entry, path, exit.
+  A doc whose reader cannot be inferred is a finding in itself.
+  See `user-stories.md`.
 
 ### 4. Evaluate information architecture
 
@@ -89,9 +102,12 @@ Lead with high-impact, low-effort fixes.
 
 This matters more here than anywhere else in the plugin, because an audit is the one surface where a reviewer is *expected* to produce a list, and that expectation is what turns a good reviewer into a bad one.
 
-No quota and no target number exist. Severity is never inflated to make a finding worth reporting: a trivial finding reported as trivial is fine, and a trivial finding dressed as important is a failed audit even when the observation is correct. A finding that exists only because someone was looking for it is not a finding.
+No quota and no target number exist.
+Severity is never inflated to make a finding worth reporting: a trivial finding reported as trivial is fine, and a trivial finding dressed as important is a failed audit even when the observation is correct.
+A finding that exists only because someone was looking for it is not a finding.
 
-Report what the docs do well, and pick the things that matter rather than the things that are easy to see. A review that lists only problems is not calibrated, and a reader who gets one bad finding starts discounting the good ones.
+Report what the docs do well, and pick the things that matter rather than the things that are easy to see.
+A review that lists only problems is not calibrated, and a reader who gets one bad finding starts discounting the good ones.
 
 The full rule is in `chairs/shared-rules.md`, which every chair loads on every pass.
 
@@ -106,10 +122,13 @@ Any of these can be empty, and an empty one is a result rather than a gap.
 
 ## Human-led research (reference)
 
-These methods produce the user understanding that makes an audit accurate, but they need real participants. You cannot run them in a session. Recommend them to the docs lead and use their results as input.
+These methods produce the user understanding that makes an audit accurate, but they need real participants.
+You cannot run them in a session.
+Recommend them to the docs lead and use their results as input.
 
 - **User personas**: capture each group's role, goals, skill level, primary tasks, and pain points.
-- **Card sorting**: open (users group and label topics) or closed (users fit topics into existing categories). Tools include OptimalSort, Figma, and Miro.
+- **Card sorting**: open (users group and label topics) or closed (users fit topics into existing categories).
+  Tools include OptimalSort, Figma, and Miro.
 - **User journey mapping**: how users discover docs, where they look first, the common paths, and where they get stuck.
 
 When you have persona or journey data, fold it into steps 3 through 5 above.

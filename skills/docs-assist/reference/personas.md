@@ -2,9 +2,14 @@
 
 A chair is three layers, and they resolve the same way configuration does.
 
-1. **The constitution.** Ships with the plugin, in `reference/chairs/`. What a role *is*, in every project: its contract, its forbidden moves, the artifact it owes. Versioned and reviewed.
-1. **The persona overlay.** Lives in the project, at `.docs-assist/personas/`. What this repo's expert knows and sounds like. Generated once, persisted, editable by hand.
-1. **The runtime brief.** Exists for one spawn. This document, this cast, these paths, this pass number.
+1. **The constitution.** Ships with the plugin, in `reference/chairs/`.
+   What a role *is*, in every project: its contract, its forbidden moves, the artifact it owes.
+   Versioned and reviewed.
+1. **The persona overlay.** Lives in the project, at `.docs-assist/personas/`.
+   What this repo's expert knows and sounds like.
+   Generated once, persisted, editable by hand.
+1. **The runtime brief.** Exists for one spawn.
+   This document, this cast, these paths, this pass number.
 
 This is the order `config-resolution.md` already defines, applied to behavior instead of formatting.
 
@@ -23,9 +28,11 @@ Persisting it buys three things: it is stable across sessions, it is inspectable
 
 Built from evidence, not invented.
 
-1. **Vocabulary.** The identifiers, error strings, config keys, and domain nouns the project actually uses. Pulled from the code and the existing docs.
+1. **Vocabulary.** The identifiers, error strings, config keys, and domain nouns the project actually uses.
+   Pulled from the code and the existing docs.
 1. **Behavior.** What the code does, so the chair can contradict a draft with something other than instinct.
-1. **Prior explanations.** The maintainers' own words: issue replies, pull request review comments, commit message bodies. **This is where the personality comes from.**
+1. **Prior explanations.** The maintainers' own words: issue replies, pull request review comments, commit message bodies.
+   **This is where the personality comes from.**
 1. **Assumed baseline.** What the existing docs already take for granted about their reader, inferred from what they explain and what they do not.
 
 The third item is the one that makes this real rather than decorative.
@@ -33,7 +40,8 @@ If a project's maintainers answer issues in four terse lines with a code pointer
 That is a repo-specific voice built from actual signal, not a costume.
 
 Harvesting reads a ticket tracker, so it stays opt-in.
-Summarize patterns; do not persist raw source. See the sensitive-source rule in `intake.md`.
+Summarize patterns; do not persist raw source.
+See the sensitive-source rule in `intake.md`.
 
 ## Do not debias the authority persona
 
@@ -49,7 +57,8 @@ Smaller, because most of what this chair needs is already in `style-stack.md` an
 
 The overlay carries what those cannot:
 
-1. **The reader this project actually serves**, from evidence rather than posture. An SDK for working engineers and a first-touch onboarding guide want opposite defaults, and applying either to the other is the failure.
+1. **The reader this project actually serves**, from evidence rather than posture.
+   An SDK for working engineers and a first-touch onboarding guide want opposite defaults, and applying either to the other is the failure.
 1. **House patterns worth keeping.** Conventions the existing docs follow well and consistently, which a fresh writer would not think to invent.
 1. **Resolved style conflicts**, accumulated over time per `style-stack.md`.
 

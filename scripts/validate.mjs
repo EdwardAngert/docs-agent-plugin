@@ -12,6 +12,7 @@
 //   7. Every chair has a contract and a rulebook per threshold.
 //   8. A reference file named inside another reference file resolves.
 //   9. Every tracked path is on the shipping allowlist.
+//  10. Prose keeps one sentence per line, per .docs-assist/config.yml.
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -307,6 +308,52 @@ for (const f of tracked) {
       `It would be copied into every user's plugin cache. Add it to the allowlist ` +
       `if it belongs in the plugin, or gitignore it and archive it on \`working-notes\`.`,
   );
+}
+
+// 10. Prose keeps one sentence per line.
+// `.docs-assist/config.yml` sets one_sentence_per_line, and nothing else
+// checks it: Vale works a sentence at a time and markdownlint does not know
+// what a sentence is. Without this the rule decays silently, which is exactly
+// what happened before 1.0. Sentence-per-line keeps diffs to the sentence that
+// actually changed instead of a reflowed paragraph.
+const ABBREV = /(?:^|[\s("'`[])(?:e\.g|i\.e|etc|vs|cf|al|Mr|Mrs|Ms|Dr|Prof|Inc|Ltd|St|No|Fig|approx|ca|resp)\.$/i;
+function sentenceCount(text) {
+  let n = 1, buf = '', tick = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (c === '`') tick = !tick;
+    buf += c;
+    if (tick || (c !== '.' && c !== '!' && c !== '?')) continue;
+    if (!/^ (?=[A-Z"'`([]|\*\*)/.test(text.slice(i + 1))) continue;
+    if (c === '.' && (ABBREV.test(buf) || /(?:^|\s)[A-Z]\.$/.test(buf) || /\.\.\.$/.test(buf))) continue;
+    n++;
+    buf = '';
+  }
+  return n;
+}
+const PROSE_DIRS = ['docs/', 'skills/', 'commands/', 'agents/', '.docs-assist/'];
+const PROSE_FILES = ['README.md', 'CONTRIBUTING.md'];
+for (const f of tracked) {
+  if (!f.endsWith('.md')) continue;
+  if (!PROSE_FILES.includes(f) && !PROSE_DIRS.some((d) => f.startsWith(d))) continue;
+  const lines = readFileSync(rel(f), 'utf8').split('\n');
+  let fence = false, fm = false;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (i === 0 && line.trim() === '---') { fm = true; continue; }
+    if (fm) { if (line.trim() === '---') fm = false; continue; }
+    if (/^\s*(```|~~~)/.test(line)) { fence = !fence; continue; }
+    if (fence) continue;
+    const body = line.replace(/^(\s*(?:>\s?)+)/, '');
+    if (!body.trim() || /^\s*[#|]/.test(body) || /^\s*<[/a-zA-Z]/.test(body)) continue;
+    if (/^\s{4,}\S/.test(line) && !/^\s*([-*+]|\d+[.)])\s/.test(body)) continue;
+    const text = body.replace(/^\s*([-*+]\s+|\d+[.)]\s+)/, '');
+    check(
+      sentenceCount(text) === 1,
+      `${f}:${i + 1} has more than one sentence on a line ` +
+        `(one_sentence_per_line in .docs-assist/config.yml): "${text.slice(0, 70)}..."`,
+    );
+  }
 }
 
 if (errors.length) {

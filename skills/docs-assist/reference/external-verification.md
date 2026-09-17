@@ -16,7 +16,8 @@ Not instead of the specific search: alongside it.
 
 1. A brand and its generic name (a drug's brand name and its generic compound).
 1. A product and the protocol it implements (a mesh-networking tool and the tunneling protocol underneath it).
-1. A specific device or platform and its general category, when the claim is really about the category. A claim about one TV model's DNS behavior is often a claim about how smart TVs handle DNS generally.
+1. A specific device or platform and its general category, when the claim is really about the category.
+   A claim about one TV model's DNS behavior is often a claim about how smart TVs handle DNS generally.
 
 Run both.
 Do not drop the specific search: plenty of claims are genuinely implementation-specific, and a generic-only search misses vendor quirks that only appear in the specific product's own documentation or community.
@@ -43,8 +44,11 @@ A habit that is never stated is a habit that lapses silently, and this one has a
 Every claim checked gets one of three outcomes, and all three are legitimate.
 A pass is not the only acceptable one.
 
-1. **Confirmed.** An independent source supports the claim. Record the source link and the date you accessed it.
-1. **Contradicted.** An independent source disagrees. Report it as a finding. Never silently correct the doc without surfacing what changed and why: a wrong claim and a stale claim look identical, and the difference matters to whoever wrote it.
+1. **Confirmed.** An independent source supports the claim.
+   Record the source link and the date you accessed it.
+1. **Contradicted.** An independent source disagrees.
+   Report it as a finding.
+   Never silently correct the doc without surfacing what changed and why: a wrong claim and a stale claim look identical, and the difference matters to whoever wrote it.
 1. **No independent source found.** Say so directly rather than leaving the claim unmarked or implying it passed.
 
 That third outcome is the one a human author never remembers to write down by hand, and it is often the most useful of the three.
@@ -56,5 +60,4 @@ A contradicted or unverifiable claim is not a verification date; it is a finding
 
 An external source can be wrong, out of date, or itself downstream of the doc under review.
 
-When the only corroboration is a forum post of unknown age, or a summary with no primary source behind it, the honest outcome is "no independent source found."
-Confidence that comes from a search result's ranking rather than its provenance is the failure this whole method exists to prevent.
+When the only corroboration is a forum post of unknown age, or a summary with no primary source behind it, the honest outcome is "no independent source found." Confidence that comes from a search result's ranking rather than its provenance is the failure this whole method exists to prevent.

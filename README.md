@@ -14,32 +14,42 @@ Think of it as having a technical writer in every Claude Code session, one who a
 
 ## What it looks like
 
-This section came out of one such session. Documenting this very plugin, it went like this:
+This section came out of one such session.
+Documenting this very plugin, it went like this:
 
 **You:**
 
-> Help me update the README with great docs about this plugin. Where do I start?
+> Help me update the README with great docs about this plugin.
+> Where do I start?
 
 **Docs Assist:**
 
-> Let me read it back first. The README is solid, but it tells more than it shows, it opens with a rename note that only old users care about, and the file tree has drifted from the code (it's missing two files). Start with one thing: a short "What it looks like" example near the top, because that's what turns a scroller into someone who tries it. Then move the rename note down and fix the tree. I'll ship those three now.
+> Let me read it back first.
+> The README is solid, but it tells more than it shows, it opens with a rename note that only old users care about, and the file tree has drifted from the code (it's missing two files).
+> Start with one thing: a short "What it looks like" example near the top, because that's what turns a scroller into someone who tries it.
+> Then move the rename note down and fix the tree.
+> I'll ship those three now.
 
 It added this section, moved the rename note, and corrected the tree.
 The rest of this README is the result.
 Its own linter caught a formatting slip in the draft and flagged it, so it fixed that too.
-You review for accuracy. The formatting is already handled.
+You review for accuracy.
+The formatting is already handled.
 
 ## Requirements
 
 - Claude Code.
-- Node, for the deterministic checks and the repository validator. Nothing else is required to draft, plan, or audit.
+- Node, for the deterministic checks and the repository validator.
+  Nothing else is required to draft, plan, or audit.
 - The linters are optional and scaffolded only if you ask: Vale, markdownlint, and cspell install when you accept them, and the plugin detects and extends an existing setup rather than replacing it.
 
 ## What it writes
 
-The plugin proposes and you accept. It shows you a draft before a file is written, and multi-file work is offered on a branch rather than committed to your default branch.
+The plugin proposes and you accept.
+It shows you a draft before a file is written, and multi-file work is offered on a branch rather than committed to your default branch.
 
-Its own bookkeeping lives in `.docs-assist/`: your conventions, the example registry, per-document verification dates, and the working artifacts of a drafting run. Your documents stay portable plain markdown, and nothing the plugin needs is written into them.
+Its own bookkeeping lives in `.docs-assist/`: your conventions, the example registry, per-document verification dates, and the working artifacts of a drafting run.
+Your documents stay portable plain markdown, and nothing the plugin needs is written into them.
 
 Two things reach outside your repo, both on an explicit yes: fetching a template, and checking a claim about something your project does not vendor.
 
@@ -79,16 +89,20 @@ Claude Code doesn't auto-update installed plugins.
 
 To update the plugin, open Claude Code, then:
 
-1. Run `/plugin`, select `docs-assist`, and choose the update option. `/plugin` also tells you if you're already on the latest version, so this is safe to run just to check.
+1. Run `/plugin`, select `docs-assist`, and choose the update option.
+   `/plugin` also tells you if you're already on the latest version, so this is safe to run just to check.
 
-1. Run `/reload-plugins` so the running session picks up the new version. Skipping this step leaves the session on the old commands and skill instructions even though the update installed cleanly.
+1. Run `/reload-plugins` so the running session picks up the new version.
+   Skipping this step leaves the session on the old commands and skill instructions even though the update installed cleanly.
 
 Check `CHANGELOG.md` for what changed since your version.
 
 ## Documentation
 
-- [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): for docs leads and devrel. Why to install, what changes for contributors, and how to customize.
-- [Write Docs With Docs Assist](docs/write-docs-with-docs-assist.md): for individual contributors. What the plugin does, and how to get the most out of it.
+- [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): for docs leads and devrel.
+  Why to install, what changes for contributors, and how to customize.
+- [Write Docs With Docs Assist](docs/write-docs-with-docs-assist.md): for individual contributors.
+  What the plugin does, and how to get the most out of it.
 - [Command reference](docs/command-reference.md): every command with its argument and an example.
 
 ## How it works
@@ -96,7 +110,8 @@ Check `CHANGELOG.md` for what changed since your version.
 The plugin activates when you ask for documentation help, in plain words.
 You don't need to learn any special syntax or documentation theory.
 
-It activates on what you *say*, though, so work that never mentions documentation will not reach it on its own. [Making It Show Up](#making-it-show-up) covers the two ways to close that gap.
+It activates on what you *say*, though, so work that never mentions documentation will not reach it on its own.
+[Making It Show Up](#making-it-show-up) covers the two ways to close that gap.
 
 The simplest path is to tell Claude what you want to document:
 
@@ -137,11 +152,14 @@ It plans to ship first and iterate, not to boil the ocean.
 
 ## Making it show up
 
-The plugin activates when something asks it to. A skill matches what you *said*, so work that never mentions documentation never reaches it.
+The plugin activates when something asks it to.
+A skill matches what you *said*, so work that never mentions documentation never reaches it.
 
 Two things close that gap:
 
-- A second skill, `writing-task`, casts a wider net. It recognizes work that is documentation-shaped without being called documentation (a pull request description, a changelog entry, a runbook) and routes to the part of the plugin that fits. It is also allowed to find nothing and say so, which is what keeps it from becoming noise.
+- A second skill, `writing-task`, casts a wider net.
+  It recognizes work that is documentation-shaped without being called documentation (a pull request description, a changelog entry, a runbook) and routes to the part of the plugin that fits.
+  It is also allowed to find nothing and say so, which is what keeps it from becoming noise.
 - **A line in your `CLAUDE.md` is the highest-leverage fix, and the cheapest.** `CLAUDE.md` is always in context where a skill description is only matched, so a standing instruction there outranks anything the plugin can say about itself:
 
 ```markdown
@@ -164,7 +182,8 @@ For every command's argument and an example, see the [command reference](docs/co
 - `/docs-assist:draft [topic]`: the primary workflow.
   Guides a contributor through turning their knowledge into a structured draft.
   Bring the expertise, the plugin handles the writing.
-  Behind it, the work is split across three isolated reviewers: one that holds what is true, one that keeps examples coherent across the whole docs set, and one that writes and then declares every assumption it had to make to write it. That last list is what you review, instead of the whole draft.
+  Behind it, the work is split across three isolated reviewers: one that holds what is true, one that keeps examples coherent across the whole docs set, and one that writes and then declares every assumption it had to make to write it.
+  That last list is what you review, instead of the whole draft.
 - `/docs-assist:plan [repo or description]`: plan a full documentation set.
   Reads the codebase, asks about users and goals, maps user journeys, and proposes a prioritized plan before writing anything.
   Once the plan is approved, docs whose material already exists draft in parallel, and you review the queue instead of co-writing each one.
@@ -182,11 +201,13 @@ For every command's argument and an example, see the [command reference](docs/co
 - `/docs-assist:release-notes [range, tag, or version]`: turn a release's worth of changes into reader-facing release notes.
   Reads the commits and PRs, asks you for the why, and writes notes that lead with what readers must know.
 - `/docs-assist:merge-prep [branch]`: get a docs change ready to merge.
-  Whole-set continuity, `llms.txt`, bundle drift, the deterministic checks, linting, and link checking, in one pass you ask for. Nothing expensive runs without being asked.
+  Whole-set continuity, `llms.txt`, bundle drift, the deterministic checks, linting, and link checking, in one pass you ask for.
+  Nothing expensive runs without being asked.
 
 ### Configure
 
-- `/docs-assist:setup [stage]`: conventions, linting, hooks, and site navigation in one pass. Every stage opt-in.
+- `/docs-assist:setup [stage]`: conventions, linting, hooks, and site navigation in one pass.
+  Every stage opt-in.
   Default off.
 
 ## Configure for your team
@@ -196,12 +217,14 @@ Commit a `.docs-assist/` directory and the whole team writes to the same convent
 - `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools).
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
-- `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and product terms, so examples and terminology stay consistent across docs. The plugin maintains it, and audits flag drift against it.
+- `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and product terms, so examples and terminology stay consistent across docs.
+  The plugin maintains it, and audits flag drift against it.
 
 Run `/docs-assist:setup` to generate them, pre-filled from what your docs already do.
 Because this config is committed to your repo, it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
 
-Writing solo? The same config is how the plugin acts as your second reader: it holds your docs to a consistent line and catches the drift in examples and terminology that a team would catch in review.
+Writing solo?
+The same config is how the plugin acts as your second reader: it holds your docs to a consistent line and catches the drift in examples and terminology that a team would catch in review.
 
 ## Lint with the same rules you write by
 
@@ -209,7 +232,8 @@ Linting is optional and never bundled.
 Run `/docs-assist:setup` to scaffold it, and the plugin generates the linter config from your `.docs-assist/config.yml`.
 That means one source of truth: the same settings drive how the agent writes and how the linter checks, so they never drift.
 
-- Vale runs a small `DocsAssist` style for what's specific to this plugin (AI voice, no em dashes, descriptive link text, imperative headings), plus the managed `Google`, `write-good`, and `alex` packages for everything general-purpose (weasel words, passive voice, wordiness, clichés, inclusive language). General prose quality is a solved, maintained problem; this plugin doesn't keep its own copy of it.
+- Vale runs a small `DocsAssist` style for what's specific to this plugin (AI voice, no em dashes, descriptive link text, imperative headings), plus the managed `Google`, `write-good`, and `alex` packages for everything general-purpose (weasel words, passive voice, wordiness, clichés, inclusive language).
+  General prose quality is a solved, maintained problem; this plugin doesn't keep its own copy of it.
 - markdownlint covers the structural rules.
 - cspell and a link checker cover spelling and links.
 - MegaLinter is offered for teams that want one aggregated tool.
@@ -241,9 +265,12 @@ Cheap detection in CI, expensive updating only when it is warranted.
 
 Your docs' readers now include AI tools: coding agents, docs assistants, and search systems that read structure before prose.
 
-`/docs-assist:merge-prep` creates or repairs `llms.txt`, the map an AI tool reads first, along with everything else that scales with the whole set. It runs when you ask for it and not at the end of every edit, because a single content fix should not trigger a regenerate-and-diff pass over your entire docs tree.
+`/docs-assist:merge-prep` creates or repairs `llms.txt`, the map an AI tool reads first, along with everything else that scales with the whole set.
+It runs when you ask for it and not at the end of every edit, because a single content fix should not trigger a regenerate-and-diff pass over your entire docs tree.
 
-Nothing here depends on frontmatter. Site generators disagree about what frontmatter they accept, plenty of documentation has no site generator at all, and frontmatter only pays off once a reader has already landed on the page. The plugin keeps what it needs in `.docs-assist/`, reads your frontmatter when you have it, and offers to wire more up when you want it.
+Nothing here depends on frontmatter.
+Site generators disagree about what frontmatter they accept, plenty of documentation has no site generator at all, and frontmatter only pays off once a reader has already landed on the page.
+The plugin keeps what it needs in `.docs-assist/`, reads your frontmatter when you have it, and offers to wire more up when you want it.
 
 ## What's inside
 
@@ -297,7 +324,9 @@ If you try it and something falls short, [an issue](https://github.com/EdwardAng
 
 ## Status
 
-Version 1.0.0. The command surface and the drafting mechanism both changed substantially in this release, so anything you pinned against 0.9.x is worth re-reading. `CHANGELOG.md` has the detail, including a Known limits section.
+Version 1.0.0.
+The command surface and the drafting mechanism both changed substantially in this release, so anything you pinned against 0.9.x is worth re-reading.
+`CHANGELOG.md` has the detail, including a Known limits section.
 
 ## Background
 
@@ -319,4 +348,5 @@ See the [contributing guidelines](CONTRIBUTING.md).
 
 ## License
 
-Apache 2.0. See [LICENSE](LICENSE) for details.
+Apache 2.0.
+See [LICENSE](LICENSE) for details.

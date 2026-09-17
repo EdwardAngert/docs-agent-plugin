@@ -1,6 +1,7 @@
 # Documentation patterns
 
-Content types live in their own canonical file. See `content-types.md` for the full list, when to use each, and the frontmatter value to set.
+Content types live in their own canonical file.
+See `content-types.md` for the full list, when to use each, and the frontmatter value to set.
 This file covers the patterns, antipatterns, examples, and practices that apply across all content types.
 
 ## Documentation antipatterns

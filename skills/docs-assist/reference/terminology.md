@@ -11,13 +11,18 @@ Load this when writing or auditing docs in a project that has a registry, or whe
 
 ## The reference registry
 
-`.docs-assist/reference.yml` holds the canonical vocabulary for the project, as `term` entries, alongside example values and other registered facts. Read it first, write with its terms, and keep it current. The full format, including the other entry kinds, is single-sourced in `reference-registry.md`; this section only covers what's specific to terminology.
+`.docs-assist/reference.yml` holds the canonical vocabulary for the project, as `term` entries, alongside example values and other registered facts.
+Read it first, write with its terms, and keep it current.
+The full format, including the other entry kinds, is single-sourced in `reference-registry.md`; this section only covers what's specific to terminology.
 
-Reading, creating, and maintaining entries, the `style.md` boundary, and the Vale compilation are all in `reference-registry.md` under `term`. They are not restated here, because two copies of a rule drift and this file already had the older wording.
+Reading, creating, and maintaining entries, the `style.md` boundary, and the Vale compilation are all in `reference-registry.md` under `term`.
+They are not restated here, because two copies of a rule drift and this file already had the older wording.
 
 What is specific to terminology, and lives only here:
 
-- **A canonical form is authoritative in prose, not in code.** A `term` entry governs how a concept is named in sentences. Identifiers, file paths, command names, and config keys keep whatever the code calls them, even when that differs from the canonical prose term. This is why `example-continuity.mjs` checks `example-variable` variants inside code blocks and deliberately does not check `term` variants there.
+- **A canonical form is authoritative in prose, not in code.** A `term` entry governs how a concept is named in sentences.
+  Identifiers, file paths, command names, and config keys keep whatever the code calls them, even when that differs from the canonical prose term.
+  This is why `example-continuity.mjs` checks `example-variable` variants inside code blocks and deliberately does not check `term` variants there.
 
 ## How the audit uses it
 

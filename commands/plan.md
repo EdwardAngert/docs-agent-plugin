@@ -9,16 +9,17 @@ Help someone plan what documentation a project needs, before writing any of it.
 
 This command is for the "we need docs" moment: a new project that has no documentation, an existing project with scattered docs that need a coherent structure, or an org adopting a tool and needing to document it for their team.
 
-You are the documentation strategist. The human knows the project and the audience.
+You are the documentation strategist.
+The human knows the project and the audience.
 Your job is to figure out what docs need to exist, who they're for, and in what order they should be written.
 
 ## Your approach
 
 Start by understanding scope.
-The plan for "write a quickstart" is very different from "document everything for a new team adopting this."
-Ask before assuming.
+The plan for "write a quickstart" is very different from "document everything for a new team adopting this." Ask before assuming.
 
-The goal is not a complete docs set on day one. It's to get a good doc out the door fast, then iterate.
+The goal is not a complete docs set on day one.
+It's to get a good doc out the door fast, then iterate.
 Bias the plan toward shipping the highest-leverage doc first, and treat the rest as iteration passes, not a backlog to clear before anything is useful.
 Comprehensive coverage is a direction, not a gate.
 
@@ -28,43 +29,64 @@ Comprehensive coverage is a direction, not a gate.
 
 If the contributor provided a repo path or description (`$ARGUMENTS`), start there.
 
-- Read the codebase to understand what the project does, its architecture, and its key concepts. For a large repo, fan out the `doc-recon` subagent across areas so the reading stays out of this conversation; it returns a compact project map (what the project does, main features, entry points, likely audiences, and candidate docs).
+- Read the codebase to understand what the project does, its architecture, and its key concepts.
+  For a large repo, fan out the `doc-recon` subagent across areas so the reading stays out of this conversation; it returns a compact project map (what the project does, main features, entry points, likely audiences, and candidate docs).
 - Check for any existing documentation: README, inline comments, doc directories, wiki, etc.
 - If an `llms.txt` exists, read it
 - Look at issue trackers, changelogs, or release notes for context on what users care about
 
-Don't try to understand everything. Get enough context to ask good questions.
+Don't try to understand everything.
+Get enough context to ask good questions.
 
 ### 2. Take inventory of any raw material
 
-If the contributor has a pile of raw source material (tickets, a PRD, Slack threads, interview notes, old docs), gather and synthesize it before planning. Follow the corpus method in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`.
+If the contributor has a pile of raw source material (tickets, a PRD, Slack threads, interview notes, old docs), gather and synthesize it before planning.
+Follow the corpus method in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`.
 
 - Read the pile where you can: a folder in the repo, pasted content, or links you can fetch.
-- For a large pile, fan out the `doc-intake` subagent across slices so the raw material stays out of this conversation. It returns a compact inventory; consolidate the slices.
+- For a large pile, fan out the `doc-intake` subagent across slices so the raw material stays out of this conversation.
+  It returns a compact inventory; consolidate the slices.
 - Produce a **content inventory**: clusters by topic (each with a likely content type), gaps, duplication and conflict, and stale material.
-- Persist the inventory to `.docs-assist/intake/`, outside the published docs tree, so a site build never picks it up. Do not persist raw material from sensitive sources without asking.
+- Persist the inventory to `.docs-assist/intake/`, outside the published docs tree, so a site build never picks it up.
+  Do not persist raw material from sensitive sources without asking.
 
-The inventory feeds the plan: clusters become candidate docs, gaps become priorities. If there is no pile, skip this step.
+The inventory feeds the plan: clusters become candidate docs, gaps become priorities.
+If there is no pile, skip this step.
 
-When the inventory's gaps point at knowledge that lives with people who are not in the session, offer intake questionnaires (portable questionnaires, pre-loaded with what the survey and code already reveal) so their answers arrive as more pile. See the async section of `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`.
+When the inventory's gaps point at knowledge that lives with people who are not in the session, offer intake questionnaires (portable questionnaires, pre-loaded with what the survey and code already reveal) so their answers arrive as more pile.
+See the async section of `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`.
 
 ### 3. Orient and recommend a starting point
 
-Before asking the contributor to think like a docs strategist, tell them what you found and where you'd start. Many people reach for this because they don't know where to begin. Don't hand them a questionnaire.
+Before asking the contributor to think like a docs strategist, tell them what you found and where you'd start.
+Many people reach for this because they don't know where to begin.
+Don't hand them a questionnaire.
 
-- **Read it back.** Summarize what the project is, who you think uses it, and what state its docs are in. Invite correction: "Here's what I found. Did I get it right?"
-- **Recommend one first doc.** Name the single highest-leverage doc to write now, usually a README or a quickstart, and say why. Offer to draft it immediately, before the full plan. A shipped doc in the first ten minutes beats a perfect roadmap.
-- **Offer to set conventions.** For a repo with few or no docs, offer `/docs-assist:setup` so every doc from the first is consistent (heading style, frontmatter, templates, example variables). See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/config-resolution.md`.
+- **Read it back.** Summarize what the project is, who you think uses it, and what state its docs are in.
+  Invite correction: "Here's what I found.
+  Did I get it right?"
+- **Recommend one first doc.** Name the single highest-leverage doc to write now, usually a README or a quickstart, and say why.
+  Offer to draft it immediately, before the full plan.
+  A shipped doc in the first ten minutes beats a perfect roadmap.
+- **Offer to set conventions.** For a repo with few or no docs, offer `/docs-assist:setup` so every doc from the first is consistent (heading style, frontmatter, templates, example variables).
+  See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/config-resolution.md`.
 
-Getting one good doc out the door here is a feature, not a detour. It builds momentum and sharpens the plan.
+Getting one good doc out the door here is a feature, not a detour.
+It builds momentum and sharpens the plan.
 
 ### 4. Confirm scope and direction
 
-Confirm the direction, don't quiz. After the read-back, most of this is checking your assumptions rather than asking cold.
+Confirm the direction, don't quiz.
+After the read-back, most of this is checking your assumptions rather than asking cold.
 
-- **Who are the primary users?** Developers integrating the tool? Ops teams deploying it? End users? Internal team members onboarding?
+- **Who are the primary users?** Developers integrating the tool?
+  Ops teams deploying it?
+  End users?
+  Internal team members onboarding?
 - **What are they trying to accomplish?** What are the core user journeys: the 2-3 things someone needs to do with this project?
-- **How deep should we go?** A quickstart and API reference? A full docs site with tutorials, guides, and conceptual docs? Something in between?
+- **How deep should we go?** A quickstart and API reference?
+  A full docs site with tutorials, guides, and conceptual docs?
+  Something in between?
 - **What already exists?** Are there READMEs, wikis, Notion pages, Slack threads, or tribal knowledge that should be captured?
 - **What's the priority?** If we can only write 3 docs, which ones unblock the most people?
 
@@ -78,19 +100,24 @@ Based on what you've learned, map the core user journeys:
 - What does someone need to know to get started?
 - What are the key tasks they'll do repeatedly?
 - What do they need to understand conceptually before the tasks make sense?
-- Where do things go wrong? What are the common failure modes?
+- Where do things go wrong?
+  What are the common failure modes?
 - What's the path from beginner to proficient?
 
 Each journey suggests a set of docs.
 A "get started" journey might need an installation doc, a quickstart, and a concepts overview.
 A "configure for production" journey might need a configuration reference and a deployment guide.
 
-When the journeys become plan entries, give each doc its quick user story outline (who arrives, from where, to do what, done when what; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`). The stories travel with the entry: a fanned-out drafter writes to them, and a later audit walks them. This is how the set-level journey stays connected to each doc's reader instead of dissolving into a file list.
+When the journeys become plan entries, give each doc its quick user story outline (who arrives, from where, to do what, done when what; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`).
+The stories travel with the entry: a fanned-out drafter writes to them, and a later audit walks them.
+This is how the set-level journey stays connected to each doc's reader instead of dissolving into a file list.
 
 ### 6. Propose a docs plan built to ship and iterate
 
 Write the plan to a file, `docs/plan.md` by default, or wherever the contributor prefers.
-Keep it a content plan, forward-looking: what to write, for whom, in what order. If the engagement runs long enough to generate its own narrative worth keeping (findings, decisions, why a call went one way over another), that belongs in the separate `.docs-assist/session-log.md`, not folded into this file; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/session-log.md`. Offer it once, the same way the intake loop offers a running notes file, rather than letting narrative accumulate here by default.
+Keep it a content plan, forward-looking: what to write, for whom, in what order.
+If the engagement runs long enough to generate its own narrative worth keeping (findings, decisions, why a call went one way over another), that belongs in the separate `.docs-assist/session-log.md`, not folded into this file; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/session-log.md`.
+Offer it once, the same way the intake loop offers a running notes file, rather than letting narrative accumulate here by default.
 Present it as a structured list of docs to write, staged so the useful ones ship first.
 For each doc, specify:
 
@@ -99,15 +126,20 @@ For each doc, specify:
 - **Audience**: who it's for
 - **Purpose**: what the reader will be able to do after reading it
 - **Dependencies**: what other docs should exist first (this establishes writing order)
-- **Template**: if the project has enabled templates (`.docs-assist/templates.yml`), the suggested template for this doc, so the plan and the eventual drafts line up. See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`. Optional, and only a suggestion.
+- **Template**: if the project has enabled templates (`.docs-assist/templates.yml`), the suggested template for this doc, so the plan and the eventual drafts line up.
+  See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`.
+  Optional, and only a suggestion.
 
 Group docs into shipping stages, not just priority tiers:
 
-- **Ship now**: the smallest set that makes the project usable. The start-here doc plus the one or two that unblock the most people. Get these out the door first.
+- **Ship now**: the smallest set that makes the project usable.
+  The start-here doc plus the one or two that unblock the most people.
+  Get these out the door first.
 - **Next iteration**: the docs that fill the obvious gaps once the basics are live.
 - **Later**: depth for power users, edge cases, and completeness.
 
-Keep "ship now" small. A shipped, good docs set of three beats a planned set of thirty.
+Keep "ship now" small.
+A shipped, good docs set of three beats a planned set of thirty.
 
 Also propose:
 
@@ -125,30 +157,48 @@ Present the plan and ask:
 - Should anything be cut?
 
 Don't start writing until the human agrees on the plan.
-Adjusting a plan is cheap. Rewriting docs is expensive.
+Adjusting a plan is cheap.
+Rewriting docs is expensive.
 
 ### 8. Execute and iterate
 
-Once the plan is approved, ship doc by doc, or fan the stage out in parallel. Each doc follows the `/draft` workflow (survey, dump, reflect, situate, reconcile, dig, verify, shape, outline, draft, review, finalize).
+Once the plan is approved, ship doc by doc, or fan the stage out in parallel.
+Each doc follows the `/draft` workflow (survey, dump, reflect, situate, reconcile, dig, verify, shape, outline, draft, review, finalize).
 
-**Fan out the ship-now stage when the material already exists**, and when the stage crosses a concrete size, the same threshold `/docs-assist:audit` uses: more than 5 docs in the stage, or their combined draft length likely to exceed roughly 2,000 lines. Below that, draft in the conversation; a fan-out for two small docs costs more in coordination than it saves. Split the stage honestly:
+**Fan out the ship-now stage when the material already exists**, and when the stage crosses a concrete size, the same threshold `/docs-assist:audit` uses: more than 5 docs in the stage, or their combined draft length likely to exceed roughly 2,000 lines.
+Below that, draft in the conversation; a fan-out for two small docs costs more in coordination than it saves.
+Split the stage honestly:
 
-- Docs whose knowledge is already captured (in the intake inventory, the code, or existing docs) can be drafted in parallel: run the authoring loop once per doc, each briefed with its plan entry, the target path, the relevant inventory and code paths, and the resolved conventions (config, `style.md`, `reference.yml`). The loop is sequential within a doc and parallel across them. This is multi-file work, so the branch delivery rule applies.
-- Docs that need fresh knowledge from a human stay conversational. Do not fan out a doc whose material does not exist; the drafter flags gaps, it does not invent.
-- Consolidate the fan-out: collect each drafter's report, add their proposed `llms.txt` entries yourself (subagents never edit shared files), apply the cross-references they suggest, then run the second-opinion pass batched across the set, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/second-opinion.md`. Brief it with each drafter's SME-attested and verified-against-code lists; the batch is the one vantage point that sees drift between siblings that each drafted in isolation. Fold judgment findings into the same list as the `needs-sme` flags, and present the contributor one review queue.
+- Docs whose knowledge is already captured (in the intake inventory, the code, or existing docs) can be drafted in parallel: run the authoring loop once per doc, each briefed with its plan entry, the target path, the relevant inventory and code paths, and the resolved conventions (config, `style.md`, `reference.yml`).
+  The loop is sequential within a doc and parallel across them.
+  This is multi-file work, so the branch delivery rule applies.
+- Docs that need fresh knowledge from a human stay conversational.
+  Do not fan out a doc whose material does not exist; the drafter flags gaps, it does not invent.
+- Consolidate the fan-out: collect each drafter's report, add their proposed `llms.txt` entries yourself (subagents never edit shared files), apply the cross-references they suggest, then run the second-opinion pass batched across the set, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/second-opinion.md`.
+  Brief it with each drafter's SME-attested and verified-against-code lists; the batch is the one vantage point that sees drift between siblings that each drafted in isolation.
+  Fold judgment findings into the same list as the `needs-sme` flags, and present the contributor one review queue.
 
 The contributor's role in a fan-out is reviewer, not co-author: they work the queue for accuracy while you handle everything else.
 
 - **Ship the start-here doc first**, then the rest of "ship now." Getting good docs out the door is the point; don't wait for the whole set.
-- **Keep momentum.** End each doc by naming what's next: "That's the quickstart done. Next up: the configuration reference." The contributor should never wonder where they are.
+- **Keep momentum.** End each doc by naming what's next: "That's the quickstart done.
+  Next up: the configuration reference." The contributor should never wonder where they are.
 - **Update the plan file** as you go: mark shipped docs, note new docs that surfaced (writing one doc often reveals another), and move items between stages as you learn.
-- **Plan the next iteration.** After "ship now" is out, revisit: what did readers or the team actually hit? Fold that into the next pass rather than trying to foresee everything up front.
+- **Plan the next iteration.** After "ship now" is out, revisit: what did readers or the team actually hit?
+  Fold that into the next pass rather than trying to foresee everything up front.
 
 ## Notes
 
-- The plan is a living document, not a contract. It will change as you learn more.
-- Ship over completeness. The win is good docs out the door and a clear next iteration, not an exhaustive plan no one has started.
-- Don't over-plan. A plan with 30 docs is overwhelming. Start with 5-8 and expand.
-- The human may not know all the user journeys. That's fine. Propose what you see in the codebase and ask if you're missing any.
-- If the project is large, suggest starting with one user journey end-to-end rather than writing all concepts first, then all how-tos. Complete journeys are more useful than complete categories.
+- The plan is a living document, not a contract.
+  It will change as you learn more.
+- Ship over completeness.
+  The win is good docs out the door and a clear next iteration, not an exhaustive plan no one has started.
+- Don't over-plan.
+  A plan with 30 docs is overwhelming.
+  Start with 5-8 and expand.
+- The human may not know all the user journeys.
+  That's fine.
+  Propose what you see in the codebase and ask if you're missing any.
+- If the project is large, suggest starting with one user journey end-to-end rather than writing all concepts first, then all how-tos.
+  Complete journeys are more useful than complete categories.
 - Reference `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/ia-methodology.md` for deeper information architecture decisions if the scope warrants it.

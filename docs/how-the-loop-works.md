@@ -26,7 +26,8 @@ Reviewer and chair mean the same thing here.
 ## What has actually been run
 
 The loop has been run end to end once: the run that produced this page.
-Before that it was exercised twice by hand, in pieces. One of those ran against documentation whose steps had already been tested; the other ran against a recipe.
+Before that it was exercised twice by hand, in pieces.
+One of those ran against documentation whose steps had already been tested; the other ran against a recipe.
 
 Most of what follows is therefore design rather than measurement.
 The shape of the mechanism is real and it is in the repository.
@@ -36,7 +37,8 @@ The [self-assessment in the README](../README.md#what-would-improve-it-most) is 
 ## The three chairs
 
 Each chair is a subagent with its own contract.
-The contract says what the chair writes and what it may not do. Both halves carry weight differently: a rule in a constitution is a request, and a tool the chair was never granted is a guarantee.
+The contract says what the chair writes and what it may not do.
+Both halves carry weight differently: a rule in a constitution is a request, and a tool the chair was never granted is a guarantee.
 
 ### The authority chair
 
@@ -49,7 +51,9 @@ Not word choice, not structure, not heading case, not tone.
 ### The continuity chair
 
 Represents the rest of the documentation set, which is the thing neither of the other two is looking at.
-It changes example values, naming, and sequencing so a reader crossing several pages meets one coherent set, and it watches whether the set's stance holds. It records every change in a substitution list. On this page's own run, its largest finding was a naming collision: one word already meant something else to readers elsewhere in the docs.
+It changes example values, naming, and sequencing so a reader crossing several pages meets one coherent set, and it watches whether the set's stance holds.
+It records every change in a substitution list.
+On this page's own run, its largest finding was a naming collision: one word already meant something else to readers elsewhere in the docs.
 
 It may not assert facts, and it may not shape prose, pick a content type, or decide architecture.
 Any substitution that could change behavior goes back as a question instead of being applied, because harmonizing a value across two pages is a correctness loss when the two products genuinely differ, and that failure stays invisible until someone runs the commands.
@@ -101,8 +105,10 @@ Warming the packet up into readable prose is the one reliable way to break the l
 
 Two rows carry most of the weight:
 
-1. **Known misconceptions.** What the reader arrives believing, then what is actually the case. This is the row only a teacher produces, and it is the highest-value row in a concept packet.
-1. **Typed provenance.** Every claim group is labeled as a code reference, an external source, or subject matter expert experience. A required citation column was rejected, because it forces the authority chair to either fabricate a source or refuse to state material that has no citable one.
+1. **Known misconceptions.** What the reader arrives believing, then what is actually the case.
+   This is the row only a teacher produces, and it is the highest-value row in a concept packet.
+1. **Typed provenance.** Every claim group is labeled as a code reference, an external source, or subject matter expert experience.
+   A required citation column was rejected, because it forces the authority chair to either fabricate a source or refuse to state material that has no citable one.
 
 The packet is also designed to be filled in by a person.
 A packet a human wrote and a packet the authority chair emitted are the same artifact, and nothing downstream can tell them apart.
@@ -156,7 +162,9 @@ The loop is what makes that division mechanical instead of aspirational: the que
 
 ## Passes, and when the loop stops
 
-A pass is one round of the authority and advocate chairs. Continuity is not on that cycle: it runs at pass 0 and again when you prepare to merge. Each chair loads its shared rules, its own contract, and one rulebook for the current pass.
+A pass is one round of the authority and advocate chairs.
+Continuity is not on that cycle: it runs at pass 0 and again when you prepare to merge.
+Each chair loads its shared rules, its own contract, and one rulebook for the current pass.
 
 The pass number selects the rulebook, and that is the entire implementation of escalation.
 Nothing about tone changes between passes.
@@ -165,8 +173,12 @@ Selecting a stricter rulebook produces finer findings instead, and it caps the c
 
 The loop ends on whichever of these comes first:
 
-1. **An empty pass.** A pass that produces nothing at or above its threshold is a successful pass and ends the run. No minimum finding count, no target, and no quota apply, and a finding that exists only because someone was looking for it is not a finding. One bad finding costs more trust than silence, because a reader who gets one starts discounting the good ones.
-1. **An oscillation.** A pass that reverses the previous pass's change stops the run immediately. A reversal is not a defect in the loop. It has located a judgment call neither chair can settle, which is precisely where your scarce attention belongs.
+1. **An empty pass.** A pass that produces nothing at or above its threshold is a successful pass and ends the run.
+   No minimum finding count, no target, and no quota apply, and a finding that exists only because someone was looking for it is not a finding.
+   One bad finding costs more trust than silence, because a reader who gets one starts discounting the good ones.
+1. **An oscillation.** A pass that reverses the previous pass's change stops the run immediately.
+   A reversal is not a defect in the loop.
+   It has located a judgment call neither chair can settle, which is precisely where your scarce attention belongs.
 1. **The pass cap.** Three by default, four at maximum, and the fourth is off.
 
 More passes do not produce a better document.
@@ -190,11 +202,15 @@ That rule replaced a heuristic about size and story count, because it is falsifi
 
 ## What the loop is not
 
-1. **Not a review step applied to a finished document.** Pass 0 is production. The loop writes the document.
+1. **Not a review step applied to a finished document.** Pass 0 is production.
+   The loop writes the document.
 1. **Not a prose polisher bolted on at the end.** The advocate chair owns the content type and the information architecture from the start.
-1. **Not a linter.** Everything a script can decide runs before any chair and briefs it. The chairs are spent on what a script cannot decide.
-1. **Not a way to remove you from documentation.** The output is a question list. The packet is built to be human-fillable, and `/docs-assist:draft` is the loop with a person in the authority chair.
-1. **Not free.** Three passes at two or three chairs each is up to nine subagent runs for one document. Cost is the design's main practical objection to itself, and it is not settled.
+1. **Not a linter.** Everything a script can decide runs before any chair and briefs it.
+   The chairs are spent on what a script cannot decide.
+1. **Not a way to remove you from documentation.** The output is a question list.
+   The packet is built to be human-fillable, and `/docs-assist:draft` is the loop with a person in the authority chair.
+1. **Not free.** Three passes at two or three chairs each is up to nine subagent runs for one document.
+   Cost is the design's main practical objection to itself, and it is not settled.
 
 Two things sit outside the pass sequence.
 [`/docs-assist:merge-prep`](command-reference.md#docs-assistmerge-prep) is a separately invoked gate over the whole set rather than a step in any document's run, and the continuity chair runs at pass 0 and again there rather than on every pass.

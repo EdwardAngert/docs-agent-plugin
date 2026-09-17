@@ -32,8 +32,10 @@ It is a service, not a convention imposed on files the plugin does not own.
 When a project does keep it, good frontmatter serves three audiences at once:
 
 - **AI tools** can scan frontmatter to understand a doc without reading the body, which makes the plugin's "survey existing docs" step fast and accurate.
-- **Search engines and docs site search** index frontmatter fields. Keywords, descriptions, and content types improve discoverability.
-- **Human docs teams** can filter, audit, and understand their content landscape. "Show me all troubleshooting docs aimed at admins" becomes a query, not a manual review.
+- **Search engines and docs site search** index frontmatter fields.
+  Keywords, descriptions, and content types improve discoverability.
+- **Human docs teams** can filter, audit, and understand their content landscape.
+  "Show me all troubleshooting docs aimed at admins" becomes a query, not a manual review.
 
 ## Schema
 
@@ -50,16 +52,13 @@ content-type: doc
 ---
 ```
 
-**`title`**
-The document title.
+**`title`** The document title.
 Should match the H1 heading in the body.
 
-**`description`**
-One or two sentences summarizing what the doc covers and what the reader will be able to do after reading it.
+**`description`** One or two sentences summarizing what the doc covers and what the reader will be able to do after reading it.
 Write it the way you'd explain the doc to a coworker, not SEO filler, not marketing copy.
 
-**`content-type`**
-The document's structural category.
+**`content-type`** The document's structural category.
 Use one of: `doc`, `guide`, `tutorial`, `concept`, `reference`, `troubleshooting`.
 These map to the content types defined in `content-types.md`.
 
@@ -87,23 +86,19 @@ related:
 ---
 ```
 
-**`audience`**
-Who this doc is for.
-Use terms that match how your team talks about users: `developers`, `admins`, `end-users`, `new-hires`, etc.
-This isn't a controlled vocabulary. Use what makes sense for your project.
+**`audience`** Who this doc is for.
+Use terms that match how your team talks about users: `developers`, `admins`, `end-users`, `new-hires`, etc. This isn't a controlled vocabulary.
+Use what makes sense for your project.
 
-**`keywords`**
-Terms someone would use when looking for this content.
+**`keywords`** Terms someone would use when looking for this content.
 These should be words and phrases a person would actually search for, not abstract categories.
 Include the specific technologies, features, or concepts the doc covers.
 
-**`prerequisites`**
-Docs the reader should read or understand before this one.
+**`prerequisites`** Docs the reader should read or understand before this one.
 Use relative paths to other docs in the repo.
 This makes dependency chains explicit and helps the plugin avoid the "assumption gap" antipattern.
 
-**`related`**
-Other docs that cover adjacent topics.
+**`related`** Other docs that cover adjacent topics.
 Use relative paths.
 These become cross-references in the doc and help the plugin maintain connective tissue across the docs set.
 
@@ -122,23 +117,20 @@ languages:
 ---
 ```
 
-**`last-verified`**
-The date someone last confirmed the doc's technical accuracy.
-This is not the same as the file's last-modified date. A doc can be edited for formatting without being verified for accuracy.
+**`last-verified`** The date someone last confirmed the doc's technical accuracy.
+This is not the same as the file's last-modified date.
+A doc can be edited for formatting without being verified for accuracy.
 The strongest form: `/docs-assist:verify` executed the doc's procedure end to end and every runnable step passed, and the bump was offered on that evidence.
 A human read-through also earns a bump; the point is that someone, or something, checked the claims, not just the prose.
 The decay detector (`docs-decay.mjs`) reads this field, so verified docs drop down the re-verification queue.
 
-**`template`**
-The catalog id of the documentation template this doc was seeded from, when one was used.
+**`template`** The catalog id of the documentation template this doc was seeded from, when one was used.
 Set it alongside the canonical `content-type` so the origin is traceable.
 See `templates.md`.
 
-**`sme-attested`**
-The verification ledger: claims that entered the doc on a subject matter expert's word alone, because they could not be checked against the code or existing docs during the intake reconcile.
+**`sme-attested`** The verification ledger: claims that entered the doc on a subject matter expert's word alone, because they could not be checked against the code or existing docs during the intake reconcile.
 
-**The ledger's home is `.docs-assist/state/docs.yml`, under the document's `attested` key.**
-That is where the plugin writes it, and it is the same shape shown below.
+**The ledger's home is `.docs-assist/state/docs.yml`, under the document's `attested` key.** That is where the plugin writes it, and it is the same shape shown below.
 The whole value of this ledger is surviving past one sitting and shrinking over several passes, which a chat transcript cannot do and a frontmatter field cannot do in a project whose pipeline rejects unknown fields.
 
 A project that wants the ledger in frontmatter as well can have it, on an explicit yes, and the plugin reads it there.
@@ -155,12 +147,10 @@ The ledger exists to shrink: a reviewer (human or AI) verifies a claim and delet
 Audits surface docs whose ledgers are large or old.
 This gives reviewers specific claims to check instead of a doc-wide request for review.
 
-**`sdk`**
-The SDK or tool this doc relates to.
+**`sdk`** The SDK or tool this doc relates to.
 Use when a doc is specific to one SDK in a multi-SDK project.
 
-**`languages`**
-Programming languages covered in the doc's examples.
+**`languages`** Programming languages covered in the doc's examples.
 Helps AI tools and search filter by language.
 
 ## How the plugin uses frontmatter
@@ -208,23 +198,32 @@ The plugin must work with what's there, not fight it.
 During the survey step, the plugin reads frontmatter from multiple existing docs (not just one) to identify patterns:
 
 - What fields are consistently present?
-- What field names does the repo use? (`tags` vs `keywords`, `type` vs `content-type`, `category` vs `content-type`)
-- What values appear? (Are content types free-text or from a fixed set? Are audiences standardized?)
-- Are there SSG-specific fields? (`sidebar_position`, `slug`, `draft`, `weight`, `layout`, etc.)
+- What field names does the repo use?
+  (`tags` vs `keywords`, `type` vs `content-type`, `category` vs `content-type`)
+- What values appear?
+  (Are content types free-text or from a fixed set?
+  Are audiences standardized?)
+- Are there SSG-specific fields?
+  (`sidebar_position`, `slug`, `draft`, `weight`, `layout`, etc.)
 
 This survey produces a mental model of the repo's frontmatter conventions that the plugin uses for all subsequent work in the session.
 
 ### Rules for conflict resolution
 
-1. **Never overwrite existing fields.** If a doc already has `title`, `description`, or `tags`, they stay as they are. The contributor or SSG config put them there for a reason.
-1. **Match existing field names.** If the repo uses `tags`, the plugin uses `tags`, not `keywords`. If it uses `type`, the plugin uses `type`, not `content-type`. The repo's convention wins.
-1. **Preserve SSG-required fields.** Fields like the following are there because the build system needs them. Never remove or reorder them.
+1. **Never overwrite existing fields.** If a doc already has `title`, `description`, or `tags`, they stay as they are.
+   The contributor or SSG config put them there for a reason.
+1. **Match existing field names.** If the repo uses `tags`, the plugin uses `tags`, not `keywords`.
+   If it uses `type`, the plugin uses `type`, not `content-type`.
+   The repo's convention wins.
+1. **Preserve SSG-required fields.** Fields like the following are there because the build system needs them.
+   Never remove or reorder them.
    - Docusaurus: `sidebar_position`, `sidebar_label`, `slug`
    - Hugo: `weight`, `layout`, `draft`
    - Jekyll: `layout`, `permalink`, `published`, `categories`
    - Astro: `draft`, `pubDate`, `heroImage`
 1. **Add missing fields alongside existing ones.** If a doc has `title` and `description` but no content type or keywords equivalent, the plugin adds those using the repo's naming convention (or its own defaults if no convention exists).
-1. **Don't duplicate semantics.** If the repo already has `tags` and the plugin would add `keywords`, it uses `tags`. One field per concept.
+1. **Don't duplicate semantics.** If the repo already has `tags` and the plugin would add `keywords`, it uses `tags`.
+   One field per concept.
 
 ### Document the mapping
 

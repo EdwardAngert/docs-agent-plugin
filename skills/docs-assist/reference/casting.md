@@ -11,10 +11,10 @@ Load this when starting a run, or when a chair reports that the cast looks wrong
 1. **Where does the truth live?** In the system's observable behavior, or in the domain's concepts.
 1. **What does the reader need?** To complete a task, or to understand something.
 
-|                     | Reader must do                 | Reader must understand              |
-| ------------------- | ------------------------------- | ------------------------------------ |
-| Truth in the system  | SME and technical writer        | SME and instructional designer       |
-| Truth in the domain  | Professor and technical writer  | Professor and instructional designer |
+|                     | Reader must do                 | Reader must understand               |
+| ------------------- | ------------------------------ | ------------------------------------ |
+| Truth in the system | SME and technical writer       | SME and instructional designer       |
+| Truth in the domain | Professor and technical writer | Professor and instructional designer |
 
 How-to and troubleshooting pages land top left.
 Tutorials land top right, because a tutorial is a procedure in the service of learning.
@@ -42,7 +42,8 @@ An instructional designer and a technical writer are the same role with a differ
 
 This is why there are two chair definitions and not four.
 
-The continuity chair is not cast at all. It represents the rest of the documentation set, which does not change with the shape of one document, so it has one contract and no variants.
+The continuity chair is not cast at all.
+It represents the rest of the documentation set, which does not change with the shape of one document, so it has one contract and no variants.
 
 ## Reference material is the exception
 

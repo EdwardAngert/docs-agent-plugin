@@ -28,18 +28,24 @@ The live fetch is what keeps the body current without vendoring a copy that goes
 
 Suggesting a template and fetching one are two different acts with two different costs.
 
-- **Suggesting is free and offline.** The catalog ships with the plugin, so you can always name a fitting template as part of a normal drafting conversation. No configuration is required to offer one.
-- **Fetching needs the contributor's yes.** Pulling a body is a network call, so it only happens when they accept the suggestion. Their acceptance is the consent.
+- **Suggesting is free and offline.** The catalog ships with the plugin, so you can always name a fitting template as part of a normal drafting conversation.
+  No configuration is required to offer one.
+- **Fetching needs the contributor's yes.** Pulling a body is a network call, so it only happens when they accept the suggestion.
+  Their acceptance is the consent.
 
 This is how the feature stays discoverable without ever fetching something the contributor did not ask for.
 
 Read `.docs-assist/templates.yml` to decide how forward to be:
 
-- **Absent or `enabled: false`:** still offer a template once when it fits, because offering is free. If they accept, fetch it (the yes is consent), then offer to save `enabled: true` so the team is not asked every time.
-- **`enabled: true`:** treat templates as a normal part of drafting. Suggest and fetch on acceptance without a separate confirmation step.
-- **`fetch: off`:** never pull a body. You may still describe the template's shape from the catalog and draft from `content-types.md`.
+- **Absent or `enabled: false`:** still offer a template once when it fits, because offering is free.
+  If they accept, fetch it (the yes is consent), then offer to save `enabled: true` so the team is not asked every time.
+- **`enabled: true`:** treat templates as a normal part of drafting.
+  Suggest and fetch on acceptance without a separate confirmation step.
+- **`fetch: off`:** never pull a body.
+  You may still describe the template's shape from the catalog and draft from `content-types.md`.
 
-Never fetch without an explicit yes. The full schema lives in `config-resolution.md`.
+Never fetch without an explicit yes.
+The full schema lives in `config-resolution.md`.
 
 ## Select a template
 
@@ -57,15 +63,15 @@ When `selection_model: seven-action`, lead with what the reader needs to do rath
 This is [Fabrizio Ferri Benedetti's seven-action model](https://passo.uno/seven-action-model/).
 Ask what the reader is trying to accomplish, map the answer to an action, then suggest the templates for that action.
 
-| Action | The reader wants to | Typical templates |
-| --- | --- | --- |
-| Appraise | Judge whether the product fits | readme, release-notes |
-| Understand | Grasp how or why it works | concept, glossary |
-| Explore | Try it with a low barrier | quickstart, api-getting-started |
-| Practice | Carry out a task | how-to, tutorial, installation-guide |
-| Remember | Look a detail up | reference, api-reference |
-| Develop | Extend or integrate | api-reference, api-getting-started |
-| Troubleshoot | Diagnose and fix a problem | troubleshooting, contact-support |
+| Action       | The reader wants to            | Typical templates                    |
+| ------------ | ------------------------------ | ------------------------------------ |
+| Appraise     | Judge whether the product fits | readme, release-notes                |
+| Understand   | Grasp how or why it works      | concept, glossary                    |
+| Explore      | Try it with a low barrier      | quickstart, api-getting-started      |
+| Practice     | Carry out a task               | how-to, tutorial, installation-guide |
+| Remember     | Look a detail up               | reference, api-reference             |
+| Develop      | Extend or integrate            | api-reference, api-getting-started   |
+| Troubleshoot | Diagnose and fix a problem     | troubleshooting, contact-support     |
 
 The `seven_action` field in the catalog carries this mapping.
 After the action narrows the field, use `signals` to land on one template.
@@ -80,9 +86,12 @@ Name the template you are suggesting and why in one sentence, then let them acce
 
 When the contributor accepts a suggestion:
 
-1. Fetch the `template_url`. Read the `guide_url` too when you need to understand how a section is meant to be filled.
-1. Use the skeleton as the document's structure. Fill it with the contributor's knowledge following the normal drafting workflow and the standards in `tone-and-voice.md`.
-1. Adapt, do not transcribe. Drop sections that do not apply, and keep the plugin's formatting rules over the template's (heading case, list markers, no em dashes).
+1. Fetch the `template_url`.
+   Read the `guide_url` too when you need to understand how a section is meant to be filled.
+1. Use the skeleton as the document's structure.
+   Fill it with the contributor's knowledge following the normal drafting workflow and the standards in `tone-and-voice.md`.
+1. Adapt, do not transcribe.
+   Drop sections that do not apply, and keep the plugin's formatting rules over the template's (heading case, list markers, no em dashes).
 
 ## Fall back by asking
 

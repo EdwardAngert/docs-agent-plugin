@@ -9,8 +9,10 @@ The validation methods at the end need real users, so treat them as recommendati
 
 Use these when proposing a structure in `/docs-assist:plan` or recommending changes in `/docs-assist:audit`.
 
-- **Match user mental models**, not the org chart. Group by what readers are trying to do.
-- **Progressive disclosure**: lead with an overview, link to detail. Do not front-load everything.
+- **Match user mental models**, not the org chart.
+  Group by what readers are trying to do.
+- **Progressive disclosure**: lead with an overview, link to detail.
+  Do not front-load everything.
 - **Clear hierarchy**: three to four levels at most.
 - **Consistent patterns**: similar things live in similar places and follow the same shape.
 - **Logical grouping**: related topics sit together, connected by cross-references.
@@ -19,8 +21,10 @@ Use these when proposing a structure in `/docs-assist:plan` or recommending chan
 
 Pick the pattern that fits how readers approach the content:
 
-- **Task-based**: organized by user goals. The default for product docs.
-- **Topic-based**: organized by subject matter. Good for conceptual material.
+- **Task-based**: organized by user goals.
+  The default for product docs.
+- **Topic-based**: organized by subject matter.
+  Good for conceptual material.
 - **Reference**: alphabetical or categorized for lookup.
 - **Hybrid**: task-based navigation with a reference section, chosen per content type.
 
@@ -44,7 +48,8 @@ When restructuring an existing set:
 
 ## Validate with real users (reference)
 
-These methods confirm a structure works, but they need participants and analytics you do not have in a session. Recommend them to the docs lead when the stakes justify it.
+These methods confirm a structure works, but they need participants and analytics you do not have in a session.
+Recommend them to the docs lead when the stakes justify it.
 
 - **Tree testing**: can users find a given item in the proposed structure?
 - **First-click testing**: do users start down the right path?

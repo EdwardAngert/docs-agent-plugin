@@ -25,12 +25,15 @@ Ask for help writing docs the way you normally would, and Claude Code guides you
 /reload-plugins
 ```
 
-Then ask Claude Code for documentation help in plain words. Nothing else is required.
+Then ask Claude Code for documentation help in plain words.
+Nothing else is required.
 
 Two optional things make it work better in your repo, and `/docs-assist:setup` offers both:
 
 - **Committed conventions** in `.docs-assist/`, so the plugin holds your docs to your heading style, your terminology, and your example values instead of inferring them each time.
-- **Three lines in `CLAUDE.md`** telling Claude Code to reach for the plugin when work touches your docs. This matters more than it looks: the plugin activates when something matches what you *said*, so work that never mentions documentation never reaches it. A standing instruction in `CLAUDE.md` closes that gap.
+- **Three lines in `CLAUDE.md`** telling Claude Code to reach for the plugin when work touches your docs.
+  This matters more than it looks: the plugin activates when something matches what you *said*, so work that never mentions documentation never reaches it.
+  A standing instruction in `CLAUDE.md` closes that gap.
 
 ## What the plugin does behind the scenes
 
@@ -51,8 +54,7 @@ The plugin handles the structure and polish.
 
 ### Start talking
 
-You don't need to know what "content type" your doc should be, or whether it's a "guide" or a "tutorial."
-Tell Claude Code what you want to document, and it opens by asking you to share everything you know:
+You don't need to know what "content type" your doc should be, or whether it's a "guide" or a "tutorial." Tell Claude Code what you want to document, and it opens by asking you to share everything you know:
 
 ```text
 I need to document how to set up SSO for enterprise customers.
@@ -72,7 +74,8 @@ Claude Code will figure out the right structure.
 
 If you have a rough brain dump, paste it in.
 If your steps are out of order, that's fine.
-If you're not sure about one part, say so. Claude Code will mark it for verification instead of skipping it.
+If you're not sure about one part, say so.
+Claude Code will mark it for verification instead of skipping it.
 
 The plugin is designed to work with how people actually share knowledge, not how finished docs look.
 
@@ -100,7 +103,8 @@ Focus on:
 
 For a new doc, Claude Code can start from a proven structure instead of a blank page, using [The Good Docs Project](https://www.thegooddocsproject.dev/) templates.
 Describe the problem in plain words, like "people keep opening tickets about a login loop," and it suggests a matching template and fills it with what you know.
-Take the suggestion, pick another, or decline. It's a head start, not a requirement.
+Take the suggestion, pick another, or decline.
+It's a head start, not a requirement.
 
 ### Use the draft command to start somewhere specific
 

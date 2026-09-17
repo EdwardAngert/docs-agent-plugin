@@ -8,7 +8,8 @@ This file single-sources the format, the ordering, and the maintenance contract;
 
 Follow the llms.txt convention ([llmstxt.org](https://llmstxt.org/)): a Markdown file at the repo root, structured so both humans and machines can parse it.
 
-1. An H1 with the project name. The only required element.
+1. An H1 with the project name.
+   The only required element.
 1. A blockquote summarizing what the project is and does, in one or two sentences.
 1. Optionally, short prose paragraphs with context a tool needs before diving in (including the field-mapping note below).
 1. H2 sections containing link lists, each entry as `- [title](relative/path.md): one-line description`.
@@ -29,8 +30,10 @@ Use it for genuinely skippable depth, and use descriptive names (`For Docs Leads
 
 ## Ordering and descriptions
 
-- **Order by reader priority, not alphabetically.** The start-here doc leads. Within a section, the order answers "what should someone (or something) read first?"
-- **Descriptions say what the doc covers and who it serves**, in the voice you would use to point a coworker at it. Honest beats complete: a wrong description misleads every agent that reads it.
+- **Order by reader priority, not alphabetically.** The start-here doc leads.
+  Within a section, the order answers "what should someone (or something) read first?"
+- **Descriptions say what the doc covers and who it serves**, in the voice you would use to point a coworker at it.
+  Honest beats complete: a wrong description misleads every agent that reads it.
 - **Every doc is listed or intentionally excluded.** Working artifacts (`.docs-assist/intake/`, `.docs-assist/reports/`) stay out; published docs go in.
 
 ## The mapping note
@@ -46,7 +49,8 @@ Pointing at the registry tells an agent which values and terms are canonical, wh
 
 ## The maintenance contract
 
-`llms.txt` is only useful while it is true. Each workflow holds up its part:
+`llms.txt` is only useful while it is true.
+Each workflow holds up its part:
 
 - **Draft** adds an entry for every new doc it finalizes, placed by reader priority.
 - **Update** reconciles entries whenever its edits add, remove, rename, move, or re-describe a doc.

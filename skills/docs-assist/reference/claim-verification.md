@@ -3,19 +3,32 @@
 This is what the authority chair does to a ledger entry, and what an audit does to a finished doc.
 For claims about something the project does not vendor, the method here has no reach; use `external-verification.md` instead.
 
-Every doc makes claims the code can confirm or refute: a flag exists and behaves as described, a default value matches, a config key is spelled right, an error message reads as documented, a version requirement still holds, a described behavior actually happens. Mechanical linting (Vale, markdownlint, cspell) cannot check any of this: it operates on the prose's surface, not its truth. Tracing claims to the code is the audit's highest-value pass, and the one most likely to get skipped, because the mechanical pass is easier to automate and produces a satisfying clean count that feels like the work is done. It is not; it just did the cheaper half.
+Every doc makes claims the code can confirm or refute: a flag exists and behaves as described, a default value matches, a config key is spelled right, an error message reads as documented, a version requirement still holds, a described behavior actually happens.
+Mechanical linting (Vale, markdownlint, cspell) cannot check any of this: it operates on the prose's surface, not its truth.
+Tracing claims to the code is the audit's highest-value pass, and the one most likely to get skipped, because the mechanical pass is easier to automate and produces a satisfying clean count that feels like the work is done.
+It is not; it just did the cheaper half.
 
 ## The plugin's own artifacts are never evidence
 
-Anything under `.docs-assist/` is the plugin's working tree: cached claim output, reconstructed packets, reports, intake material, state. None of it counts as evidence that a claim is true.
+Anything under `.docs-assist/` is the plugin's working tree: cached claim output, reconstructed packets, reports, intake material, state.
+None of it counts as evidence that a claim is true.
 
-The reason is circularity, and it fails silently. A claim cache records the text of every claim it found. A reconstructed packet is a transcription of what a document asserts. A report quotes both. Resolve a claim by searching those and it confirms itself, the check reports zero findings, and zero findings is indistinguishable from a clean repository.
+The reason is circularity, and it fails silently.
+A claim cache records the text of every claim it found.
+A reconstructed packet is a transcription of what a document asserts.
+A report quotes both.
+Resolve a claim by searching those and it confirms itself, the check reports zero findings, and zero findings is indistinguishable from a clean repository.
 
-This happened here. Committing `.docs-assist/claims/` took `check-claims.mjs` from 20 findings to 0 between two runs with nothing fixed in between.
+This happened here.
+Committing `.docs-assist/claims/` took `check-claims.mjs` from 20 findings to 0 between two runs with nothing fixed in between.
 
-**Whether a project tracks these artifacts is its own call.** Committing them gives a team a shared record so the same claim is not re-litigated by the next contributor; gitignoring them keeps the working tree quiet. Both are fine, and the checks must be immune either way.
+**Whether a project tracks these artifacts is its own call.** Committing them gives a team a shared record so the same claim is not re-litigated by the next contributor; gitignoring them keeps the working tree quiet.
+Both are fine, and the checks must be immune either way.
 
-What is worth tracking is not the raw output but the **resolutions**. A claim that needed judgment and got settled becomes a `fact` entry in `.docs-assist/reference.yml`, with a `source` so it stays re-checkable, or an attested-claim entry in `.docs-assist/state/docs.yml` when nothing can source it. Those are small, hand-editable, and survive a merge. The JSON is a cache, and a cache in version control is diff noise that nobody can resolve by hand.
+What is worth tracking is not the raw output but the **resolutions**.
+A claim that needed judgment and got settled becomes a `fact` entry in `.docs-assist/reference.yml`, with a `source` so it stays re-checkable, or an attested-claim entry in `.docs-assist/state/docs.yml` when nothing can source it.
+Those are small, hand-editable, and survive a merge.
+The JSON is a cache, and a cache in version control is diff noise that nobody can resolve by hand.
 
 ## What counts as a claim
 
@@ -30,24 +43,40 @@ A doc with no such claims (pure narrative, a concept overview with no specifics)
 
 ## How to trace one
 
-Before tracing by hand, run `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/check-claims.mjs` (no setup needed; it auto-discovers docs from `docs_dir` plus README/AGENTS/CLAUDE.md). It's deterministic and dependency-free, the same philosophy as `check-facts.mjs` and `docs-decay.mjs`: it extracts every identifier-shaped claim (file paths, CLI flags, function or class names, config/env keys) across the whole doc set in one pass and resolves each against the code with `git grep`, instead of a reader re-deriving the same mechanical lookups one claim at a time. What it confirms or flags "missing" needs no further tracing; what it can't settle (described behavior, numeric assertions, runtime claims) it writes to `claims-needs-judgment.json`, grouped by doc, which is exactly what the fan-out below is for. A "missing" result still deserves a look before you report it: the target can be real but gitignored (a vendored asset, a build artifact) rather than actually gone, since the check only sees tracked content.
+Before tracing by hand, run `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/check-claims.mjs` (no setup needed; it auto-discovers docs from `docs_dir` plus README/AGENTS/CLAUDE.md).
+It's deterministic and dependency-free, the same philosophy as `check-facts.mjs` and `docs-decay.mjs`: it extracts every identifier-shaped claim (file paths, CLI flags, function or class names, config/env keys) across the whole doc set in one pass and resolves each against the code with `git grep`, instead of a reader re-deriving the same mechanical lookups one claim at a time.
+What it confirms or flags "missing" needs no further tracing; what it can't settle (described behavior, numeric assertions, runtime claims) it writes to `claims-needs-judgment.json`, grouped by doc, which is exactly what the fan-out below is for.
+A "missing" result still deserves a look before you report it: the target can be real but gitignored (a vendored asset, a build artifact) rather than actually gone, since the check only sees tracked content.
 
 For each claim the script leaves unresolved, or when working a doc by hand without it:
 
-1. Find where the code would prove or disprove it: grep for the flag name, the config key, the constant, the function. Read the actual definition, not just a usage site.
+1. Find where the code would prove or disprove it: grep for the flag name, the config key, the constant, the function.
+   Read the actual definition, not just a usage site.
 1. Compare what you find to what the doc states:
    - **Matches**: no finding, move on.
-   - **Drifted**: the code exists but disagrees with the doc (a renamed flag, a changed default, an updated error string, a signature that gained or dropped a parameter). Report the specific doc line next to the specific code line; this is the finding, not "seems outdated."
-   - **Missing**: nothing in the code backs the claim anymore, removed or renamed beyond recognition. Report as Critical: a reader will follow instructions that no longer resolve to anything.
-1. When a static read cannot settle it, because the claim is about runtime behavior rather than a fixed value ("retries with exponential backoff," "starts within 30 seconds"), it is a candidate for `/docs-assist:verify`, not something to guess at from reading. Say so rather than marking it verified on inference.
-1. If the claim is already a `fact` entry in `.docs-assist/reference.yml`, check its `source` field directly instead of re-deriving from scratch; see `reference-registry.md`. If it is not tracked yet and looks likely to drift again (a default that has already changed once, a value repeated across several docs), offer to add it, so the same claim gets caught automatically next time the source changes instead of needing a full manual retrace.
+   - **Drifted**: the code exists but disagrees with the doc (a renamed flag, a changed default, an updated error string, a signature that gained or dropped a parameter).
+     Report the specific doc line next to the specific code line; this is the finding, not "seems outdated."
+   - **Missing**: nothing in the code backs the claim anymore, removed or renamed beyond recognition.
+     Report as Critical: a reader will follow instructions that no longer resolve to anything.
+1. When a static read cannot settle it, because the claim is about runtime behavior rather than a fixed value ("retries with exponential backoff," "starts within 30 seconds"), it is a candidate for `/docs-assist:verify`, not something to guess at from reading.
+   Say so rather than marking it verified on inference.
+1. If the claim is already a `fact` entry in `.docs-assist/reference.yml`, check its `source` field directly instead of re-deriving from scratch; see `reference-registry.md`.
+   If it is not tracked yet and looks likely to drift again (a default that has already changed once, a value repeated across several docs), offer to add it, so the same claim gets caught automatically next time the source changes instead of needing a full manual retrace.
 
 ## Scope it like everything else
 
-- **Full-set audit**: run `check-claims.mjs` once for the whole set first, then fan out only what's left. Run `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/claim-briefs.mjs` against its output to generate one self-contained brief per doc from `claims-needs-judgment.json` (the claim rows, the classification method, and instructions to report only Drifted/Missing/worth-a-second-look), and hand each brief to a `chair-authority` slice as its claim-tracing task: this is exactly the per-doc work the fan-out threshold exists for (see the Notes in `${CLAUDE_PLUGIN_ROOT}/commands/audit.md`). A slice that only runs the mechanical checklist and skips this is an incomplete slice, not a fast one.
-- **Change-based audit or update**: `impact-analysis.md`'s "Command, flag, endpoint, or config key changed" row already covers the diff-driven version of this: something changed, follow it to what it touches. This method is what to run when there is no diff, against the docs set as it already stands, which is the common case for "review our existing docs" rather than "review this PR."
-- **Health check**: too deep for the fast scorecard. Health's Freshness dimension uses `docs-decay.mjs`'s churn heuristic to rank which docs are worth this trace, not to perform the trace itself. Point the full audit, or `/docs-assist:verify` for procedural claims, at what the ranking surfaces.
+- **Full-set audit**: run `check-claims.mjs` once for the whole set first, then fan out only what's left.
+  Run `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/claim-briefs.mjs` against its output to generate one self-contained brief per doc from `claims-needs-judgment.json` (the claim rows, the classification method, and instructions to report only Drifted/Missing/worth-a-second-look), and hand each brief to a `chair-authority` slice as its claim-tracing task: this is exactly the per-doc work the fan-out threshold exists for (see the Notes in `${CLAUDE_PLUGIN_ROOT}/commands/audit.md`).
+  A slice that only runs the mechanical checklist and skips this is an incomplete slice, not a fast one.
+- **Change-based audit or update**: `impact-analysis.md`'s "Command, flag, endpoint, or config key changed" row already covers the diff-driven version of this: something changed, follow it to what it touches.
+  This method is what to run when there is no diff, against the docs set as it already stands, which is the common case for "review our existing docs" rather than "review this PR."
+- **Health check**: too deep for the fast scorecard.
+  Health's Freshness dimension uses `docs-decay.mjs`'s churn heuristic to rank which docs are worth this trace, not to perform the trace itself.
+  Point the full audit, or `/docs-assist:verify` for procedural claims, at what the ranking surfaces.
 
 ## Why this, not just the linters
 
-A linter confirms a doc is well-formed. This confirms a doc is true. Both matter and neither substitutes for the other. A pass that runs the linters, gets them clean, and reports the docs as "improved" has finished the cheaper half of the job and skipped the half a reader actually depends on: whether what the doc says still matches what the code does.
+A linter confirms a doc is well-formed.
+This confirms a doc is true.
+Both matter and neither substitutes for the other.
+A pass that runs the linters, gets them clean, and reports the docs as "improved" has finished the cheaper half of the job and skipped the half a reader actually depends on: whether what the doc says still matches what the code does.

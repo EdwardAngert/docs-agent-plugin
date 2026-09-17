@@ -8,20 +8,31 @@ This config also feeds the linters, so the agent and the deterministic checks ne
 
 A configured project has a `.docs-assist/` directory at its root:
 
-- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools). Shared with the linters.
+- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools).
+  Shared with the linters.
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases) that need human judgment.
-- `.docs-assist/templates.yml`: optional. Settings for external documentation templates (auto-use flag, selection model, source, attribution). Absent does not disable suggestions: the assistant still offers a template when one fits and fetches only on the contributor's yes. See `templates.md`.
-- `.docs-assist/reference.yml`: optional. The canonical registry of example values, verified facts, worked-example pointers, and terminology, so examples and product terms stay consistent across docs. The plugin reads it and maintains it. See `reference-registry.md`. Replaces the older separate `example-variables.txt` and `terms.txt` files; the plugin no longer reads either.
+- `.docs-assist/templates.yml`: optional.
+  Settings for external documentation templates (auto-use flag, selection model, source, attribution).
+  Absent does not disable suggestions: the assistant still offers a template when one fits and fetches only on the contributor's yes.
+  See `templates.md`.
+- `.docs-assist/reference.yml`: optional.
+  The canonical registry of example values, verified facts, worked-example pointers, and terminology, so examples and product terms stay consistent across docs.
+  The plugin reads it and maintains it.
+  See `reference-registry.md`.
+  Replaces the older separate `example-variables.txt` and `terms.txt` files; the plugin no longer reads either.
 
 `/docs-assist:setup` scaffolds `config.yml` and `style.md`, pre-filled from the repo's existing conventions. drafting scaffolds `templates.yml` when a project opts into templates.
 
 ## Resolution order
 
-At the start of any workflow (draft, plan, audit, make-examples, update), resolve settings in this order. Later sources win:
+At the start of any workflow (draft, plan, audit, make-examples, update), resolve settings in this order.
+Later sources win:
 
 1. **Plugin defaults**: the rules in `tone-and-voice.md`, `content-types.md`, and `frontmatter-spec.md`.
-1. **Inferred repo conventions**: what the existing docs actually do (heading case, list markers, frontmatter field names). Detected during the survey step.
-1. **Project config**: `.docs-assist/config.yml` and `.docs-assist/style.md` when present. These are explicit and authoritative.
+1. **Inferred repo conventions**: what the existing docs actually do (heading case, list markers, frontmatter field names).
+   Detected during the survey step.
+1. **Project config**: `.docs-assist/config.yml` and `.docs-assist/style.md` when present.
+   These are explicit and authoritative.
 
 If `.docs-assist/` is absent, run on defaults plus inferred conventions, and offer to scaffold config with `/docs-assist:setup` when it would help (for example, before a team adopts the plugin).
 
@@ -31,13 +42,17 @@ When `config.yml` is present, apply it directly:
 
 - `heading_case`, `title_case_style`, `action_oriented_headings`: how you format every heading.
 - `list_marker`, `ordered_list_style`: list formatting.
-- `one_sentence_per_line`, `no_em_dashes`, `no_ai_voice`: line, punctuation, and voice rules. See `tone-and-voice.md`'s "Avoid AI Voice" section for what `no_ai_voice` covers.
-- `frontmatter.*`: the field names to write and the allowed `content-type` values. Honor the repo's names over the plugin's defaults.
+- `one_sentence_per_line`, `no_em_dashes`, `no_ai_voice`: line, punctuation, and voice rules.
+  See `tone-and-voice.md`'s "Avoid AI Voice" section for what `no_ai_voice` covers.
+- `frontmatter.*`: the field names to write and the allowed `content-type` values.
+  Honor the repo's names over the plugin's defaults.
 - `docs_dir`: where to look and where new docs go.
 - `lint.*`: which linter the project uses, so you can recommend running it and avoid re-flagging what the linter already covers.
-- `verify.tool`: `auto` (default), `doc-detective`, or `docs-assist`. Controls which engine `/docs-assist:verify` uses; see that command's step 1.5.
+- `verify.tool`: `auto` (default), `doc-detective`, or `docs-assist`.
+  Controls which engine `/docs-assist:verify` uses; see that command's step 1.5.
 
-`style.md` is prose: read it and follow it the way you would a team style guide. When it conflicts with a plugin default, `style.md` wins.
+`style.md` is prose: read it and follow it the way you would a team style guide.
+When it conflicts with a plugin default, `style.md` wins.
 
 ## Shared source of truth with linters
 
@@ -45,4 +60,5 @@ When `config.yml` is present, apply it directly:
 That means a change to `heading_case` or `no_em_dashes` updates both how you write and how the linter checks.
 When you edit config for a project, note that the linter config may need regenerating, and point the user to `/docs-assist:setup`.
 
-`reference.yml`'s `term` entries feed the same generation step: `/docs-assist:setup` compiles them into a Vale substitution rule, so a term added to the registry updates both how you write and how the linter checks, the same as `config.yml`. The other three entry kinds (`example-variable`, `fact`, `pointer`) stay agent-only; Vale has no way to check inside code blocks or follow a link.
+`reference.yml`'s `term` entries feed the same generation step: `/docs-assist:setup` compiles them into a Vale substitution rule, so a term added to the registry updates both how you write and how the linter checks, the same as `config.yml`.
+The other three entry kinds (`example-variable`, `fact`, `pointer`) stay agent-only; Vale has no way to check inside code blocks or follow a link.

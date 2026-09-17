@@ -4,19 +4,20 @@ This is the canonical list of content types Docs Assist uses.
 Every other file in the plugin points here instead of redefining them, so there is one source of truth for the categories and their frontmatter values.
 
 When you draft or audit a doc, pick the type that best serves the reader, then set the `content-type` frontmatter field to the matching value.
-The contributor never needs to know these categories. You choose.
+The contributor never needs to know these categories.
+You choose.
 When the right type is genuinely ambiguous, default to `doc` (task-oriented) and let the reviewer restructure.
 
 ## How to choose
 
-| If the contributor is | Use | `content-type` value |
-| --- | --- | --- |
-| Listing the steps to complete one task | Doc | `doc` |
-| Walking through a larger goal with paths that branch by context | Guide | `guide` |
-| Onboarding someone from zero to competent, in sequence | Tutorial | `tutorial` |
-| Teaching how or why something works | Concept | `concept` |
-| Cataloging complete technical details to look up | Reference | `reference` |
-| Explaining how to recover when something breaks | Troubleshooting | `troubleshooting` |
+| If the contributor is                                           | Use             | `content-type` value |
+| --------------------------------------------------------------- | --------------- | -------------------- |
+| Listing the steps to complete one task                          | Doc             | `doc`                |
+| Walking through a larger goal with paths that branch by context | Guide           | `guide`              |
+| Onboarding someone from zero to competent, in sequence          | Tutorial        | `tutorial`           |
+| Teaching how or why something works                             | Concept         | `concept`            |
+| Cataloging complete technical details to look up                | Reference       | `reference`          |
+| Explaining how to recover when something breaks                 | Troubleshooting | `troubleshooting`    |
 
 ## Doc
 
@@ -47,7 +48,8 @@ A guided learning journey, usually a set of guides in sequence.
 
 ## Concept
 
-- Use when: the contributor is teaching, not instructing. The reader needs to understand how or why something works before the tasks make sense.
+- Use when: the contributor is teaching, not instructing.
+  The reader needs to understand how or why something works before the tasks make sense.
 - Structure: explanation supported by examples, analogies, and diagrams where they clarify.
 - Outcome: the reader understands the what and the why.
 - Example: "Understand Workspace Architecture"
@@ -55,14 +57,16 @@ A guided learning journey, usually a set of guides in sequence.
 ## Reference
 
 - Use when: the reader knows what they are looking for and needs accurate, complete details to look up.
-- Structure: systematic, scannable, and searchable. Tables, lists, and consistent entry formats.
+- Structure: systematic, scannable, and searchable.
+  Tables, lists, and consistent entry formats.
 - Outcome: the reader finds the specific detail quickly.
 - Covers: API and CLI references, configuration options, plans and pricing, comparison tables, changelogs and release notes.
 
 ## Troubleshooting
 
 - Use when: something went wrong and the reader needs to recover.
-- Structure: problem, then cause, then solution. One entry per failure mode.
+- Structure: problem, then cause, then solution.
+  One entry per failure mode.
 - Outcome: the reader resolves their issue.
 - Placement: standalone pages, or a section within a related doc.
 - Example: "Resolve Connection Timeout Errors"
@@ -75,7 +79,8 @@ Doc, Guide, and Tutorial form a hierarchy of task-oriented content that scales w
 - A Guide is a set of docs toward one goal, with branching paths.
 - A Tutorial is an ordered journey, often a set of guides, that builds competency.
 
-Start at the smallest type that fits. Split upward only when a single page tries to do too much (see the Everything Document antipattern in `documentation-patterns.md`).
+Start at the smallest type that fits.
+Split upward only when a single page tries to do too much (see the Everything Document antipattern in `documentation-patterns.md`).
 
 ## Templates for a starting structure
 
