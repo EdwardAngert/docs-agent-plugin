@@ -38,7 +38,8 @@ Nothing else in the upgrade requires action from you.
 - **The maintainer-facing docs are no longer part of the install.** The two planning docs, both files under `docs/reviews/`, and `docs/plan.md` moved to the `working-notes` branch, so a link into them breaks.
   They described a pre-1.0 command surface, which meant a reader arriving from `llms.txt` landed on a workflow that could not be run.
   `docs/plan.md` was also carrying three identities at once: the README linked it as a live backlog, `llms.txt` called it a superseded historical record, and the instruction files use that same path for the forward-looking content plan the plugin writes in your project.
-  Its deferred backlog moved into the README's self-assessment, and the path now means only the last of those. What ships under `docs/` is four reader-facing pages.
+  Its deferred backlog moved into the README's self-assessment, and the path now means only the last of those.
+  What ships under `docs/` is four reader-facing pages.
 
 ### Added
 
@@ -140,6 +141,9 @@ Maintainer-facing work, with no effect on an installed plugin except where noted
 - **markdownlint covers the shipped surface.** It linted `README.md`, `CHANGELOG.md`, and `docs/` while `commands/`, `agents/`, and `skills/` had no coverage, though they are the bulk of what installs into a user's plugin cache and Vale and cspell already scanned them.
   All 73 files already passed, so this closes the gate rather than fixing a backlog.
 - **`check-claims.mjs`** now covers `skills/`, `commands/`, and `agents/`, scoped so an instruction file's examples are not read as claims about the repository.
+- **The changelog itself was ungated.** `CHANGELOG.md` is rightly exempt from the stale-name check, because a dated record is allowed to name the dead, but it was also sitting outside the emphasis, sentence-per-line, and ordered-list checks, where it has no such excuse.
+  It is the most-read file in a release and it was the one shipped file those rules did not cover.
+  Gated now, which cost one split line in this entry.
 - **`validate.mjs` gained two more checks and lost a blind spot.** A removed command named in a bare code span now fails, and an `llms.txt` entry whose title disagrees with the doc's own frontmatter now fails.
   Its stale-name check also walked the working tree rather than the index, so it reported on the archived working notes that are gitignored but still sit on a maintainer's disk; every prose check now scopes to what git tracks, which is what actually reaches a user's plugin cache.
 

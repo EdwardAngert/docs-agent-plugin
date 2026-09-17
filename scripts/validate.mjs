@@ -403,7 +403,11 @@ function sentenceCount(text) {
   return n;
 }
 const PROSE_DIRS = ['docs/', 'skills/', 'commands/', 'agents/', '.docs-assist/', 'assets/config/'];
-const PROSE_FILES = ['README.md', 'CONTRIBUTING.md'];
+// CHANGELOG.md is exempt from the stale-name check above, because a dated
+// record is allowed to name the dead. It has no such excuse for the prose
+// rules, and it was the one shipped file where emphasis, sentence-per-line,
+// and ordered-list style went ungated.
+const PROSE_FILES = ['README.md', 'CONTRIBUTING.md', 'CHANGELOG.md'];
 for (const f of tracked) {
   if (!f.endsWith('.md')) continue;
   if (!PROSE_FILES.includes(f) && !PROSE_DIRS.some((d) => f.startsWith(d))) continue;
