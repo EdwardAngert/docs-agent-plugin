@@ -1,12 +1,24 @@
 extends: existence
-message: "Rewrite the 'it's not X, it's Y' contrast as a direct statement of the fact."
+message: "Rewrite the 'not X, it's Y' contrast as a direct statement of the fact."
 link: https://github.com/EdwardAngert/docs-agent-plugin
 level: suggestion
 ignorecase: true
 nonword: true
-# Heuristic for the "it's not X, it's Y" / "not X, but Y" contrast pattern.
-# It can match legitimate technical prose ("if it's not configured, but a
-# default applies, ..."), so this is a suggestion, not an error: a prompt to
-# look at the sentence, not an automatic rewrite.
+# Heuristic for the false-contrast frame, in both word orders.
+#
+# The first token catches "it's not X, it's Y". The second catches the
+# inverted "Y, not X", which is the far more common form in practice and was
+# invisible to this rule until a release note shipped "the cut is doors
+# against plumbing, not a target number" past it.
+#
+# Both can match legitimate technical prose ("if it's not configured, but a
+# default applies, ..."), and the inverted token especially so: a contrast is
+# fair when the negated alternative was genuinely on the table. On this
+# repository the inverted token matches roughly forty-five times, and most of
+# those are legitimate. That is why this is a suggestion, not an error: it is
+# a prompt to ask whether the alternative was ever real, which no regex can
+# decide. Drop the second token if the noise outweighs the catch for your
+# project.
 tokens:
   - '\b(?:not|isn''t|is not)\b[^.!?,;]{0,50},\s*(?:but\s+)?(?:it''s|it is|they''re|they are)\b'
+  - ',\s*not\s+(?:just\s+)?(?:a|an)\s+\w+(?:\s+\w+){0,2}\s*(?:[.;:]|$)'

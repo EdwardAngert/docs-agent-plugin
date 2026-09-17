@@ -9,17 +9,22 @@ The fix is the same as for example values: a small registry every doc is checked
 
 Load this when writing or auditing docs in a project that has a registry, or when drift you find suggests a project needs one.
 
-## The Reference Registry
+## The reference registry
 
-`.docs-assist/reference.yml` holds the canonical vocabulary for the project, as `term` entries, alongside example values and other registered facts. Read it first, write with its terms, and keep it current. The full format, including the other entry kinds, is single-sourced in `reference-registry.md`; this section only covers what's specific to terminology.
+`.docs-assist/reference.yml` holds the canonical vocabulary for the project, as `term` entries, alongside example values and other registered facts.
+Read it first, write with its terms, and keep it current.
+The full format, including the other entry kinds, is single-sourced in `reference-registry.md`; this section only covers what's specific to terminology.
 
-- **Read it first.** If a `term` entry exists, its canonical form is authoritative in prose. Use it in everything you write.
-- **Offer to create it.** When you find terminology drift (in an audit, or while surveying before a draft), offer to create the registry seeded with the canonical choices, so the decision is recorded instead of re-made every session. Scaffold from `${CLAUDE_PLUGIN_ROOT}/assets/config/reference.yml`.
-- **Maintain it.** When a draft introduces a product term readers will see again, add a `term` entry with its variants to avoid. The registry is the plugin's responsibility to keep in sync, not the contributor's.
-- **Respect the boundary with `style.md`.** The registry holds machine-checkable pairs: a canonical term and the variants to avoid. Judgment-based language guidance (voice, banned phrases, when a term is appropriate) stays in `.docs-assist/style.md`. When the two disagree, `style.md` wins and the registry needs updating.
-- **The only kind Vale also checks.** `/docs-assist:setup-lint` compiles every `term` entry into a generated Vale substitution rule, so this check also runs as a deterministic lint, not only during a drafting or audit conversation.
+Reading, creating, and maintaining entries, the `style.md` boundary, and the Vale compilation are all in `reference-registry.md` under `term`.
+They are not restated here, because two copies of a rule drift and this file already had the older wording.
 
-## How the Audit Uses It
+What is specific to terminology, and lives only here:
+
+- **A canonical form is authoritative in prose, not in code.** A `term` entry governs how a concept is named in sentences.
+  Identifiers, file paths, command names, and config keys keep whatever the code calls them, even when that differs from the canonical prose term.
+  This is why `example-continuity.mjs` checks `example-variable` variants inside code blocks and deliberately does not check `term` variants there.
+
+## How the audit uses it
 
 `/docs-assist:audit` treats `term` entries in the registry the way it treats `example-variable` entries:
 
@@ -27,7 +32,7 @@ Load this when writing or auditing docs in a project that has a registry, or whe
 - Flag the same concept appearing under different terms across docs, even when neither is in the registry yet, and suggest the pair to add.
 - Without a registry, the docs set's own dominant usage is the standard: flag the outliers, and offer to record the winner.
 
-## When a Term Changes
+## When a term changes
 
 Renaming a term is a repeated-value change: it ripples.
 Update the registry, then follow the term-rename edge in `impact-analysis.md` to every other occurrence, including `style.md` and the glossary if one exists.

@@ -5,9 +5,11 @@
 
 ## Docs
 
-- [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): For docs leads and devrel. Why to install, what changes for contributors, and how to customize.
-- [Write Docs With Docs Assist](docs/write-docs-with-docs-assist.md): For individual contributors. What the plugin does, and tips for getting the most out of it.
-- [Docs Assist Command Reference](docs/command-reference.md): Every command with its argument and an example.
+- [Get started with Docs Assist](docs/get-started.md): Install the plugin, set it up so it writes like your project, and make sure it shows up when it should. Start here.
+- [Set up documentation standards for your team](docs/set-up-documentation-standards-for-your-team.md): For docs leads and devrel. Why to install, what changes for contributors, and how to customize.
+- [Write docs with Docs Assist](docs/write-docs-with-docs-assist.md): For individual contributors. What the plugin does, and tips for getting the most out of it.
+- [Docs Assist command reference](docs/command-reference.md): Every command with its argument and an example.
+- [How the authoring loop works](docs/how-the-loop-works.md): What happens when the plugin drafts for you, and why it is built that way. Three reviewers in separate contexts, and the ledger of assumptions you review instead of a whole draft.
 
 ## Plugin Configuration
 
@@ -18,27 +20,30 @@
 ## Commands
 
 - [/docs-assist:health](commands/health.md): Fast docs health check: a scorecard across coverage, freshness, consistency, and findability, plus the single highest-leverage fix. The recommended first command.
-- [/docs-assist:draft](commands/draft.md): Guided workflow for SMEs to contribute a single document.
+- [/docs-assist:draft](commands/draft.md): Write a document through the authoring loop. The contributor brings what they know; the plugin handles the writing.
 - [/docs-assist:plan](commands/plan.md): Plan a full documentation set: user journeys, content types, priorities, and writing order.
-- [/docs-assist:audit](commands/audit.md): Systematic documentation audit for quality, gaps, and structure.
-- [/docs-assist:make-examples](commands/make-examples.md): Add or improve code examples in existing docs.
-- [/docs-assist:init](commands/init.md): Scaffold project-local configuration so the plugin and the linters share one source of truth.
-- [/docs-assist:setup-lint](commands/setup-lint.md): Scaffold optional documentation linting (Vale, markdownlint, MegaLinter, cspell, link check), generated from the project config and respecting any existing linter.
-- [/docs-assist:setup-hooks](commands/setup-hooks.md): Install opt-in documentation hooks (git pre-commit lint, in-session doc lint, CI docs-impact check). Default off.
-- [/docs-assist:setup-site](commands/setup-site.md): Generate site navigation from the docs' metadata (llms.txt order becomes sidebar order), scaffolding minimal Docusaurus or MkDocs when no site exists.
+- [/docs-assist:audit](commands/audit.md): Review existing docs by reconstructing what each one claims and ruling on it. The loop pointed at a finished doc.
+- [/docs-assist:verify](commands/verify.md): Verify a procedural doc by executing its steps in an isolated workspace and reporting where the doc diverges from reality.
 - [/docs-assist:update](commands/update.md): Find and update the docs affected by a code change (a diff, a PR, or changed files).
-- [/docs-assist:verify](commands/verify.md): Verify a procedural doc by executing its steps in an isolated workspace and reporting where the doc diverges from reality. A clean pass earns the `last-verified` bump.
 - [/docs-assist:release-notes](commands/release-notes.md): Turn a release's worth of changes into reader-facing release notes, leading with breaking changes and upgrade steps.
-- [/docs-assist:agent-ready](commands/agent-ready.md): Make the docs legible to AI tools: create or repair llms.txt, complete frontmatter, record conventions.
-- [/docs-assist:template](commands/template.md): Suggest and scaffold a documentation template (The Good Docs Project) for a healthy start. Opt-in.
+- [/docs-assist:setup](commands/setup.md): Set up conventions, linting, hooks, and site navigation in one pass. Every stage opt-in, nothing written without a yes.
+- [/docs-assist:merge-prep](commands/merge-prep.md): Get a docs change ready to merge. Everything expensive that scales with the whole set runs here and nowhere else.
+
+## Skills
+
+- [docs-assist](skills/docs-assist/SKILL.md): the documentation expert. Intake, the authoring loop, standards, and every reference file the chairs load.
+- [writing-task](skills/writing-task/SKILL.md): a wider net. Recognizes work that is documentation-shaped without being called documentation, routes to what fits, and says plainly when the plugin has nothing for it.
 
 ## Agents
 
-- [doc-auditor](agents/doc-auditor.md): Audits a single doc or slice and returns structured findings. Used to fan out large audits in parallel.
+- [chair-authority](agents/chair-authority.md): The authority chair in the authoring loop. Emits a cold, prose-free packet of what is true, then rules on the ledger entries the advocate chair added. Holds the only web access in the loop.
+- [chair-advocate](agents/chair-advocate.md): The advocate chair. Shapes a packet into a document and declares, as a ledger, everything it added that the packet did not contain.
+- [chair-continuity](agents/chair-continuity.md): The continuity chair. Reconciles example values, naming, and sequencing against the rest of the set, so a reader working straight through meets something coherent.
+- [cold-reader](agents/cold-reader.md): Reads one finished document with no repository access and states what it would do and expect. Divergence names the paragraph at fault.
 - [doc-updater](agents/doc-updater.md): Updates a single doc to match a code change. Used to fan out update-on-change across many files.
 - [doc-intake](agents/doc-intake.md): Reads a pile of raw source material in isolation and returns a compact content inventory. Used to fan out corpus intake without loading the pile into the main conversation.
 - [doc-recon](agents/doc-recon.md): Reads a codebase in isolation and returns a compact project map (what it does, features, entry points, audiences, candidate docs). Used to orient a from-scratch docs effort without reading the whole repo in the main conversation.
-- [doc-drafter](agents/doc-drafter.md): Drafts one planned doc from a plan entry and existing source material, flagging what needs SME verification. Used to fan out drafting across an approved plan stage in parallel.
+- [doc-harvester](agents/doc-harvester.md): Mines issue replies, pull request review comments, and commit message bodies for what maintainers already explained but never documented. Opt-in; returns an inventory, never raw content.
 - [doc-verifier](agents/doc-verifier.md): Executes one procedural doc's commands in an isolated workspace and reports, step by step, where reality diverges from the doc. Used to fan out verification across a set's procedural docs.
 
 ## Standards and Methodology
@@ -53,6 +58,7 @@
 - [Code examples](skills/docs-assist/reference/code-examples.md): Write safe code samples that stay consistent across docs, using the reference registry's example-variable entries.
 - [Terminology](skills/docs-assist/reference/terminology.md): Keep product terms consistent across docs, using the reference registry's term entries, which audits check for drift and a generated Vale rule also enforces.
 - [llms.txt](skills/docs-assist/reference/llms-txt.md): The llms.txt format, entry ordering, and the maintenance contract every workflow follows. Surfacing docs for AI readers is core functionality.
+- [How this plugin gets triggered](skills/docs-assist/reference/triggering.md): What makes the plugin show up and why it sometimes does not, the four surfaces, and what a project can add to change it.
 - [Config resolution](skills/docs-assist/reference/config-resolution.md): How a project's committed `.docs-assist/` configuration overrides the defaults and feeds the linters.
 - [Documentation patterns](skills/docs-assist/reference/documentation-patterns.md): Patterns, antipatterns, examples, SEO, and accessibility.
 - [Templates](skills/docs-assist/reference/templates.md): Suggest and apply external documentation templates (The Good Docs Project) for a healthy start. Opt-in, with content-type and seven-action selection.
@@ -64,6 +70,3 @@
 - [IA methodology](skills/docs-assist/reference/ia-methodology.md): Information architecture research, design, and validation.
 - [Style guides](skills/docs-assist/reference/style-guides.md): Style guide selection, components, and enforcement strategies.
 - [Contributing](CONTRIBUTING.md): How to contribute to this plugin.
-- [0.8.0 product review findings](docs/reviews/0.8.0-findings.md): The prioritized findings behind the 0.8.0 release, with the remaining recommendations.
-- [Docs Assist 1.0 plan](docs/plan.md): The staged product plan toward 1.0, with what has shipped and what remains.
-- [Standalone CLI packaging plan](docs/standalone-cli-plan.md): A deferred plan for an `npx`-run CLI so the plugin reaches people who don't use Claude Code, without forking the instructions into a second codebase.

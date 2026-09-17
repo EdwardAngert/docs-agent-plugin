@@ -1,0 +1,29 @@
+# Vale vocabulary: terms that keep their capitalization in sentence-case
+# headings and after a colon. Vale compares these against the matched text in
+# Google.Headings and Google.Colons, so a proper noun listed here stops being
+# a false positive without weakening either rule.
+#
+# Add your project's own product names, tools, and acronyms here. Entries are
+# regular expressions, so escape a literal dot.
+Docs Assist
+The Good Docs Project
+Claude Code
+Claude
+GitHub
+GitLab
+MegaLinter
+Docusaurus
+MkDocs
+Starlight
+Diátaxis
+Vale
+AI
+API
+CI
+CI/CD
+CLI
+PR
+SDK
+SEO
+SME
+llms\.txt

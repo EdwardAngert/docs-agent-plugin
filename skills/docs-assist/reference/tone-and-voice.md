@@ -1,35 +1,57 @@
-# Tone and Voice
+# Tone and voice
 
-- Use a **direct, clear, and instructional tone**
-- Assume a **developer or technical admin** as your reader when nothing more specific is known; calibrate below that floor for a beginner-facing doc and above it for an expert one, per each doc's own user story (see `user-stories.md`)
-- Jargon and term explanations follow the same calibration: an expert-audience doc uses the field's own vocabulary without apology; a beginner-audience doc explains a term the first time it appears. Explaining what the calibrated reader already knows is the expert tax, the same failure as skipping what they don't
-- Prioritize **user actions** and outcomes
+- Use a direct, clear, and instructional tone
+- Assume a developer or technical admin as your reader when nothing more specific is known; calibrate below that floor for a beginner-facing doc and above it for an expert one, per each doc's own user story (see `user-stories.md`)
+- Jargon and term explanations follow the same calibration: an expert-audience doc uses the field's own vocabulary without apology; a beginner-audience doc explains a term the first time it appears.
+  Explaining what the calibrated reader already knows is the expert tax, the same failure as skipping what they don't
+- Prioritize user actions and outcomes
 
-## Avoid AI Voice
+## Avoid AI voice
 
-Documentation states and instructs; it does not hedge, sell, or perform confidence. The patterns below are the reliable tells of generated-sounding prose. Cut them on sight, the same way an em dash gets cut, and rewrite what was there into a direct statement rather than leaving a gap.
+Documentation states and instructs; it does not hedge, sell, or perform confidence.
+The patterns below are the reliable tells of generated-sounding prose.
+Cut them on sight, the same way an em dash gets cut, and rewrite what was there into a direct statement rather than leaving a gap.
 
-- **False contrast** (`it's not X, it's Y`, `this isn't just X, it's Y`): state the fact instead of the frame. `The retry queue processes in order` beats `It's not random, it's ordered`. If the contrast is itself the useful information, a reader's common misconception, say why the wrong answer is wrong once, then move on. Don't repeat the not-X-it's-Y shape sentence after sentence.
-- **Hedging**: `should work in most cases`, `generally speaking`, `in most scenarios`. A step either works under a stated condition or it doesn't. Replace the qualifier with the actual condition: `this works when X; for Y, see Z`.
-- **Marketing language**: `powerful`, `seamless`, `robust`, `cutting-edge`, `effortless`, `unlock`, `elevate`, `empower`, `game-changing`, `revolutionize`, `best-in-class`. Documentation describes what something does, not how impressed the reader should be. A word can be a legitimate technical term in one project's vocabulary and marketing filler in another (this plugin's own docs use "leverage" as a compound noun, "highest-leverage fix," not the verb cliché); judge usage in context rather than banning by word alone.
-- **Throat-clearing openers**: `it's worth noting that`, `it's important to understand`, `let's dive into`, `needless to say`. Cut the preamble and start with the instruction or fact it was stalling in front of.
-- **Stacked inflated transitions**: `furthermore`, `moreover`, `that said`, used as connective tissue between every sentence rather than where a real logical turn exists. A period is usually enough.
+- **False contrast** (`it's not X, it's Y`, `this isn't just X, it's Y`): state the fact instead of the frame.
+  `The retry queue processes in order` beats `It's not random, it's ordered`.
+  If the contrast is itself the useful information, a reader's common misconception, say why the wrong answer is wrong once, then move on.
+  Don't repeat the not-X-it's-Y shape sentence after sentence.
+- **Phantom negation**: naming something the thing does not do, when it was never a live option.
+  `The cut is doors against plumbing, not a target number` rules out a target number nobody proposed.
+  A reader with no access to the design conversation now believes a target number was once on the table, and has to work out why it was rejected.
+  Before writing `does not X` or `not a X`, check whether X was ever genuinely considered.
+  If it wasn't, delete the clause rather than softening it, and state what the thing is instead.
+  A contrast earns its place only when the alternative was real, like `removed rather than deprecated`, where deprecating was the obvious other choice.
+- **An analogy carrying the meaning**: a figure of speech standing where the fact belongs.
+  `Doors against plumbing` compressed a real criterion (a command should be something the reader sets out to do, not a step inside something else) into two nouns that transmit none of it.
+  Analogies illustrate a fact already stated; they do not replace it.
+  If a fluent reader of the language has to stop and decode the figure, it failed, and the test is whether the sentence still works with the analogy deleted.
+- **Hedging**: `should work in most cases`, `generally speaking`, `in most scenarios`.
+  A step either works under a stated condition or it doesn't.
+  Replace the qualifier with the actual condition: `this works when X; for Y, see Z`.
+- **Marketing language**: `powerful`, `seamless`, `robust`, `cutting-edge`, `effortless`, `unlock`, `elevate`, `empower`, `game-changing`, `revolutionize`, `best-in-class`.
+  Documentation describes what something does, not how impressed the reader should be.
+  A word can be a legitimate technical term in one project's vocabulary and marketing filler in another (this plugin's own docs use "leverage" as a compound noun, "highest-leverage fix," not the verb cliché); judge usage in context rather than banning by word alone.
+- **Throat-clearing openers**: `it's worth noting that`, `it's important to understand`, `let's dive into`, `needless to say`.
+  Cut the preamble and start with the instruction or fact it was stalling in front of.
+- **Stacked inflated transitions**: `furthermore`, `moreover`, `that said`, used as connective tissue between every sentence rather than where a real logical turn exists.
+  A period is usually enough.
 
-## Markdown Formatting Rules
+## Markdown formatting rules
 
 ### Headings
 
 - Use `#`, `##`, `###`; avoid going deeper than `####`
 - Top-level headings (H1) should only appear once per file
 - Prefer heading structure over bold for organization
-- **Do not use emojis in headings**
-- Use **sentence case** for headings by default: capitalize only the first word and proper nouns
+- Do not use emojis in headings
+- Use sentence case for headings by default: capitalize only the first word and proper nouns
   - Good: "Install the plugin", "Configure authentication"
   - Bad: "Install The Plugin", "Configure Authentication"
-- Write **action-oriented headings**: use imperative verbs, not gerunds
+- Write action-oriented headings: use imperative verbs, not gerunds
   - Good: "Install the plugin", "Configure authentication"
   - Bad: "Installing the plugin", "Configuring authentication"
-- Make headings **SEO-friendly**: use keywords users would search for
+- Make headings SEO-friendly: use keywords users would search for
   - Good: "Troubleshoot connection errors"
   - Bad: "When things go wrong"
 
@@ -40,8 +62,8 @@ Documentation states and instructs; it does not hedge, sell, or perform confiden
 
 ### Lists
 
-- Use `1.` for **ordered lists** (Markdown auto-numbers)
-- Use `-` for **unordered lists**
+- Use `1.` for ordered lists (Markdown auto-numbers)
+- Use `-` for unordered lists
 - Do not use emojis to start list items
 - Keep list items as short as possible; use full sentences only when needed
 
@@ -50,7 +72,7 @@ Documentation states and instructs; it does not hedge, sell, or perform confiden
 > Some teams prefer explicit numbering (`1.`, `2.`, `3.`).
 > The `1.` approach simplifies reordering and diffs.
 
-### Code and Inline Elements
+### Code and inline elements
 
 - Use backticks for:
   - File names (`manifest.json`)
@@ -58,11 +80,45 @@ Documentation states and instructs; it does not hedge, sell, or perform confiden
   - Inline code (`npm run build`)
   - Environment variables (`LOG_LEVEL`)
 - Include a language tag on all code blocks (for example, `bash`, `json`, `md`)
+- Write every block for the reader who pastes it before reading the prose around it.
+  One step per block; two unrelated commands belong in two blocks.
+- Chain a step's commands with `&& \` and a line break, never inline, so the reader can see and copy the halves.
+  Only chain what is genuinely one step, and never commands meant to run regardless of each other.
+- Each command in a chain starts flush; indentation is reserved for the wrapped arguments of one command.
+- Show a block that edits an existing file in place: include the real surrounding context, or mark the omission with `...`.
+- Name the file a block belongs to, and the machine a command runs on, whenever the step's prose leaves either unclear.
+  A path comment at the top of the block is the portable carrier; use the renderer's filename feature for a language with no comments, such as JSON.
+- A destructive example must fail when pasted verbatim, with an unresolvable placeholder in the slot that would do the damage.
+  Never ask the reader to edit a command in their head: show the second command as its own block, in full.
+  `code-examples.md` has the full rule, including safe placeholder values.
 - Examples:
 
   ```bash
-  npm install && npm run build
+  npm install && \
+  npm run build
   ```
+
+### Emphasis
+
+- Use bold for run-in headings and for UI labels a reader looks for on screen.
+- Use nothing else: no bold or italics mid-sentence, including on a term you are defining.
+- Put a literal value in a code span, not in bold: `solid`, not bold "solid".
+
+Google allows bold "only for UI elements and run-in headings" and notes that "usually, your words can carry the emphasis without adding italics."
+GitLab is stricter, permitting bold only for "UI elements with a visible label" and navigation paths, and stating plainly: "Do not use bold for keywords or emphasis."
+A sentence that needs emphasis to land is a sentence to rewrite.
+
+Defining a term is the case people argue for, and it does not survive either guide.
+A defined term is a keyword, and GitLab points at a description list instead of bold.
+A glossary entry therefore leads its bullet, where the term is a run-in heading and the definition follows:
+
+```md
+- **Ledger.** The diff between the packet and the draft.
+```
+
+That is not the same as bolding the word where it happens to appear in a sentence, which is the thing to avoid.
+
+### Separators
 
 The separator `---` is for identifying YAML frontmatter only.
 Do not use it to separate sections.
@@ -75,9 +131,9 @@ Surround headings and lists with blank lines (markdownlint rules MD022 and MD032
 - Avoid linking directly to headings, unless persistent
 - Use link text that describes the destination purpose
 
-## Visual Standards
+## Visual standards
 
-### Alerts and Admonitions
+### Alerts and admonitions
 
 - Use GitHub-flavored Markdown extensions:
 
@@ -86,18 +142,18 @@ Surround headings and lists with blank lines (markdownlint rules MD022 and MD032
   > This feature requires version 2.1.0 or later.
   ```
 
-## Terminology Consistency
+## Terminology consistency
 
 Use the same term for the same concept in every doc.
 When the project has `term` entries in `.docs-assist/reference.yml`, its canonical terms are authoritative; see `terminology.md`.
 For general style questions beyond this file, `style-guides.md` covers choosing and applying an external guide such as the [Google developer documentation style guide](https://developers.google.com/style/).
 
-## Document Hygiene
+## Document hygiene
 
 - Avoid TODOs or placeholders in merged docs
 - Check anchor links if you rename headings or move files
 - Break lines after each period.
-Markdown renders it as a single line, but line breaks help human editors scan content.
+  Markdown renders it as a single line, but line breaks help human editors scan content.
 
 > [!NOTE]
 > Line breaks after periods is a style choice.

@@ -1,5 +1,24 @@
 # Vale packages fetched by `vale sync` (Google, write-good, alex, and any
 # others a project adds). Only the DocsAssist style is this plugin's own and
-# tracked; the rest are synced fresh by CI and by /docs-assist:setup-lint.
+# tracked; the rest are synced fresh by CI and by /docs-assist:setup.
 assets/lint/vale/styles/*/
 !assets/lint/vale/styles/DocsAssist/
+!assets/lint/vale/styles/config/
+
+# Regenerated check output. Tracking it poisoned check-claims.mjs, which
+# resolves claims by grepping tracked source and began finding them in its
+# own cache.
+.docs-assist/claims/
+
+# Working files that must not ship. Claude Code copies the whole repository
+# into ~/.claude/plugins/cache on install, so anything tracked here lands in
+# every user's cache. These are kept locally and archived on the
+# `working-notes` branch; scripts/validate.mjs enforces the allowlist.
+reports/
+docs/1.0-release-plan.md
+docs/standalone-cli-plan.md
+docs/reviews/
+docs/plan.md
+.docs-assist/loop/
+.docs-assist/session-log.md
+.docs-assist/state/

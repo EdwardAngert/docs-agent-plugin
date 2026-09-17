@@ -17,10 +17,10 @@ jobs:
     name: Validate plugin structure
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: "20"
+          node-version: "24"
       - name: Validate manifests, references, and frontmatter
         run: node scripts/validate.mjs
 
@@ -28,18 +28,25 @@ jobs:
     name: Lint own docs with shipped config
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: "20"
+          node-version: "24"
 
       # Structural rules, using the markdownlint config this plugin ships.
+      # The glob covers the shipped surface, not just the reader-facing docs:
+      # `commands/`, `agents/`, and `skills/` are the bulk of what installs
+      # into a user's plugin cache, and they were unlinted while Vale and
+      # cspell already scanned them. Widening it is the same fix this release
+      # made for one-sentence-per-line and prose emphasis, a rule declared
+      # and then left without a gate.
       - name: markdownlint (own docs)
         if: always()
         run: >
           npx --yes markdownlint-cli2
           --config assets/lint/markdownlint/.markdownlint.jsonc
-          "README.md" "CHANGELOG.md" "docs/**/*.md"
+          "README.md" "CHANGELOG.md" "CONTRIBUTING.md" "THIRD-PARTY-NOTICES.md"
+          "docs/**/*.md" "commands/**/*.md" "agents/**/*.md" "skills/**/*.md"
 
       # Vale never fetches Packages (Google, write-good, alex) on its own;
       # only `vale sync` does, and only its LSP mode runs that automatically.
@@ -62,16 +69,24 @@ jobs:
       # the managed Google, write-good, and alex packages synced above.
       # Lints all of the plugin's own markdown. The action's `files` input takes a
       # single path, so scan the repo root and let .vale.ini scope to markdown.
-      # `--minAlertLevel=error` makes Vale emit only error-level findings (em
-      # dashes), so the job fails on those and not on warnings. reviewdog reports
-      # at info level and would otherwise fail the PR on any warning in the diff.
+      # `--minAlertLevel=error` makes Vale emit only error-level findings, so the
+      # job fails on those and not on warnings. reviewdog reports at info level
+      # and would otherwise fail the PR on any warning in the diff.
+      #
+      # `reports/` and `.docs-assist/loop/` are no longer tracked: they are
+      # working notes, archived on the `working-notes` branch and kept out of
+      # the plugin by the shipping allowlist in scripts/validate.mjs. The glob
+      # below still excludes them so a local run with those directories present
+      # matches CI. A packet is deliberately cold, flat prose written by an
+      # agent for another agent, and linting a machine's working notes against
+      # a human prose style is a category error.
       - name: Vale (own docs)
         if: always()
         uses: errata-ai/vale-action@v2
         with:
           version: latest
           files: "."
-          vale_flags: "--config=assets/lint/vale/.vale.ini --minAlertLevel=error"
+          vale_flags: "--config=assets/lint/vale/.vale.ini --minAlertLevel=error --glob=!{reports,.docs-assist}/**"
           fail_on_error: true
           reporter: github-pr-check
         env:

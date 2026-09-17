@@ -5,11 +5,11 @@
 // risk, the drift the per-PR docs-impact check cannot see because it built
 // up across many changes. Signals per doc:
 //   - age: days since the doc itself last changed
-//   - verification: days since its `last-verified` frontmatter (or never)
+//   - verification: days since it was last verified (or never)
 //   - churn: commits that touched related source files since the doc last
 //     changed, where "related" means files that mention the identifiers the
 //     doc uses in inline code
-//   - attested: open entries in the doc's `sme-attested` ledger
+//   - attested: open entries in the doc's attested-claims ledger
 // Output is a ranked re-verification queue, worst first. It reports; it
 // never edits. /docs-assist:health runs it for the Freshness dimension, and
 // it works standalone.
@@ -73,24 +73,65 @@ if (!docs.length) {
   process.exit(0);
 }
 
+// Per-document state lives in the plugin's own store, so the docs stay
+// portable plain markdown. Different site generators accept different
+// frontmatter schemas, and assuming a site generator at all is already too
+// much, so nothing the plugin depends on is written into the documents.
+//
+// Frontmatter is still read when a project keeps it. That is not a fallback
+// shim: a project whose generator renders `last-verified` into the page should
+// have that respected. The sidecar is where the plugin WRITES; frontmatter is
+// something the plugin READS when the project already has it. The sidecar wins
+// when both carry a value.
+const STATE_PATH = process.env.DOCS_ASSIST_STATE || '.docs-assist/state/docs.yml';
+
+function readState(path) {
+  if (!existsSync(path)) return {};
+  const state = {};
+  let currentDoc = null;
+  let currentList = null;
+  for (const raw of readFileSync(path, 'utf8').split('\n')) {
+    if (/^\s*#/.test(raw) || !raw.trim()) continue;
+    const doc = raw.match(/^([^\s#][^:]*):\s*$/);
+    if (doc) { currentDoc = doc[1].trim(); state[currentDoc] = { attested: 0 }; currentList = null; continue; }
+    if (!currentDoc) continue;
+    const field = raw.match(/^\s{2}([a-z-]+):\s*(.*)$/);
+    if (field) {
+      const [, key, value] = field;
+      if (!value.trim()) { currentList = key; continue; }
+      currentList = null;
+      if (key === 'last-verified') state[currentDoc][key] = value.trim().replace(/^["']|["']$/g, '');
+      continue;
+    }
+    if (currentList === 'attested' && /^\s{4}-\s/.test(raw)) state[currentDoc].attested += 1;
+  }
+  return state;
+}
+
+const docState = readState(STATE_PATH);
+
 const rows = [];
 for (const doc of docs) {
   const text = readFileSync(doc, 'utf8');
+  const stateKey = doc.replace(/^\.\//, '');
+  const sidecar = docState[stateKey] || {};
 
   // Age: days since the doc's last commit. Untracked or uncommitted docs
   // are brand new by definition.
   const lastCommit = sh(`git log -1 --format=%ct -- "${doc}"`);
   const ageDays = lastCommit ? Math.floor((NOW - Number(lastCommit) * 1000) / DAY) : 0;
 
-  // Verification: days since last-verified, or null when the field is absent.
-  const lv = text.match(/^last-verified:\s*["']?(\d{4}-\d{2}-\d{2})/m);
-  const verifiedDays = lv ? Math.floor((NOW - Date.parse(lv[1])) / DAY) : null;
+  // Verification: days since last verified, or null when nothing records it.
+  const fmVerified = text.match(/^last-verified:\s*["']?(\d{4}-\d{2}-\d{2})/m);
+  const verifiedOn = sidecar['last-verified'] || (fmVerified ? fmVerified[1] : null);
+  const verifiedDays = verifiedOn ? Math.floor((NOW - Date.parse(verifiedOn)) / DAY) : null;
 
-  // Attested: open sme-attested ledger entries.
+  // Attested: open ledger entries, from the store or from frontmatter.
   const fmBlock = (text.match(/^---\n([\s\S]*?)\n---/) || [])[1] || '';
-  const attested = fmBlock.includes('sme-attested:')
+  const fmAttested = fmBlock.includes('sme-attested:')
     ? (fmBlock.match(/^\s+-\s+section:/gm) || []).length
     : 0;
+  const attested = sidecar.attested || fmAttested;
 
   // Churn: commits touching related source files since the doc last changed.
   // Related = non-doc files that mention identifiers the doc uses in inline
@@ -132,7 +173,7 @@ for (const doc of docs) {
   if (ageDays > 90) reasons.push(`doc untouched for ${ageDays} days`);
   if (verifiedDays === null) reasons.push('never verified');
   else if (verifiedDays > 90) reasons.push(`last verified ${verifiedDays} days ago`);
-  if (attested) reasons.push(`${attested} open sme-attested claim${attested === 1 ? '' : 's'}`);
+  if (attested) reasons.push(`${attested} open attested claim${attested === 1 ? '' : 's'}`);
 
   rows.push({ doc, score: Math.round(score * 10) / 10, reasons });
 }
@@ -147,7 +188,7 @@ out += `| Score | Doc | Why |\n| ---: | --- | --- |\n`;
 for (const r of shown) {
   out += `| ${r.score} | \`${r.doc}\` | ${r.reasons.join('; ') || 'no decay signals'} |\n`;
 }
-out += `\n**Suggested follow-up**: work the queue top-down with \`/docs-assist:update\` (when the related code changed) or \`/docs-assist:verify\` (for procedural docs, which it re-runs step by step, bumping \`last-verified\` on a clean pass).\n`;
+out += `\n**Suggested follow-up**: work the queue top-down with \`/docs-assist:update\` (when the related code changed) or \`/docs-assist:verify\` (for procedural docs, which it re-runs step by step, recording a fresh verification date on a clean pass).\n`;
 
 report(out);
 if (decayed.length && process.env.DOCS_DECAY_STRICT === '1') process.exit(1);

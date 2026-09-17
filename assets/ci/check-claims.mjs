@@ -66,6 +66,40 @@ for (const extra of ['README.md', 'AGENTS.md', 'CLAUDE.md', 'llms.txt']) {
   if (existsSync(extra)) docs.push(extra);
 }
 
+// Instruction files carry claims too, and a wrong one there fails silently.
+// A bad path in a published doc misleads a reader who can recover; a bad path
+// in a skill's reference file sends an agent looking for something that is not
+// there, with no error anywhere. Scope defaults to the extra directories named
+// in CHECK_CLAIMS_ALSO, or to the conventional plugin layout when it is unset.
+const alsoDirs = (process.env.CHECK_CLAIMS_ALSO || 'skills,commands,agents')
+  .split(',').map((d) => d.trim()).filter(Boolean);
+const instructionFiles = new Set();
+for (const dir of alsoDirs) {
+  if (dir === DOCS_DIR || !existsSync(dir)) continue;
+  for (const f of mdFiles(dir)) {
+    if (!docs.includes(f)) docs.push(f);
+    instructionFiles.add(f);
+  }
+}
+
+// An instruction file's examples are not claims about this repository.
+// `--dry-run`, `YOUR_KEY`, `config.ts`, and `package.json` in a reference file
+// are showing a reader what a doc might contain. Only a path pointing into this
+// repo is a real assertion there, so that is all that gets checked. Scoping
+// this wrong turns one true finding into sixteen false ones, which is how a
+// check gets switched off.
+const repoRoots = new Set(sh(['git', 'ls-files']).split('\n')
+  .map((f) => f.split('/')[0]).filter(Boolean));
+function isRealClaimFor(file, claim) {
+  if (!instructionFiles.has(file)) return true;
+  // file-path only. A bare directory in an instruction file is almost always
+  // one option among several ("a `docs/releases/` directory, or GitHub
+  // releases"), while a path with an extension is a real pointer.
+  if (claim.category !== 'file-path') return false;
+  const v = String(claim.matched || '').replace(/^[`'"]+|[`'"]+$/g, '');
+  return v.includes('/') && repoRoots.has(v.split('/')[0]);
+}
+
 function report(text) {
   console.log(text);
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, text + '\n');
@@ -144,7 +178,17 @@ function gitGrepHits(pattern) {
 function gitGrepLiteral(pattern) {
   const key = `lit:${pattern}`;
   if (gitGrepCache.has(key)) return gitGrepCache.get(key);
-  const out = sh(['git', 'grep', '-n', '-F', '-e', pattern, '--', ':!*.md', ':!*.mdx']);
+  // The plugin's own working tree is never evidence for the plugin's own
+  // checks. claims.json records the text of every claim found, so tracking it
+  // made each claim resolve by finding itself: 20 real findings silently became
+  // 0 between two runs with nothing fixed. The same shape applies to every
+  // artifact under .docs-assist/ — a reconstructed packet is a transcription of
+  // a document's claims, and a report quotes them. Markdown artifacts happen to
+  // be excluded by the *.md filter below, but that is accidental protection,
+  // and a packet written as YAML or a report as JSON would poison this again.
+  // Exclude the whole working tree by rule rather than by coincidence.
+  const out = sh(['git', 'grep', '-n', '-F', '-e', pattern, '--',
+    ':!*.md', ':!*.mdx', `:!${OUT_DIR}/*`, ':!.docs-assist/*']);
   const hits = out ? out.split('\n').filter(Boolean) : [];
   gitGrepCache.set(key, hits);
   return hits;
@@ -248,7 +292,7 @@ const byDoc = {};
 for (const c of needsJudgment) (byDoc[c.doc] ??= []).push(c);
 writeFileSync(`${OUT_DIR}/claims-needs-judgment.json`, JSON.stringify(byDoc, null, 2) + '\n');
 
-const missingClaims = allClaims.filter((c) => c.status === 'missing');
+const missingClaims = allClaims.filter((c) => c.status === 'missing' && isRealClaimFor(c.doc, c));
 
 let out = `## Claim check\n\n`;
 out += `${docs.length} docs, ${allClaims.length} candidate claims (${resolved} mechanically checkable: ${confirmed} confirmed, ${missing} missing, ${resolved - confirmed - missing} demoted to judgment). `;

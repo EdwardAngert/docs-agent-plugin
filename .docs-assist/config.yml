@@ -8,9 +8,11 @@
 # skills/docs-assist/reference/ and follows the same rules.
 docs_dir: docs
 
-# Headings: AP title case, action-oriented (imperative verbs, not gerunds).
-heading_case: title
-title_case_style: ap
+# Headings: sentence case, action-oriented (imperative verbs, not gerunds).
+# Matches the plugin's own default and the Google developer documentation
+# style guide this repo lints against, so Google.Headings stays enabled in
+# .vale.ini rather than being switched off to accommodate a local exception.
+heading_case: sentence
 action_oriented_headings: true
 
 # Lists: "-" for unordered, repeated "1." for ordered.

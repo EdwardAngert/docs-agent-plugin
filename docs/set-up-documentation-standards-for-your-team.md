@@ -1,5 +1,5 @@
 ---
-title: "Set Up Documentation Standards for Your Team"
+title: "Set up documentation standards for your team"
 description: "Install and configure the Docs Assist plugin for your team: what changes for contributors, how to customize writing standards, and how to run your first audit."
 content-type: doc
 audience: docs-leads
@@ -10,7 +10,7 @@ keywords:
   - team onboarding
 ---
 
-# Set Up Documentation Standards for Your Team
+# Set up documentation standards for your team
 
 You have people who know things.
 Engineers who built the feature.
@@ -23,7 +23,7 @@ But put them all together and there's no consistency, no cross-referencing, no c
 
 This plugin fixes that without hiring a dedicated technical writer.
 
-## What the Plugin Does
+## What the plugin does
 
 Docs Assist is a Claude Code plugin that gives every Claude Code session documentation expertise.
 When a contributor asks Claude Code for help writing docs, the plugin shapes how Claude Code responds, guiding the conversation, picking the right structure, applying formatting standards, and connecting the new content to what already exists.
@@ -31,10 +31,9 @@ When a contributor asks Claude Code for help writing docs, the plugin shapes how
 The contributor doesn't interact with the plugin directly.
 They talk to Claude Code, and it acts like a documentation coach instead of a generic assistant.
 
-## What Changes for Your Contributors
+## What changes for your contributors
 
-**Before the plugin**, a contributor opens Claude Code and says "help me document how the deployment pipeline works."
-Claude Code produces something technically accurate but flat: a markdown file that describes what happens, with no particular structure, no connection to related docs, and formatting that doesn't match anything else in the repo.
+**Before the plugin**, a contributor opens Claude Code and says "help me document how the deployment pipeline works." Claude Code produces something technically accurate but flat: a markdown file that describes what happens, with no particular structure, no connection to related docs, and formatting that doesn't match anything else in the repo.
 
 **With the plugin**, the same request triggers a different workflow.
 Claude Code first looks at the existing documentation to understand what's already there.
@@ -46,7 +45,7 @@ It produces a draft that follows your team's formatting conventions, keeps code 
 The contributor reviews for technical accuracy.
 Claude Code handles everything else.
 
-## What Changes for You
+## What changes for you
 
 You stop being the bottleneck.
 Instead of reviewing every doc for style, structure, and consistency, the plugin enforces those standards at the point of creation.
@@ -58,7 +57,7 @@ The plugin handles the tactical work of making sure individual docs are well-for
 You can also customize the standards.
 The plugin ships with defaults (sentence-case headings, action-oriented headings, specific markdown conventions), but you can edit the configuration files to match your team's style guide.
 
-## Install the Plugin
+## Install the plugin
 
 1. Open Claude Code:
 
@@ -78,36 +77,44 @@ The plugin ships with defaults (sentence-case headings, action-oriented headings
    /plugin install docs-assist@docs-assist-marketplace
    ```
 
-1. Restart Claude Code.
+1. Run `/reload-plugins` so the session picks up the new commands and skills.
 
 Once installed, the plugin activates automatically whenever someone asks for documentation help.
 No special commands required.
 A few commands are worth knowing:
 
-- `/docs-assist:health`: a thirty-second scorecard of where the docs stand (coverage, freshness, consistency, findability) and the one fix to start with. The best first command after installing, and the periodic pulse check afterward.
-- `/docs-assist:draft`: guided intake for a single document. It opens by asking the contributor to share everything they know, then shapes it into a draft.
-- `/docs-assist:plan`: for "we need docs for this project" moments. Reads the codebase, tells you what it found and where to start, and produces a plan built to ship the useful docs first and iterate. Start here when rolling out documentation for a new project or team.
-- `/docs-assist:template`: start a doc from a proven structure (The Good Docs Project) instead of a blank page.
-- `/docs-assist:init`: scaffold your team's configuration so everyone writes to the same conventions. Run this first.
-- `/docs-assist:setup-lint`: add optional linting that checks the same rules the plugin writes by.
+- `/docs-assist:health`: a thirty-second scorecard of where the docs stand (coverage, freshness, consistency, findability) and the one fix to start with.
+  The best first command after installing, and the periodic pulse check afterward.
+- `/docs-assist:draft`: guided intake for a single document.
+  It opens by asking the contributor to share everything they know, then shapes it into a draft.
+  When a proven structure fits, it offers a template from The Good Docs Project rather than starting from a blank page.
+- `/docs-assist:plan`: for "we need docs for this project" moments.
+  Reads the codebase, tells you what it found and where to start, and produces a plan built to ship the useful docs first and iterate.
+  Start here when rolling out documentation for a new project or team.
+- `/docs-assist:setup`: scaffold your team's configuration so everyone writes to the same conventions, then generate linting from it that checks the same rules the plugin writes by.
+  Run this first.
+  It also covers hooks, CI, and site navigation, each stage opt-in.
 - `/docs-assist:update`: update the docs affected by a code change.
 
-## Customize for Your Team
+## Customize for your team
 
 The recommended way to customize is project-local config you commit to your repo.
-Run `/docs-assist:init` to scaffold a `.docs-assist/` directory:
+Run `/docs-assist:setup` to scaffold a `.docs-assist/` directory:
 
-- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools). This file also drives the linters, so your rules stay in one place.
+- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools).
+  This file also drives the linters, so your rules stay in one place.
 - `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
 - `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
-- `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and product terms, maintained by the plugin. Audits flag prose or code samples that drift from it.
+- `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and product terms, maintained by the plugin.
+  Audits flag prose or code samples that drift from it.
 
 Because this config is committed, it survives plugin updates and is shared across your whole team.
 This repo runs on the same setup: see its committed `.docs-assist/` for a real example.
 
-If you prefer, you can edit the plugin's own files directly: `skills/docs-assist/reference/tone-and-voice.md` for formatting and `skills/docs-assist/SKILL.md` for the coaching approach. Those edits do not survive a plugin update, so project-local config is the better default.
+If you prefer, you can edit the plugin's own files directly: `skills/docs-assist/reference/tone-and-voice.md` for formatting and `skills/docs-assist/SKILL.md` for the coaching approach.
+Those edits do not survive a plugin update, so project-local config is the better default.
 
-## Run a Documentation Audit
+## Run a documentation audit
 
 If you want to assess the state of your existing docs, the plugin includes an audit command:
 
@@ -116,9 +123,10 @@ If you want to assess the state of your existing docs, the plugin includes an au
 ```
 
 This produces a structured report covering content quality, structural issues, findability gaps, and prioritized recommendations.
-It's a good starting point before rolling the plugin out to your team. It shows you what needs attention and helps you prioritize.
+It's a good starting point before rolling the plugin out to your team.
+It shows you what needs attention and helps you prioritize.
 
-## What This Doesn't Replace
+## What this doesn't replace
 
 This plugin gives your contributors documentation expertise at the point of writing.
 It doesn't replace the judgment calls a documentation lead makes about information architecture, content strategy, or what to document next.

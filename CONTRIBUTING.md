@@ -2,7 +2,7 @@
 
 Thanks for your interest in contributing.
 
-## Report Issues
+## Report issues
 
 Open an issue at [github.com/EdwardAngert/docs-agent-plugin/issues](https://github.com/EdwardAngert/docs-agent-plugin/issues) for:
 
@@ -10,7 +10,7 @@ Open an issue at [github.com/EdwardAngert/docs-agent-plugin/issues](https://gith
 - Feature requests
 - Questions about usage
 
-## Submit Pull Requests
+## Submit pull requests
 
 1. Fork the repository
 1. Create a branch for your changes
@@ -18,7 +18,7 @@ Open an issue at [github.com/EdwardAngert/docs-agent-plugin/issues](https://gith
 1. Test with Claude Code locally
 1. Open a pull request
 
-### What to Contribute
+### What to contribute
 
 Good contributions:
 
@@ -27,18 +27,18 @@ Good contributions:
 - Better examples or clarifications
 - Bug fixes
 
-### Code Style
+### Code style
 
 - Follow the style established in existing files
 - Use clear, descriptive names
 - Keep commands focused on a single purpose
 
-## Test Locally
+## Test locally
 
 Add your working copy as a marketplace, then install the plugin from it:
 
 ```bash
-claude plugin marketplace add /path/to/docs-agent-plugin
+claude plugin marketplace add /path/to/docs-agent-plugin && \
 claude plugin install docs-assist@docs-assist-marketplace
 ```
 
@@ -54,18 +54,22 @@ node scripts/validate.mjs
 
 This validates the manifests, the files they reference, frontmatter, and that the shipped Vale styles don't fire on the plugin's own docs (a style that bans a phrase and then explains itself using that phrase in plain prose flags itself; wrap the example in backticks, or reconsider the token if it's flagging ordinary English rather than the thing the rule means to catch).
 
-CI also dogfoods the shipped linters against the plugin's own docs, so if you changed any docs, run them locally too. The root `.markdownlint-cli2.jsonc` already scopes this to what CI lints, so a bare invocation matches:
+CI also dogfoods the shipped linters against the plugin's own docs, so if you changed any docs, run them locally too.
+The root `.markdownlint-cli2.jsonc` already scopes this to what CI lints, so a bare invocation matches:
 
 ```bash
 npx markdownlint-cli2
 npx cspell "**/*.md" ".docs-assist/**"
 ```
 
-Spelling uses `.cspell.json`, this repo's own word list (its own vocabulary: `frontmatter`, `llms`, `dogfooding`, and so on), not the generic template the plugin ships to other projects at `assets/lint/cspell/`. If a real word is missing, add it there rather than ignoring the finding.
+Spelling uses `.cspell.json`, this repo's own word list (its own vocabulary: `frontmatter`, `llms`, `dogfooding`, and so on), not the generic template the plugin ships to other projects at `assets/lint/cspell/`.
+If a real word is missing, add it there rather than ignoring the finding.
 
-### When You Rename a Plugin Concept
+### When you rename a plugin concept
 
-This repo is almost entirely prose, cross-referenced by hand: renaming a file, a registry, or a concept the docs describe means every mention of the old name needs to be found and updated, not just the definition. `impact-analysis.md` exists to formalize exactly this kind of change for the docs the plugin works on; turn it on this repo too rather than hand-grepping. After a rename, run `/docs-assist:audit` or `/docs-assist:update` against this repo in Claude Code to catch what a manual search misses.
+This repo is almost entirely prose, cross-referenced by hand: renaming a file, a registry, or a concept the docs describe means every mention of the old name needs to be found and updated, not just the definition.
+`impact-analysis.md` exists to formalize exactly this kind of change for the docs the plugin works on; turn it on this repo too rather than hand-grepping.
+After a rename, run `/docs-assist:audit` or `/docs-assist:update` against this repo in Claude Code to catch what a manual search misses.
 
 ## License
 

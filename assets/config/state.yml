@@ -1,0 +1,35 @@
+# Docs Assist per-document state.
+#
+# Goes at .docs-assist/state/docs.yml.
+#
+# This is where the plugin keeps what it needs to know about each document, so
+# the documents themselves stay portable plain markdown. Different site
+# generators accept different frontmatter schemas, assuming a site generator at
+# all is already too much, and frontmatter only pays off once a reader has
+# landed on the page, at which point the page itself is in view and more
+# useful. So nothing the plugin depends on is written into the docs.
+#
+# Frontmatter is still read when a project keeps it. A project whose generator
+# renders `last-verified` into the page should have that respected. The split:
+# the plugin WRITES here, and READS frontmatter when the project already has
+# it. This file wins when both carry a value.
+#
+# Keys are document paths relative to the repo root.
+# Read by assets/ci/docs-decay.mjs.
+
+# docs/guides/install.md:
+#   # Date this document was last checked against reality, YYYY-MM-DD.
+#   # Written by /docs-assist:verify on a clean pass.
+#   last-verified: 2026-08-14
+#
+#   # Claims the expert asserted that could not be traced to code or an
+#   # external source. The ledger shrinks to empty as they get confirmed.
+#   # This is the durable home for the attested-claims list: a chat
+#   # transcript does not survive the session, which is the whole point.
+#   attested:
+#     - section: "Rate limits"
+#       claim: "The default ceiling is 100 requests per minute"
+#       source: "SME, 2026-08-14"
+#     - section: "Retries"
+#       claim: "Backoff is exponential with a 30s ceiling"
+#       source: "SME, 2026-08-14"
