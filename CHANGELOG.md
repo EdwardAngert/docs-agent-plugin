@@ -141,7 +141,7 @@ Maintainer-facing work, with no effect on an installed plugin except where noted
 - **markdownlint covers the shipped surface.** It linted `README.md`, `CHANGELOG.md`, and `docs/` while `commands/`, `agents/`, and `skills/` had no coverage, though they are the bulk of what installs into a user's plugin cache and Vale and cspell already scanned them.
   All 73 files already passed, so this closes the gate rather than fixing a backlog.
 - **`check-claims.mjs`** now covers `skills/`, `commands/`, and `agents/`, scoped so an instruction file's examples are not read as claims about the repository.
-- **The changelog itself was ungated.** `CHANGELOG.md` is rightly exempt from the stale-name check, because a dated record is allowed to name the dead, but it was also sitting outside the emphasis, sentence-per-line, and ordered-list checks, where it has no such excuse.
+- **Nothing checked the changelog's own prose.** `CHANGELOG.md` is rightly exempt from the stale-name check, because a dated record is allowed to name the dead, but it was also sitting outside the emphasis, sentence-per-line, and ordered-list checks, where it has no such excuse.
   It is the most-read file in a release and it was the one shipped file those rules did not cover.
   Gated now, which cost one split line in this entry.
 - **`validate.mjs` gained two more checks and lost a blind spot.** A removed command named in a bare code span now fails, and an `llms.txt` entry whose title disagrees with the doc's own frontmatter now fails.
