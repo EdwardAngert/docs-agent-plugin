@@ -27,6 +27,7 @@
 //   FILE_PATH_CHECK_STRICT    "1" exits nonzero when anything is flagged
 //   GITHUB_STEP_SUMMARY       when set, the report is appended there too
 
+import { execSync } from 'node:child_process';
 import { readFileSync, existsSync, readdirSync, statSync, appendFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
@@ -43,6 +44,29 @@ if (!existsSync(docsDir)) {
 }
 
 const DOC_EXT = /\.(md|mdx|markdown)$/i;
+
+// The documentation set is what git tracks. A file on disk that git ignores is
+// working material: a report, an intake packet, a planning note. Ranking or
+// auditing those produces confident findings about files no reader will ever
+// see, which is a category error that has misfired here more than once.
+//
+// Outside a checkout there is no index to consult and the whole tree is what
+// shipped (an installed plugin cache, an extracted tarball), so the walk stands
+// unfiltered there.
+function keepTracked(files) {
+  let tracked;
+  try {
+    execSync('git rev-parse --git-dir', { stdio: 'ignore' });
+    tracked = new Set(
+      execSync('git ls-files -z', { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+        .split('\0')
+        .filter(Boolean),
+    );
+  } catch {
+    return files;
+  }
+  return files.filter((f) => tracked.has(f.replace(/^\.\//, '')));
+}
 
 function walk(dir, out = []) {
   for (const entry of readdirSync(dir)) {
@@ -81,7 +105,7 @@ function isCommandBlock(body) {
 
 const findings = [];
 
-for (const file of walk(docsDir)) {
+for (const file of keepTracked(walk(docsDir))) {
   const lines = readFileSync(file, 'utf8').split('\n');
 
   for (let i = 0; i < lines.length; i++) {

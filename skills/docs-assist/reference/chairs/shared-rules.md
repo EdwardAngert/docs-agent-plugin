@@ -58,6 +58,20 @@ Each chair has forbidden moves, named in its own contract.
 They exist because a chair that does everything agrees with the others politely and produces a confident average.
 The tension between the chairs is the mechanism, not a problem to resolve.
 
+## The set is what git tracks
+
+A file on disk is not automatically a document.
+
+Glob and Grep see everything in the working tree, including what the project deliberately ignores: reports, intake packets, planning notes, generated caches.
+Those are working material, and a finding about one is a finding about a file no reader will ever open.
+
+Before treating a file as part of the set, confirm the project tracks it.
+Where you cannot check, say which files you counted, so a wrong assumption is visible rather than silent.
+
+This is not hypothetical.
+A chair reported seven maintainer-facing pages as shipping in a docs directory that tracks four, and separately called for a ruling on a file the project had already excluded.
+Both readings were confident, both were wrong, and nothing in the report showed which files had been counted.
+
 ## Write to your artifact only
 
 Your contract names the files you write.

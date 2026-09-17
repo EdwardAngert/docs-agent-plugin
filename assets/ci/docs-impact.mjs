@@ -43,6 +43,29 @@ const isDoc = (f) => /\.mdx?$/.test(f);
 
 // Load every doc into memory once; docs sets are small and this avoids
 // running grep per candidate term.
+// The documentation set is what git tracks. A file on disk that git ignores is
+// working material: a report, an intake packet, a planning note. Ranking or
+// auditing those produces confident findings about files no reader will ever
+// see, which is a category error that has misfired here more than once.
+//
+// Outside a checkout there is no index to consult and the whole tree is what
+// shipped (an installed plugin cache, an extracted tarball), so the walk stands
+// unfiltered there.
+function keepTracked(files) {
+  let tracked;
+  try {
+    execSync('git rev-parse --git-dir', { stdio: 'ignore' });
+    tracked = new Set(
+      execSync('git ls-files -z', { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+        .split('\0')
+        .filter(Boolean),
+    );
+  } catch {
+    return files;
+  }
+  return files.filter((f) => tracked.has(f.replace(/^\.\//, '')));
+}
+
 function loadDocs() {
   const files = [];
   const walk = (dir) => {
@@ -54,7 +77,7 @@ function loadDocs() {
   };
   if (existsSync(DOCS)) walk(DOCS);
   for (const f of ['README.md', 'llms.txt']) if (existsSync(f)) files.push(f);
-  return files.map((f) => ({ file: f, text: readFileSync(f, 'utf8') }));
+  return keepTracked(files).map((f) => ({ file: f, text: readFileSync(f, 'utf8') }));
 }
 
 // 1. Classify the changed files.

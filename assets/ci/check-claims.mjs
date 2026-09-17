@@ -293,9 +293,16 @@ for (const c of needsJudgment) (byDoc[c.doc] ??= []).push(c);
 writeFileSync(`${OUT_DIR}/claims-needs-judgment.json`, JSON.stringify(byDoc, null, 2) + '\n');
 
 const missingClaims = allClaims.filter((c) => c.status === 'missing' && isRealClaimFor(c.doc, c));
+// Claims that resolved "missing" inside an instruction file, where a generic
+// example is not a claim about this repository. They are suppressed from the
+// table by isRealClaimFor, so they must not be counted as missing in the
+// summary either: reporting eleven and showing one teaches a reader that the
+// table is incomplete, and the next real finding gets discounted with it.
+const suppressed = missing - missingClaims.length;
 
 let out = `## Claim check\n\n`;
-out += `${docs.length} docs, ${allClaims.length} candidate claims (${resolved} mechanically checkable: ${confirmed} confirmed, ${missing} missing, ${resolved - confirmed - missing} demoted to judgment). `;
+out += `${docs.length} docs, ${allClaims.length} candidate claims (${resolved} mechanically checkable: ${confirmed} confirmed, ${missingClaims.length} missing, ${resolved - confirmed - missingClaims.length} demoted to judgment`;
+out += suppressed ? `, of which ${suppressed} are examples inside instruction files rather than claims about this repository). ` : `). `;
 out += `${needsJudgment.length} require a reader, grouped by doc in \`${OUT_DIR}/claims-needs-judgment.json\`: hand those to \`claim-briefs.mjs\`.\n\n`;
 if (missingClaims.length) {
   out += `### Missing (code doesn't back the claim anymore)\n\n`;

@@ -49,6 +49,29 @@ const THRESHOLD = Number(process.env.DOCS_DECAY_THRESHOLD || 10);
 const NOW = Date.now();
 const DAY = 24 * 60 * 60 * 1000;
 
+// The documentation set is what git tracks. A file on disk that git ignores is
+// working material: a report, an intake packet, a planning note. Ranking or
+// auditing those produces confident findings about files no reader will ever
+// see, which is a category error that has misfired here more than once.
+//
+// Outside a checkout there is no index to consult and the whole tree is what
+// shipped (an installed plugin cache, an extracted tarball), so the walk stands
+// unfiltered there.
+function keepTracked(files) {
+  let tracked;
+  try {
+    execSync('git rev-parse --git-dir', { stdio: 'ignore' });
+    tracked = new Set(
+      execSync('git ls-files -z', { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+        .split('\0')
+        .filter(Boolean),
+    );
+  } catch {
+    return files;
+  }
+  return files.filter((f) => tracked.has(f.replace(/^\.\//, '')));
+}
+
 function mdFiles(dir) {
   const out = [];
   if (!existsSync(dir)) return out;
@@ -60,7 +83,7 @@ function mdFiles(dir) {
   return out;
 }
 
-const docs = mdFiles(DOCS);
+const docs = keepTracked(mdFiles(DOCS));
 if (existsSync('README.md')) docs.push('README.md');
 
 function report(text) {
