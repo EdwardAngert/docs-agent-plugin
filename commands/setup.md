@@ -13,6 +13,11 @@ A contributor who has just watched the plugin infer their heading case for the t
 Each stage is opt-in and nothing is written without a yes.
 Ask once, up front, naming what you intend to do, then run through without stopping at every internal boundary.
 
+The optional argument (`$ARGUMENTS`) names a single stage to run alone: `conventions`, `linting`, `hooks`, `personas`, `reachability`, or `site`.
+Match it loosely, so `lint` and `nav` reach the stage a contributor meant.
+With no argument, offer the full pass.
+When the named stage depends on one the project has not done, say so and offer that one first: linting generates its config from `config.yml`, so it needs the conventions stage, or an existing `.docs-assist/config.yml`, before it can run.
+
 ## 1. Conventions
 
 Detect, then confirm.

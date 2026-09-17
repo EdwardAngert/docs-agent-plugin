@@ -56,6 +56,7 @@ Nothing else in the upgrade requires action from you.
   One corpus, three uses: propose a draft from existing material, build the authority persona's voice, and supply real reader language.
   Opt-in, with privacy rules stricter than the plugin's defaults.
 - **`/docs-assist:setup`**: conventions, linting, hooks, and site navigation in one pass, each stage opt-in and nothing written without a yes.
+  Naming a stage (`/docs-assist:setup linting`) runs that one alone.
   This is the command the four removed setup commands became, and it is new rather than a rename: it reads the repo's existing conventions first and proposes config that matches them, instead of asking you to answer the same questions four times.
 - **`/docs-assist:merge-prep`**: the one place anything expensive runs.
   Whole-set continuity, `llms.txt` regeneration, bundle drift, link checking, and full linting happen here when you ask, so a single content fix never triggers a regenerate-and-diff pass over your whole docs tree.
@@ -123,6 +124,9 @@ Nothing else in the upgrade requires action from you.
   It now says what it wanted.
 - **`check-claims.mjs` confirmed claims against its own output.** Its cache records the text of every claim found, so tracking that directory made each claim resolve by finding itself: 20 findings became 0 between two runs with nothing fixed.
   The plugin's working tree is now excluded by rule rather than by the coincidence of a markdown filter.
+- **The README documented `[stage]` for `/docs-assist:setup` and the command never read an argument.** Every other command resolves `$ARGUMENTS`; this one did not, so `/docs-assist:setup linting` ran the full pass.
+  The stage argument is implemented now, and the command reference names the six stages rather than showing one example and leaving the rest to guesswork.
+- **The heading sweep mangled nine command names.** `docs/command-reference.md` carried `### /Docs-assist:draft` and eight more, where sentence-casing capitalized a literal command that is spelled lower case everywhere it is typed.
 - The README's file tree left out `skills/writing-task/`, one of the two skills this release ships.
 - A language-tag check was proposed and cut after firing on a deliberate accommodation, the same lesson `leverage` and `just` already taught the Vale styles.
 

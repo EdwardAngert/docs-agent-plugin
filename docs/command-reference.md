@@ -35,7 +35,7 @@ Every command also works with no argument: it asks for what it needs.
 
 ## Write and plan
 
-### /Docs-assist:draft
+### /docs-assist:draft
 
 `/docs-assist:draft [topic or issue number]`
 
@@ -48,7 +48,7 @@ For a topic that will take more than one sitting, it can offer to keep a running
 /docs-assist:draft how to configure webhook retries
 ```
 
-### /Docs-assist:plan
+### /docs-assist:plan
 
 `/docs-assist:plan [repo path or description]`
 
@@ -62,7 +62,7 @@ Use it for a new project with no docs, a project with scattered docs, or onboard
 
 ## Review and maintain
 
-### /Docs-assist:health
+### /docs-assist:health
 
 `/docs-assist:health [docs directory]`
 
@@ -74,7 +74,7 @@ Use `/docs-assist:audit` when you want the full findings list instead of a score
 /docs-assist:health
 ```
 
-### /Docs-assist:audit
+### /docs-assist:audit
 
 `/docs-assist:audit [path]`
 
@@ -87,7 +87,7 @@ Use it to assess a docs set before a cleanup, or to review the ripple of a chang
 /docs-assist:audit docs/
 ```
 
-### /Docs-assist:update
+### /docs-assist:update
 
 `/docs-assist:update [git ref, PR number, or path]`
 
@@ -99,7 +99,7 @@ Use it after a code change so the docs keep pace.
 /docs-assist:update 42
 ```
 
-### /Docs-assist:verify
+### /docs-assist:verify
 
 `/docs-assist:verify [doc path or directory]`
 
@@ -113,7 +113,7 @@ Use it on quickstarts and tutorials, the docs where a broken step costs the most
 /docs-assist:verify docs/quickstart.md
 ```
 
-### /Docs-assist:release-notes
+### /docs-assist:release-notes
 
 `/docs-assist:release-notes [range, tag, or version]`
 
@@ -127,7 +127,7 @@ Use it when cutting a release, so the notes describe outcomes readers care about
 
 ## Configure your project
 
-### /Docs-assist:setup
+### /docs-assist:setup
 
 `/docs-assist:setup [stage]`
 
@@ -135,12 +135,20 @@ Conventions, linting, hooks, and site navigation, in one pass with one set of qu
 Every stage is opt-in and nothing is written without a yes.
 The plugin also offers this inline at the moment it would help, so you rarely need to type it.
 
+With no argument, it offers the full pass:
+
 ```text
 /docs-assist:setup
-/docs-assist:setup lint
 ```
 
-### /Docs-assist:merge-prep
+Name a stage to run that one alone.
+The stages are `conventions`, `linting`, `hooks`, `personas`, `reachability`, and `site`, matched loosely:
+
+```text
+/docs-assist:setup linting
+```
+
+### /docs-assist:merge-prep
 
 `/docs-assist:merge-prep [branch or path]`
 

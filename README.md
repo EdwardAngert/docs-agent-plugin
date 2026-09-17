@@ -83,6 +83,39 @@ Two things reach outside your repo, both on an explicit yes: fetching a template
 
    You get a thirty-second scorecard (coverage, freshness, consistency, findability), the single highest-leverage fix, and an offer to make it now.
 
+If step 5 comes back "unknown command", the session is still running the plugin list it started with.
+Run `/reload-plugins` again, and if the commands still do not appear, run `/plugin` and check that `docs-assist` is listed and enabled.
+
+Prefer the terminal to the in-session commands?
+`claude plugin marketplace add EdwardAngert/docs-agent-plugin` and `claude plugin install docs-assist@docs-assist-marketplace` do the same two steps from a shell.
+
+## Set up your project
+
+Installing gives you the plugin.
+Setting up is what makes it write like your project instead of like its defaults, and makes it show up when it should.
+
+One command walks all of it, and every stage is opt-in with nothing written until you say yes:
+
+```text
+/docs-assist:setup
+```
+
+It runs six stages, and you can name one to run it alone (`/docs-assist:setup linting`):
+
+1. **Conventions.** Reads your existing docs and proposes a `.docs-assist/config.yml` and `style.md` that match what they already do, as a summary to correct rather than a questionnaire.
+   See [Configure for your team](#configure-for-your-team).
+1. **Linting.** Generates Vale, markdownlint, and cspell config from that config, so one source of truth drives both how the plugin writes and how the linter checks.
+   See [Lint with the same rules you write by](#lint-with-the-same-rules-you-write-by).
+1. **Hooks and CI.** Offers a git pre-commit lint, an in-session doc lint, and CI checks for docs impact, the reference registry, and claims.
+   Every one default off, installed only on an explicit choice.
+1. **Personas.** Only when the project will use the authoring loop: a short per-project brief for the chairs that write and review.
+1. **Reachability.** Offers the `CLAUDE.md` line described in [Make it show up](#make-it-show-up), adjusted to your layout.
+1. **Site navigation.** Generates nav from your docs' own metadata for Docusaurus or MkDocs, and scaffolds a minimal setup when no site exists.
+
+The minimum worth doing is stages 1 and 5: conventions so the plugin writes like your project, and the `CLAUDE.md` line so it gets asked in the first place.
+
+Everything it writes is committed to your repo, so it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
+
 ## Update
 
 Claude Code doesn't auto-update installed plugins.
@@ -113,7 +146,7 @@ The plugin activates when you ask for documentation help, in plain words.
 You don't need to learn any special syntax or documentation theory.
 
 It activates on what you say, though, so work that never mentions documentation will not reach it on its own.
-[Making It Show Up](#make-it-show-up) covers the two ways to close that gap.
+[Make it show up](#make-it-show-up) covers the two ways to close that gap.
 
 The simplest path is to tell Claude what you want to document:
 
@@ -123,7 +156,7 @@ I need to document how to set up SSO for our enterprise customers.
 
 Claude gathers what you know, connects it to your existing docs, and produces a structured draft.
 You review for accuracy, Claude handles the rest.
-The full rhythm is in [Gather Before You Structure](#gather-before-you-structure) below.
+The full rhythm is in [Gather before you structure](#gather-before-you-structure) below.
 
 Other prompts that work:
 
@@ -154,15 +187,31 @@ It plans to ship first and iterate, not to boil the ocean.
 
 ## Make it show up
 
-The plugin activates when something asks it to.
-A skill matches what you said, so work that never mentions documentation never reaches it.
+The plugin has four ways in, and only one of them can start on its own:
 
-Two things close that gap:
+| Surface  | Who pulls the trigger                                  | Starts on its own |
+| -------- | ------------------------------------------------------ | ----------------- |
+| Skill    | The model, matching your request against a description | No                |
+| Command  | You, typing `/docs-assist:...`                         | No                |
+| Subagent | The model, when a workflow fans work out               | No                |
+| Hook     | The event itself                                       | Yes               |
 
-- A second skill, `writing-task`, casts a wider net.
-  It recognizes work that is documentation-shaped without being called documentation (a pull request description, a changelog entry, a runbook) and routes to the part of the plugin that fits.
-  It is also allowed to find nothing and say so, which is what keeps it from becoming noise.
-- **A line in your `CLAUDE.md` is the highest-leverage fix, and the cheapest.** `CLAUDE.md` is always in context where a skill description is only matched, so a standing instruction there outranks anything the plugin can say about itself:
+That table has one consequence worth stating plainly: the plugin cannot notice anything you did not bring up.
+Someone editing `install.mdx` who never says "docs" gets no help, not because the plugin is unable, but because nothing asked it to look.
+
+Two different problems hide behind "it didn't fire", and they have different fixes.
+
+**Your request was documentation-shaped but not phrased as documentation** ("write the PR body", "update the changelog").
+That is a matching problem, and the second skill, `writing-task`, exists for it: a wider net that routes to the capability that fits, and that is allowed to find nothing and say so, which is what keeps it from becoming noise.
+Nothing to configure.
+
+**You never mentioned it at all.** That is a push problem, and no skill description can solve it.
+Fix it in this order.
+
+### Add three lines to `CLAUDE.md`
+
+The highest-leverage fix, and the cheapest.
+`CLAUDE.md` is always in context where a skill description is only matched, so a standing instruction there outranks anything the plugin can say about itself:
 
 ```markdown
 ## Documentation
@@ -172,7 +221,27 @@ the README, a release note, or a pull request description, use it rather than
 writing prose directly. Start with `/docs-assist:health` if the state is unclear.
 ```
 
+Keep it short and specific about where.
+A vague instruction competes with everything else in that file and loses.
 `/docs-assist:setup` offers to add it, adjusted to your layout.
+
+### Commit your configuration
+
+A `.docs-assist/` directory does not trigger anything by itself, and it changes what happens once the plugin is running: the conventions are yours rather than inferred.
+Pair it with the `CLAUDE.md` line.
+One gets the plugin invoked, the other makes the invocation behave like your project.
+
+### Add hooks, if you want a genuine push
+
+Hooks are the only surface that fires without anyone asking, and they are default off.
+`/docs-assist:setup` offers them one at a time.
+
+A hook can put information in front of the model and nothing more; it cannot make the model offer anything, so everything after that is judgment.
+The plugin holds that judgment to one rule: a proactive layer that speaks whenever it can stops being read.
+At most one notice per turn, once per task, and declined means dropped for the session.
+Nothing to say is the common case, and saying nothing is the correct behavior rather than a missed opportunity.
+
+The full reasoning, including why the useful hook shape is two events rather than one, is in [`reference/triggering.md`](skills/docs-assist/reference/triggering.md).
 
 ## Commands
 
