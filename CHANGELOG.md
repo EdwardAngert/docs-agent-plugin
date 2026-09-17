@@ -166,6 +166,8 @@ Maintainer-facing work, with no effect on an installed plugin except where noted
   Gated now, which cost one split line in this entry.
 - **Node 20 is out of support, and the workflows this plugin scaffolds still pinned it.** Four of the six pins are in the CI templates `/docs-assist:setup` writes into your repository, so the stale pin was being handed to every project that accepted them.
   All six now pin Node 24, the current long-term support line.
+  The runner's deprecation warning turned out to be a separate thing: it comes from the actions themselves, whose own bundles ran on Node 20, not from the version those actions install.
+  `actions/checkout` and `actions/setup-node` move to v7 and `actions/github-script` to v9, in this repo's workflow and in the shipped templates.
 - **`validate.mjs` gained two more checks and lost a blind spot.** A removed command named in a bare code span now fails, and an `llms.txt` entry whose title disagrees with the doc's own frontmatter now fails.
   Its stale-name check also walked the working tree rather than the index, so it reported on the archived working notes that are gitignored but still sit on a maintainer's disk; every prose check now scopes to what git tracks, which is what actually reaches a user's plugin cache.
 
