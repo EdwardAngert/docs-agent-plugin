@@ -1,5 +1,6 @@
 {
   "name": "docs-assist-marketplace",
+  "description": "Docs Assist: a documentation coach for Claude Code, published by its author.",
   "owner": {
     "name": "Edward Angert"
   },

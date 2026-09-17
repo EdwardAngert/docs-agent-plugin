@@ -55,6 +55,8 @@ Nothing else in the upgrade requires action from you.
 - **Drafts proposed from what maintainers already wrote.** The new `doc-harvester` subagent and `reference/harvest.md` mine issue replies, pull request comments, and commit message bodies.
   One corpus, three uses: propose a draft from existing material, build the authority persona's voice, and supply real reader language.
   Opt-in, with privacy rules stricter than the plugin's defaults.
+- **`/docs-assist:setup`**: conventions, linting, hooks, and site navigation in one pass, each stage opt-in and nothing written without a yes.
+  This is the command the four removed setup commands became, and it is new rather than a rename: it reads the repo's existing conventions first and proposes config that matches them, instead of asking you to answer the same questions four times.
 - **`/docs-assist:merge-prep`**: the one place anything expensive runs.
   Whole-set continuity, `llms.txt` regeneration, bundle drift, link checking, and full linting happen here when you ask, so a single content fix never triggers a regenerate-and-diff pass over your whole docs tree.
 - **A wider net for writing that nobody called documentation.** The `writing-task` skill routes pull request descriptions, release notes, runbooks, and READMEs to the capability that fits, and says plainly when the plugin has nothing for the task rather than stretching.
