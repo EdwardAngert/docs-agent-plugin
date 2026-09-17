@@ -65,6 +65,15 @@ function done(message) {
 }
 
 if (!existsSync(configPath)) done(`No config at \`${configPath}\`. Nothing to check.`);
+// This check's argument is a config file, where the other deterministic checks
+// take a docs directory. Handing it one crashes readFileSync with a raw EISDIR
+// stack, which is the opposite of how every other bad input here is handled.
+if (statSync(configPath).isDirectory()) {
+  done(
+    `\`${configPath}\` is a directory. This check takes the path to a config ` +
+      `file (default \`.docs-assist/config.yml\`), not a docs directory.`,
+  );
+}
 
 // Minimal nested-YAML read, scoped to the `bundle:` block. The plugin controls
 // this file's shape, so a small parser beats a dependency.

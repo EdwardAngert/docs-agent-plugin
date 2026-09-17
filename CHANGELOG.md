@@ -104,6 +104,8 @@ Nothing else in the upgrade requires action from you.
   The questionnaire is now named as an instrument that collects answers rather than a packet, and the claim says what is actually true: one home for a filled packet, with the questionnaire and the corpus inventory as the two instruments beside it.
 - `SKILL.md` sent content inventories to `.docs-assist/inventory/`, a path no other file uses; the inventory lives in `.docs-assist/intake/`.
 - A bulk rename left `reference/config-resolution.md` with a sentence starting in lower case.
+- **`bundle-drift.mjs` crashed on a docs directory.** It is the one deterministic check whose argument is a config file rather than a docs directory, so handing it what the other three take died on a raw `EISDIR` stack instead of the graceful message every other bad input there produces.
+  It now says what it wanted.
 - **`check-claims.mjs` confirmed claims against its own output.** Its cache records the text of every claim found, so tracking that directory made each claim resolve by finding itself: 20 findings became 0 between two runs with nothing fixed.
   The plugin's working tree is now excluded by rule rather than by the coincidence of a markdown filter.
 - The README's file tree left out `skills/writing-task/`, one of the two skills this release ships.
