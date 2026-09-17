@@ -49,7 +49,12 @@ The plugin proposes and you accept.
 It shows you a draft before a file is written, and multi-file work is offered on a branch rather than committed to your default branch.
 
 Its own bookkeeping lives in `.docs-assist/`: your conventions, the example registry, per-document verification dates, and the working artifacts of a drafting run.
-Your documents stay portable plain markdown, and nothing the plugin needs is written into them.
+Your documents stay portable plain markdown, and nothing is written into them without a yes.
+[What setup writes](docs/get-started.md#what-setup-writes-and-how-to-remove-it) lists every file it can add, whether it is committed, and how to remove it.
+
+Cost is uneven and worth knowing before you pick a command.
+A health check and the deterministic checks are cheap.
+The authoring loop is not: a full run is up to nine subagent passes for one document, which is the design's main practical objection to itself and is [stated as such](docs/how-the-loop-works.md#passes-and-when-the-loop-stops) rather than buried.
 
 A few things reach outside your repo, every one on an explicit yes: fetching a template, checking a claim about something your project does not vendor, mining your issue tracker for explanations maintainers already wrote, and the linters and link checkers you choose to install.
 
@@ -75,6 +80,7 @@ Then ask for a health check, or run `/docs-assist:health`, and you get a thirty-
 - [Command reference](docs/command-reference.md): every command with its argument and an example.
 - [How the authoring loop works](docs/how-the-loop-works.md): the three-chair mechanism behind drafting.
   You don't need it to use the plugin; read it to judge what a draft's assumptions list is worth.
+  It shows [a real entry](docs/how-the-loop-works.md#one-real-entry) from the ledger of the run that wrote that page, which is the fastest way to tell whether any of this is worth your time.
 
 ## How it works
 

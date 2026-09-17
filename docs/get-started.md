@@ -11,6 +11,18 @@ Three things, in order: install it, set it up so it writes like your project, an
 
 The last one is the step people skip, and it is the one that decides whether the plugin is ever used.
 
+## Before you start
+
+- Claude Code, recent enough to have `/plugin` and `/reload-plugins`.
+- **Run this from inside the project you want documented.** Install works anywhere; setup writes into the repository you are sitting in, so starting from your home directory produces config for nothing.
+- A git repository, if you want the pre-commit hook or anything committed.
+- Some existing documentation, even rough.
+  Setup reads it to detect your conventions, and a repo with none gets defaults instead.
+- Node, for the deterministic checks.
+  Nothing else is needed to draft, plan, or audit.
+
+Vale and markdownlint are installed by the linting stage if you accept it, so you do not need them beforehand.
+
 ## Install the plugin
 
 1. Open Claude Code:
@@ -57,7 +69,14 @@ Ask for it in plain words, or run the command:
 ```
 
 It walks six stages, and every one is opt-in with nothing written until you say yes.
-Name a stage to run it alone:
+
+To run one stage on its own, name it as an argument:
+
+```text
+/docs-assist:setup linting
+```
+
+The stages, in the order setup offers them:
 
 1. **Conventions.** Reads your existing docs for heading case, list markers, ordered-list style, frontmatter field names, and whether lines break at sentences, then proposes a `.docs-assist/config.yml` and `style.md` that match.
    It arrives as a summary to correct, not a questionnaire, and it never prescribes what your repo already decided.
@@ -162,15 +181,44 @@ The wider proactive layer, where findings accumulate quietly and surface once on
 The design holds it to one rule, which is the rule worth knowing before you turn any of this on: a layer that speaks whenever it can stops being read.
 At most one notice per turn, once per task, and declined means dropped for the session.
 
-The full reasoning, including why the useful shape is two events rather than one, is in [`reference/triggering.md`](../skills/docs-assist/reference/triggering.md).
+The full reasoning, including why the useful shape is two events rather than one, is in the plugin's own `skills/docs-assist/reference/triggering.md`, which you can read [on GitHub](https://github.com/EdwardAngert/docs-agent-plugin/blob/main/skills/docs-assist/reference/triggering.md) if you installed from the marketplace and have no checkout.
+
+## Check that it worked
+
+Three things, each with an answer you can see.
+
+**Setup wrote what you accepted.**
+`git status` shows the files from the table above, and only the ones you said yes to.
+
+**The conventions took.**
+Run `/docs-assist:health` again and compare it to the scorecard from the install step.
+Consistency and findability are the dimensions most likely to move once the plugin is writing to your rules.
+
+**The plugin gets asked.**
+This is the one people skip, and it is the one worth testing, because it fails silently.
+Say something documentation-shaped without using the word documentation:
+
+```text
+Write the pull request description for this branch.
+```
+
+If the reachability lines took, the plugin picks that up as writing worth helping with.
+If you get a generic answer instead, `CLAUDE.md` is the first thing to check: the section has to be in the file Claude actually loads for this repo, and it has to name the paths your docs really live under.
 
 ## Keep it current
 
-To update the plugin, run `/plugin`, select `docs-assist`, and choose the update option.
-From a shell, `claude plugin update docs-assist@docs-assist-marketplace` does the same, and a restart applies it.
+From a shell:
 
-Then run `/reload-plugins` so the running session picks up the new version.
-Skipping that leaves the session on the old commands and skill instructions even though the update installed cleanly.
+```bash
+claude plugin update docs-assist@docs-assist-marketplace
+```
+
+An update does not reach the session that is already running.
+Either restart Claude Code, or run `/reload-plugins` in the open session; you do not need both.
+Skipping it leaves you on the old commands and skill instructions even though the update installed cleanly.
+
+Installed at more than one scope?
+Each is updated separately, and `claude plugin list` shows the version and scope of each, which is also how you find the version number the changelog is asking you for.
 
 Check the [changelog](../CHANGELOG.md) for what changed since your version.
 Read it before upgrading from 0.9.x: seven commands were removed outright rather than deprecated, so anything you pinned or scripted against them is worth re-reading.
