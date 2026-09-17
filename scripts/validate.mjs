@@ -18,6 +18,7 @@
 //  10. Prose keeps one sentence per line, per .docs-assist/config.yml.
 //  11. Prose does not use bold or italics to stress a word.
 //  12. Ordered lists repeat `1.`, per .docs-assist/config.yml.
+//  13. Shell examples chain commands with `&& \\` and a line break, not inline.
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -495,6 +496,38 @@ for (const f of tracked) {
       !/^[ ]*[2-9]\d*[.)] /.test(lines[i]),
       `${f}:${i + 1} numbers an ordered list item explicitly. ` +
         `Use a repeated \`1.\` (ordered_list_style in .docs-assist/config.yml): "${lines[i].trim().slice(0, 60)}"`,
+    );
+  }
+}
+
+// 13. A shell example chains commands with `&& \\` and a line break, never inline.
+// `.docs-assist/style.md` and the shipped `assets/config/style.md` both carry
+// this: a reader copies a block, pastes it, and reads afterward, and an inline
+// `&&` reads as one long command whose halves cannot be seen or copied apart.
+// Written down without a gate, this is the shape that decayed before 1.0, and
+// the repo's one illustrative block was the anti-pattern it warns against.
+//
+// Only the formatting half is checked. Whether two commands are genuinely one
+// step is a judgment no regex makes, and so is whether a partial-file block
+// carries enough surrounding context.
+const SHELL_LANG = /^(bash|sh|shell|console|zsh)$/i;
+for (const f of tracked) {
+  if (!f.endsWith('.md')) continue;
+  const lines = readFileSync(rel(f), 'utf8').split('\n');
+  let fence = false, lang = '';
+  for (let i = 0; i < lines.length; i++) {
+    const open = lines[i].match(/^\s*(?:```|~~~)(\S*)/);
+    if (open) {
+      if (!fence) { fence = true; lang = open[1]; } else { fence = false; lang = ''; }
+      continue;
+    }
+    if (!fence || !SHELL_LANG.test(lang)) continue;
+    if (lines[i].trim().startsWith('#')) continue;
+    check(
+      !/ && /.test(lines[i]) || / && \\\s*$/.test(lines[i]),
+      `${f}:${i + 1} chains shell commands with an inline \`&&\`. ` +
+        `End the line with \`&& \\\` and put the next command on its own line, ` +
+        `so a reader can see and copy the halves: "${lines[i].trim().slice(0, 60)}"`,
     );
   }
 }

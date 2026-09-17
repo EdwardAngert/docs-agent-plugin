@@ -44,6 +44,11 @@ Terminology's product-name and preferred-term entries are inherently project-spe
 
 - No em dashes.
   Use a comma, a colon, parentheses, or rewrite the sentence.
+- Protect the reader who pastes without reading.
+  One step per code block, and two unrelated commands belong in two blocks.
+  When a step genuinely takes two commands, chain them with `&& \` and a line break rather than inline, so the reader can see and copy the halves.
+  A block that edits an existing file shows its surrounding context, or marks the omission with `...`, so nobody has to guess where it goes.
+  A destructive example must fail as written: a warning a copy-paste skips past protects nobody.
 - Where new docs of each type should live.
   [project-specific: fill in]
 - How to refer to internal tools, teams, or environments.

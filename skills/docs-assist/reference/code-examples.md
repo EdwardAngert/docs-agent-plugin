@@ -52,7 +52,7 @@ An audit checks this too: `/docs-assist:audit` flags code samples whose values d
 Whether or not a registry exists, examples must be copy-paste safe.
 This means two different things depending on what the example does, and they call for opposite defaults.
 
-**A setup or tutorial example should work exactly as written.** Copy-paste-and-run is the point (this is what makes "Compose Across the Docs Set" above possible at all).
+**A setup or tutorial example should work exactly as written.** Copy-paste-and-run is the point (this is what makes "Compose across the docs set" above possible at all).
 
 - Use documentation IP ranges (`192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24`) and reserved example domains (`example.com`).
 - Use clearly fake secrets that cannot work (`sk_test_EXAMPLE...`, `your-api-key`).
@@ -68,9 +68,47 @@ A command that would delete, drop, overwrite, force-push, or otherwise act on wh
   A warning a copy-paste skips past protects nobody; a command that fails when pasted verbatim protects everyone.
 - `doc-verifier` already refuses to run anything in this category (see its safety tiers); this rule is the same discipline applied for the human reader, who has no safety tier at all.
 
+## Protect the reader who pastes without reading
+
+Assume the reader copies the block, pastes it, and reads afterward.
+Every rule below follows from that, and so does the destructive-example rule above: safety and formatting are the same concern seen from two angles.
+
+**One step per block.** A block is a single thing the reader is doing, not a transcript of your terminal.
+Two unrelated commands belong in two blocks, each under the prose that says why it is there.
+
+**Chain a step's commands with `&& \` and a line break, never inline.** When a step genuinely takes two commands, `&&` is right, but written inline it reads as one long command and the reader cannot see, or copy, the halves.
+Break the line so the shape of the step is visible:
+
+```bash
+mkdir -p demo-widgets && \
+  cd demo-widgets
+```
+
+Not `mkdir -p demo-widgets && cd demo-widgets`.
+It still pastes as one working chain, and the reader can now see two commands, run them separately, or stop after the first.
+
+**Only chain what is genuinely one step.** "Create the directory and switch to it" is one step that would be pedantic as two.
+"Install the dependencies" and "run the test suite" are two.
+`&&` also means "and only if that succeeded", so do not use it for commands the reader should run regardless of each other: two linters chained with `&&` silently skip the second one whenever the first finds something.
+
+**Show a partial file edit in place, not as a floating fragment.** A block that is part of an existing file must say where in that file it goes, or the reader guesses and appends.
+In order of preference:
+
+- Include the real surrounding context: the block above it, the enclosing key, the function signature.
+  A reader who can see the anchor does not have to guess.
+- Failing that, mark the omission with `...` on its own line before, after, or both, so the block is visibly an excerpt rather than the whole file.
+- Never show a bare fragment whose position is implied only by the prose.
+
+```yaml
+# .docs-assist/config.yml
+lint:
+  tools: [vale, markdownlint]
+  ...
+  spelling: true
+```
+
 ## Formatting
 
 - A language tag on every fenced code block.
-- Combine related commands with `&&`; do not put several unrelated commands in one block.
 - Show expected output where it helps, and an error case for troubleshooting docs.
 - Keep the plugin's formatting rules (`tone-and-voice.md`) over any convention copied from an external source.

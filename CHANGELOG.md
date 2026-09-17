@@ -74,6 +74,10 @@ Nothing else in the upgrade requires action from you.
 - **An audit is the loop pointed at a finished document.** Pass 0 reconstructs the packet from what the document claims rather than writing one.
   A claim nobody can source is the finding, and in finished prose it is invisible: it sits next to twenty sourced claims and reads exactly like them.
 - **Intake and the packet are one artifact.** The intake loop is pass 0 with a person in the authority chair, so a packet a human filled and one a chair emitted are interchangeable.
+- **Code examples are written for the reader who pastes first and reads after.** `reference/code-examples.md` gains the formatting half of the safety rule its destructive-example section already covered: one step per block, two unrelated commands in two blocks, and a step's commands chained with `&& \` and a line break rather than inline, so the halves can be seen and copied apart.
+  A block that edits an existing file now has to show its surrounding context or mark the omission with `...`, rather than leaving the reader to guess where it goes.
+  The rule ships in `assets/config/style.md` as a default your project inherits, and `validate.mjs` gates the `&&` half, which is the only part a regex can judge.
+  The repo's own illustrative block was `npm install && npm run build`, the shape the rule warns about.
 - **The style template the plugin scaffolds bans emphasis inside prose.** `assets/config/style.md` now carries the rule as a default your project inherits: bold is for run-in headings and UI labels, a term being defined leads its bullet instead, and a literal value belongs in a code span.
   GitLab's rule is the one followed: "Do not use bold for keywords or emphasis."
 - **The Vale scaffold declares a vocabulary** at `styles/config/vocabularies/DocsAssist/accept.txt`, so proper nouns survive a sentence-case heading rule instead of being the reason to switch it off.

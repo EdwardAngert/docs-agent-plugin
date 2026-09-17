@@ -83,7 +83,8 @@ Cut them on sight, the same way an em dash gets cut, and rewrite what was there 
 - Examples:
 
   ```bash
-  npm install && npm run build
+  npm install && \
+    npm run build
   ```
 
 ### Emphasis

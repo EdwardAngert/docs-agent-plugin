@@ -44,5 +44,10 @@ Judgment-based guidance lives here.
   A glossary entry leads its bullet so the term is a run-in heading; if a sentence needs emphasis to land, rewrite the sentence.
   Google's style guide says "usually, your words can carry the emphasis without adding italics," and GitLab's bans emphasis outright in favor of "content that is clear enough that emphasis is not needed."
   A literal value belongs in a code span, not bold.
+- Protect the reader who pastes without reading.
+  One step per code block, and two unrelated commands belong in two blocks.
+  When a step genuinely takes two commands, chain them with `&& \` and a line break rather than inline, so the reader can see and copy the halves.
+  A block that edits an existing file shows its surrounding context, or marks the omission with `...`, so nobody has to guess where it goes.
+  A destructive example must fail as written: a warning a copy-paste skips past protects nobody.
 - Reuse the placeholder values in `reference.yml` for code samples.
 - Keep examples copy-paste safe: reserved example domains, documentation IP ranges, and fake credentials that cannot work.
