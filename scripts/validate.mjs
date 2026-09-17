@@ -19,6 +19,8 @@
 //  11. Prose does not use bold or italics to stress a word.
 //  12. Ordered lists repeat `1.`, per .docs-assist/config.yml.
 //  13. Shell examples chain commands with `&& \\` and a line break, not inline.
+//  14. A script that enumerates documents consults the git index.
+//  15. A fact with a named owner is not restated outside it.
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -73,6 +75,20 @@ for (const s of plugin.skills || []) {
   check(hasKey(fm, 'name') && hasKey(fm, 'description'), `SKILL.md missing name/description frontmatter: ${s}`);
 }
 
+// What git tracks. Every prose check below scopes to this rather than to the
+// working tree: the archived working notes (`reports/`, `docs/plan.md`, the two
+// planning docs) are gitignored but still sit on a maintainer's disk, and a
+// validator that reports on files the plugin does not ship is reporting noise.
+let tracked = [];
+try {
+  tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8' })
+    .split('\0')
+    .filter(Boolean);
+} catch {
+  // Not a git checkout (a published plugin cache, for instance). Skip.
+}
+const isTracked = new Set(tracked);
+
 // 4. docs/ frontmatter, including subdirectories.
 function mdFilesUnder(dir) {
   const out = [];
@@ -84,7 +100,9 @@ function mdFilesUnder(dir) {
   return out;
 }
 if (existsSync(rel('docs'))) {
-  for (const f of mdFilesUnder('docs')) {
+  // Tracked only: a gitignored planning note under docs/ is working material, and
+  // holding it to the frontmatter contract audits a file no reader will see.
+  for (const f of mdFilesUnder('docs').filter((f) => !tracked.length || isTracked.has(f))) {
     const fm = frontmatter(f);
     check(!!fm, `${f} missing frontmatter`);
     for (const key of ['title', 'description', 'content-type']) {
@@ -215,6 +233,7 @@ if (styleTokens.length) {
   }));
   for (const f of allMdFiles('.')) {
     if (f.startsWith(join(styleDir))) continue; // the style files themselves, not markdown anyway
+    if (tracked.length && !isTracked.has(f)) continue; // untracked working notes are not shipped prose
     const prose = stripCode(readFileSync(rel(f), 'utf8'));
     for (const { file: styleFile, token, re } of patterns) {
       check(!re.test(prose), `${f} contains "${token}" in plain prose, which the shipped ${styleFile} Vale style flags; wrap it in backticks or rephrase`);
@@ -235,19 +254,6 @@ const liveCommands = new Set(
   readdirSync(rel('commands')).filter((f) => f.endsWith('.md')).map((f) => f.replace(/\.md$/, '')),
 );
 
-// What git tracks. Every prose check below scopes to this rather than to the
-// working tree: the archived working notes (`reports/`, `docs/plan.md`, the two
-// planning docs) are gitignored but still sit on a maintainer's disk, and a
-// validator that reports on files the plugin does not ship is reporting noise.
-let tracked = [];
-try {
-  tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8' })
-    .split('\0')
-    .filter(Boolean);
-} catch {
-  // Not a git checkout (a published plugin cache, for instance). Skip.
-}
-const isTracked = new Set(tracked);
 
 // CHANGELOG records what was true at the time and is allowed to name the dead.
 const HISTORY = new Set(['CHANGELOG.md']);
@@ -541,6 +547,95 @@ for (const f of tracked) {
         `End the line with \`&& \\\` and put the next command on its own line, ` +
         `so a reader can see and copy the halves: "${lines[i].trim().slice(0, 60)}"`,
     );
+  }
+}
+
+// 14. A script that enumerates documents consults the git index.
+// The doc set is what git tracks (see .docs-assist/decisions.md). Walking the
+// filesystem instead gave four separate wrong answers in one day, in this file,
+// in docs-decay.mjs, and twice in a chair's report, because the wrong call is
+// correct in one of two contexts: outside a checkout there is no index and the
+// whole tree is what shipped. That is why it never looks wrong locally.
+//
+// The rule is deliberately coarse. Any check script that walks directories must
+// also mention the index, whether by calling git itself or by using a helper
+// that does. It cannot verify the consult is wired to the right call site, so it
+// is a tripwire against the next script repeating the pattern, not a proof.
+{
+  const checkScripts = [];
+  for (const dir of ['scripts', 'assets/ci']) {
+    if (!existsSync(rel(dir))) continue;
+    for (const f of readdirSync(rel(dir))) {
+      if (f.endsWith('.mjs')) checkScripts.push(join(dir, f));
+    }
+  }
+  for (const f of checkScripts) {
+    const src = readFileSync(rel(f), 'utf8');
+    if (!/readdirSync|readdir\(/.test(src)) continue; // enumerates nothing
+    // Count uses, not presence. Two earlier forms of this check passed a script
+    // whose call site had been deleted: the helper's own definition leaves its
+    // name behind, and the helper's body contains `ls-files`, so either token
+    // alone is still there with nothing calling it. Both were caught by actually
+    // deleting a call site and watching the check stay green.
+    // Anchored to a real declaration. An unanchored match reads this file's own
+    // regex literals as a definition, the same self-reference trap the shipped
+    // Vale styles hit when a rule explained itself using the phrase it bans.
+    const defines = /^function keepTracked\(/m.test(src);
+    const uses = (src.match(/keepTracked\s*\(/g) || []).length;
+    const consults = defines ? uses >= 2 : /ls-files/.test(src);
+    check(
+      consults,
+      `${f} walks directories to find documents but does not consult the git index` +
+        (defines ? ` (keepTracked is defined but never called)` : ``) + `. ` +
+        `A file git ignores is working material, not a document. Filter the walk ` +
+        `through \`git ls-files\`, falling back to the walk only outside a checkout.`,
+    );
+  }
+}
+
+// 15. A fact with a named owner is not restated outside it.
+// .docs-assist/decisions.md carries the ownership map, and the machine-readable
+// half of it drives this check, so the rule a reader sees and the rule CI
+// enforces are the same text rather than two copies that drift.
+//
+// This is what keeps the consolidation from decaying. Install lived in five
+// files and they disagreed about whether a restart or a reload applies an
+// update; the copies were found by an agent reading, which does not scale and
+// does not run on every change.
+{
+  const decisionsPath = '.docs-assist/decisions.md';
+  if (existsSync(rel(decisionsPath)) && tracked.length) {
+    const block = readFileSync(rel(decisionsPath), 'utf8').match(/```yaml\n(owners:[\s\S]*?)```/);
+    if (block) {
+      // Minimal parse of the shape this repo writes, not general YAML.
+      const rules = [];
+      let cur = null;
+      for (const line of block[1].split('\n')) {
+        const start = line.match(/^\s*-\s+fact:\s*(.+?)\s*$/);
+        if (start) { cur = { fact: start[1], also: [] }; rules.push(cur); continue; }
+        if (!cur) continue;
+        const pat = line.match(/^\s+pattern:\s*"(.+)"\s*$/);
+        if (pat) { cur.pattern = pat[1]; continue; }
+        const own = line.match(/^\s+owner:\s*(\S+)\s*$/);
+        if (own) { cur.owner = own[1]; continue; }
+        const also = line.match(/^\s+also:\s*\[(.*)\]\s*$/);
+        if (also) cur.also = also[1].split(',').map((x) => x.trim()).filter(Boolean);
+      }
+      for (const r of rules) {
+        if (!r.pattern || !r.owner) continue;
+        const allowed = new Set([r.owner, ...r.also, decisionsPath]);
+        for (const f of tracked) {
+          if (!/\.(md|txt)$/.test(f) || allowed.has(f)) continue;
+          const text = readFileSync(rel(f), 'utf8');
+          check(
+            !text.includes(r.pattern),
+            `${f} restates "${r.fact}", which ${r.owner} owns (matched \`${r.pattern}\`). ` +
+              `Link to the owner instead, or add this file to that rule's \`also\` list ` +
+              `in ${decisionsPath} with the reason it is a separate case.`,
+          );
+        }
+      }
+    }
   }
 }
 

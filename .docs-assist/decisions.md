@@ -42,6 +42,31 @@ Walking the filesystem is correct in one place only: an installed plugin cache, 
 Duplication across audiences is legitimate: the same fact for Claude and for a person is two documents, not one drifted in two places.
 Duplication inside one audience is drift, and it has already cost this repo four disagreeing install procedures and a `templates.yml` claim that outlived the feature.
 
+The rows above are prose for a reader.
+The block below is the same map in a form `scripts/validate.mjs` can enforce, for the facts whose restatement is mechanically detectable.
+It is deliberately short: a pattern only belongs here when a stray copy is both likely and findable by grep.
+
+```yaml
+owners:
+  - fact: Install steps
+    pattern: "plugin marketplace add"
+    owner: docs/get-started.md
+    also: [CONTRIBUTING.md, README.md]
+    why: >
+      CONTRIBUTING documents the local-path install, which is a different
+      procedure. The README block is the shape of the thing, kept on purpose.
+  - fact: The setup stage list
+    pattern: "Site navigation"
+    owner: docs/get-started.md
+    also: [commands/setup.md, CHANGELOG.md]
+    why: >
+      setup.md is the implementation and names its own stages. The changelog
+      records what shipped.
+```
+
+Adding a row is cheap and removing one is cheaper.
+A pattern that fires on a legitimate mention is worse than no row, because the next person turns the check off rather than arguing with it.
+
 ## Count the occurrences before changing a fact
 
 Grep for every instance of a fact before editing it, and fix them together.
