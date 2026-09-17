@@ -74,9 +74,11 @@ That ledger is the point: it is a diff between two artifacts, not a model's reco
 - **Three rules that were declared but unenforced now fail CI**: one sentence per line, no prose emphasis, and a repeated `1.` for ordered lists.
   Each had decayed quietly, and each check names the config key it comes from.
   `validate.mjs`'s prose checks cover `assets/config/` too, so the style template this plugin ships follows the rules it describes.
-- **The maintainer-facing docs stopped shipping.** `docs/1.0-release-plan.md`, `docs/standalone-cli-plan.md`, and both files under `docs/reviews/` join the working notes on the `working-notes` branch.
-  The two reviews described a pre-1.0 command surface, naming eight commands 1.0 removed, so a reader arriving from `llms.txt` landed on a workflow that could not be run.
-  What ships under `docs/` is now the five reader-facing pages and the build record.
+- **The maintainer-facing docs stopped shipping.** The two planning docs, both files under `docs/reviews/`, and `docs/plan.md` join the working notes on the `working-notes` branch.
+  The reviews described a pre-1.0 command surface, naming eight commands 1.0 removed, so a reader arriving from `llms.txt` landed on a workflow that could not be run.
+  `docs/plan.md` was carrying three identities at once: the README linked it as a live backlog, `llms.txt` called it a superseded historical record, and the instruction files use that same path for the forward-looking content plan the plugin writes in a user's project.
+  Its deferred backlog moved into the README's self-assessment, which already pointed at it, and the path is now unambiguous.
+  What ships under `docs/` is four reader-facing pages.
 - **`check-claims.mjs`** now covers `skills/`, `commands/`, and `agents/`, scoped so an instruction file's examples are not read as claims about the repository.
 
 ### Removed
@@ -139,7 +141,7 @@ Two registries that used to duplicate each other's territory (`example-variables
 And general prose quality stops being something this plugin maintains its own copy of: `Google`, `write-good`, and `alex` are now the managed Vale packages doing that work, actively maintained upstream, with the plugin's own style stripped down to only what they do not cover.
 A [field report from a real end-to-end run](https://github.com/EdwardAngert/docs-agent-plugin/blob/working-notes/docs/reviews/0.9.5-field-report-reformatters-session.md) then closed the gap between what this plugin claims by default and what it actually does: mechanical checks are now wired into `audit` and `health` instead of stated as a principle, `setup-lint` runs and triages its first pass instead of stopping at scaffolding, and a mandatory claim-to-code trace (`reference/claim-verification.md`) makes "improve the docs" reach further than a clean lint run.
 `/docs-assist:verify` also now defers to [Doc Detective](https://docs.doc-detective.com/) when it's present in the target repo, since it's a purpose-built execution engine for the same job; the plugin's own `doc-verifier` remains the default otherwise.
-The staged plan behind this release is committed at `docs/plan.md`.
+The staged plan behind this release is archived on the [`working-notes` branch](https://github.com/EdwardAngert/docs-agent-plugin/blob/working-notes/docs/plan.md).
 
 <details>
 <summary>All changes in this release</summary>
@@ -208,7 +210,7 @@ Experts who are not in the session get intake packets: portable questionnaires p
 Feedback now lands where it lives instead of dying with the conversation: change-scoped results go to a sticky pull-request comment, repo-scoped reports to dated files that the next run compares against.
 A new `/docs-assist:setup-site` turns the metadata the plugin already maintains into site navigation.
 And because surfacing docs for AI readers is core functionality, the llms.txt rules are now single-sourced in their own reference, with every workflow holding up a named part of the maintenance contract.
-The staged plan behind this release is committed at `docs/plan.md`.
+The staged plan behind this release is archived on the [`working-notes` branch](https://github.com/EdwardAngert/docs-agent-plugin/blob/working-notes/docs/plan.md).
 
 <details>
 <summary>All changes in 0.9.5</summary>
@@ -225,7 +227,8 @@ The staged plan behind this release is committed at `docs/plan.md`.
   Deliberately not a site builder.
 - `reference/llms-txt.md`: the llms.txt format (per the llms.txt convention, including the reserved `Optional` section), reader-priority ordering, description rules, the frontmatter mapping note, the `llms-full.txt` companion, and the maintenance contract naming which workflow holds up which part.
   `/docs-assist:agent-ready`, the audit, and the frontmatter spec now point at it instead of describing the format piecemeal.
-- The staged 1.0 product plan, committed at `docs/plan.md` per the plugin's own persist-the-plan convention, with shipped items marked and the deferred list (CI auto-update, docs-impact noise knobs, more generators) recorded.
+- The staged 1.0 product plan, persisted per the plugin's own persist-the-plan convention, with shipped items marked and the deferred list (CI auto-update, docs-impact noise knobs, more generators) recorded.
+  It is archived on the [`working-notes` branch](https://github.com/EdwardAngert/docs-agent-plugin/blob/working-notes/docs/plan.md).
 - An opt-in fact-check in the intake loop: the new reconcile move offers to check the dump against the code and the existing docs, before anything is shaped and always as the contributor's choice.
   When accepted, confirmed claims are read back and contradictions are asked about rather than assumed (a wrong memory and a found bug look identical, and the plugin offers to record the bug when it is the code that is wrong).
   Afterward, a second, separate offer: record unverifiable claims in a new `sme-attested` frontmatter ledger, specific claims a reviewer verifies and deletes instead of a doc-wide review request.

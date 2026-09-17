@@ -99,11 +99,13 @@ Check `CHANGELOG.md` for what changed since your version.
 
 ## Documentation
 
-- [Set Up Documentation Standards for Your Team](docs/set-up-documentation-standards-for-your-team.md): for docs leads and devrel.
+- [Set up documentation standards for your team](docs/set-up-documentation-standards-for-your-team.md): for docs leads and devrel.
   Why to install, what changes for contributors, and how to customize.
-- [Write Docs With Docs Assist](docs/write-docs-with-docs-assist.md): for individual contributors.
+- [Write docs with Docs Assist](docs/write-docs-with-docs-assist.md): for individual contributors.
   What the plugin does, and how to get the most out of it.
 - [Command reference](docs/command-reference.md): every command with its argument and an example.
+- [How the authoring loop works](docs/how-the-loop-works.md): the three-chair mechanism behind drafting.
+  You don't need it to use the plugin; read it to judge what a draft's assumptions list is worth.
 
 ## How it works
 
@@ -318,7 +320,15 @@ The claims above should be read with that asterisk, and the list below is the ro
 1. **An eval suite.** Claude Code ships a plugin eval harness (`claude plugin eval`), and the load-bearing behaviors deserve cases: does a cold audit catch planted example drift, does the drafter flag gaps instead of inventing facts, does a healthy docs set get told it is healthy?
 1. **Live runs on messy repos.** Fan-out drafting, intake questionnaires, template fetching, and the CI comment flow have not yet run in anger, and this repo is too well-groomed to be a fair test.
 1. **Real users.** A few solo maintainers running `/docs-assist:health`, a plan, and a fan-out, then reporting where it fell down, would outweigh any amount of self-assessment.
-1. **The deferred backlog.** Docs-impact noise knobs, more site generators, and CI auto-update, tracked in [the plan](docs/plan.md).
+1. **The deferred backlog**, in rough priority order:
+   - A standalone `npx` CLI, so the plugin reaches people who don't use Claude Code without forking the instructions into a second codebase.
+     Blocked on a naming decision and on which adapters ship first; the [packaging plan](https://github.com/EdwardAngert/docs-agent-plugin/blob/working-notes/docs/standalone-cli-plan.md) is on the `working-notes` branch.
+   - Auto-running `/docs-assist:update` from CI on detector hits, committing docs changes to the pull request.
+     The trust cliff: the sticky-comment loop should earn confidence first.
+   - Docs-impact noise knobs: a per-repo ignore list in `.docs-assist/config.yml`, and requiring term matches inside backticks rather than anywhere in prose.
+   - Navigation generation for Astro, Hugo, and Jekyll.
+     Docusaurus and MkDocs are covered.
+   - Audit and audit-methodology consolidation, where some of the duplication is load-bearing.
 
 If you try it and something falls short, [an issue](https://github.com/EdwardAngert/docs-agent-plugin/issues) with what you expected and what happened is the most valuable contribution this project can receive.
 
