@@ -145,7 +145,7 @@ Then run `/reload-plugins` so the running session picks up the new version.
 Skipping that leaves the session on the old commands and skill instructions even though the update installed cleanly.
 
 Check the [changelog](../CHANGELOG.md) for what changed since your version.
-Read it before upgrading across a major version: 1.0.0 removed seven commands outright rather than deprecating them, so anything you pinned or scripted against 0.9.x is worth re-reading.
+Read it before upgrading from an earlier 0.9.x: 0.9.9 removed seven commands outright rather than deprecating them, so anything you pinned or scripted against them is worth re-reading.
 
 ## What to do next
 

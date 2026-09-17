@@ -246,8 +246,9 @@ If you try it and something falls short, [an issue](https://github.com/EdwardAng
 
 ## Status
 
-Version 1.0.0.
-The command surface and the drafting mechanism both changed substantially in this release, so anything you pinned against 0.9.x is worth re-reading.
+Version 0.9.9, which is the 1.0 overhaul shipped as a release candidate.
+The content is what 1.0.0 will be; the number is short of it on purpose, so this can be run against real repositories and corrected first.
+The command surface and the drafting mechanism both changed substantially, so anything you pinned against 0.9.x is worth re-reading.
 `CHANGELOG.md` has the detail, including a Known limits section.
 
 ## Background

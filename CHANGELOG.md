@@ -3,7 +3,11 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
-## 1.0.0 - 2026-09-16
+## 0.9.9 - 2026-09-16
+
+The 1.0 overhaul, shipped as a release candidate under a 0.9.x number.
+The content is what 1.0.0 will be; the version is deliberately short of it so this can be installed, run against real repositories, and corrected before the number stops being provisional.
+Everything below describes that overhaul.
 
 A comprehensive overhaul rather than an increment.
 The plugin's doctrine survives almost intact; its architecture and surface do not.
@@ -173,7 +177,7 @@ Maintainer-facing work, with no effect on an installed plugin except where noted
 
 ### Version policy
 
-- Bumped to 1.0.0 on the maintainer's explicit instruction.
+- Shipped as 0.9.9 on the maintainer's explicit instruction, holding 1.0.0 back until this has been installed and run against real repositories.
   The policy stands: a version bump past 0.9.5 is the maintainer's decision, and 1.0.0 especially so.
 
 ## 0.9.8 - 2026-07-21
