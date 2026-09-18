@@ -8,6 +8,20 @@ Mechanical linting (Vale, markdownlint, cspell) cannot check any of this: it ope
 Tracing claims to the code is the audit's highest-value pass, and the one most likely to get skipped, because the mechanical pass is easier to automate and produces a satisfying clean count that feels like the work is done.
 It is not; it just did the cheaper half.
 
+## A path that will never resolve on purpose
+
+Not every backtick-fenced path in prose is a claim about this repository's current state.
+A removed script cited as "recoverable from git history," a placeholder illustrating a naming convention, a real path in a sibling repo this checkout cannot see: `check-claims.mjs` cannot tell any of these apart from real drift by pattern alone, and guessing from nearby words is a false-negative machine waiting to hide a real regression behind a word like "removed."
+
+Mark it explicitly instead, immediately after the claim, same line:
+
+```markdown
+The old build script `scripts/build-onepagers.mjs`<!-- docs-assist:not-a-claim --> is gone;
+see PR #56 for why.
+```
+
+Same family as `doc-verifier`'s `<!-- docs-assist:no-verify -->` fenced-block opt-out (`agents/doc-verifier.md`): the author states the exception once, explicitly, rather than the checker inferring it.
+
 ## The plugin's own artifacts are never evidence
 
 Anything under `.docs-assist/` is the plugin's working tree: cached claim output, reconstructed packets, reports, intake material, state.

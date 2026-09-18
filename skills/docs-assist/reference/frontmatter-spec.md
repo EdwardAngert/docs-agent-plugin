@@ -124,6 +124,15 @@ The strongest form: `/docs-assist:verify` executed the doc's procedure end to en
 A human read-through also earns a bump; the point is that someone, or something, checked the claims, not just the prose.
 The decay detector (`docs-decay.mjs`) reads this field, so verified docs drop down the re-verification queue.
 
+A project that records verification some other way, a rendered component rather than frontmatter, gets the same benefit by declaring a `verified_body_pattern` in `.docs-assist/config.yml`: a regex with one capture group holding a `YYYY-MM-DD` date, matched against the whole doc body.
+
+```yaml
+# .docs-assist/config.yml
+verified_body_pattern: '<Verified date="(\d{4}-\d{2}-\d{2})"'
+```
+
+This is a project declaring its own established schema, per the rule at the top of this file, not a convention the plugin ships or assumes.
+
 **`template`** The catalog id of the documentation template this doc was seeded from, when one was used.
 Set it alongside the canonical `content-type` so the origin is traceable.
 See `templates.md`.

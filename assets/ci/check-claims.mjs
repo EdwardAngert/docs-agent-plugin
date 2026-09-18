@@ -32,6 +32,13 @@
 // tries to rule out before calling something missing (see checkFilePath and
 // checkConfigKey below); anything left over after that is worth a human or
 // agent second look, not an auto-fix.
+//
+// A path that will never resolve on purpose (a removed file cited in a
+// historical note, a placeholder illustrating a naming convention, a real
+// path in a sibling repo) is not drift either, and no heuristic can tell it
+// apart from real drift reliably. Mark it explicitly instead:
+// `` `old/path.js`<!-- docs-assist:not-a-claim --> ``, immediately after the
+// backtick-fenced claim, same line.
 
 import { readFileSync, existsSync, appendFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -135,6 +142,17 @@ const PATTERNS = [
 // Categories a lookup can settle without judgment.
 const MECHANICAL = new Set(['file-path', 'bare-path', 'cli-flag', 'cli-command', 'identifier-call', 'env-or-config-key', 'yaml-key']);
 
+// An author-declared suppression, immediately after the claim it excuses, in
+// the same `docs-assist:` comment family as doc-verifier's `no-verify`
+// (agents/doc-verifier.md). It exists because some backtick-fenced paths in
+// prose are not claims about this repository's current state at all: a
+// removed script cited as "recoverable from git history," a placeholder
+// illustrating a naming convention, a real path in a sibling repo this
+// checkout cannot see. No heuristic can tell those apart from real drift
+// reliably enough to guess; the author already knows and says so explicitly,
+// the same way a fenced block opts out of doc-verifier.
+const SUPPRESS_MARKER = /^\s*<!--\s*docs-assist:not-a-claim\s*-->/;
+
 function extractFromDoc(doc) {
   const claims = [];
   const lines = readFileSync(doc, 'utf8').split('\n');
@@ -151,6 +169,7 @@ function extractFromDoc(doc) {
         const span = [m.index, m.index + m[0].length];
         if (spans.some(([s, e]) => span[0] < e && span[1] > s)) continue;
         spans.push(span);
+        if (SUPPRESS_MARKER.test(raw.slice(span[1]))) continue;
         claims.push({ doc, line: i + 1, category, matched: m[0], context: line });
       }
     }

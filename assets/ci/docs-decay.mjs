@@ -22,8 +22,20 @@
 //   DOCS_DECAY_STRICT       "1" exits nonzero when any doc scores at or
 //                           above DOCS_DECAY_THRESHOLD (default: 10)
 //   DOCS_DECAY_THRESHOLD    score that counts as decayed (default: 10)
+//   DOCS_DECAY_VERIFIED_PATTERN    a regex, one capture group holding a
+//                           YYYY-MM-DD date, matched against the full doc
+//                           body (default: verified_body_pattern from
+//                           .docs-assist/config.yml, else none)
 //   DOCS_ASSIST_REPORT_FILE    when set, the full report is written there too
 //   GITHUB_STEP_SUMMARY     when set, the report is appended there too
+//
+// "Never verified" is a frontmatter- and sidecar-only reading by default,
+// and a project that records verification some other way (a rendered
+// component, a footer, a build-time badge) will see every doc it verified
+// still called never-verified. That is a project's own established schema
+// the plugin should extend rather than fight (frontmatter-spec.md), so a
+// project can declare one pattern in config.yml instead of the plugin
+// guessing at every site generator's own verification convention.
 
 import { execSync } from 'node:child_process';
 import { readFileSync, existsSync, readdirSync, appendFileSync } from 'node:fs';
@@ -44,7 +56,20 @@ function docsDir() {
   return 'docs';
 }
 
+function verifiedBodyPattern() {
+  const raw = process.env.DOCS_DECAY_VERIFIED_PATTERN || (() => {
+    try {
+      const m = readFileSync('.docs-assist/config.yml', 'utf8').match(/^verified_body_pattern:\s*(.+)$/m);
+      return m ? m[1].trim().replace(/^["']|["']$/g, '') : null;
+    } catch { return null; }
+  })();
+  if (!raw) return null;
+  try { return new RegExp(raw); }
+  catch { return null; } // a malformed project pattern degrades to "no pattern", not a crash
+}
+
 const DOCS = docsDir();
+const VERIFIED_BODY_PATTERN = verifiedBodyPattern();
 const TOP = Number(process.env.DOCS_DECAY_TOP || 10);
 const THRESHOLD = Number(process.env.DOCS_DECAY_THRESHOLD || 10);
 const NOW = Date.now();
@@ -152,7 +177,8 @@ for (const doc of docs) {
 
   // Verification: days since last verified, or null when nothing records it.
   const fmVerified = text.match(/^last-verified:\s*["']?(\d{4}-\d{2}-\d{2})/m);
-  const verifiedOn = sidecar['last-verified'] || (fmVerified ? fmVerified[1] : null);
+  const bodyVerified = VERIFIED_BODY_PATTERN ? text.match(VERIFIED_BODY_PATTERN) : null;
+  const verifiedOn = sidecar['last-verified'] || (fmVerified ? fmVerified[1] : null) || (bodyVerified ? bodyVerified[1] : null);
   const verifiedDays = verifiedOn ? Math.floor((NOW - Date.parse(verifiedOn)) / DAY) : null;
 
   // Attested: open ledger entries, from the store or from frontmatter.

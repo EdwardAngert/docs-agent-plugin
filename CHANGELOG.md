@@ -3,6 +3,22 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
+## Unreleased
+
+Found while dogfooding 0.9.10 against `edwardangert.github.io`, reported back live from a session testing that branch.
+
+- **`check-claims.mjs` false positives on deliberately non-resolving paths.**
+  A removed script cited as history, a placeholder illustrating a naming convention, and a real path in a sibling repo this checkout cannot see all read identically to real drift.
+  Added an explicit, author-declared suppression: `` `path`<!-- docs-assist:not-a-claim --> ``, same line, same family as `doc-verifier`'s `<!-- docs-assist:no-verify -->`.
+  See `claim-verification.md`.
+- **`docs-decay.mjs`'s "never verified" ignored a project's own verification record when it wasn't frontmatter.**
+  A site rendering verification as a component (`<Verified date="..." method="...">`) got every verified doc flagged as never verified anyway.
+  Added `verified_body_pattern` in `.docs-assist/config.yml`: a project-declared regex, not a plugin-guessed one, per the existing rule that a project's established schema gets extended rather than fought.
+  See `frontmatter-spec.md`.
+- Two dangling anchors left by the 0.9.10 README rewrite, and a stale self-assessment section removed from the README.
+  It duplicated `CHANGELOG.md`'s own Known limits and had gone stale.
+  Found by `/docs-assist:health`.
+
 ## 0.9.10 - 2026-09-16
 
 A comprehensive overhaul rather than an increment.
