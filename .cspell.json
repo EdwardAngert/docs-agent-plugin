@@ -14,7 +14,8 @@
     "**/pnpm-lock.yaml",
     "**/yarn.lock",
     "reports/**",
-    ".docs-assist/loop/**"
+    ".docs-assist/loop/**",
+    ".docs-assist/session-log.md"
   ],
   "ignoreRegExpList": [
     "Urls",

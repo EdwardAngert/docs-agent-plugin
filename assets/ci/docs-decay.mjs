@@ -22,6 +22,7 @@
 //   DOCS_DECAY_STRICT       "1" exits nonzero when any doc scores at or
 //                           above DOCS_DECAY_THRESHOLD (default: 10)
 //   DOCS_DECAY_THRESHOLD    score that counts as decayed (default: 10)
+//   DOCS_ASSIST_REPORT_FILE    when set, the full report is written there too
 //   GITHUB_STEP_SUMMARY     when set, the report is appended there too
 
 import { execSync } from 'node:child_process';
@@ -49,6 +50,29 @@ const THRESHOLD = Number(process.env.DOCS_DECAY_THRESHOLD || 10);
 const NOW = Date.now();
 const DAY = 24 * 60 * 60 * 1000;
 
+// The documentation set is what git tracks. A file on disk that git ignores is
+// working material: a report, an intake packet, a planning note. Ranking or
+// auditing those produces confident findings about files no reader will ever
+// see, which is a category error that has misfired here more than once.
+//
+// Outside a checkout there is no index to consult and the whole tree is what
+// shipped (an installed plugin cache, an extracted tarball), so the walk stands
+// unfiltered there.
+function keepTracked(files) {
+  let tracked;
+  try {
+    execSync('git rev-parse --git-dir', { stdio: 'ignore' });
+    tracked = new Set(
+      execSync('git ls-files -z', { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+        .split('\0')
+        .filter(Boolean),
+    );
+  } catch {
+    return files;
+  }
+  return files.filter((f) => tracked.has(f.replace(/^\.\//, '')));
+}
+
 function mdFiles(dir) {
   const out = [];
   if (!existsSync(dir)) return out;
@@ -60,11 +84,16 @@ function mdFiles(dir) {
   return out;
 }
 
-const docs = mdFiles(DOCS);
+const docs = keepTracked(mdFiles(DOCS));
 if (existsSync('README.md')) docs.push('README.md');
 
 function report(text) {
   console.log(text);
+  // The screen gets the judgment; a file gets the detail when a run is long
+  // enough to scroll past. See reference/reports.md for the contract.
+  if (process.env.DOCS_ASSIST_REPORT_FILE) {
+    appendFileSync(process.env.DOCS_ASSIST_REPORT_FILE, text + '\n');
+  }
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, text + '\n');
 }
 

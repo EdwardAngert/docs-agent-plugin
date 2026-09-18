@@ -110,6 +110,28 @@ Apply a materiality threshold so a word swapped back and forth does not trigger 
 
 Report what the run cost and let the contributor halt it at any pass boundary.
 
+## Cold read, before the contributor sees it
+
+One more step after the loop stops, not another pass inside it: run `cold-reader` once against the finished draft, with no repository access and no memory of the run that produced it.
+
+Why this needs a separate step rather than folding into the advocate's own passes: every pass a chair runs has already seen the reasoning behind the document, the same problem this file names as the reason the chairs run in separate contexts at all.
+A chair reviewing its own shape decisions cannot experience the ordering the way a first-time reader does.
+Two real runs against chair-shaped drafts found what neither chair's fact-checking caught in any pass: a shortcut buried after the material it would have made skippable, a problem framed as one thing that turns out to be two, a duplicated instruction with no signal about which copy still applies, a maintenance topic wedged inside onboarding, and information split across sections with the split disclosed only at the end.
+None of these are false claims.
+All of them are reader costs that only show up by reading the finished document in order, the way a reader actually would.
+
+Route findings back to the advocate chair for one shaping decision each: fix, or say why not (churn cost, a deliberate tradeoff, out of scope).
+This is a single additional advocate pass, not a new loop cycle.
+It does not reset the pass count or reopen convergence.
+
+Skip it under the same threshold that skips the outline and the second-opinion pass: a doc short enough that a full round trip costs more than it is worth.
+Skip it also when the document in front of the loop is a reconstruction rather than a fresh draft (`/docs-assist:audit`'s pass 0), where the reader-perceived order is the thing being reconstructed, not decided.
+
+This is not the second-opinion pass (`second-opinion.md`), and does not replace it.
+Second opinion is a judgment re-read with full context: it catches a wrong call made with every fact in view.
+A cold read's entire value is having none of that context.
+It is the only tool in the set that experiences a document the way an actual first-time reader does: sequentially, and without knowing why anything was written the way it was.
+
 ## The real output
 
 Not the polished document.

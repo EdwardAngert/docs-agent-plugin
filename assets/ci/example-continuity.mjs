@@ -40,8 +40,10 @@
 //   DOCS_ASSIST_DOCS_DIR        docs root (default: docs)
 //   DOCS_ASSIST_REFERENCE       registry path (default: .docs-assist/reference.yml)
 //   EXAMPLE_CONTINUITY_STRICT   "1" exits nonzero when anything is flagged
+//   DOCS_ASSIST_REPORT_FILE    when set, the full report is written there too
 //   GITHUB_STEP_SUMMARY         when set, the report is appended there too
 
+import { execSync } from 'node:child_process';
 import { readFileSync, existsSync, readdirSync, statSync, appendFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
@@ -50,6 +52,11 @@ const registryPath = process.env.DOCS_ASSIST_REFERENCE || '.docs-assist/referenc
 
 function report(text) {
   console.log(text);
+  // The screen gets the judgment; a file gets the detail when a run is long
+  // enough to scroll past. See reference/reports.md for the contract.
+  if (process.env.DOCS_ASSIST_REPORT_FILE) {
+    appendFileSync(process.env.DOCS_ASSIST_REPORT_FILE, text + '\n');
+  }
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, text + '\n');
 }
 
@@ -94,6 +101,29 @@ for (const [name, entry] of Object.entries(registry)) {
 
 const DOC_EXT = /\.(md|mdx|markdown)$/i;
 
+// The documentation set is what git tracks. A file on disk that git ignores is
+// working material: a report, an intake packet, a planning note. Ranking or
+// auditing those produces confident findings about files no reader will ever
+// see, which is a category error that has misfired here more than once.
+//
+// Outside a checkout there is no index to consult and the whole tree is what
+// shipped (an installed plugin cache, an extracted tarball), so the walk stands
+// unfiltered there.
+function keepTracked(files) {
+  let tracked;
+  try {
+    execSync('git rev-parse --git-dir', { stdio: 'ignore' });
+    tracked = new Set(
+      execSync('git ls-files -z', { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+        .split('\0')
+        .filter(Boolean),
+    );
+  } catch {
+    return files;
+  }
+  return files.filter((f) => tracked.has(f.replace(/^\.\//, '')));
+}
+
 function walk(dir, out = []) {
   for (const entry of readdirSync(dir)) {
     if (entry.startsWith('.') || entry === 'node_modules') continue;
@@ -111,7 +141,7 @@ const PLACEHOLDER = /(<[a-z][a-z0-9]*(?:[-_][a-z0-9]+)+>|\b(?:YOUR|MY|REPLACE|CH
 const variantHits = [];
 const placeholders = new Map();
 
-for (const file of walk(docsDir)) {
+for (const file of keepTracked(walk(docsDir))) {
   const rel = relative(process.cwd(), file);
   const lines = readFileSync(file, 'utf8').split('\n');
 

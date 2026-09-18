@@ -141,6 +141,43 @@ A fluent writer fills a gap with something that reads exactly like the sourced s
 Analogies always route as well, and the authority chair signs off specifically on where the analogy breaks, because that is the part that belongs in the document.
 Simplifications always route so that a caveat dropped for clarity becomes an approved loss rather than a silent one.
 
+### One real entry
+
+This page was written by the loop, so its own ledger is the honest example.
+Pass 0 produced thirty-eight entries, twenty-four of which routed.
+Here is one, reproduced as the advocate chair wrote it:
+
+```markdown
+### A1. "A packet is closer to a parts list than to a first draft."
+
+**Draft:** the *The Packet* section.
+**Packet antecedent:** none. Claim 63 and boundaries 3 and 4 say what the
+packet is not. No comparison is offered.
+**Where I think it breaks, and I said so in the draft:** a parts list only
+inventories, while the packet also states causes, rationale, and the reader's
+likely wrong beliefs.
+**Where it may also break, and I did not say so:** a parts list is complete by
+definition, and the packet has an Unknowns row, so a packet is explicitly
+allowed to be incomplete in a way a parts list is not. If the authority chair
+thinks that second break matters more than the first, the sentence should name
+it instead.
+**Routed.**
+```
+
+Three things about that entry are the whole design.
+
+It names its own absence of a source.
+The analogy is the advocate chair's invention, the packet offered no comparison, and the entry says so rather than presenting the figure as though it came from the material.
+
+It separates what the draft already admits from what it does not.
+The first break is in the prose you are reading; the second is not, and the chair flagged the gap between them rather than quietly choosing.
+
+It is a question, not a correction.
+The chair does not decide whether the analogy holds, because that is a claim about the subject, and claims about the subject belong to the authority chair.
+
+Reviewing that costs about thirty seconds, and it is the part of the draft most likely to be wrong.
+Reading the whole page to find it costs considerably more and usually fails, because a well-made analogy reads exactly like the sourced sentences around it.
+
 Style, word choice, heading case, and formatting never enter the ledger.
 Those belong to the advocate chair, and routing them would turn the loop into two agents arguing about commas.
 

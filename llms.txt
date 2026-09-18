@@ -5,6 +5,7 @@
 
 ## Docs
 
+- [Docs Assist documentation](docs/README.md): Index of the four reader-facing pages, and which one you want depending on what you are doing.
 - [Get started with Docs Assist](docs/get-started.md): Install the plugin, set it up so it writes like your project, and make sure it shows up when it should. Start here.
 - [Set up documentation standards for your team](docs/set-up-documentation-standards-for-your-team.md): For docs leads and devrel. Why to install, what changes for contributors, and how to customize.
 - [Write docs with Docs Assist](docs/write-docs-with-docs-assist.md): For individual contributors. What the plugin does, and tips for getting the most out of it.

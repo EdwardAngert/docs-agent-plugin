@@ -100,7 +100,7 @@ A skill matches what the contributor said, so work that never mentions documenta
 Offer the `CLAUDE.md` line, which is the highest-leverage fix and the cheapest.
 `CLAUDE.md` is always in context, where a skill description is only matched, so a standing instruction there outranks anything this plugin can say about itself.
 
-Propose three lines, specific about where:
+Propose this block, specific about where:
 
 ```markdown
 ## Documentation
@@ -108,7 +108,11 @@ Propose three lines, specific about where:
 This repo uses the Docs Assist plugin. When work touches anything under `docs/`,
 the README, a release note, or a pull request description, use it rather than
 writing prose directly. Start with `/docs-assist:health` if the state is unclear.
+If finishing it surfaces something else that blocks it, fix that first and say
+so, rather than stopping to ask.
 ```
+
+The last line matters as much as the first three: it is the same "always in context" leverage, spent on making a mid-task judgment call reliable instead of left to chance.
 
 Adjust the paths to the repo's own layout, and keep it short.
 A vague instruction competes with everything else in that file and loses.

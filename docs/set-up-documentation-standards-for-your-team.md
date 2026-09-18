@@ -31,6 +31,48 @@ When a contributor asks Claude Code for help writing docs, the plugin shapes how
 The contributor doesn't interact with the plugin directly.
 They talk to Claude Code, and it acts like a documentation coach instead of a generic assistant.
 
+## Before you start
+
+You need a repository with some documentation already in it, and permission to commit to it.
+Setup reads what your docs already do and proposes conventions that match, so a repo with no docs yet gets defaults rather than detected conventions: start with [Plan a documentation set](../README.md#documentation) instead.
+
+You do not need every contributor to install anything yet.
+The configuration you commit is what carries the standards; the plugin reads it on every run, for everyone who has it.
+
+## Roll it out
+
+1. **Install it yourself first**, and see where the docs stand.
+   [Get started with Docs Assist](get-started.md) has the three steps, the failure worth knowing about, and what each stage of setup writes into your repo.
+
+1. **Run `/docs-assist:setup` and commit what it proposes.**
+   This is the step that makes it a team standard rather than your personal preference.
+   It reads your existing docs for heading case, list markers, frontmatter fields, and sentence breaks, then hands you a summary to correct.
+   Correct it: detected conventions are a proposal, and the ones you change are the ones your team actually argued about.
+
+1. **Take the reachability stage.**
+   It adds a short section to `CLAUDE.md` telling Claude to use the plugin for documentation work in this repo.
+   Do not skip it.
+   A skill is matched against what someone says, so a contributor who never uses the word "documentation" gets no help; `CLAUDE.md` is always in context and closes that gap.
+   [Make sure it shows up](get-started.md#make-sure-it-shows-up) explains why this is the highest-leverage part of the rollout.
+
+1. **Tell your contributors one sentence.**
+   They do not need a command or this page.
+   "Ask Claude Code for help writing docs, the way you already would" is the whole instruction; [Write docs with Docs Assist](write-docs-with-docs-assist.md) is the page to send anyone who wants more.
+
+1. **Run an audit to get a baseline**, so the next one has something to compare against.
+
+   ```text
+   /docs-assist:audit docs/
+   ```
+
+## You are done when
+
+- `.docs-assist/` is committed and your team is working from it.
+- `CLAUDE.md` has the documentation section, and a contributor who asks for docs help in plain words gets the plugin rather than a generic assistant.
+- You have one audit on record.
+
+If a contributor asks for documentation help and nothing changes about the answer, reachability is the thing to check first.
+
 ## What changes for your contributors
 
 **Before the plugin**, a contributor opens Claude Code and says "help me document how the deployment pipeline works." Claude Code produces something technically accurate but flat: a markdown file that describes what happens, with no particular structure, no connection to related docs, and formatting that doesn't match anything else in the repo.
@@ -57,74 +99,18 @@ The plugin handles the tactical work of making sure individual docs are well-for
 You can also customize the standards.
 The plugin ships with defaults (sentence-case headings, action-oriented headings, specific markdown conventions), but you can edit the configuration files to match your team's style guide.
 
-## Install the plugin
-
-1. Open Claude Code:
-
-   ```bash
-   claude
-   ```
-
-1. Add the marketplace:
-
-   ```bash
-   /plugin marketplace add EdwardAngert/docs-agent-plugin
-   ```
-
-1. Install the plugin:
-
-   ```bash
-   /plugin install docs-assist@docs-assist-marketplace
-   ```
-
-1. Run `/reload-plugins` so the session picks up the new commands and skills.
-
-Once installed, the plugin activates automatically whenever someone asks for documentation help.
-No special commands required.
-A few commands are worth knowing:
-
-- `/docs-assist:health`: a thirty-second scorecard of where the docs stand (coverage, freshness, consistency, findability) and the one fix to start with.
-  The best first command after installing, and the periodic pulse check afterward.
-- `/docs-assist:draft`: guided intake for a single document.
-  It opens by asking the contributor to share everything they know, then shapes it into a draft.
-  When a proven structure fits, it offers a template from The Good Docs Project rather than starting from a blank page.
-- `/docs-assist:plan`: for "we need docs for this project" moments.
-  Reads the codebase, tells you what it found and where to start, and produces a plan built to ship the useful docs first and iterate.
-  Start here when rolling out documentation for a new project or team.
-- `/docs-assist:setup`: scaffold your team's configuration so everyone writes to the same conventions, then generate linting from it that checks the same rules the plugin writes by.
-  Run this first.
-  It also covers hooks, CI, and site navigation, each stage opt-in.
-- `/docs-assist:update`: update the docs affected by a code change.
-
 ## Customize for your team
 
-The recommended way to customize is project-local config you commit to your repo.
-Run `/docs-assist:setup` to scaffold a `.docs-assist/` directory:
+Customization is project-local config you commit, which is what makes it survive plugin updates and reach everyone.
+`/docs-assist:setup` scaffolds it, and [what setup writes](get-started.md#what-setup-writes-and-how-to-remove-it) lists every file, whether it is committed, and how to remove it.
 
-- `.docs-assist/config.yml`: machine-readable settings (heading case, list markers, frontmatter field names, lint tools).
-  This file also drives the linters, so your rules stay in one place.
-- `.docs-assist/style.md`: prose conventions (voice, terminology, banned phrases).
-- `.docs-assist/templates.yml`: optional settings for documentation templates (selection model, source).
-- `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and product terms, maintained by the plugin.
-  Audits flag prose or code samples that drift from it.
+The two you will edit by hand:
 
-Because this config is committed, it survives plugin updates and is shared across your whole team.
-This repo runs on the same setup: see its committed `.docs-assist/` for a real example.
+- `.docs-assist/config.yml` for machine-checkable settings, which also generates the linter config so your rules live in one place.
+- `.docs-assist/style.md` for the judgment calls: voice, terminology, the phrases you ban.
 
-If you prefer, you can edit the plugin's own files directly: `skills/docs-assist/reference/tone-and-voice.md` for formatting and `skills/docs-assist/SKILL.md` for the coaching approach.
-Those edits do not survive a plugin update, so project-local config is the better default.
-
-## Run a documentation audit
-
-If you want to assess the state of your existing docs, the plugin includes an audit command:
-
-```bash
-/docs-assist:audit docs/
-```
-
-This produces a structured report covering content quality, structural issues, findability gaps, and prioritized recommendations.
-It's a good starting point before rolling the plugin out to your team.
-It shows you what needs attention and helps you prioritize.
+This repo runs on the same setup.
+Its committed `.docs-assist/` is a real worked example, including a `decisions.md` recording the calls that were not obvious.
 
 ## What this doesn't replace
 

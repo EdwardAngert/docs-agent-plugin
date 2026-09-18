@@ -15,10 +15,15 @@ assets/lint/vale/styles/*/
 # every user's cache. These are kept locally and archived on the
 # `working-notes` branch; scripts/validate.mjs enforces the allowlist.
 reports/
-docs/1.0-release-plan.md
-docs/standalone-cli-plan.md
-docs/reviews/
-docs/plan.md
+# Parked: a scenario harness for `claude plugin eval`. Kept on disk, not
+# shipped. It belongs near the end of a docs process, answering "did we do
+# good docs", rather than in front of the work as a prerequisite.
+evals/
+# Planning documents: forward-looking plans and dated reviews, for this
+# repo's own maintainers rather than for a reader of the shipped docs.
+# A dedicated top-level directory, not a spot under docs/, so the doc set
+# (git ls-files, per decisions.md) never has to carve out an exception.
+planning/
 .docs-assist/loop/
 .docs-assist/session-log.md
 .docs-assist/state/

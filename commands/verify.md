@@ -90,6 +90,7 @@ Present one prioritized result across the set:
 - For a journey, bump only the docs the run actually reached clean: a doc after the point of failure was never really executed against live state, only reported as `blocked`, and bumping it would claim evidence the run doesn't have.
 - The decay detector (`docs-decay.mjs`) reads `last-verified`, so verified docs drop down the re-verification queue and the queue stays focused on what actually needs attention.
 - The conversation is for triage, per the skill's feedback guidance: offer to save the full run report under `.docs-assist/reports/verify-<date>.md`, and end by naming the natural next step.
+  `reference/reports.md` has the shape; a verification run is the case where the detail matters most, because a divergence is only actionable with the step and the output that produced it.
 
 ## Notes
 

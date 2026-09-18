@@ -95,6 +95,7 @@ If the fix touches doc content and `lint.tools` is configured, re-run the linter
 Don't let an edit made in this session become the next check's finding.
 
 Also offer to save the scorecard to `.docs-assist/reports/health-<date>.md`, so the next check has a baseline to compare against and the trend survives the session.
+A scorecard is short enough to be its own report; keep the shape from `reference/reports.md` so a later run can diff against it.
 
 ## Notes
 

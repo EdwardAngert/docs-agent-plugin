@@ -19,6 +19,10 @@ You rarely need these.
 The plugin activates from plain conversation ("help me document X"), and the commands are optional shortcuts into the same workflows.
 Every command also works with no argument: it asks for what it needs.
 
+New here?
+[Get started](get-started.md) is the page to read first; this one is for looking something up.
+The rest of the documentation is indexed in [Docs Assist documentation](README.md).
+
 ## At a glance
 
 | Command                      | What it does                                  | Argument                        |

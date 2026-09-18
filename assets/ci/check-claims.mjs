@@ -22,6 +22,7 @@
 //                          .docs-assist/config.yml, else "docs")
 //   CHECK_CLAIMS_OUT       output directory (default: ".docs-assist/claims")
 //   CHECK_CLAIMS_STRICT    "1" exits nonzero when any claim resolves "missing"
+//   DOCS_ASSIST_REPORT_FILE    when set, the full report is written there too
 //   GITHUB_STEP_SUMMARY    when set, the report is appended there too
 //
 // A claim that resolves "missing" means grep found nothing anywhere in the
@@ -102,6 +103,11 @@ function isRealClaimFor(file, claim) {
 
 function report(text) {
   console.log(text);
+  // The screen gets the judgment; a file gets the detail when a run is long
+  // enough to scroll past. See reference/reports.md for the contract.
+  if (process.env.DOCS_ASSIST_REPORT_FILE) {
+    appendFileSync(process.env.DOCS_ASSIST_REPORT_FILE, text + '\n');
+  }
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, text + '\n');
 }
 
@@ -293,9 +299,16 @@ for (const c of needsJudgment) (byDoc[c.doc] ??= []).push(c);
 writeFileSync(`${OUT_DIR}/claims-needs-judgment.json`, JSON.stringify(byDoc, null, 2) + '\n');
 
 const missingClaims = allClaims.filter((c) => c.status === 'missing' && isRealClaimFor(c.doc, c));
+// Claims that resolved "missing" inside an instruction file, where a generic
+// example is not a claim about this repository. They are suppressed from the
+// table by isRealClaimFor, so they must not be counted as missing in the
+// summary either: reporting eleven and showing one teaches a reader that the
+// table is incomplete, and the next real finding gets discounted with it.
+const suppressed = missing - missingClaims.length;
 
 let out = `## Claim check\n\n`;
-out += `${docs.length} docs, ${allClaims.length} candidate claims (${resolved} mechanically checkable: ${confirmed} confirmed, ${missing} missing, ${resolved - confirmed - missing} demoted to judgment). `;
+out += `${docs.length} docs, ${allClaims.length} candidate claims (${resolved} mechanically checkable: ${confirmed} confirmed, ${missingClaims.length} missing, ${resolved - confirmed - missingClaims.length} demoted to judgment`;
+out += suppressed ? `, of which ${suppressed} are examples inside instruction files rather than claims about this repository). ` : `). `;
 out += `${needsJudgment.length} require a reader, grouped by doc in \`${OUT_DIR}/claims-needs-judgment.json\`: hand those to \`claim-briefs.mjs\`.\n\n`;
 if (missingClaims.length) {
   out += `### Missing (code doesn't back the claim anymore)\n\n`;

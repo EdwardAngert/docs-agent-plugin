@@ -47,8 +47,10 @@
 // Env:
 //   DOCS_ASSIST_CONFIG      config path (default: .docs-assist/config.yml)
 //   BUNDLE_DRIFT_STRICT     "1" exits nonzero when drift is found
+//   DOCS_ASSIST_REPORT_FILE    when set, the full report is written there too
 //   GITHUB_STEP_SUMMARY     when set, the report is appended there too
 
+import { execSync } from 'node:child_process';
 import { readFileSync, existsSync, readdirSync, statSync, appendFileSync } from 'node:fs';
 import { join, relative, basename } from 'node:path';
 
@@ -56,6 +58,11 @@ const configPath = process.argv[2] || process.env.DOCS_ASSIST_CONFIG || '.docs-a
 
 function report(text) {
   console.log(text);
+  // The screen gets the judgment; a file gets the detail when a run is long
+  // enough to scroll past. See reference/reports.md for the contract.
+  if (process.env.DOCS_ASSIST_REPORT_FILE) {
+    appendFileSync(process.env.DOCS_ASSIST_REPORT_FILE, text + '\n');
+  }
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, text + '\n');
 }
 
@@ -146,6 +153,29 @@ function isExcluded(path) {
   return excludes.some((e) => path.includes(e) || basename(path).startsWith(e));
 }
 
+// The documentation set is what git tracks. A file on disk that git ignores is
+// working material: a report, an intake packet, a planning note. Ranking or
+// auditing those produces confident findings about files no reader will ever
+// see, which is a category error that has misfired here more than once.
+//
+// Outside a checkout there is no index to consult and the whole tree is what
+// shipped (an installed plugin cache, an extracted tarball), so the walk stands
+// unfiltered there.
+function keepTracked(files) {
+  let tracked;
+  try {
+    execSync('git rev-parse --git-dir', { stdio: 'ignore' });
+    tracked = new Set(
+      execSync('git ls-files -z', { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+        .split('\0')
+        .filter(Boolean),
+    );
+  } catch {
+    return files;
+  }
+  return files.filter((f) => tracked.has(f.replace(/^\.\//, '')));
+}
+
 function walk(target, out = []) {
   if (!existsSync(target)) return out;
   if (!statSync(target).isDirectory()) {
@@ -161,6 +191,7 @@ function walk(target, out = []) {
 
 const sourceFiles = [];
 for (const s of cfg.sources) walk(s, sourceFiles);
+sourceFiles.splice(0, sourceFiles.length, ...keepTracked(sourceFiles));
 if (!sourceFiles.length) done('No source docs matched `bundle.sources`. Nothing to check.');
 
 // Frontmatter never survives into a bundle: every transformation table strips

@@ -15,7 +15,9 @@
 //                              "large change, no docs touched" signal
 //                              (default: 100)
 //   DOCS_IMPACT_STRICT         "1" exits nonzero when signals fire
-//   DOCS_IMPACT_REPORT_FILE    when set, the report is also written there
+//   DOCS_ASSIST_REPORT_FILE    when set, the report is also written there
+//                              (shared by every deterministic check)
+//   DOCS_IMPACT_REPORT_FILE    the same, kept for the shipped workflow
 //                              (the workflow uses this to post a sticky
 //                              PR comment)
 //   GITHUB_STEP_SUMMARY        when set, the report is appended there too
@@ -43,6 +45,29 @@ const isDoc = (f) => /\.mdx?$/.test(f);
 
 // Load every doc into memory once; docs sets are small and this avoids
 // running grep per candidate term.
+// The documentation set is what git tracks. A file on disk that git ignores is
+// working material: a report, an intake packet, a planning note. Ranking or
+// auditing those produces confident findings about files no reader will ever
+// see, which is a category error that has misfired here more than once.
+//
+// Outside a checkout there is no index to consult and the whole tree is what
+// shipped (an installed plugin cache, an extracted tarball), so the walk stands
+// unfiltered there.
+function keepTracked(files) {
+  let tracked;
+  try {
+    execSync('git rev-parse --git-dir', { stdio: 'ignore' });
+    tracked = new Set(
+      execSync('git ls-files -z', { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+        .split('\0')
+        .filter(Boolean),
+    );
+  } catch {
+    return files;
+  }
+  return files.filter((f) => tracked.has(f.replace(/^\.\//, '')));
+}
+
 function loadDocs() {
   const files = [];
   const walk = (dir) => {
@@ -54,7 +79,7 @@ function loadDocs() {
   };
   if (existsSync(DOCS)) walk(DOCS);
   for (const f of ['README.md', 'llms.txt']) if (existsSync(f)) files.push(f);
-  return files.map((f) => ({ file: f, text: readFileSync(f, 'utf8') }));
+  return keepTracked(files).map((f) => ({ file: f, text: readFileSync(f, 'utf8') }));
 }
 
 // 1. Classify the changed files.
@@ -124,5 +149,10 @@ if (signals.length) {
 }
 console.log(report);
 if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, report + '\n');
-if (process.env.DOCS_IMPACT_REPORT_FILE) writeFileSync(process.env.DOCS_IMPACT_REPORT_FILE, report);
+// DOCS_IMPACT_REPORT_FILE stays: the shipped workflow writes a sticky PR
+// comment from it, and renaming it would break every copy already in a
+// user's repository. DOCS_ASSIST_REPORT_FILE is the name the other checks
+// share, honoured here too so one variable covers a whole run.
+const reportFile = process.env.DOCS_IMPACT_REPORT_FILE || process.env.DOCS_ASSIST_REPORT_FILE;
+if (reportFile) writeFileSync(reportFile, report);
 if (signals.length && process.env.DOCS_IMPACT_STRICT === '1') process.exit(1);

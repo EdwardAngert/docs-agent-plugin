@@ -19,11 +19,7 @@ Ask for help writing docs the way you normally would, and Claude Code guides you
 
 ## Install it first
 
-```text
-/plugin marketplace add EdwardAngert/docs-agent-plugin
-/plugin install docs-assist@docs-assist-marketplace
-/reload-plugins
-```
+If it is not installed yet, [Get started with Docs Assist](get-started.md) walks the three steps and what to do when one of them does not take.
 
 Then ask Claude Code for documentation help in plain words.
 Nothing else is required.
