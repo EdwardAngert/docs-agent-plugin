@@ -89,7 +89,7 @@ A context that produced the packet knows things it never wrote down, and it cann
 
 Every artifact is a file, and the main conversation passes paths rather than contents.
 That keeps the conversation's context flat no matter how large the document gets, and it makes a run resumable and every intermediate step inspectable after the session ends.
-The working artifacts live under `.docs-assist/loop/`, alongside the plugin's other [bookkeeping](../README.md#what-it-writes).
+The working artifacts live under `.docs-assist/loop/`, alongside the plugin's other [bookkeeping](set-up-documentation-standards-for-your-team.md#customize-for-your-team).
 
 ## The packet
 

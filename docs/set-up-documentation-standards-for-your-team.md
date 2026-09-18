@@ -34,7 +34,7 @@ They talk to Claude Code, and it acts like a documentation coach instead of a ge
 ## Before you start
 
 You need a repository with some documentation already in it, and permission to commit to it.
-Setup reads what your docs already do and proposes conventions that match, so a repo with no docs yet gets defaults rather than detected conventions: start with [Plan a documentation set](../README.md#documentation) instead.
+Setup reads what your docs already do and proposes conventions that match, so a repo with no docs yet gets defaults rather than detected conventions: start with [Plan a documentation set](command-reference.md#docs-assistplan) instead.
 
 You do not need every contributor to install anything yet.
 The configuration you commit is what carries the standards; the plugin reads it on every run, for everyone who has it.

@@ -39,28 +39,14 @@ Then ask for a health check, or run `/docs-assist:health`, for a scorecard and o
 
 [Get started with Docs Assist](docs/get-started.md) has the full path: installing, setting up so the plugin writes like your project (including how to customize things like ordered-list style, heading case, and terminology casing), and making sure it shows up when it should.
 
+[Docs Assist documentation](docs/README.md) indexes every page from there: writing a document, setting standards for a team, and judging how the authoring loop works.
+
 ## Commands and specifics
 
 Nine commands exist, but they're a shortcut rather than the way in: anything they do, you can ask for in plain words.
 
 [Command reference](docs/command-reference.md) has every command, its argument shape, and a worked example.
 [How the authoring loop works](docs/how-the-loop-works.md) explains the three-chair mechanism behind drafting, including a real example from the ledger of the run that wrote that page, which is the fastest way to judge whether any of this is worth your time.
-
-## What would improve it most
-
-An honest self-assessment, kept in the open on purpose.
-
-- **The loop has run once.** End to end, against one 207-line document, across four subagent runs total.
-  Its cost, convergence, and false-positive rates are unmeasured.
-- **Every finding to date is over-fit to one site.** `edwardangert.github.io` (Astro, Starlight, one subject) is the only real consumer of this plugin on record.
-- **The chairs aren't registered as their own subagent types yet**, in the session that has run them so far.
-  The first observed run used a workaround, an existing subagent type carrying a chair's brief, and the authority chair lacked a `Write` tool as a result.
-  A faithful chair run needs a plugin reload first.
-- **The eval harness comes after the implementation, not before.** Two dry runs, with two false positives, stand as its seed corpus; building the harness against an imagined implementation was rejected as carrying the same over-fitting risk the harness is meant to catch.
-- **Not yet run as a living version.** 0.9.10 is merging to `main` specifically to get real use before 1.0.0 is declared; nothing above has been exercised outside this branch yet.
-
-`CHANGELOG.md` carries the fuller Known limits list for the 0.9.10 release.
-If you try the plugin and something falls short, an issue with what you expected and what happened is the most valuable contribution this project can receive right now.
 
 ## Status
 
