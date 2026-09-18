@@ -5,6 +5,7 @@
 This repo is the Docs Assist plugin, and it runs on itself.
 Use the plugin for anything under `docs/`, the README, the changelog, release notes, or a pull request description, rather than writing prose directly.
 Start with `/docs-assist:health` when the state is unclear.
+If finishing a documentation task surfaces something else that blocks it, fix that first and say so, rather than stopping to ask.
 
 Two decisions to apply without re-deriving them:
 

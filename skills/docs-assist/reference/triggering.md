@@ -38,7 +38,7 @@ The highest-leverage thing, and the cheapest.
 A skill description is only matched.
 A standing instruction in `CLAUDE.md` therefore outranks any description this plugin can write, and it works with no hooks, no configuration, and no mechanism at all.
 
-Three lines is enough:
+This is enough:
 
 ```markdown
 ## Documentation
@@ -46,10 +46,13 @@ Three lines is enough:
 This repo uses the Docs Assist plugin. When work touches anything under `docs/`,
 the README, a release note, or a pull request description, use it rather than
 writing prose directly. Start with `/docs-assist:health` if the state is unclear.
+If finishing it surfaces something else that blocks it, fix that first and say
+so, rather than stopping to ask.
 ```
 
 Keep it short and specific about where.
 A vague instruction competes with everything else in the file and loses.
+The last line is worth its cost anyway: it spends the same "always in context" leverage on a mid-task judgment call, the one place a skill description cannot reach because the task is already in progress by the time it would match.
 
 ### 2. Committed configuration
 

@@ -112,6 +112,11 @@ One request can need more than one doc.
 A newly shipped feature usually wants a how-to plus release notes, and sometimes a concept.
 When you see this, draft the one they asked for, then offer the small set that completes it rather than making them ask again for each.
 
+That offer does not have to wait for the end.
+When something surfaces mid-task that blocks or contradicts the document in progress (a fact other docs already disagree on, a step that no longer works), name it and address it in the same pass, in plain language, rather than finishing the original workflow on autopilot or stopping to ask which command applies.
+Queue anything that does not block for the end-of-workflow offer instead; not every tangent earns a detour.
+This is separate from casting a single request as two documents up front (`reference/casting.md`), which is a different need on the same material, decided before writing either.
+
 ### Calibrate to the contributor's context
 
 One plugin serves the solo maintainer and the docs lead through the same workflows.

@@ -160,10 +160,13 @@ The highest-leverage fix, and the cheapest.
 This repo uses the Docs Assist plugin. When work touches anything under `docs/`,
 the README, a release note, or a pull request description, use it rather than
 writing prose directly. Start with `/docs-assist:health` if the state is unclear.
+If finishing it surfaces something else that blocks it, fix that first and say
+so, rather than stopping to ask.
 ```
 
 Keep it short and specific about where.
 A vague instruction competes with everything else in that file and loses.
+The last line earns its place despite that: `CLAUDE.md` loads on every turn where a skill description only has to be matched, so it is the cheapest place to make a mid-task judgment call reliable rather than left to chance.
 
 ### Commit your configuration
 
