@@ -22,10 +22,10 @@ It also helps once a document exists, not just while it's being written:
 - Updates the docs affected by a code change, for your review.
 - Turns a release's commits and pull requests into release notes, asking you for the why.
 
-## This README describes version 1.0.0
+## This README describes version 0.9.10
 
 `origin/main`'s marketplace manifest currently serves 0.9.8.
-1.0.0 exists only on the `1.0-overhaul` branch, pending merge.
+0.9.10 is the pre-1.0 candidate on this branch: a living version meant to run against real use before 1.0.0 is declared, not a staging area for it.
 See [Status](#status) before you install.
 
 ## Get started
@@ -57,19 +57,19 @@ An honest self-assessment, kept in the open on purpose.
   The first observed run used a workaround, an existing subagent type carrying a chair's brief, and the authority chair lacked a `Write` tool as a result.
   A faithful chair run needs a plugin reload first.
 - **The eval harness comes after the implementation, not before.** Two dry runs, with two false positives, stand as its seed corpus; building the harness against an imagined implementation was rejected as carrying the same over-fitting risk the harness is meant to catch.
-- **This branch is unpublished.** As of 2026-09-17 it, and its `v1.0.0` tag, are local only; no pull request is open.
+- **Not yet run as a living version.** 0.9.10 is merging to `main` specifically to get real use before 1.0.0 is declared; nothing above has been exercised outside this branch yet.
 
-`CHANGELOG.md` carries the fuller Known limits list for the 1.0.0 release.
+`CHANGELOG.md` carries the fuller Known limits list for the 0.9.10 release.
 If you try the plugin and something falls short, an issue with what you expected and what happened is the most valuable contribution this project can receive right now.
 
 ## Status
 
-Version 1.0.0 is set in this branch's `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`.
-`origin/main` still serves 0.9.8; installing from `EdwardAngert/docs-agent-plugin` today gets you 0.9.8, not the plugin this README describes.
+Version 0.9.10 is set in this branch's `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`, merging to `main` as a living pre-1.0 candidate rather than a number staged ahead of a merge.
+Once merged, installing from `EdwardAngert/docs-agent-plugin` gets you this content as version 0.9.10, not 1.0.0; 1.0.0 is declared only once this has run against real use, on the maintainer's own call.
 
-1.0 is one comprehensive overhaul, not a staged path through intermediate versions; the earlier plan for 0.9.8 through 0.9.11 is superseded.
-The command surface and the drafting mechanism both changed substantially, so anything pinned against a 0.9.x install is worth re-reading.
-A version bump past 0.9.5, and especially to 1.0.0, is the maintainer's call rather than the plugin's own; this one followed 0.9.9 shipping the same content as a release candidate.
+This is a comprehensive overhaul rather than an increment, even though the version number reads like one; the earlier plan for 0.9.8 through 0.9.11 as separate staged releases is superseded by a single overhaul held under a provisional number.
+The command surface and the drafting mechanism both changed substantially, so anything pinned against an earlier 0.9.x install is worth re-reading.
+A version bump past 0.9.5, and especially to 1.0.0, is the maintainer's call rather than the plugin's own.
 
 The plugin was renamed from `documentation-agent`; commands are `/docs-assist:...` now.
 
