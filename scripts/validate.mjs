@@ -76,9 +76,9 @@ for (const s of plugin.skills || []) {
 }
 
 // What git tracks. Every prose check below scopes to this rather than to the
-// working tree: the archived working notes (`reports/`, `docs/plan.md`, the two
-// planning docs) are gitignored but still sit on a maintainer's disk, and a
-// validator that reports on files the plugin does not ship is reporting noise.
+// working tree: the archived working notes (`reports/`, `planning/`) are
+// gitignored but still sit on a maintainer's disk, and a validator that
+// reports on files the plugin does not ship is reporting noise.
 let tracked = [];
 try {
   tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8' })

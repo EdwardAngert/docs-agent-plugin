@@ -123,10 +123,14 @@ An empty report is worse than no report, because it looks like a run that failed
 
 ## What not to do
 
-**Do not transcribe a linter.** If markdownlint found twelve issues, the report says the linters found twelve issues and names the command that lists them. Copying its output into a report turns a mechanical result into what looks like an audit finding.
+**Do not transcribe a linter.** If markdownlint found twelve issues, the report says the linters found twelve issues and names the command that lists them.
+Copying its output into a report turns a mechanical result into what looks like an audit finding.
 
-**Do not omit the mechanics line when it is clean.** A report that lists the linters it ran and then says nothing about them leaves the reader unable to tell whether they passed or whether their output was dropped. One line either way.
+**Do not omit the mechanics line when it is clean.** A report that lists the linters it ran and then says nothing about them leaves the reader unable to tell whether they passed or whether their output was dropped.
+One line either way.
 
-**Do not pad.** A report with three findings is a three-finding report. Sections exist to be omitted when empty, and "nothing to flag" is a complete answer.
+**Do not pad.** A report with three findings is a three-finding report.
+Sections exist to be omitted when empty, and "nothing to flag" is a complete answer.
 
-**Do not report a score.** A number invites comparison it cannot support, and it hides whether the run found something worth acting on. Say what was found.
+**Do not report a score.** A number invites comparison it cannot support, and it hides whether the run found something worth acting on.
+Say what was found.

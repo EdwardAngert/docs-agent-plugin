@@ -10,6 +10,7 @@ audience: contributor
 Three things, in order: install it, set it up so it writes like your project, and make sure it gets asked in the first place.
 
 The last one is the step people skip, and it is the one that decides whether the plugin is ever used.
+It turns out to be two separate problems: requests that are documentation-shaped but don't say so, which the plugin already matches on its own, and requests that never mention documentation at all, which need a line in `CLAUDE.md` to fix.
 
 ## Before you start
 
@@ -70,6 +71,9 @@ Ask for it in plain words, or run the command:
 
 It walks six stages, and every one is opt-in with nothing written until you say yes.
 
+The minimum worth doing is stages 1 and 5: conventions, so the plugin writes like your project, and reachability, so it gets asked at all.
+The other four are worth reading, but skippable on a first pass.
+
 To run one stage on its own, name it as an argument:
 
 ```text
@@ -88,9 +92,6 @@ The stages, in the order setup offers them:
 1. **Site navigation.** Only when the project already has a site generator, and only on a yes.
    Generates navigation from the docs' own metadata rather than a hand-maintained list, so a new page cannot be silently omitted.
    Docusaurus and MkDocs are covered.
-
-The minimum worth doing is stages 1 and 5.
-Conventions so the plugin writes like your project, and reachability so it gets asked at all.
 
 Everything it writes is committed to your repo, so it survives plugin updates and is shared across contributors, unlike editing the plugin's own files.
 
@@ -121,6 +122,7 @@ The git pre-commit hook is the one row that is not committed.
 It lives in `.git/hooks/`, which git does not track, so it is per-clone: a teammate who clones the repo does not get it, and deleting your clone takes it with you.
 
 Uninstalling the plugin itself is Claude Code's job rather than this plugin's: `/plugin` lists what you have installed and removes it.
+That is a separate step from this table, on purpose; see [How to remove the plugin from Claude Code](#how-to-remove-the-plugin-from-claude-code) at the end of this page.
 
 ## Make sure it shows up
 
@@ -147,6 +149,8 @@ Fix it in this order.
 
 ### Add three lines to `CLAUDE.md`
 
+If you already ran the setup command's reachability stage, this is done; skip to [Commit your configuration](#commit-your-configuration).
+
 The highest-leverage fix, and the cheapest.
 `CLAUDE.md` is always in context where a skill description is only matched, so a standing instruction there outranks anything the plugin can say about itself:
 
@@ -160,7 +164,6 @@ writing prose directly. Start with `/docs-assist:health` if the state is unclear
 
 Keep it short and specific about where.
 A vague instruction competes with everything else in that file and loses.
-The setup command's reachability stage offers to add it, adjusted to your layout.
 
 ### Commit your configuration
 
@@ -205,6 +208,18 @@ Write the pull request description for this branch.
 If the reachability lines took, the plugin picks that up as writing worth helping with.
 If you get a generic answer instead, `CLAUDE.md` is the first thing to check: the section has to be in the file Claude actually loads for this repo, and it has to name the paths your docs really live under.
 
+## What to do next
+
+- Not sure where your docs stand?
+  Ask for a health check, or run `/docs-assist:health`.
+- Ready to write something?
+  Describe what you want to document in plain words.
+  You do not need a command.
+- Setting standards for a team?
+  See [Set up documentation standards for your team](set-up-documentation-standards-for-your-team.md).
+- Want the full surface?
+  See the [command reference](command-reference.md).
+
 ## Keep it current
 
 From a shell:
@@ -223,14 +238,16 @@ Each is updated separately, and `claude plugin list` shows the version and scope
 Check the [changelog](../CHANGELOG.md) for what changed since your version.
 Read it before upgrading from 0.9.x: seven commands were removed outright rather than deprecated, so anything you pinned or scripted against them is worth re-reading.
 
-## What to do next
+## How to remove the plugin from Claude Code
 
-- Not sure where your docs stand?
-  Ask for a health check, or run `/docs-assist:health`.
-- Ready to write something?
-  Describe what you want to document in plain words.
-  You do not need a command.
-- Setting standards for a team?
-  See [Set up documentation standards for your team](set-up-documentation-standards-for-your-team.md).
-- Want the full surface?
-  See the [command reference](command-reference.md).
+```bash
+claude plugin uninstall docs-assist@docs-assist-marketplace
+```
+
+This removes the plugin from the default `user` scope.
+If you installed to a different scope, pass it explicitly: `--scope project` or `--scope local`.
+`--keep-data` preserves `~/.claude/plugins/data/docs-assist/` if you plan to reinstall later; without it, that directory goes too.
+
+This does not touch anything setup wrote into your project.
+[What setup writes, and how to remove it](#what-setup-writes-and-how-to-remove-it) lists every file it can add, whether it is committed, and how to remove it: uninstalling the plugin and removing its footprint from a project are two separate steps, on purpose.
+The plugin stops running the moment it's uninstalled, but the config it wrote is yours, committed to your repo, and safe to keep even without the plugin installed.

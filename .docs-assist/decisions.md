@@ -76,7 +76,7 @@ A fact worth correcting is usually a fact worth correcting more than once.
 
 ## Working notes are not drafts
 
-`reports/`, `.docs-assist/loop/`, `.docs-assist/claims/`, and the planning documents under `docs/` are working material.
+`reports/`, `.docs-assist/loop/`, `.docs-assist/claims/`, and `planning/` (forward-looking plans and dated reviews, moved out of `docs/` on 2026-09-17 for exactly this reason) are working material.
 They are excluded from the shipping allowlist, from the linters, and from the doc set above.
 
 Why: a packet is cold, flat prose written by an agent for another agent.

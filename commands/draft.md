@@ -110,11 +110,18 @@ Write from the packet: it already holds the reconciled facts, the typed provenan
 - Notes or warnings where the contributor flagged gotchas
 - Cross-references to related docs you found in the survey
 
-**Before showing it to the contributor**, run the second-opinion pass on the draft file, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/second-opinion.md`.
+**Before showing it to the contributor**, run two passes, in this order, and do not skip the second because the first came back clean: they catch different things.
+
+1. The second-opinion pass on the draft file, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/second-opinion.md`: a judgment re-read with full context, for a wrong call made with every fact in view.
+1. The cold read, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/loop.md`'s "Cold read, before the contributor sees it": launch `cold-reader` on the draft file alone, no other repository access, no memory of how it was written.
+   It catches what full-context review cannot: the shortcut placed after the detail it should have made skippable, a problem framed as one thing that turns out to be two, a duplicated instruction with no signal which copy applies now, a topic wedged where it interrupts the reader's momentum.
+   Route its findings back into this step as one more shaping decision each: fix now, or say why not.
+
 Draft-specific notes:
 
-- The skip threshold is the same as skipping the outline in step 9: a very short single-entry doc gets no round trip.
-- Brief it with the notes file's Reconcile section when one exists; that is this workflow's record of settled facts.
+- The skip threshold is the same as skipping the outline in step 9: a very short single-entry doc gets no round trip, for either pass.
+- Brief the second-opinion pass with the notes file's Reconcile section when one exists; that is this workflow's record of settled facts.
+  The cold read gets no such briefing: no repository access is the point.
 - Judgment findings fold into the Do list below, as your own read of the draft.
 
 **Do not** ask the contributor to review your formatting choices, heading case, or markdown conventions.

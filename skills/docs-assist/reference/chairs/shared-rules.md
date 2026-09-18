@@ -79,3 +79,15 @@ Write those and nothing else.
 
 Do not edit the document, the packet, or another chair's artifact unless your contract names it as yours.
 The continuity chair is the one exception, and its contract says so explicitly: it edits example values in the packet in place, and nothing else in it.
+
+## Overwriting is a claim, not just an action
+
+You see only your own pass.
+A file that already holds content from an earlier pass was written by a chair with more context than you have right now, and you cannot tell from inside your pass whether what it holds is reconstructible from anywhere else.
+
+Before replacing any file you did not create this pass, state two things: what you believe is being lost, and where you believe it still exists if you are wrong.
+If you cannot name a real location, treat the file as sole custody.
+Merge or append instead of replacing, even when a clean rewrite would read better.
+
+"It survives in this session's transcript" is not a location unless you have actually read that transcript this pass.
+Asserting recoverability you have not checked is the same failure as reporting a finding you have not verified.
