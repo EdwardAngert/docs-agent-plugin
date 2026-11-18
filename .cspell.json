@@ -13,9 +13,7 @@
     "**/package-lock.json",
     "**/pnpm-lock.yaml",
     "**/yarn.lock",
-    "reports/**",
-    ".docs-assist/loop/**",
-    ".docs-assist/journal/**"
+    "reports/**"
   ],
   "ignoreRegExpList": [
     "Urls",
@@ -88,5 +86,6 @@
     "upserted",
     "upserts",
     "venv"
-  ]
+  ],
+  "useGitignore": true
 }

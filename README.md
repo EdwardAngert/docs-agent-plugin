@@ -67,9 +67,8 @@ flowchart LR
 
 ## Status
 
-Version 0.9.10 is on `main` as a living pre-1.0 candidate, set in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`.
-Installing from `EdwardAngert/docs-agent-plugin` gets you version 0.9.10, not 1.0.0; 1.0.0 is declared only once this has run against real use, on the maintainer's own call.
-Changes since 0.9.10 are listed under Unreleased in `CHANGELOG.md`.
+Version 0.9.15 is the living pre-1.0 candidate, set in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`.
+Installing from `EdwardAngert/docs-agent-plugin` gets you version 0.9.15, not 1.0.0; 1.0.0 is declared only once this has run against real use, on the maintainer's own call.
 
 This is a comprehensive overhaul rather than an increment, even though the version number reads like one; the earlier plan for 0.9.8 through 0.9.11 as separate staged releases is superseded by a single overhaul held under a provisional number.
 The command surface and the drafting mechanism both changed substantially, so anything pinned against an earlier 0.9.x install is worth re-reading.

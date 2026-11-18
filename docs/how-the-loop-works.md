@@ -26,9 +26,9 @@ Reviewer and chair mean the same thing here.
 ## What has actually been run
 
 The original multi-pass loop ran end to end once: the run that produced this page.
-The three steps it now runs as (draft, write, edit) have been run three times, headless, on one small test project.
+The three steps it now runs as (draft, write, edit) have been run headless three times on a small test project, and on copies of one real docs set, with the expert's answers scripted.
 Those runs found real errors (a setting nothing reads, a step that nests a directory instead of replacing it), and they also found the gaps the steps were changed to close.
-The rounds of questioning in the write step were added after them and have not run yet.
+On the real set, the write step's questioning ran one round in one session and two in another, and the page it produced carried none of the invented details the same request picked up when it skipped the write step.
 
 Most of what follows is therefore design checked against a few runs, not measurement.
 The shape of the mechanism is real and it is in the repository.

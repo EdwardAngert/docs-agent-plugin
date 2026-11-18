@@ -3,9 +3,11 @@
 All notable changes to this project are documented here.
 The format is based on Keep a Changelog, and the project follows Semantic Versioning.
 
-## Unreleased
+## 0.9.15 - 2026-11-18
 
-A new doc now goes through three separate steps (draft, write, edit), nothing the plugin works with reaches your repository unless you ask, the plugin keeps notes the way a writer does beside an expert, it notices some documentation problems on its own, and it has a way to measure whether it helps.
+A new doc now goes through three separate steps (draft, write, edit), with the writer questioned by a separate reviewer until its additions hold up.
+Every workflow follows one set of house rules however it starts, nothing the plugin works with reaches your repository unless you ask, and it keeps notes the way a writer does beside an expert.
+It also notices some documentation problems on its own, offers a markdown reference for sites, and has a way to measure whether it helps.
 
 ### A new doc takes three steps: draft, write, edit
 
@@ -171,8 +173,11 @@ If you upgrade from 0.9.10 with a committed `.docs-assist/state/docs.yml` or `la
 
 ### Known limits
 
-- The three steps have run three times, headless, on one small test project; never on a real project with a real expert.
-  The write step's rounds of questioning were added after those runs and have not run yet.
+- The three steps have run headless three times on a small test project, and on clones of one real docs set (a 50-file Pi-hole guide), always with the expert's answers scripted, never with a real expert in the conversation.
+  On the real set, the write step's questioning ran one round in one session and two in another; the rule that a round with a correction is always followed by another was added after and hasn't run.
+- Headless trials load no project instructions, because the scratch clones are untrusted workspaces, so the project instructions block setup offers is untested.
+  Without it, routing a plain request to the right step is unreliable: the same edit request reached the edit workflow in three runs and bypassed the plugin in two.
+- The markdown reference has never been offered in a trial: the only site tried ran without the setup stage that offers it.
   Cost and false-positive rates are unmeasured.
 - Every finding to date is over-fit to one site: `edwardangert.github.io` (Astro, Starlight, one subject) is the only real consumer of this plugin on record.
 - Of the six eval cases that predate the journal, none shows the plugin ahead of plain Claude Code: five score the same with and without it, so they guard against regressions without showing what the plugin adds.
