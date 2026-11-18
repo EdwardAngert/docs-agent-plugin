@@ -5,6 +5,8 @@ argument-hint: [branch or path]
 
 # Get the docs ready to merge
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 Everything expensive that scales with the whole docs set runs here, and nowhere else.
 
 Routine workflows do not do this.

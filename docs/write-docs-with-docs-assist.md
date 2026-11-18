@@ -28,7 +28,7 @@ Nothing else is required.
 Two optional things make it work better in your repo, and `/docs-assist:setup` offers both:
 
 - **Conventions** in `.docs-assist/`, kept to yourself or shared with your team, so the plugin holds your docs to your heading style, your terminology, and your example values instead of inferring them each time.
-- **Three lines in `CLAUDE.md`** telling Claude Code to reach for the plugin when work touches your docs.
+- **A few lines of project instructions** telling Claude Code which step handles what when work touches your docs, kept to yourself in `CLAUDE.local.md` or shared in `CLAUDE.md`.
   This matters more than it looks: the plugin activates when something matches what you said, so work that never mentions documentation never reaches it.
   A standing instruction in `CLAUDE.md` closes that gap.
 

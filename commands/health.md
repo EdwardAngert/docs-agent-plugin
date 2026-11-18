@@ -5,6 +5,8 @@ argument-hint: [docs directory]
 
 # Check documentation health
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 Give the contributor a fast, honest read on the state of their documentation, and one clear place to start.
 
 This is the orientation command: the first thing to run after installing the plugin, and the periodic pulse check afterward.

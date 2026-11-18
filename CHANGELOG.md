@@ -56,6 +56,20 @@ It is now three steps, each its own command with its own job, and each offers th
   The new eval suite caught the audit template: a run told the reader to set up linting with a slash command.
   The shipped config, linter, and workflow templates also named `setup-lint` and `setup-hooks`, and `example-continuity.mjs`'s report named `init`: three commands that no longer exist.
 
+### Every workflow follows the same rules, however it starts
+
+A trial against a real docs set showed the workflows behaving differently depending on how they were started: a workflow run by its command never loads the plugin's main skill, so it never saw the rules kept there.
+
+- **`reference/house-rules.md`, new, read first by every workflow**: run each step through its own workflow, plain words in every message (progress lines included), the task list, notes, the project's own patterns, and listing for confirmation any change to another page that rests on someone's word.
+  In the trial, the audit and edit sessions kept no notes and never used the task list, and progress lines said "Pass 0" and "the authority chair."
+- **"Write it up" runs the write step.**
+  Asked in plain words, the trial's write-up was done in the conversation instead: no separate writer, no questioning, and three invented details on the page.
+  The same request through the write step ran two rounds of questioning, stopped when nothing was raised, and produced a page with no invented facts.
+- **An audit above its size threshold always uses several reviewers.**
+  Inline, a 48-file audit took two minutes, missed the critical finding an earlier audit led with, and still called the set in good shape; the verdict now covers only what was read closely.
+- **Project instructions name the routes**: a new doc goes through draft, write, and edit, a doc that exists through the edit step, a code change through the update step.
+  Setup puts them in `CLAUDE.local.md` by default, hidden from git through `.git/info/exclude` (`journal.mjs exclude`), or in `CLAUDE.md` for the team; in a repo that relies on `AGENTS.md`, it asks first, since a `CLAUDE.local.md` stops Claude Code reading `AGENTS.md`.
+
 ### A markdown reference for your site
 
 For a project with a site (a site generator, MDX, or custom components), the plugin offers once, at setup or the first time it works there, to write down how the docs handle images, links, callouts, list items, indentation, and custom components.

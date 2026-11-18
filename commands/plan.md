@@ -5,6 +5,8 @@ argument-hint: [repo path or description]
 
 # Plan a documentation set
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 Help someone plan what documentation a project needs, before writing any of it.
 
 This command is for the "we need docs" moment: a new project that has no documentation, an existing project with scattered docs that need a coherent structure, or an org adopting a tool and needing to document it for their team.

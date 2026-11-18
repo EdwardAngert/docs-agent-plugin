@@ -5,6 +5,8 @@ argument-hint: [range, tag, or version]
 
 # Write release notes
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 Turn the changes in a release into notes a reader can act on: what changed, why it matters, and what they must do about it.
 
 The argument (`$ARGUMENTS`) can be a git range (`v0.8.0..HEAD`), a tag, or the version being released.

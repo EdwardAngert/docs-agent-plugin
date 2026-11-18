@@ -57,11 +57,11 @@ Site-rooted paths and routes without a file extension resolve through a generato
 
 In order of leverage.
 
-### 1. A line in `CLAUDE.md`
+### 1. A block in `CLAUDE.md` or `CLAUDE.local.md`
 
 The highest-leverage thing, and the cheapest.
 
-`CLAUDE.md` is always in context.
+`CLAUDE.md` is always in context, and so is `CLAUDE.local.md`, its personal counterpart that stays out of git.
 A skill description is only matched.
 A standing instruction in `CLAUDE.md` therefore outranks any description this plugin can write, and it works with no hooks, no configuration, and no mechanism at all.
 
@@ -70,12 +70,22 @@ This is enough:
 ```markdown
 ## Documentation
 
-This repo uses the Docs Assist plugin. When work touches anything under `docs/`,
-the README, a release note, or a pull request description, use it rather than
-writing prose directly. Start with `/docs-assist:health` if the state is unclear.
+This repo uses the Docs Assist plugin for anything under `docs/`, the README,
+release notes, and pull request descriptions. Use it rather than writing prose directly:
+
+- A new doc goes through three steps: draft it with whoever knows the subject
+  (`/docs-assist:draft`), write it up (`/docs-assist:write`), then edit it
+  (`/docs-assist:edit`). Never write a doc directly.
+- To check or fix a doc that exists, use the edit step.
+- When a code change leaves docs out of date, use `/docs-assist:update`.
+- When the state of the docs is unclear, start with `/docs-assist:health`.
+
 If finishing it surfaces something else that blocks it, fix that first and say
 so, rather than stopping to ask.
 ```
+
+Name the routes, not just the plugin: a trial without it saw a plain "write it up" answered by writing the page in the conversation, skipping the separate writer and the questioning.
+Setup puts it in `CLAUDE.local.md` by default, hidden through `.git/info/exclude`, and in `CLAUDE.md` when the contributor wants the team to get it.
 
 Keep it short and specific about where.
 A vague instruction competes with everything else in the file and loses.
@@ -85,7 +95,7 @@ The last line is worth its cost anyway: it spends the same "always in context" l
 
 `.docs-assist/config.yml` does not trigger anything on its own, and it changes what happens once the plugin is running: the conventions are the project's rather than inferred, and its presence signals the project opted in rather than tolerating a default.
 
-Pair it with the `CLAUDE.md` line.
+Pair it with the project instructions block.
 One gets the plugin invoked; the other makes the invocation behave like this project.
 
 ### 3. More hooks

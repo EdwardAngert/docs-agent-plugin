@@ -42,7 +42,7 @@ If most of a procedure lands in the never-run tier, say so up front: the user sh
 
 A subagent's result reaches the conversation only when it finishes, so one long run is silence.
 Run a procedure in chunks, one per section of the doc, or one per five or so steps when a section is longer.
-Before the first launch, put the chunks on the session's task list, one task per chunk, when the session has a task tool, and mark each one in progress and done as it goes (see "Show where the work is" in `SKILL.md`).
+Before the first launch, put the chunks on the session's task list, one task per chunk, when the session has a task tool, and mark each one in progress and done as it goes (see "Show where the work is" in `house-rules.md`).
 
 1. Launch `doc-verifier` for the first chunk, with the scratch workspace, in the foreground: wait for it, never run it in the background.
    A background run returns control with nothing to report, and the user is back to watching a silence.

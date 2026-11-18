@@ -10,7 +10,7 @@ audience: contributor
 Three things, in order: install it, set it up so it writes like your project, and make sure it gets asked in the first place.
 
 The last one is the step people skip, and it is the one that decides whether the plugin is ever used.
-It turns out to be two separate problems: requests that are documentation-shaped but don't say so, which the plugin already matches on its own, and requests that never mention documentation at all, which need a line in `CLAUDE.md` to fix.
+It turns out to be two separate problems: requests that are documentation-shaped but don't say so, which the plugin already matches on its own, and requests that never mention documentation at all, which need a few lines of project instructions to fix.
 
 ## Before you start
 
@@ -89,7 +89,7 @@ The stages, in the order setup offers them:
 1. **Hooks and CI.** Offers a git pre-commit lint, an in-session doc lint, and CI checks for docs impact, the reference registry, and claims.
    Every one is default off and installed only on an explicit choice.
 1. **Personas.** Only when the project will use the authoring loop: a short per-project brief for the chairs that write and review.
-1. **Reachability.** Offers the `CLAUDE.md` lines described below, adjusted to your layout.
+1. **Reachability.** Offers the project instructions described below, adjusted to your layout, kept to yourself unless you share them.
 1. **Site navigation.** Only when the project already has a site generator, and only on a yes.
    Generates navigation from the docs' own metadata rather than a hand-maintained list, so a new page cannot be silently omitted.
    Docusaurus and MkDocs are covered.
@@ -101,19 +101,19 @@ The rules from stages 1 and 4 stay on your machine unless you choose to share th
 
 Every row is opt-in, nothing is written before you say yes, and the plugin commits none of it: committing is yours to do.
 
-| Stage        | Path                                        | Visible to git       | To remove                     |
-| ------------ | ------------------------------------------- | -------------------- | ----------------------------- |
-| Conventions  | `.docs-assist/config.yml`                   | Only if you share it | Delete the file               |
-| Conventions  | `.docs-assist/style.md`                     | Only if you share it | Delete the file               |
-| Conventions  | `.docs-assist/reference.yml`                | Only if you share it | Delete the file               |
-| Linting      | `.vale.ini` and `styles/`                   | Yes                  | Delete both                   |
-| Linting      | `.markdownlint-cli2.jsonc`                  | Yes                  | Delete the file               |
-| Hooks and CI | `.git/hooks/pre-commit`                     | No                   | Delete the hook               |
-| Hooks and CI | `scripts/*.mjs`                             | Yes                  | Delete the scripts you took   |
-| Hooks and CI | `.github/workflows/*.yml`                   | Yes                  | Delete the workflows you took |
-| Personas     | `.docs-assist/personas/*.md`                | Only if you share it | Delete the directory          |
-| Reachability | A `## Documentation` section in `CLAUDE.md` | Yes                  | Delete the section            |
-| Site nav     | Your generator's nav config                 | Yes                  | Revert the file               |
+| Stage        | Path                                           | Visible to git       | To remove                     |
+| ------------ | ---------------------------------------------- | -------------------- | ----------------------------- |
+| Conventions  | `.docs-assist/config.yml`                      | Only if you share it | Delete the file               |
+| Conventions  | `.docs-assist/style.md`                        | Only if you share it | Delete the file               |
+| Conventions  | `.docs-assist/reference.yml`                   | Only if you share it | Delete the file               |
+| Linting      | `.vale.ini` and `styles/`                      | Yes                  | Delete both                   |
+| Linting      | `.markdownlint-cli2.jsonc`                     | Yes                  | Delete the file               |
+| Hooks and CI | `.git/hooks/pre-commit`                        | No                   | Delete the hook               |
+| Hooks and CI | `scripts/*.mjs`                                | Yes                  | Delete the scripts you took   |
+| Hooks and CI | `.github/workflows/*.yml`                      | Yes                  | Delete the workflows you took |
+| Personas     | `.docs-assist/personas/*.md`                   | Only if you share it | Delete the directory          |
+| Reachability | `CLAUDE.local.md`, or a section in `CLAUDE.md` | Only if you share it | Delete the file or section    |
+| Site nav     | Your generator's nav config                    | Yes                  | Revert the file               |
 
 Three things this table is telling you.
 
@@ -153,22 +153,35 @@ Nothing to configure.
 **You never mentioned it at all.** That is a push problem, and no skill description can solve it.
 Fix it in this order.
 
-### Add three lines to `CLAUDE.md`
+### Add a few lines of project instructions
 
 If you already ran the setup command's reachability stage, this is done; skip to [Share your rules, if your team should use them](#share-your-rules-if-your-team-should-use-them).
 
 The highest-leverage fix, and the cheapest.
-`CLAUDE.md` is always in context where a skill description is only matched, so a standing instruction there outranks anything the plugin can say about itself:
+Claude Code loads `CLAUDE.md` on every turn where a skill description is only matched, so a standing instruction there outranks anything the plugin can say about itself.
+The lines name which step handles what, so a plain "write it up" goes through the write step instead of being written in the conversation:
 
 ```markdown
 ## Documentation
 
-This repo uses the Docs Assist plugin. When work touches anything under `docs/`,
-the README, a release note, or a pull request description, use it rather than
-writing prose directly. Start with `/docs-assist:health` if the state is unclear.
+This repo uses the Docs Assist plugin for anything under `docs/`, the README,
+release notes, and pull request descriptions. Use it rather than writing prose directly:
+
+- A new doc goes through three steps: draft it with whoever knows the subject
+  (`/docs-assist:draft`), write it up (`/docs-assist:write`), then edit it
+  (`/docs-assist:edit`). Never write a doc directly.
+- To check or fix a doc that exists, use the edit step.
+- When a code change leaves docs out of date, use `/docs-assist:update`.
+- When the state of the docs is unclear, start with `/docs-assist:health`.
+
 If finishing it surfaces something else that blocks it, fix that first and say
 so, rather than stopping to ask.
 ```
+
+Put them in `CLAUDE.local.md` at the project root to keep them to yourself, or in `CLAUDE.md` to give them to your team.
+Claude Code reads both.
+Setup does the first by default and hides the file from git through `.git/info/exclude`, so your `.gitignore` doesn't change.
+If your repo has an `AGENTS.md` and no `CLAUDE.md`, setup asks first: a `CLAUDE.local.md` there stops Claude Code reading `AGENTS.md` for you.
 
 Keep it short and specific about where.
 A vague instruction competes with everything else in that file and loses.
@@ -178,7 +191,7 @@ The last line earns its place despite that: `CLAUDE.md` loads on every turn wher
 
 A `.docs-assist/` directory does not trigger anything by itself, and it changes what happens once the plugin is running: the conventions are yours rather than inferred.
 Setup keeps it on your machine unless you choose to share it.
-When teammates should write to the same rules, share and commit it alongside the `CLAUDE.md` lines.
+When teammates should write to the same rules, share and commit it alongside the project instructions in `CLAUDE.md`.
 One gets the plugin invoked, the other makes the invocation behave like your project.
 
 ### What the plugin notices on its own

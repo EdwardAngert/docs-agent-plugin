@@ -26,8 +26,8 @@
 // DOCS_ASSIST_JOURNAL=0 in the environment.
 
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, rmSync, statSync, unlinkSync, writeFileSync } from 'node:fs';
-import { dirname, join, relative } from 'node:path';
+import { appendFileSync, existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, rmSync, statSync, unlinkSync, writeFileSync } from 'node:fs';
+import { dirname, isAbsolute, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // --- where things are ----------------------------------------------------------
@@ -164,6 +164,24 @@ export function shareRules(root) {
   return 'shared';
 }
 
+// --- a file only this clone should see ------------------------------------------
+
+// `.git/info/exclude` works like .gitignore but is never tracked, so a personal
+// file (a CLAUDE.local.md) stays out of git without changing anything the team
+// shares. Returns 'added', 'already', or '' outside a git repository.
+export function excludeLocally(root, path) {
+  const where = git(root, ['rev-parse', '--git-path', 'info/exclude']);
+  if (!where) return '';
+  const file = isAbsolute(where) ? where : join(root, where);
+  const line = `/${path.replace(/^\/+/, '')}`;
+  let text = '';
+  try { text = readFileSync(file, 'utf8'); } catch { /* not there yet */ }
+  if (text.split('\n').some((l) => l.trim() === line)) return 'already';
+  mkdirSync(dirname(file), { recursive: true });
+  appendFileSync(file, `${text && !text.endsWith('\n') ? '\n' : ''}${line}\n`);
+  return 'added';
+}
+
 // --- housekeeping --------------------------------------------------------------
 
 export function defaultBase(root) {
@@ -245,6 +263,14 @@ function cli() {
     catch { console.error(`No journal at ${relative(root, path)}`); return 1; }
   }
 
+  if (cmd === 'exclude') {
+    if (!arg) { console.error('exclude needs a path'); return 1; }
+    const done = excludeLocally(root, arg);
+    if (!done) { console.error('Not a git repository: nothing to exclude from.'); return 1; }
+    console.log(done === 'already' ? `${arg} was already hidden from git in this clone.` : `${arg} is hidden from git in this clone only.`);
+    return 0;
+  }
+
   if (cmd === 'drafts') { console.log(placedDrafts(root).join('\n')); return 0; }
 
   if (cmd === 'clear-draft') {
@@ -266,7 +292,7 @@ function cli() {
     return 1;
   }
 
-  console.error('usage: journal.mjs path | merged | clear BRANCH | drafts | clear-draft NAME | rules local|shared');
+  console.error('usage: journal.mjs path | merged | clear BRANCH | drafts | clear-draft NAME | rules local|shared | exclude PATH');
   return 1;
 }
 

@@ -5,6 +5,8 @@ argument-hint: [git ref, PR number, or path]
 
 # Update docs for a change
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 Keep documentation in sync with the code.
 Given a change, find the docs it affects and update them.
 This is the workflow that most benefits from running inside Claude Code, where the diff and the docs are both at hand.

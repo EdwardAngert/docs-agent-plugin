@@ -5,6 +5,8 @@ argument-hint: [doc path]
 
 # Edit: check it, run it, then tidy it
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 The third of three steps, and the one that makes a doc verified rather than plausible.
 It works on a doc the write step just produced (`commands/write.md`) or on any existing doc.
 
@@ -31,6 +33,7 @@ A technical editor, then a copy editor.
 
 ### 1. Scope the edit
 
+- Run `node ${CLAUDE_PLUGIN_ROOT}/hooks/journal.mjs path` now: it prints the notes file for this branch, and every correction, failed step, and open question this edit finds goes there before the closing summary.
 - `$ARGUMENTS` is a doc path.
   Without one, glob `.docs-assist/loop/*/packet.md` for packets whose `status` is `written` and offer those docs, most recent first.
 - Read the branch's journal (`journal.md`) for the doc's notes: which claims rest on whose word, the questions still open, and decisions already made.
@@ -45,6 +48,9 @@ One short message before any work:
 
 > "Editing docs/restore.md: 14 claims to check against the code, then 9 steps to run in a scratch folder (two won't run: step 4 needs admin rights, step 7 changes a real server), then a style pass.
 > I'll report as each part finishes."
+
+In the same breath, create the task list with `TaskCreate` (or `TodoWrite`), one task each for the claims, each section's step run, and the copy edit, and keep it current with `TaskUpdate`.
+This message and the task list come before any checking: they are how the contributor knows the edit hasn't hung.
 
 ### 3. Technical edit: claims
 
@@ -96,6 +102,9 @@ A copy edit never changes what a sentence claims.
 If tightening a sentence would change its meaning, leave the meaning and note it.
 
 ### 6. Close
+
+Record first, then summarize: a session can end the moment the summary is sent.
+Write the journal notes and set the packet's `status` (below, under "Then record it") before the summary, which then goes out as the step's last message.
 
 Bring the contributor one short summary:
 

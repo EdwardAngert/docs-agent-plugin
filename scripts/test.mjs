@@ -415,6 +415,17 @@ test('journal: drafts whose doc is placed are listed for clearing, unfinished on
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 
+test('journal: a personal file is hidden from git without touching anything tracked', () => {
+  const dir = repo({ 'docs/a.md': '# A\n', '.gitignore': 'node_modules\n' });
+  try {
+    writeFileSync(join(dir, 'CLAUDE.local.md'), '## Documentation\n');
+    journal(dir, ['exclude', 'CLAUDE.local.md']);
+    journal(dir, ['exclude', 'CLAUDE.local.md']);
+    assert.equal(gitIn(dir, 'status', '--porcelain', '--untracked-files=all'), '', 'hidden, and .gitignore unchanged');
+    assert.equal(readFileSync(join(dir, '.git/info/exclude'), 'utf8').split('\n').filter((l) => l === '/CLAUDE.local.md').length, 1, 'added once');
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
+
 test('journal: the hook hides a working directory the moment something is written there, even with notices off', () => {
   const dir = repo({ 'docs/a.md': '# A\n', '.docs-assist/config.yml': 'notices: false\n' });
   try {

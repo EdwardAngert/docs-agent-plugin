@@ -5,6 +5,8 @@ argument-hint: [topic or draft path]
 
 # Write: turn the draft into documentation
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 The second of three steps.
 It takes the high-level draft from the draft step (`commands/draft.md`) and writes it up as a finished document in the project's conventions.
 It adds no facts on its own say-so.
@@ -38,7 +40,8 @@ You orchestrate, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/loop.md
 
 ### 2. Tell the user what this step does
 
-One or two lines: the doc type you expect from the draft, and that the writing runs as a few separate passes, the first of which sees only the draft.
+One or two lines: the doc type you expect from the draft, and that a writer who sees only the draft writes it up, then a reviewer questions what it added.
+Set up the task list now, per `house-rules.md`: matching the draft to the rest of the docs, writing it up, each round of questions as it starts, the cold read, placing it.
 Then post one line as each pass finishes ("Checked the draft's example values against the other docs; writing it up now."), so a long write-up never looks like a hang.
 
 ### 3. Cast, then shape
@@ -68,7 +71,7 @@ This is the loop in `loop.md`, and it keeps each side honest: neither one grades
 1. Repeat with the next pair of rulebooks: `pass-2-assumptions.md` and `pass-2-clarity.md`, then pass 3.
    Each round lowers the threshold for what is worth raising.
 1. Stop at the first of these:
-   - a round in which the authority chair raises nothing, the normal end, usually after one or two rounds;
+   - a round in which the authority chair raises nothing, the normal end, usually after one or two rounds (a round that corrected anything is always followed by another, which reviews the corrections and anything the revision added);
    - a round that reverses the previous round's change, which is a judgment call for the contributor, not another round;
    - the third round.
 
@@ -93,6 +96,7 @@ Copy the cold-read version of `draft.md` into the project as a real file:
   Add a template attribution line only when `templates.md` says to.
 - An `llms.txt` entry when the repo has one, per `llms-txt.md`.
 - Links from related docs to the new one, where a reader would look for it.
+  Change only the link and the words around it; any other change to those pages that rests on someone's word goes in your summary to confirm (`house-rules.md`, "Changes to other pages").
 
 Set the packet's `status` to `written`.
 

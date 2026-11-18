@@ -5,6 +5,8 @@ argument-hint: [doc path or directory]
 
 # Verify docs by running them
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 A tutorial whose step 3 no longer works is worse than no tutorial: the reader followed instructions, hit a wall, and now distrusts the rest of the docs.
 Nothing catches that by reading; the steps have to actually run.
 This command executes procedural docs in an isolated workspace, the way CI executes tests, and reports where the documented path and the real path diverge.
@@ -16,7 +18,9 @@ If omitted, survey the docs set and propose the procedural docs worth verifying,
 
 ### 1. Scope the run
 
+- Run `node ${CLAUDE_PLUGIN_ROOT}/hooks/journal.mjs path` now: it prints the notes file for this branch, and every correction, failed step, and open question this run finds goes there before the closing report.
 - Resolve `.docs-assist/` config if present (`${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/config-resolution.md`).
+- Set up the task list once the scope is known, per `house-rules.md`: one task per doc, or per section of a long one.
 - Identify the procedural docs in scope: docs whose content type is task-oriented (doc, guide, tutorial, troubleshooting) and that contain executable fenced commands.
   A concept doc with no commands has nothing to verify; say so rather than reporting it as clean.
 - When more than one doc is in scope, decide whether they are independent or a journey: do they share a user story (`user-stories.md`), does a plan or a guide lay out an order, does one doc's prerequisites point at another's outcome?

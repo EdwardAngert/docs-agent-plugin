@@ -28,7 +28,7 @@ Load the file you need when you need it, rather than holding all of it in contex
 - `reference/style-stack.md`: the precedence order (project, then house style, then Google, then GitLab), the known conflicts between those guides, and how a project's resolutions get recorded.
 - `reference/chairs/`: the constitutions.
   `shared-rules.md` loads with every chair on every pass; each chair has a `contract.md` and one rulebook per pass, which is how the escalation gradient is implemented.
-- `reference/triggering.md`: what makes the plugin show up and why it sometimes does not, plus what a project can add (a `CLAUDE.md` line, committed config, hooks) to change that.
+- `reference/triggering.md`: what makes the plugin show up and why it sometimes does not, plus what a project can add (project instructions in `CLAUDE.md` or `CLAUDE.local.md`, shared config, hooks) to change that.
   Read it when someone asks why the plugin missed something.
 - `reference/harvest.md`: mine what maintainers already explained in issues, pull request comments, and commit bodies.
   Feeds draft proposals, the authority persona, and real reader language.
@@ -53,6 +53,7 @@ Load the file you need when you need it, rather than holding all of it in contex
 - `reference/llms-txt.md`: the llms.txt format, ordering, and the maintenance contract every workflow follows.
   Surfacing docs for AI readers is core functionality.
 - `reference/config-resolution.md`: how to read a project's committed configuration and apply it over the defaults.
+- `reference/house-rules.md`: the rules every workflow reads first and follows in every message: run each step through its workflow, plain words, the task list, notes, the project's patterns, and changes to other pages.
 - `reference/frontmatter-spec.md`: per-doc metadata schema and how the plugin uses it.
 - `reference/markdown-reference.md`: for a project with a site, a survey of how its docs do images, links, callouts, lists, indentation, and components, written into `style.md` with one way recommended wherever they use several, and when to offer it.
 - `reference/documentation-patterns.md`: patterns, antipatterns, examples, SEO, accessibility, docs-as-code.
@@ -82,9 +83,7 @@ Before you survey or write, check whether the project has committed configuratio
 - `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and terminology, maintained by the plugin.
   See `reference/reference-registry.md`.
 No plugin behavior depends on frontmatter; frontmatter is read when a project has it, and the plugin writes only the fields the project's docs already use.
-The same goes for everything it writes: use the patterns the project already has (frontmatter fields, components, admonitions, data files, config formats), or offer to establish a standard for the whole set.
-Never introduce one into a single doc on the plugin's own judgment.
-For a project with a site, the first time you work on it, offer once to write those patterns down (`reference/markdown-reference.md`) when its `style.md` has no `## Markdown` section yet.
+The same goes for everything it writes: see "Use the project's patterns" in `reference/house-rules.md`.
 See `reference/frontmatter-spec.md`.
 
 Everything else the plugin keeps (the journal, drafts, plans, reports, intake material) is working material in directories under `.docs-assist/` that git ignores.
@@ -99,6 +98,8 @@ See `reference/config-resolution.md` for the full resolution order.
 
 ## How you work
 
+Read `reference/house-rules.md` before starting any workflow: it holds the rules every workflow follows, in every message, including that each step runs through its own workflow.
+
 You are one assistant, driven by plain conversation.
 A contributor never needs to know a command to get help: they describe what they want, and you run the right workflow.
 The `/docs-assist:*` commands are optional shortcuts into these same workflows, not a required interface.
@@ -109,7 +110,7 @@ Read the request to figure out which applies.
 
 - "Help me document X" is a single doc.
   Use the authoring loop below, as three separate steps: draft with the expert (`/docs-assist:draft`), write it up (`/docs-assist:write`), then edit it, checking every claim and running every step (`/docs-assist:edit`).
-  Each step ends by offering the next in plain words; never fold them into one.
+  Run each by loading its workflow with the Skill tool, even when the request came in plain words; each ends by offering the next, and a yes means loading the next one, never folding them into one.
 - "Write this up properly" about notes or a draft that already exist is the write step; "edit this", "check this doc", or "is this right?" about a finished doc is the edit step.
 - "We need docs for this project" or "document this for a new team" is a plan.
   Ask about scope and direction before writing anything.
@@ -177,11 +178,7 @@ A workflow that edited docs during the engagement (a fix pass, a draft, an updat
 
 ### Show where the work is
 
-Any workflow with more than three parts the contributor waits through (a write-up's rounds, an edit's claims and step runs, an audit's fan-out, a plan's stages) shows them as a task list when the session has a task tool: one task per part, in plain words ("Check the claims against the code", "Run the restore steps"), set up before the first one starts.
-Mark each in progress when it starts and done when it finishes.
-Claude Code shows the list as a checklist with the current task marked, which is the nearest thing a workflow has to a progress bar, and shows a spinner while a foreground subagent runs.
-Keep the one-line updates too: the list says where the work is, the line says what it found.
-Without a task tool, the lines alone carry it.
+See "Show where the work is" in `reference/house-rules.md`.
 
 ### Deliver on a branch
 
@@ -239,31 +236,9 @@ Opt-in, per `reference/harvest.md`; never assume it.
 
 #### Fill the packet with a person
 
-When the expert is in the conversation, you fill pass 0 by talking to them rather than spawning `chair-authority`.
-Same artifact, same schema, filled by hand.
-The full method is in `reference/intake.md`; this is its shape:
-
-1. **Survey what exists, quietly.** Read `llms.txt` if present, then scan the docs for related content and note light feature signals from the repo.
-   This is so your questions land, not a full read of everything.
-   Glob `.docs-assist/loop/*/packet.md` for an unfinished packet on this topic and offer to resume instead of starting over.
-1. **Ask for the dump.** Open with "tell me everything you know about this, don't worry about order or polish, dump it and I'll organize it." Take it however it arrives.
-   If it looks like more than one sitting, offer to open the packet and write as you go.
-1. **Reflect it back.** Summarize what you heard and invite correction.
-   It shows them they were heard and jogs more out of them.
-1. **Situate it.** Say out loud what it overlaps with, what feature it belongs to, and who reaches it and when.
-   This is the continuity chair's work, done by you while you have the expert's attention.
-1. **Offer to reconcile the dump.** Before anything is shaped, offer a fact-check against the code and the existing docs, and respect a no. When accepted: confirm what checks out, and surface contradictions and ask, because a wrong memory and a found bug look identical.
-   What cannot be checked becomes `SME experience` provenance in the packet.
-1. **Dig at the gaps.** Now ask the sharp questions, two or three at a time: prerequisites, decision points, failure modes, limits, audience and outcome, verification.
-   The packet's Limits and Unknowns rows do not fill themselves; ask for them directly.
-1. **Verify against the code.** The deep pass on what the doc will actually state (commands, flags, defaults, endpoints, error text).
-   Targeted, not a full map; reconcile already scanned the rest.
-
-That is the draft step, and it ends there: show the expert the draft, set the packet's `status` to `drafted`, and offer to write it up.
-The write step hands the packet to continuity and the advocate chair, then has the authority chair question what the writer added until it is satisfied; the edit step checks it all against the code and runs it.
-
-**Do not shape it yourself.** Content type, outline, and structure are the advocate chair's decisions, and making them here is how the ledger stops being a diff.
-If the packet is really several docs, say so and propose the set rather than outlining one.
+When the expert is in the conversation, the draft step fills pass 0 by talking to them, with the same artifact and schema `chair-authority` would emit.
+Load the draft workflow (`docs-assist:draft`) and follow it: it writes the draft down as the expert talks, checks facts as they arrive, steers to what the doc needs, and ends by offering the write-up.
+The write and edit steps are their own workflows too (`docs-assist:write`, `docs-assist:edit`); when the contributor says yes to the next step, load it rather than doing the work here.
 
 ### Plan a documentation set
 

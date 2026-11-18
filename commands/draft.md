@@ -5,6 +5,8 @@ argument-hint: [topic or issue number]
 
 # Draft: get the knowledge down
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 The first of three steps.
 This one gets what a subject matter expert knows into a high-level draft: the facts, in order, each one checked against the code or marked as resting on the expert's word.
 Writing it up as finished documentation is the next step (`commands/write.md`), and editing it, with every claim checked and every step run, is the one after (`commands/edit.md`).

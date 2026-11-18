@@ -5,6 +5,8 @@ argument-hint: [path]
 
 # Audit documentation
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 Perform a systematic documentation audit on the specified path: `$ARGUMENTS`
 
 ## Your role
@@ -57,12 +59,20 @@ Before reading a single file for structure or style, check `.docs-assist/config.
 
 ### 1. Take inventory
 
+Run `node ${CLAUDE_PLUGIN_ROOT}/hooks/journal.mjs path` first: it prints the notes file for this branch, and every claim the audit finds wrong goes there before the report.
+Once the scope is known, set up the task list (`house-rules.md`): one task per reviewer or part of the set.
+
 Scale this step to the target.
 For a full set or a directory, take the full inventory below.
 For a few files or a diff, skip the whole-set inventory and work from the edit scope plus the edges in `impact-analysis.md`.
 
 Check the fan-out threshold now, from the inventory you just took: more than 5 files or roughly 2,000 lines total means fanning out across `chair-authority` and `chair-advocate` slices (see the Notes section), not auditing inline.
 Decide this here, before starting content analysis, not partway through.
+
+Above the threshold, the fan-out is not optional.
+A set that size read inline gets skimmed, and a skim misses what matters: an inline audit of a 48-file guide finished in two minutes, called the set in good shape, and missed the critical finding a fanned-out audit of the same guide had led with.
+If you can't launch reviewers, say so before starting, audit only what you can read closely, and make the verdict about that part alone.
+Either way, put the reviewers on the task list (`house-rules.md`), one task per slice, so the contributor can see the work move.
 
 For a full set, explore the documentation structure:
 
@@ -166,6 +176,7 @@ It is how technical writing ranks: a wrong doc is worse than an ugly one, and a 
 Report in this order even when the interesting findings are further down, because a reader who stops after the first section should still have the answer that matters most.
 
 Lead with a verdict, in one or two sentences, that says whether this set is in good shape.
+The verdict covers only what was read closely: a page that was skimmed gets no verdict, and the report says which pages those were.
 Say so plainly when it is.
 An audit that finds nothing is a successful audit, and a list of manufactured findings is the failure mode, not a sign of thoroughness.
 
@@ -303,7 +314,7 @@ The conversation is for triage; end with a persist offer, per the skill's feedba
   Follow `reference/reports.md` for the shape: identifiers per finding, evidence attached to each, and a record of where you looked.
 - Either way, present the findings here first and let the user choose.
   Never persist without the offer.
-- Note in the branch's journal each claim the trace found wrong, with the code that settled it, and each call a reviewer might question.
+- Before presenting the report, note in the branch's journal each claim the trace found wrong, with the code that settled it, and each call a reviewer might question: a session can end the moment the report is sent.
   See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/journal.md`.
 
 ## Notes
