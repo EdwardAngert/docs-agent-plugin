@@ -51,7 +51,7 @@ Before reading a single file for structure or style, check `.docs-assist/config.
   Their output belongs on the Mechanics line of the report, which is one line.
   It does not become a section: a clean lint run is a precondition for the audit, not a result of it.
   A heading-level skip, a missing blank line, an untagged fence, a weasel word: these are findings the linter already found, not things to re-derive by reading.
-- **Not configured**: say so explicitly in the report, and offer `/docs-assist:setup` before doing any manual mechanical checking.
+- **Not configured**: say so explicitly in the report, and offer to set up linting (the setup workflow, which you run yourself) before doing any manual mechanical checking.
   Do one-off ad hoc runs only if the user wants findings now and declines setup (`npx --yes markdownlint-cli2 <scope>` is enough for a single pass; no config to generate first).
 - Either way, mechanical findings are not optional to skip: a hand-checked pass that substitutes for actually running the tool is the failure mode this step exists to prevent.
 
@@ -81,7 +81,7 @@ This is mechanical, so use an existing tool rather than re-implementing it, in t
 1. **Already wired up**: if `.markdown-link-check.json` exists, or `.docs-assist/config.yml` sets `lint.link_check`, or `.github/workflows/` already runs a link check, it's owned by the linter, the same way Vale/markdownlint are.
    Don't re-check by hand; note its last CI result and move on.
    If it's failing or hasn't run recently, flag that as the finding instead of the individual links.
-1. **No CI yet, but the repo has GitHub Actions**: recommend `/docs-assist:setup` to wire the link-check step into `.github/workflows/docs-lint.yml` (it scaffolds `markdown-link-check` with the right config) so this runs on every PR instead of once per audit.
+1. **No CI yet, but the repo has GitHub Actions**: offer to wire the link-check step (the setup workflow, which you run yourself) into `.github/workflows/docs-lint.yml` (it scaffolds `markdown-link-check` with the right config) so this runs on every PR instead of once per audit.
    Still do a one-off pass this run (step 3) so the current audit isn't empty-handed.
 1. **No tooling at all, or a one-off scoped audit**: run `npx --yes markdown-link-check --quiet <files>` directly (add `--config .markdown-link-check.json` if present) rather than hand-rolling requests with `curl`/`WebFetch`.
    Treat its dead-link findings as Critical.
@@ -105,10 +105,9 @@ Analyze in the order you will report in, so nothing has to be re-sorted later.
   See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/claim-verification.md` for the full method, what counts as a claim, and how to classify what you find (matches, drifted, missing, needs `/docs-assist:verify`).
   A pass that runs the mechanical linters, gets them clean, and stops there has finished the cheaper half of the audit and skipped the half a reader depends on.
 - Outdated information (check dates and version references; for a full-set audit in a git repo, `node ${CLAUDE_PLUGIN_ROOT}/assets/ci/docs-decay.mjs` ranks every doc by staleness risk in one deterministic pass, prioritizing which docs get the claim trace above first)
-- Unverified claims: docs whose `sme-attested` frontmatter ledger is large or old.
-  Surface the specific claims so a reviewer can verify and delete entries (the ledger exists to shrink; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`)
+- Unverified claims: when the branch's journal names claims that rest on someone's word, surface the specific claims so a reviewer can check them against the code or ask again.
 - Incomplete instructions (missing steps).
-  Reading can only catch so much here: for a load-bearing procedural doc, recommend `/docs-assist:verify`, which executes the steps in an isolated workspace and finds the break a read-through misses
+  Reading can only catch so much here: for a load-bearing procedural doc, offer to verify it (the verify workflow, which you run yourself), which executes the steps in an isolated workspace and finds the break a read-through misses
 - Broken reader journeys: a story whose arrival, entry, path, or exit fails when walked through the doc, and docs whose intended reader cannot be inferred at all.
   See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`
 - Assumption gaps (undefined terms, missing prerequisites)
@@ -145,7 +144,7 @@ Analyze in the order you will report in, so nothing has to be re-sorted later.
   Critical: this is where a reader gets hurt, not just confused.
   See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md`'s "Keep Every Example Safe"
 - For a full-set audit, whether the docs set's guided journeys (per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`) actually compose: the same resource, project, or identifier used consistently across every doc in the sequence, not just similar-looking examples.
-  Recommend `/docs-assist:verify` on the journey to prove it, not just read it
+  Offer to verify the journey (the verify workflow, which you run yourself) to prove it, not just read it
 - Terminology drift: prose that uses a variant listed against a `term` entry in `.docs-assist/reference.yml` instead of the canonical term, or the same concept under different terms across docs when no registry exists (flag the outliers against the dominant usage, and offer to record the winner).
   See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/terminology.md`
 - AI voice: hedging, marketing language, false-contrast framing (`it's not X, it's Y`), and throat-clearing openers.
@@ -169,6 +168,8 @@ Report in this order even when the interesting findings are further down, becaus
 Lead with a verdict, in one or two sentences, that says whether this set is in good shape.
 Say so plainly when it is.
 An audit that finds nothing is a successful audit, and a list of manufactured findings is the failure mode, not a sign of thoroughness.
+
+The report is for the contributor, who never needs a command name: an offer in it says what you will do ("want me to set up linting?"), and names no slash command.
 
 ```markdown
 ## Audit summary
@@ -219,7 +220,7 @@ is a smaller problem than a false sentence or an unreachable page.]
 ## Mechanics
 
 [One line. Which linters ran and what they found, or that none are configured
-and `/docs-assist:setup` would wire them up.
+and an offer to set them up, in plain words.
 
 A clean lint run is a precondition, not a result. Do not expand this into a
 section: if the linters found something, the fix is to run them, not to
@@ -233,9 +234,21 @@ covered everything.]
 
 ## What to do first
 
-[The smallest number of actions that move this set the most, in order. Each
-names the file and what to change. Prefer one real fix over ten suggestions.]
+[Only what needs fixing: a reader gets something wrong, gets stuck, or can't
+find the page. The smallest number of actions that move this set the most, in
+order, each naming the file and what to change. When nothing needs fixing, say
+"Nothing here is urgent." and stop.]
 ```
+
+Keep optional improvements out of the report: things that would make a sound doc
+better (a tighter sentence, an extra example, a nicer structure) but that no
+reader trips over.
+After the report, when there are any, ask once whether the contributor wants
+them, saying how many and what kind, and list them only on a yes:
+
+> "I also found four optional improvements, mostly wording and one extra example.
+> Want to see them?"
+A healthy set with optional improvements is still a healthy set.
 
 Give every finding an identifier: `T1`, `R2`, `P3`, `M1`, numbered within its
 section, so it can be referred to in a commit, a pull request, or a handoff
@@ -273,6 +286,9 @@ fix, because effort is a tiebreaker and not a ranking.
 
 Within a kind, prefer what hurts more readers, more often, for less work.
 
+Optional improvements are not on this list at all; they wait for the
+contributor's yes (see Format output).
+
 Resist the pull of the cheap fix.
 A list led by typo corrections reads as thorough and leaves the expensive,
 important findings at the bottom where they do not get done.
@@ -287,8 +303,8 @@ The conversation is for triage; end with a persist offer, per the skill's feedba
   Follow `reference/reports.md` for the shape: identifiers per finding, evidence attached to each, and a record of where you looked.
 - Either way, present the findings here first and let the user choose.
   Never persist without the offer.
-- If `.docs-assist/session-log.md` is in use (check for it if this audit is one stage of a broader pass), append what this stage found and decided rather than letting that narrative dissolve into the audit report.
-  See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/session-log.md`.
+- Note in the branch's journal each claim the trace found wrong, with the code that settled it, and each call a reviewer might question.
+  See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/journal.md`.
 
 ## Notes
 
@@ -299,7 +315,7 @@ The conversation is for triage; end with a persist offer, per the skill's feedba
   An empty section is a valid result
 - For a change-based target, follow `impact-analysis.md` and report residual risk rather than auditing the changed files in isolation
 - An audit reports; it does not edit.
-  When `llms.txt` is stale or missing, flag it as a finding and recommend `/docs-assist:update` to apply the fix
+  When `llms.txt` is stale or missing, flag it as a finding and offer to apply the fix (the update workflow, which you run yourself)
 - Consider context: some "issues" may be intentional choices
 - External link checking prefers, in order: an existing linter/CI setup already in the repo, wiring one up via `/docs-assist:setup` when CI exists, then an ad hoc `npx markdown-link-check` run.
   It needs `Bash` (for `npx`) or `WebFetch`; if neither is available, skip the check and say so rather than reporting links as clean

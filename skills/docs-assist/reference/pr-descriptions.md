@@ -68,8 +68,63 @@ Only when there's a distinct verification pass worth naming: what was
 checked against what, and what it caught. Skip this section entirely for
 a change with no verification step beyond normal review.
 
+## Rests on someone's word
+
+Only when a claim stays in the docs on an expert's word alone, with nothing
+in the code to check it against. One line per claim, with whose word as a
+role, so the reviewer knows exactly what they are taking on trust.
+
 ## Test plan
 
 Checkable items: commands run, their results, what still needs a human to
 confirm.
 ```
+
+## Write it from the journal
+
+When the branch has a journal (`journal.md`), it holds what was asked, answered, decided, corrected, and run, and the description is written from it rather than from memory of the session.
+With no journal, write the description the usual way and say nothing about one.
+
+1. Read the journal at `node ${CLAUDE_PLUGIN_ROOT}/hooks/journal.mjs path`, and only the notes for docs this branch changes: `git diff --name-only` against the base, plus uncommitted work.
+1. Offer it once, in plain words, with the second option named:
+
+   > I kept notes on what I checked on this branch.
+   > Want me to write the PR description from them?
+   > I can also add a section for each doc showing what was checked, what was run, and what's still open.
+1. Check again, now, every claim about the code the description will present as verified.
+   A note records what was true when it was written, and the code may have moved since: read the file, and when it no longer agrees, the description says the doc needs another look instead of calling it verified, and the note gets corrected (`journal.md`, "When things disagree").
+   Never present a claim as checked because a note says it was.
+1. Fill the template from the notes:
+   - **How this was verified**: the corrections, each on its own line with the code that settled it, since a correction is what tells a reviewer the check was real; what ran and the result; and a count of the rest.
+   - **Rests on someone's word**: what a person said that the code can't settle, by role.
+   - **Known gaps**: questions still unanswered, and decisions that left something out of scope.
+   - **Summary, or How to review this**: decisions that explain a choice the diff shows.
+1. On the second yes, add the breakdown after the main body: one collapsible block per doc in the diff, in the order a reviewer should read them.
+
+   ```markdown
+   <details>
+   <summary><code>docs/connect.md</code>: 4 claims checked, 1 corrected, 1 open question</summary>
+
+   - Checked against `src/client.js`: the default timeout is 8000 ms.
+   - Corrected: the retry ceiling is 5 seconds, not 10 (`src/retry.js`).
+   - Open: whether the timeout applies per attempt or overall.
+   - Fixed a broken link the edit introduced.
+
+   </details>
+   ```
+
+   With the breakdown, the main body's "How this was verified" shrinks to the totals and the one or two corrections a reviewer most needs, and the detail lives only in the breakdown.
+   A correction listed in both places is read twice and trusted less.
+   GitHub and GitLab both render `<details>`.
+   If the body would pass GitHub's 65,536-character limit, post the breakdown as the pull request's first comment and say so in the body.
+
+Never put these in the body:
+
+- The journal, its path, or that it exists: the reviewer sees verification, not the plugin's working notes.
+- Command names.
+- Approaches that were tried and dropped, unless one explains something in the diff.
+- Anything under `.docs-assist/`.
+
+Show the full body before posting it, every time.
+Post only on a yes: `gh pr create` or `gh pr edit` on GitHub, `glab mr create` or `glab mr update` on GitLab.
+Without either, write the body to a file outside the repository and say where it is.

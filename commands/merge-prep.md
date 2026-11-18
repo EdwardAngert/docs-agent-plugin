@@ -30,16 +30,19 @@ Say what you skipped and why.
 1. **Link check**, internal and external, when the project has it configured.
 1. **Site metadata**, when the project has a site generator: navigation generated from the docs' own metadata, and structured data where the generator renders it.
    Offered, never imposed.
-1. **Open questions.** Read `.docs-assist/loop/*/questions.md` and `.docs-assist/state/docs.yml`.
+1. **Open questions.** Read the questions still unanswered in the branch's journal (`reference/journal.md`).
    Anything unresolved that the change depends on is a merge blocker; anything unresolved that it does not is a note for the pull request description.
+1. **Nothing of the plugin's goes in.** `git ls-files .docs-assist` and the staged changes should hold only settings the team set up on purpose (`config.yml`, `style.md`, `reference.yml`, `personas/`, `templates.yml`).
+   A draft, report, journal, or claim-check output that is tracked or staged, usually from an older version of the plugin, is a finding: say what it is and offer to stop tracking it (`git rm --cached`), leaving the file on disk.
+   The same goes for anything the plugin left in a doc for its own use: a comment, a marker, or a frontmatter field the project doesn't otherwise use.
 
 ## Trust signals
 
-If the changed docs carry claims about things that decay (a vendor's behavior, a version, an external service), this is the moment to offer a freshness signal, with the benefit stated plainly: it is how a reader decides whether to trust the page, and how a retrieval system decides whether to cite it.
+If the changed docs carry claims about things that decay (a vendor's behavior, a version, an external service), and the project already marks freshness in its docs (a reviewed date, a version note, a component its site renders), keep that current in the project's own format.
 
-Offer it.
-Add it on a yes.
-Never write it unasked, and never make it a step the contributor has to decline.
+If it has no such practice, don't invent one for a page.
+Offer, once, to establish it as a standard for the set, with the benefit stated plainly (it is how a reader decides whether to trust the page), and record it in the project's rules on a yes.
+Never make it a step the contributor has to decline.
 
 ## Report
 
@@ -52,6 +55,15 @@ One summary, in this order:
 1. What was skipped, and why.
 
 Then offer the pull request description, per `reference/pr-descriptions.md`.
+When the branch has a journal, the offer is to write it from what was checked on this branch, with a doc-by-doc breakdown as a second option; that reference has the wording and what must stay out of the body.
+
+Offer once to clear the working drafts behind the docs this branch placed: `journal.mjs drafts` lists them, and `journal.mjs clear-draft <name>` clears one.
+The docs are the source now, and a draft left behind holds facts the edit may since have corrected.
+In plain words:
+
+> "The docs are done, so the working drafts behind them are out of date.
+> Want me to clear them?"
+If `journal.mjs merged` lists journals for branches already merged, offer once to clear them too.
 
 ## What this is not
 

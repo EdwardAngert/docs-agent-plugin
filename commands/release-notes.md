@@ -57,7 +57,7 @@ Fold their answer into the summary.
   Release notes are the content most prone to the AI voice and inflation this workflow already warns against, so the fresh read earns its keep here; skip it only for a release small enough that the notes are a few lines.
   Fold judgment findings into the finalize checks below.
 - Place the notes per the project's convention (prepend the changelog entry, add the release file, or output the GitHub release body).
-- Flag shipped features that have no documentation yet, and offer `/docs-assist:draft` for each.
+- Flag shipped features that have no documentation yet, and offer to draft each one (the draft workflow, which you run yourself).
 - The branch delivery rule applies: in a git repo, offer to land the notes on a branch rather than the default branch.
 
 ## Notes

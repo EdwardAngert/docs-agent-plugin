@@ -37,7 +37,8 @@ You need a repository with some documentation already in it, and permission to c
 Setup reads what your docs already do and proposes conventions that match, so a repo with no docs yet gets defaults rather than detected conventions: start with [Plan a documentation set](command-reference.md#docs-assistplan) instead.
 
 You do not need every contributor to install anything yet.
-The configuration you commit is what carries the standards; the plugin reads it on every run, for everyone who has it.
+The rules you share are what carry the standards; the plugin reads them on every run, for everyone who has them.
+Setup keeps them on your machine unless you tell it to share them, so for a team, say so when it asks.
 
 ## Roll it out
 
@@ -67,7 +68,7 @@ The configuration you commit is what carries the standards; the plugin reads it 
 
 ## You are done when
 
-- `.docs-assist/` is committed and your team is working from it.
+- The rules in `.docs-assist/` are shared and committed, and your team is working from them.
 - `CLAUDE.md` has the documentation section, and a contributor who asks for docs help in plain words gets the plugin rather than a generic assistant.
 - You have one audit on record.
 
@@ -80,12 +81,15 @@ If a contributor asks for documentation help and nothing changes about the answe
 **With the plugin**, the same request triggers a different workflow.
 Claude Code first looks at the existing documentation to understand what's already there.
 Then it asks the contributor to share everything they know, reflects it back, and connects it to the existing docs and how people use the product before digging into the gaps.
-It pulls out the prerequisites, gotchas, and decision points the contributor mentions casually, and confirms an outline before writing.
-It picks the right content type (a how-to, a concept, a troubleshooting guide) without the contributor needing to know those categories, and can start from a proven template.
-It produces a draft that follows your team's formatting conventions, keeps code examples consistent, includes cross-references to related docs, and flags where existing content should link back to this new page.
+It pulls out the prerequisites, gotchas, and decision points the contributor mentions casually, checks each fact against the code, and shows a high-level draft of the facts before anything is written up.
+That draft is the first of three steps, and each can be done by a different person:
 
-The contributor reviews for technical accuracy.
-Claude Code handles everything else.
+1. **Draft**: the contributor's knowledge, as checked facts in order.
+1. **Write**: the draft written up in the right content type (a how-to, a concept, a troubleshooting guide) without the contributor needing to know those categories, following your team's formatting conventions, with examples consistent with the rest of the docs and links from related pages.
+1. **Edit**: every claim checked against the code and every step run, then a copy edit, ending in a short list of questions only the contributor can answer.
+
+The contributor checks the facts and answers the questions.
+Claude Code handles everything else, and a writer on your team can take over at the write step.
 
 ## What changes for you
 
@@ -101,8 +105,8 @@ The plugin ships with defaults (sentence-case headings, action-oriented headings
 
 ## Customize for your team
 
-Customization is project-local config you commit, which is what makes it survive plugin updates and reach everyone.
-`/docs-assist:setup` scaffolds it, and [what setup writes](get-started.md#what-setup-writes-and-how-to-remove-it) lists every file, whether it is committed, and how to remove it.
+Customization is project-local config, which is what makes it survive plugin updates; sharing it, which setup asks about, is what makes it reach everyone.
+`/docs-assist:setup` scaffolds it, and [what setup writes](get-started.md#what-setup-writes-and-how-to-remove-it) lists every file, whether git sees it, and how to remove it.
 
 The two you will edit by hand:
 

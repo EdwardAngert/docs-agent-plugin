@@ -7,16 +7,17 @@ It is short on purpose: it holds only decisions whose absence has actually cause
 
 Where things go:
 
-| File | Holds | Read by |
-| ---------------- | ----------------------------------------------- | -------------------- |
-| `config.yml` | Machine-checkable settings | Agents and linters |
-| `style.md` | Prose judgment: voice, terminology, emphasis | Agents |
-| `reference.yml` | Machine-checkable pairs: values, facts, terms | Agents and linters |
-| `decisions.md` | Settled calls that are none of the above | Agents |
-| `session-log.md` | What happened, in order, and why | People, later |
+| File                  | Holds                                                  | Read by               |
+| --------------------- | ------------------------------------------------------ | --------------------- |
+| `config.yml`          | Machine-checkable settings                             | Agents and linters    |
+| `style.md`            | Prose judgment: voice, terminology, emphasis           | Agents                |
+| `reference.yml`       | Machine-checkable pairs: values, facts, terms          | Agents and linters    |
+| `decisions.md`        | Settled calls that are none of the above               | Agents                |
+| `journal/<branch>.md` | Notes on a branch: questions, answers, decisions, runs | Agents, every session |
 
 A decision belongs here when getting it wrong costs real work and the answer is not derivable from the files themselves.
-Anything provisional stays in the session log until it settles.
+Anything provisional stays in the branch's journal until it settles.
+The older `session-log.md` is history from before the journal existed.
 
 ## The doc set is what git tracks
 
@@ -31,13 +32,13 @@ Walking the filesystem is correct in one place only: an installed plugin cache, 
 
 ## Every repeated fact has one owner
 
-| Fact | Owner | Everyone else |
-| ---------------------------- | ------------------------------------ | ------------- |
-| Install steps | `docs/get-started.md` | Links |
-| Command arguments | `docs/command-reference.md` | Links |
-| What `/docs-assist:setup` writes | `docs/get-started.md` | Links |
-| The intake narrative, for Claude | `skills/docs-assist/SKILL.md` | Links |
-| The intake narrative, for people | `docs/write-docs-with-docs-assist.md` | Links |
+| Fact                             | Owner                                 | Everyone else |
+| -------------------------------- | ------------------------------------- | ------------- |
+| Install steps                    | `docs/get-started.md`                 | Links         |
+| Command arguments                | `docs/command-reference.md`           | Links         |
+| What `/docs-assist:setup` writes | `docs/get-started.md`                 | Links         |
+| The intake narrative, for Claude | `skills/docs-assist/SKILL.md`         | Links         |
+| The intake narrative, for people | `docs/write-docs-with-docs-assist.md` | Links         |
 
 Duplication across audiences is legitimate: the same fact for Claude and for a person is two documents, not one drifted in two places.
 Duplication inside one audience is drift, and it has already cost this repo four disagreeing install procedures and a `templates.yml` claim that outlived the feature.
@@ -86,4 +87,4 @@ Linting it against a human prose style, or auditing it as documentation, is a ca
 
 Add a decision when you settle something that cost real work to figure out and that the files do not state on their own.
 Give it a heading, state the decision in one or two sentences, and say why underneath.
-Delete an entry when it stops being true, rather than annotating it: this file is what is true now, and the session log is what happened.
+Delete an entry when it stops being true, rather than annotating it: this file is what is true now for the whole repo, and the journal is what one branch is working out.

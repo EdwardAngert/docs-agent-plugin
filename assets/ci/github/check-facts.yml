@@ -1,6 +1,6 @@
 # Docs Assist reference-registry check.
 #
-# Installed by /docs-assist:setup-hooks (ci). Runs the deterministic
+# Installed by Docs Assist setup (the Hooks and CI stage). Runs the deterministic
 # check-facts detector on every pull request: it verifies that every `fact`
 # entry's source still contains the referenced identifier, and every
 # `pointer` entry's target file and heading anchor still resolve.

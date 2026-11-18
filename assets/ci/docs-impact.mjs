@@ -143,7 +143,7 @@ if (bigAndSilent) signals.push(`**${srcLines} source lines changed with no docs 
 
 let report;
 if (signals.length) {
-  report = `## Docs impact detected\n\n${signals.join('\n\n')}\n\n**Suggested follow-up**: run \`/docs-assist:update ${range}\` in Claude Code to bring the affected docs in line, or note in the PR why no docs change is needed.\n`;
+  report = `## Docs impact detected\n\n${signals.join('\n\n')}\n\n**Suggested follow-up**: ask Claude to bring the docs in line with the changes in \`${range}\`, or note in the PR why no docs change is needed.\n`;
 } else {
   report = '## Docs impact: none detected\n\nNo doc moves, heading changes, documented-term changes, or large silent source changes in this diff.\n';
 }

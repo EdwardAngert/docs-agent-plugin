@@ -1,6 +1,6 @@
 {
   // Docs Assist markdownlint configuration.
-  // Scaffolded by `/docs-assist:setup-lint` from .docs-assist/config.yml.
+  // Scaffolded by Docs Assist setup from .docs-assist/config.yml.
   // Encodes the structural markdown rules. Prose style (em dashes, headings,
   // weasel words) is handled by the Vale DocsAssist style.
   //

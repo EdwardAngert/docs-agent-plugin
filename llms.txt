@@ -21,7 +21,9 @@
 ## Commands
 
 - [/docs-assist:health](commands/health.md): Fast docs health check: a scorecard across coverage, freshness, consistency, and findability, plus the single highest-leverage fix. The recommended first command.
-- [/docs-assist:draft](commands/draft.md): Write a document through the authoring loop. The contributor brings what they know; the plugin handles the writing.
+- [/docs-assist:draft](commands/draft.md): Step one of three: get an expert's knowledge into a high-level draft, with the plugin steering toward what a good doc needs and checking each fact against the code.
+- [/docs-assist:write](commands/write.md): Step two: write the draft up as finished documentation in the project's conventions, adding no facts; anything it needed becomes a question.
+- [/docs-assist:edit](commands/edit.md): Step three: a technical edit that checks every claim against the code and runs every step, then a copy edit. Works on any doc.
 - [/docs-assist:plan](commands/plan.md): Plan a full documentation set: user journeys, content types, priorities, and writing order.
 - [/docs-assist:audit](commands/audit.md): Review existing docs by reconstructing what each one claims and ruling on it. The loop pointed at a finished doc.
 - [/docs-assist:verify](commands/verify.md): Verify a procedural doc by executing its steps in an isolated workspace and reporting where the doc diverges from reality.

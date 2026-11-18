@@ -2,7 +2,7 @@
 name: doc-recon
 description: "Reads a codebase in isolation and returns a compact project map: what the project does, its main features, entry points, likely audiences, and candidate docs. Use to orient a from-scratch documentation effort without reading the whole repo in the main conversation."
 tools: Read, Grep, Glob
-model: inherit
+model: sonnet
 ---
 
 You do documentation reconnaissance.

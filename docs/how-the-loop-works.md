@@ -1,6 +1,6 @@
 ---
 title: "How the authoring loop works"
-description: "The three-reviewer authoring loop behind /docs-assist:draft: what a packet is, why the reviewers run in separate contexts, what a ledger declares, and why the real output is a short list of questions rather than the finished document."
+description: "The three-reviewer authoring loop behind drafting, writing, and editing a doc: what a packet is, why the reviewers run in separate contexts, what a ledger declares, and why the real output is a short list of questions rather than the finished document."
 content-type: concept
 audience: contributors
 keywords:
@@ -13,7 +13,7 @@ keywords:
 
 # How the authoring loop works
 
-When you run `/docs-assist:draft`, the plugin does not write a document and hand it to you.
+When you document something with the plugin, it does not simply write a document and hand it to you.
 It splits the work across three isolated reviewers, each defined by what it produces and what it is forbidden to do, and the thing it hands you first is a list of what it had to guess.
 
 This page explains that mechanism and why it is built this way.
@@ -25,14 +25,15 @@ Reviewer and chair mean the same thing here.
 
 ## What has actually been run
 
-The loop has been run end to end once: the run that produced this page.
-Before that it was exercised twice by hand, in pieces.
-One of those ran against documentation whose steps had already been tested; the other ran against a recipe.
+The original multi-pass loop ran end to end once: the run that produced this page.
+The three steps it now runs as (draft, write, edit) have been run three times, headless, on one small test project.
+Those runs found real errors (a setting nothing reads, a step that nests a directory instead of replacing it), and they also found the gaps the steps were changed to close.
+The rounds of questioning in the write step were added after them and have not run yet.
 
-Most of what follows is therefore design rather than measurement.
+Most of what follows is therefore design checked against a few runs, not measurement.
 The shape of the mechanism is real and it is in the repository.
-Its runtime behavior, including whether runs converge as quickly as the design expects and what a document actually costs to produce, is predicted and not yet observed.
-The [self-assessment in the README](../README.md#what-would-improve-it-most) is the set's standing record of that gap, and this page sits on the same side of it.
+How it behaves on a real project, with a real expert, and what a document costs to produce there, is not yet observed.
+The newest [Known limits in the changelog](../CHANGELOG.md#known-limits) are the set's standing record of that gap, and this page sits on the same side of it.
 
 ## The three chairs
 
@@ -89,7 +90,7 @@ A context that produced the packet knows things it never wrote down, and it cann
 
 Every artifact is a file, and the main conversation passes paths rather than contents.
 That keeps the conversation's context flat no matter how large the document gets, and it makes a run resumable and every intermediate step inspectable after the session ends.
-The working artifacts live under `.docs-assist/loop/`, alongside the plugin's other [bookkeeping](set-up-documentation-standards-for-your-team.md#customize-for-your-team).
+The working artifacts live under `.docs-assist/loop/`, in a directory git ignores, so none of them reaches your repository.
 
 ## The packet
 
@@ -113,6 +114,14 @@ Two rows carry most of the weight:
 The packet is also designed to be filled in by a person.
 A packet a human wrote and a packet the authority chair emitted are the same artifact, and nothing downstream can tell them apart.
 `/docs-assist:draft` is the loop with you seated in the authority chair.
+
+That is the first of three steps a new doc goes through, each its own command:
+
+1. **Draft** (`/docs-assist:draft`): you fill the packet by talking, and the plugin steers you toward the rows that never fill themselves, such as limits and failure modes.
+1. **Write** (`/docs-assist:write`): the continuity and advocate chairs turn the packet into a document, and a cold reader reads it before you do.
+1. **Edit** (`/docs-assist:edit`): every claim is checked against the code and every step is run, then the wording gets a copy edit.
+
+They are separate for the reason the chairs are: the step that interviews you never shapes the doc, the step that writes never decides what is true, and the step that edits trusts nothing it has not checked or run.
 
 ## The ledger
 
@@ -188,7 +197,7 @@ An uncited correction is not applied and becomes a question for you instead, bec
 ## What you actually review
 
 The finished document is a by-product.
-The stated deliverable is `questions.md`: a short list of what genuinely needs a person, with the context attached.
+The stated deliverable is a short list of questions: what genuinely needs a person, with the context attached.
 
 That choice is about your attention, not about the writing.
 Four questions with context is a ten-minute task an expert will finish.
@@ -197,41 +206,71 @@ A full draft review is a task that sits in a tab.
 This is the same division of labor the contributor guide describes when it says to [review for accuracy, not style](write-docs-with-docs-assist.md#review-for-accuracy-not-style).
 The loop is what makes that division mechanical instead of aspirational: the questions reaching you are the ones the chairs could not settle between them.
 
-## Passes, and when the loop stops
+## How the three steps use the chairs
 
-A pass is one round of the authority and advocate chairs.
-Continuity is not on that cycle: it runs at pass 0 and again when you prepare to merge.
-Each chair loads its shared rules, its own contract, and one rulebook for the current pass.
+Each step seats the chairs differently, and each hands the next one a file rather than a memory of the conversation.
 
-The pass number selects the rulebook, and that is the entire implementation of escalation.
-Nothing about tone changes between passes.
+```mermaid
+flowchart TD
+  subgraph draft["Draft: with you"]
+    you["You say what you know"] --> steer["The plugin checks it against the code<br/>and asks for what's missing"]
+  end
+  subgraph write["Write: the writer sees only the packet"]
+    continuity["Continuity chair<br/>matches values and names to the set"] --> advocate["Advocate chair<br/>writes the doc and the ledger"]
+    advocate --> review["Authority chair<br/>questions what the writer added"]
+    review --> check{"Anything<br/>raised?"}
+    check -->|"yes"| revise["Advocate chair<br/>revises, lists anything new"]
+    revise -->|"next round,<br/>lower threshold"| review
+    check -->|"a round undoes the last one"| you2["Judgment call goes to you"]
+    check -->|"nothing, or round three"| cold["Cold reader<br/>reads it with no context"]
+    cold --> fix["Advocate chair<br/>fixes what the reader tripped on"]
+  end
+  subgraph edit["Edit: trusts nothing it hasn't checked"]
+    trace["Every claim<br/>re-read against the code"] --> run["Every step run<br/>in a scratch workspace"]
+    run --> copy["Copy edit"]
+  end
+  steer -->|"the packet"| continuity
+  fix -->|"the doc, placed in your project"| trace
+  copy --> questions["Fixes made, and a short list<br/>of questions for you"]
+  questions -->|"your answers"| recheck["Re-check only what<br/>the answers touched"]
+```
+
+1. **Draft.** You sit in the authority chair.
+   The plugin interviews, checks what you say against the code as it comes up, and asks for the rows that never fill themselves, such as limits and failure modes.
+1. **Write.** The continuity chair reconciles the packet with the rest of the set.
+   The advocate chair, which receives the packet and the substitutions and nothing else, writes the document and its ledger.
+   Then the two adversarial chairs go back and forth: the authority chair questions what the writer added, and the writer revises, until the authority chair is satisfied.
+   A cold reader then reads the result in order, with no context, and the advocate chair fixes what it tripped on, or says why not, in one more pass.
+1. **Edit.** Every claim is re-read against the code as it stands, including the ones the draft step and the questioning already settled, and every step is run in a scratch workspace, one section at a time.
+   The copy edit comes last, because polishing a sentence the technical edit then rewrites wastes the work.
+
+### Rounds, and when the questioning stops
+
+A round is one review by the authority chair and one revision by the advocate chair.
+Each chair loads its shared rules, its own contract, and one rulebook for the current round, and each round's rulebook lowers the threshold for what is worth raising: first what is wrong, then what the doc takes for granted, then what is true but misleading.
+Nothing about tone changes between rounds.
 Telling a model to be grouchier was proposed and rejected: a model told to be grouchy writes grouchy prose, it does not read more carefully.
-Selecting a stricter rulebook produces finer findings instead, and it caps the cost of each spawn, because a pass-1 run never loads the pass-3 rules.
 
-The loop ends on whichever of these comes first:
+The questioning ends on whichever of these comes first:
 
-1. **An empty pass.** A pass that produces nothing at or above its threshold is a successful pass and ends the run.
+1. **A round that raises nothing.** That is the normal end, and a successful one.
    No minimum finding count, no target, and no quota apply, and a finding that exists only because someone was looking for it is not a finding.
    One bad finding costs more trust than silence, because a reader who gets one starts discounting the good ones.
-1. **An oscillation.** A pass that reverses the previous pass's change stops the run immediately.
-   A reversal is not a defect in the loop.
-   It has located a judgment call neither chair can settle, which is precisely where your scarce attention belongs.
-1. **The pass cap.** Three by default, four at maximum, and the fourth is off.
+1. **A round that undoes the last one.** It stops the questioning immediately.
+   A reversal is not a defect.
+   It has found a judgment call neither chair can settle, which is precisely where your scarce attention belongs.
+1. **The third round.**
 
-More passes do not produce a better document.
-In the one by-hand run against documentation whose steps had already been tested, pass 1 found nothing, and that null result was read as the validating signal rather than as a wasted pass.
-
-Shape is decided twice, at pass 0 and again at pass 1, and it is the only thing decided twice.
-The first round of correctness verdicts can invalidate the original shape call, because a correction that removes half a procedure changes what the document should have been.
+More rounds do not produce a better document.
+In one by-hand run against documentation whose steps had already been tested, the first review found nothing, and that null result was read as the validating signal rather than as a wasted round.
 
 ## Casting
 
-Before the first pass, the document is cast on two axes: where the truth lives, and what the reader needs.
+Before the write-up, the document is cast on two axes: where the truth lives, and what the reader needs.
 The cast selects which packet schema is loaded and which persona the chairs are briefed with, and nothing else.
 The contracts do not change with the cast, and the casting matrix is not a content-type taxonomy: [content types](../skills/docs-assist/reference/content-types.md) are a separate thing, and the advocate chair owns the choice.
 
-Exactly one re-cast is allowed per document.
-The pass counter resets and the authority chair re-emits the packet in the new shape.
+Exactly one re-cast is allowed per document, and it sends the packet back to be filled again in the new shape.
 A second re-cast request goes to you.
 
 Material that needs two casts is two documents.
@@ -239,18 +278,18 @@ That rule replaced a heuristic about size and story count, because it is falsifi
 
 ## What the loop is not
 
-1. **Not a review step applied to a finished document.** Pass 0 is production.
-   The loop writes the document.
+1. **Not only a review of a finished document.** The write step produces the document.
+   The edit step is where review happens, and it works the same way on a doc you already have.
 1. **Not a prose polisher bolted on at the end.** The advocate chair owns the content type and the information architecture from the start.
 1. **Not a linter.** Everything a script can decide runs before any chair and briefs it.
    The chairs are spent on what a script cannot decide.
 1. **Not a way to remove you from documentation.** The output is a question list.
-   The packet is built to be human-fillable, and `/docs-assist:draft` is the loop with a person in the authority chair.
-1. **Not free.** Three passes at two or three chairs each is up to nine subagent runs for one document.
+   The packet is built to be human-fillable, and the draft step is the loop with a person in the authority chair.
+1. **Not free.** A new doc takes about seven subagent runs across the write and edit steps with one round of questioning, two more for each further round, and one step run per section of a procedure.
    Cost is the design's main practical objection to itself, and it is not settled.
 
-Two things sit outside the pass sequence.
-[`/docs-assist:merge-prep`](command-reference.md#docs-assistmerge-prep) is a separately invoked gate over the whole set rather than a step in any document's run, and the continuity chair runs at pass 0 and again there rather than on every pass.
+Two things sit outside the three steps.
+[`/docs-assist:merge-prep`](command-reference.md#docs-assistmerge-prep) is a separately invoked gate over the whole set rather than a step in any document's run, and the continuity chair runs in the write step and again there.
 `/docs-assist:audit` is the same mechanism pointed at an existing document instead of a new one.
 
 ## Related reading

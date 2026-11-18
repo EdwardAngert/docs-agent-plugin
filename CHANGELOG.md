@@ -5,7 +5,128 @@ The format is based on Keep a Changelog, and the project follows Semantic Versio
 
 ## Unreleased
 
-Found while dogfooding 0.9.10 against `edwardangert.github.io`, reported back live from a session testing that branch.
+A new doc now goes through three separate steps (draft, write, edit), nothing the plugin works with reaches your repository unless you ask, the plugin keeps notes the way a writer does beside an expert, it notices some documentation problems on its own, and it has a way to measure whether it helps.
+
+### A new doc takes three steps: draft, write, edit
+
+Drafting used to run as one conversation: the same pass interviewed the expert, chose the structure, wrote the prose, reviewed its own work, and offered at the very end to run the steps.
+It is now three steps, each its own command with its own job, and each offers the next in plain words when it finishes.
+
+- **Draft** (`/docs-assist:draft`, rewritten) gets what an expert knows into a high-level draft: the facts in order, each checked against the code or marked as resting on the expert's word.
+  It steers: it knows what a how-to, a troubleshooting entry, a concept, or a tutorial needs, and asks for what the expert hasn't said, always including limits and who the doc is for.
+  It no longer shapes or writes prose, which `SKILL.md` already said the interviewer must not do.
+- **Write** (`/docs-assist:write`, new) turns the draft into documentation in the project's conventions, through the `chair-advocate` subagent, which sees only the draft.
+  It adds no facts; what it needed becomes a question.
+  A cold read follows before anyone else sees it, and the doc is placed with frontmatter, an `llms.txt` entry, and links from related pages.
+- **Edit** (`/docs-assist:edit`, new) is a technical edit, then a copy edit.
+  Every claim is checked against the code, including those the draft step checked; every step is run, with the project's own tool when it has one; what the evidence settles is fixed, and the rest becomes a short list of questions with the evidence attached.
+  A claim the expert made is never overruled, only asked about.
+  It works on any doc, and tells you it runs clean only when every runnable step passed.
+- **Progress while steps run.**
+  Running a procedure now says what will and won't run before it starts, runs one section at a time, and reports after each, instead of going quiet until the end.
+  `reference/running-steps.md` holds this for both the edit step and verify, which no longer keeps its own copy of the engine detection.
+- **Steps run as written.**
+  `doc-verifier` runs each command exactly as the doc gives it, and a command that only works after a change (a tool called by a different path, a different directory) is reported as a missing prerequisite, not quietly worked around.
+  Setup the doc didn't ask for is reported too.
+  A doc runs clean only when every step ran and passed, apart from steps skipped for safety, which are named; a step the doc gives nothing to run means it doesn't.
+  A trial run caught each of these going wrong.
+- **`check-claims.mjs` no longer flags operating-system variables** such as `PATH` and `HOME` as missing from the repository: a doc naming one is about the reader's environment.
+  The trial's edit step had to explain the false alarm away each time.
+- The draft is the one source while it's being written; once the write step places the doc, the doc is.
+  At that point the write step moves the draft's open questions, and which claims rest on whose word, into the journal, so nothing is kept in two places.
+- The steps read each other's files rather than a conversation, so they can run in one sitting, across days, or by different people: an expert drafts, a teammate writes it up and edits it.
+  With nobody to ask, the code fills the draft and the three run back to back.
+- **The writer is questioned until it holds up.**
+  In the write step, the authority chair questions everything the write-up added that the draft didn't say, in its own context, and the writer revises, for up to three rounds with a lower threshold each time.
+  It stops when a round raises nothing, or hands you the call when a round undoes the last one.
+  The first version of the three steps had dropped these rounds, leaving their rulebooks unused; the edit step still re-checks every claim from the code afterward.
+  `docs/how-the-loop-works.md` and the README show the new flow.
+
+### The plugin notices things nobody asked about
+
+- **In-session notices ship with the plugin, on by default.**
+  After Claude edits a file, a hook checks it with no model and no tokens: broken links and anchors in an edited markdown file, links elsewhere that pointed at a heading the edit removed, and which docs name an edited source file by path.
+  On the next prompt, a second hook re-checks the broken links it found, drops any already fixed, and passes the rest to Claude once, with instructions to raise it only when it bears on the current task and never as a command to run.
+  It says nothing most of the time, skips files git ignores, and turns off with `notices: false` in `.docs-assist/config.yml` or `DOCS_ASSIST_NOTICES=0`.
+  This builds the proactive layer `triggering.md` described and 0.9.10 listed as not yet built.
+  Hooks that setup writes into a project stay off until accepted, one at a time.
+- **No report, notice, or offer tells you to run a command.**
+  The decay, docs-impact, and example-continuity reports, the pre-commit hook, the audit and health report templates, and every offer the workflows make now describe the next step in plain words.
+  Commands still work for anyone who wants a shortcut, and the docs say so.
+  The new eval suite caught the audit template: a run told the reader to set up linting with a slash command.
+  The shipped config, linter, and workflow templates also named `setup-lint` and `setup-hooks`, and `example-continuity.mjs`'s report named `init`: three commands that no longer exist.
+
+### A markdown reference for your site
+
+For a project with a site (a site generator, MDX, or custom components), the plugin offers once, at setup or the first time it works there, to write down how the docs handle images, links, callouts, list items, indentation, and custom components.
+Where the docs do one thing more than one way, it lists each with its count and recommends one as the standard, weighing what the site renders, what reads well raw, what most pages already use, and what a reader needs.
+It goes in `.docs-assist/style.md`, which every writing and editing step already reads, and which stays out of git unless you share your rules.
+It changes no existing page unless you ask.
+
+- **`assets/ci/markdown-patterns.mjs`**, new: a dependency-free survey of the tracked docs that counts every form of each, skips code blocks, inventories components by name, and flags images with no alt text.
+  It counts and never chooses; the recommendation is made with you.
+
+### Nothing reaches your repository unless you ask
+
+The plugin delivers documentation and otherwise stays out of the repository.
+
+- **Working material stays out of git.**
+  The journal, drafts and the files around them, plans, reports, intake material, and claim-check output live in directories under `.docs-assist/` that each hold a `.gitignore` of `*`, so `git status` stays clean and your own `.gitignore` never changes.
+  The plugin's edit hook adds those files the moment anything is written there, even with notices off, and `check-claims.mjs` hides its own output the same way.
+  Earlier guidance to commit reports, intake material, or claim output for a shared record is gone.
+- **Your rules stay on your machine unless you share them.**
+  Setup asks whether `config.yml`, `style.md`, `reference.yml`, and the personas are for you or for the team, and keeps them out of git by default with a `.docs-assist/.gitignore`; sharing removes that one file, and committing stays yours to do.
+  A project that already tracks its rules is left as it is.
+- **Plans are working material too**: the plan goes to `.docs-assist/plan/`, not `docs/plan.md`, unless you ask for it in the repository.
+- **Drafts are cleared once their doc is done.**
+  Once a doc is placed, it is the source, and the draft behind it goes stale as the edit corrects the doc; merge-prep now offers to clear those drafts, and the edit step stops reading a draft once the doc has been edited.
+- **The draft is saved as you go, without asking.**
+  It was an offer before, so a session that ended early could lose the one thing the expert came for.
+- **Merge-prep flags plugin material headed into a commit**: a tracked or staged draft, report, journal, or claim output, usually from an older version, with an offer to stop tracking it and leave the file on disk.
+- **Steps skipped for safety no longer stop a doc running clean.**
+  A trial's edit called a doc not clean because two `sudo systemctl` steps were skipped by design; the rule always allowed them, and the edit step now says so in the summary itself ("Runs clean; the two `sudo systemctl` steps weren't run, by design.").
+- **The edit step's notes keep only what someone needs later**: a wrong claim and the code that settled it, a failed step, a question.
+  A trial's notes had kept every round and every claim that matched.
+- **The plugin's own words stay out of what you read.**
+  The edit step rereads its closing summary for words like "packet" before sending it; a trial's summary had said "packet."
+- **Audits keep optional improvements out of "What to do first".**
+  That section holds only what a reader trips over, or says nothing is urgent; optional improvements wait behind one question at the end, saying how many there are and of what kind.
+  The healthy-set eval had scored worse with the plugin because the audit listed optional ideas as fixes to make first.
+- **Long workflows show a task list** when the session has a task tool: one task per part (a round of questions, a section's steps, a slice of an audit), checked off as it goes, alongside the one-line updates.
+- **Only patterns your project already uses.**
+  The plugin writes no frontmatter field, component, or format your docs don't already use; it offers to establish one as a standard for the set instead.
+  Merge-prep's freshness offer follows the same rule: it keeps your project's own freshness marker current, or offers to set one up for the whole set, never for one page.
+- **No notes in your docs.**
+  The plugin no longer writes `last-verified`, `sme-attested`, or `template` into frontmatter, and writes only the frontmatter fields your docs already use.
+  The `<!-- docs-assist:not-a-claim -->` and `<!-- docs-assist:no-verify -->` markers still work, and are yours to place; the plugin never adds one.
+  A template attribution line is added only when you set `attribution` in `templates.yml`, which is now empty by default: the default source is MIT-0 and requires none.
+- **`.docs-assist/state/docs.yml` is gone**, with its template.
+  What it held, verification dates and claims resting on someone's word, is now said to you and kept in the journal.
+- **The decay check reads verification only where your project records it**, through `verified_body_pattern`.
+  It no longer reads `last-verified` frontmatter or the state file, and a project that records no verification gets no verification term in its scores rather than every doc called never verified.
+
+If you upgrade from 0.9.10 with a committed `.docs-assist/state/docs.yml` or `last-verified` fields, nothing breaks: the plugin ignores both, and removing them is up to you.
+
+### Notes kept the way a writer keeps them
+
+- **A journal per branch, as a scratch pad.**
+  While Claude works on docs, the plugin keeps notes in `.docs-assist/journal/<branch>.md`: what people said that the code can't settle, the questions and their answers, the decisions and why, where people, docs, and code disagreed and how it settled, and what ran.
+  Plain notes under a heading per doc, not typed entries: a correction replaces what it corrects, an answered question stops reading as open, and nothing the draft or the doc already says is copied in.
+  People are recorded by role, never by name.
+  Every step reads the notes when it starts, so they carry what one session learned to the next, and from one person to the next.
+  `journal: false` or `DOCS_ASSIST_JOURNAL=0` turns it off.
+- **Disagreements settle by what is true now.**
+  The notes are memory, not evidence: the code, read now, settles what the software does, and a person settles intent, practice, and anything outside the repository.
+  When someone says something that contradicts a note or the code, the plugin checks the code again or asks once with both versions, then rewrites the note, rather than going with whatever was written down first.
+  A value in the code that nothing reads settles nothing, and the plugin asks what actually enforces the behavior.
+- **The pull request description comes from the notes.**
+  When a branch is ready for review, the plugin offers to write the description from them, with a collapsible section per doc as a second option.
+  Every claim it presents as verified is checked against the code again first, because a note records what was true when it was written.
+  The description leaves out the journal itself, command names, anything under `.docs-assist/`, and docs outside the diff, and is shown in full before anything is posted.
+- **The session log is gone.**
+  `reference/session-log.md` described an opt-in narrative log; the journal replaces it.
+
+### Found while dogfooding 0.9.10 against `edwardangert.github.io`
 
 - **`check-claims.mjs` false positives on deliberately non-resolving paths.**
   A removed script cited as history, a placeholder illustrating a naming convention, and a real path in a sibling repo this checkout cannot see all read identically to real drift.
@@ -14,10 +135,39 @@ Found while dogfooding 0.9.10 against `edwardangert.github.io`, reported back li
 - **`docs-decay.mjs`'s "never verified" ignored a project's own verification record when it wasn't frontmatter.**
   A site rendering verification as a component (`<Verified date="..." method="...">`) got every verified doc flagged as never verified anyway.
   Added `verified_body_pattern` in `.docs-assist/config.yml`: a project-declared regex, not a plugin-guessed one, per the existing rule that a project's established schema gets extended rather than fought.
+  It reads single-quoted, double-quoted, and bare values with a trailing comment alike, and the report says so when a pattern is invalid, has no capture group, or matches no doc, rather than falling back to calling every doc unverified.
   See `frontmatter-spec.md`.
-- Two dangling anchors left by the 0.9.10 README rewrite, and a stale self-assessment section removed from the README.
-  It duplicated `CHANGELOG.md`'s own Known limits and had gone stale.
-  Found by `/docs-assist:health`.
+- **Three dangling anchors from the 0.9.10 README rewrite.**
+  The rewrite dropped headings other pages linked to, and the first fix for two of them deleted a third heading that `docs/how-the-loop-works.md` still pointed at.
+  The README's self-assessment section is gone: it had gone stale, claiming the chairs were not registered as subagent types.
+  One of its points, that every finding is over-fit to one site, appeared nowhere else, and now sits under Known limits below.
+
+### Repository and CI
+
+- **An eval suite, in `evals/`, run with `claude plugin eval`.**
+  Nine cases, each run with and without the plugin: a healthy set an audit should call healthy, a doc written from code, a pull request description, docs brought in line with a code change, a vague request answered in plain words, a code-only fix where the plugin should stay out of the way, and three for the journal: a pull request description written from notes that went out of date when the code changed, the same with a section per doc, and an ordinary update that should leave a correction in the notes, outside git.
+  It is tracked now rather than parked; results stay gitignored.
+  CONTRIBUTING.md says how to run it and what it costs.
+- **`scripts/test.mjs`, regression tests for the scripts and hooks that run without a model**, in CI.
+  Writing them found a bug before it shipped: on macOS, the notice hook resolved a project opened through a symlinked path as outside the repository and stayed silent.
+- **`validate.mjs` checks relative links and anchors** across tracked markdown, with the same resolver the notice hook uses, and fails when a config key a shipped script reads is missing from the config template or from `config-resolution.md`.
+  The second check found `bundle` and `verified_body_pattern` undocumented in both.
+- **Four subagents run on Sonnet** rather than inheriting the session's model: `doc-intake`, `doc-recon`, `doc-harvester`, and `doc-updater`, whose work is reading, inventorying, and applying a described change.
+  The chairs, `cold-reader`, and `doc-verifier` still inherit, because their value is judgment.
+
+### Known limits
+
+- The three steps have run three times, headless, on one small test project; never on a real project with a real expert.
+  The write step's rounds of questioning were added after those runs and have not run yet.
+  Cost and false-positive rates are unmeasured.
+- Every finding to date is over-fit to one site: `edwardangert.github.io` (Astro, Starlight, one subject) is the only real consumer of this plugin on record.
+- Of the six eval cases that predate the journal, none shows the plugin ahead of plain Claude Code: five score the same with and without it, so they guard against regressions without showing what the plugin adds.
+  The two pull request cases do show it ahead, in one pilot run each: without the plugin, Claude found the journal file on its own and used it well, but described a doc the branch does not change, and did not build a section per doc when asked.
+  The healthy-set case scores worse with the plugin: the audit calls the set healthy, then lists optional improvements as fixes to make first.
+  Every case has run one or two passes per arm, below the suite's own three-run floor.
+- On macOS, `git` does not run inside the eval sandbox, so eval runs there exercise the plugin without its git-based checks.
+- The Sonnet split for four subagents is a judgment about their work, not yet a measured result.
+- No coverage for docstrings and in-source reference, commit message bodies, or architecture decision records.
 
 ## 0.9.10 - 2026-09-16
 

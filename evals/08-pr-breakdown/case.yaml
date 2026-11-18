@@ -1,0 +1,16 @@
+schema_version: "1.0"
+name: 08-pr-breakdown
+description: >
+  The same branch and notes as 07, with a section per doc asked for. Tests
+  that each doc the branch changes gets its own collapsible section built
+  from what was checked, and that no section appears for a doc outside the
+  diff.
+tags: [fire, writing-task, journal]
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: |
+    Write the PR description for this branch, with a section for each doc that shows what was checked, and save it as PR_BODY.md.
+  max_turns: 30
+  timeout_seconds: 600
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Write, Edit, Bash]

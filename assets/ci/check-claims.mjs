@@ -68,6 +68,11 @@ function mdFiles(dir) {
 const DOCS_DIR = docsDir();
 const OUT_DIR = process.argv[3] || process.env.CHECK_CLAIMS_OUT || '.docs-assist/claims';
 mkdirSync(OUT_DIR, { recursive: true });
+// Its output is working material, never something to commit: a `.gitignore`
+// of `*` hides the directory, and itself, from git.
+if (!existsSync(`${OUT_DIR}/.gitignore`)) {
+  try { writeFileSync(`${OUT_DIR}/.gitignore`, '*\n'); } catch { /* read-only checkout */ }
+}
 
 const docs = mdFiles(DOCS_DIR);
 for (const extra of ['README.md', 'AGENTS.md', 'CLAUDE.md', 'llms.txt']) {
@@ -265,8 +270,18 @@ function checkCliFlag(matched) {
   return ['missing', `${flag} not found as a literal or as parameter/field '${param}'`];
 }
 
+// Variables the operating system or shell defines. A doc naming one is
+// talking about the reader's environment, not this repository, so a repo
+// with no mention of it is not drift.
+const SYSTEM_VARS = new Set([
+  'PATH', 'HOME', 'USER', 'SHELL', 'PWD', 'TMPDIR', 'TEMP', 'TMP', 'LANG', 'TERM',
+  'EDITOR', 'VISUAL', 'PAGER', 'XDG_CONFIG_HOME', 'XDG_DATA_HOME', 'XDG_CACHE_HOME',
+  'HTTP_PROXY', 'HTTPS_PROXY', 'NO_PROXY', 'CI', 'APPDATA', 'USERPROFILE', 'LOCALAPPDATA',
+]);
+
 function checkConfigKey(matched) {
   const key = matched.replace(/`/g, '').split(':')[0].trim();
+  if (SYSTEM_VARS.has(key)) return ['confirmed', `'${key}' is an operating-system variable, not a repository key`];
   const hits = gitGrepHits(key);
   if (hits.length) return ['confirmed', `'${key}' found: ${hits[0]}`];
   // SCREAMING_SNAKE backtick tokens are also used as doc-only placeholders

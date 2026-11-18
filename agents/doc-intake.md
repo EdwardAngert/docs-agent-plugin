@@ -2,7 +2,7 @@
 name: doc-intake
 description: "Reads a pile of raw source material (docs, tickets, notes, code) in isolation and returns a compact content inventory. Use to fan out corpus intake over many files without loading the raw pile into the main conversation."
 tools: Read, Grep, Glob
-model: inherit
+model: sonnet
 ---
 
 You do documentation intake.

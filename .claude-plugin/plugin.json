@@ -13,6 +13,8 @@
   "commands": [
     "./commands/health.md",
     "./commands/draft.md",
+    "./commands/write.md",
+    "./commands/edit.md",
     "./commands/plan.md",
     "./commands/audit.md",
     "./commands/verify.md",

@@ -1,14 +1,14 @@
 # Docs Assist docs-impact check.
 #
-# Installed by /docs-assist:setup-hooks (ci). Runs the deterministic
+# Installed by Docs Assist setup (the Hooks and CI stage). Runs the deterministic
 # docs-impact detector on every pull request: it classifies the diff against
 # the change types that ripple into documentation (moved docs, changed
 # headings, changed code terms the docs mention, large silent source changes)
 # and writes the result to the job summary.
 #
 # Cheap by design: no agent, no network calls beyond GitHub itself, no
-# tokens. It tells reviewers when to run /docs-assist:update; it does not
-# run it. Set DOCS_IMPACT_STRICT: "1" to fail the check instead of only
+# tokens. It tells reviewers when the docs need updating; it does not
+# update them. Set DOCS_IMPACT_STRICT: "1" to fail the check instead of only
 # reporting.
 #
 # The result is posted as a single sticky PR comment, updated in place on

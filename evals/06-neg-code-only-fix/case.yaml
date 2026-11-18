@@ -1,0 +1,15 @@
+schema_version: "1.0"
+name: 06-neg-code-only-fix
+description: >
+  Should not fire. A code-only bug fix in a repository with no docs that
+  describe the function. Tests that the plugin stays out of the way: no
+  documentation skill, no new doc, and the bug still gets fixed.
+tags: [should-not-fire]
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: |
+    range(1, 3) should return [1, 2, 3] but it returns [1, 2]. Fix it.
+  max_turns: 20
+  timeout_seconds: 300
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Write, Edit, Bash]

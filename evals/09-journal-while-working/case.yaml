@@ -1,0 +1,15 @@
+schema_version: "1.0"
+name: 09-journal-while-working
+description: >
+  An ordinary docs update with no mention of notes or a pull request. Tests
+  that the plugin keeps the branch's notes as it works: the correction it
+  made, old value and new, in a file git ignores.
+tags: [fire, journal]
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: |
+    I raised the default timeout in src/client.js. Update the docs to match.
+  max_turns: 30
+  timeout_seconds: 600
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Write, Edit, Bash]

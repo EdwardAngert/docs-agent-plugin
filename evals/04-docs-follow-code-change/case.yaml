@@ -1,0 +1,17 @@
+schema_version: "1.0"
+name: 04-docs-follow-code-change
+description: >
+  The last commit changed a default that three docs state. The contributor
+  asks only whether anything else is out of date. Tests that every doc
+  stating the old value gets corrected, including the one that states it in
+  different words, and that unrelated values are left alone.
+tags: [fire, update, drift]
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: |
+    I bumped the client's default timeout in my last commit. Is anything
+    else out of date because of that? If so, fix it.
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Write, Edit, Bash]

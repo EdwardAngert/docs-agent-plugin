@@ -13,7 +13,7 @@ It is not; it just did the cheaper half.
 Not every backtick-fenced path in prose is a claim about this repository's current state.
 A removed script cited as "recoverable from git history," a placeholder illustrating a naming convention, a real path in a sibling repo this checkout cannot see: `check-claims.mjs` cannot tell any of these apart from real drift by pattern alone, and guessing from nearby words is a false-negative machine waiting to hide a real regression behind a word like "removed."
 
-Mark it explicitly instead, immediately after the claim, same line:
+An author who wants the checker to skip one can mark it, immediately after the claim, same line:
 
 ```markdown
 The old build script `scripts/build-onepagers.mjs`<!-- docs-assist:not-a-claim --> is gone;
@@ -21,6 +21,8 @@ see PR #56 for why.
 ```
 
 Same family as `doc-verifier`'s `<!-- docs-assist:no-verify -->` fenced-block opt-out (`agents/doc-verifier.md`): the author states the exception once, explicitly, rather than the checker inferring it.
+Both markers are the author's to place.
+The plugin never adds one on its own: a false positive is explained in the report and the journal, not suppressed with a comment in the doc.
 
 ## The plugin's own artifacts are never evidence
 
@@ -36,13 +38,10 @@ Resolve a claim by searching those and it confirms itself, the check reports zer
 This happened here.
 Committing `.docs-assist/claims/` took `check-claims.mjs` from 20 findings to 0 between two runs with nothing fixed in between.
 
-**Whether a project tracks these artifacts is its own call.** Committing them gives a team a shared record so the same claim is not re-litigated by the next contributor; gitignoring them keeps the working tree quiet.
-Both are fine, and the checks must be immune either way.
+The plugin's working material is never committed unasked, and git ignores it (see "Nothing is committed unasked" in `journal.md`), but a project can still choose to commit some, so the checks must be immune either way.
 
-What is worth tracking is not the raw output but the resolutions.
-A claim that needed judgment and got settled becomes a `fact` entry in `.docs-assist/reference.yml`, with a `source` so it stays re-checkable, or an attested-claim entry in `.docs-assist/state/docs.yml` when nothing can source it.
-Those are small, hand-editable, and survive a merge.
-The JSON is a cache, and a cache in version control is diff noise that nobody can resolve by hand.
+What is worth keeping is not the raw output but the resolutions, and those go in the branch's journal.
+A settled fact the team wants every later doc to reuse can become a `fact` entry in `.docs-assist/reference.yml`, with a `source` so it stays re-checkable, on the contributor's yes: that file is the team's, and the plugin adds to it only when asked.
 
 ## What counts as a claim
 

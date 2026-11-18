@@ -50,7 +50,7 @@ Three legitimate values:
 The type carries weight.
 In a software procedure an uncitable claim is a warning sign worth investigating.
 In a craft domain, or any procedure about something the project does not vendor, SME experience is the normal case and not a defect.
-Claims marked SME experience route to the attested-claims ledger in `.docs-assist/state/docs.yml`.
+Claims marked SME experience are named in the branch's journal once the doc is written up, so a reviewer knows which claims rest on whose word.
 
 ### Limits
 

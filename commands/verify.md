@@ -24,24 +24,9 @@ If omitted, survey the docs set and propose the procedural docs worth verifying,
 - Tell the user what will run and what will not before running anything: the verifier executes workspace-scoped commands only, and steps needing credentials, privilege escalation, or real services are reported as `unverified`, never run.
   If the doc set's procedures are mostly in that category, say so up front so the user can calibrate expectations.
 
-### 1.5. Choose the execution engine
+### 1.5. Choose the engine and prepare the workspace
 
-`.docs-assist/config.yml`'s `verify.tool` can force `doc-detective`, `docs-assist`, or the default `auto`.
-On `auto` (or when the key is absent), detect [Doc Detective](https://docs.doc-detective.com/) before falling back:
-
-- Look for `.doc-detective.json` / `doc-detective.config.json` at the repo root, a `doc-detective` entry in `package.json`'s dependencies, or `doc-detective` resolving on `PATH` (`doc-detective --version`) or via `npx doc-detective --version`.
-- If found and `verify.tool` isn't set to `docs-assist`, default to it: it is a purpose-built execution engine for exactly this job, including link validation as part of the same run rather than a separate pass.
-  Point it at the doc or docs in scope, translate its per-step results into this command's classification vocabulary (`pass`, `divergence`, `fail`, `blocked`, `unverified`, `skipped`), and continue through steps 3 to 5 the same way regardless of engine, so the report, the journey handling, and the `last-verified` bump behave identically to a `doc-verifier` run.
-  Doc Detective can also drive browser and HTTP steps beyond what `doc-verifier` attempts; say so as part of the "what will run" framing in step 1, since it broadens what "workspace-scoped" means.
-- If not found, or `verify.tool: docs-assist` is set, use the `doc-verifier` subagent as described below.
-  Don't ask the user to install Doc Detective; it's a nice-to-have, not a requirement, and `doc-verifier` covers the same core job without it.
-
-### 2. Prepare the workspace
-
-- Create a scratch directory outside the repo working tree for each doc's run, so a verification can never dirty the user's checkout.
-  A temp directory is right; the repo itself is not, unless the doc's procedure is explicitly about operating on this repo, and then work on a disposable copy.
-- Note the environment honestly in the report: OS, tool versions the doc's steps depend on.
-  A step that fails here but works on the doc's assumed platform is a platform-assumption finding, not necessarily a broken doc.
+Per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/running-steps.md`, which this workflow shares with the edit step: the project's existing tool (Doc Detective, when detected) before `doc-verifier`, a scratch workspace outside the working tree, and the environment noted for the report.
 
 ### 3. Run the verifier
 
@@ -49,9 +34,9 @@ First decide whether the target is independent docs or a journey (see "Verify a 
 This decision changes the workspace boundary, not just the run.
 
 If step 1.5 chose Doc Detective, run it against the scoped doc or docs with the workspace as its working directory instead of launching `doc-verifier`, then skip to step 4 with its translated results.
-Otherwise:
+Otherwise, run each doc in chunks with a progress line after each, per "Show progress while it runs" in `running-steps.md`:
 
-- **One doc**: launch the `doc-verifier` subagent with the doc path and the workspace path.
+- **One doc**: launch the `doc-verifier` subagent with the doc path, the workspace path, and the chunk of steps to run.
 - **Independent docs** (unrelated procedures that happen to be verified in the same pass): fan out, one `doc-verifier` per doc, each with its own workspace, in parallel.
 - **A journey** (docs meant to compose into one outcome): one `doc-verifier` call, given the ordered doc list and a single shared workspace.
   Never fan a journey out into independent workspaces; that proves each doc works alone, which is not the claim a journey makes.
@@ -79,16 +64,17 @@ Present one prioritized result across the set:
 - **Missing prerequisites** the verifier had to supply: the assumption gap, made concrete.
   Usually the fix is a sentence in the doc's prerequisites section, and it's cheap.
 - **Unverified steps**, with reasons, so nobody mistakes a partial pass for a full one.
-- Offer to fix what the run proved wrong, through the normal drafting flow: update the command, the documented output, or the prerequisites to match reality.
+- Offer to fix what the run proved wrong, through the edit step (`commands/edit.md`), which re-runs what the fix touches: update the command, the documented output, or the prerequisites to match reality.
   When the code is what's wrong (the doc describes intended behavior the code no longer delivers), surface it and ask rather than rewriting the doc to match a bug; offer to record it the way the reconcile move does.
 
 ### 5. Record the verification
 
-- On a clean pass (every executable step green), offer to bump the doc's `last-verified` frontmatter to today.
-  After this command, that date means a machine ran the procedure, the strongest freshness signal the plugin has.
-- On a partial pass, do not bump `last-verified`; note in the report which steps stand between the doc and a clean run.
-- For a journey, bump only the docs the run actually reached clean: a doc after the point of failure was never really executed against live state, only reported as `blocked`, and bumping it would claim evidence the run doesn't have.
-- The decay detector (`docs-decay.mjs`) reads `last-verified`, so verified docs drop down the re-verification queue and the queue stays focused on what actually needs attention.
+- Say whether each doc runs clean, under the rule in `running-steps.md`: every step ran and passed except those not run for safety, and none left without anything to run.
+  On a partial pass, say which steps stand between the doc and a clean run.
+- For a journey, a doc after the point of failure was never really executed against live state, only reported as `blocked`: say so rather than counting it as run.
+- Nothing is written into the doc to record the run.
+  A project that already records verification in its docs in its own way can have that updated on the contributor's yes, in the project's format.
+- Note in the branch's journal, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/journal.md`: what ran, where, and the result, one line per doc, and each divergence left unfixed, as a question for whoever can answer it.
 - The conversation is for triage, per the skill's feedback guidance: offer to save the full run report under `.docs-assist/reports/verify-<date>.md`, and end by naming the natural next step.
   `reference/reports.md` has the shape; a verification run is the case where the detail matters most, because a divergence is only actionable with the step and the output that produced it.
 

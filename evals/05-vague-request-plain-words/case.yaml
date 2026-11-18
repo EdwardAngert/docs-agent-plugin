@@ -1,0 +1,16 @@
+schema_version: "1.0"
+name: 05-vague-request-plain-words
+description: >
+  A vague request from someone who knows nothing about the plugin. Tests the
+  rule that a contributor never needs a command name: the answer should find
+  the real problems in a small set and offer to fix them in plain words,
+  rather than send the reader off to type a command.
+tags: [fire, health, plain-words]
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: |
+    Our docs feel kind of neglected. Where do we stand?
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Bash]

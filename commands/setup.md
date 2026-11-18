@@ -28,6 +28,8 @@ Read the existing docs for heading case, list markers, ordered-list style, front
 Read `README.md` and any `CONTRIBUTING.md` for stated conventions.
 Present what you found as a summary to correct, not a questionnaire.
 
+When the project has a site (a generator, MDX, or custom components), also offer the markdown reference, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/markdown-reference.md`: how the site does images, links, callouts, lists, indentation, and components, with one way recommended wherever it uses several.
+
 Write `.docs-assist/config.yml` from `${CLAUDE_PLUGIN_ROOT}/assets/config/config.yml`, with the detected values filled in and the rest left at defaults.
 Write `.docs-assist/style.md` from the assets copy for prose conventions the config cannot express.
 
@@ -35,6 +37,17 @@ If the repo has `example-variables.txt` or `terms.txt` from an older version, of
 See `reference/reference-registry.md`.
 
 Seed `reference.yml` from what the docs already use: the placeholder values that recur, and the product terms that appear under more than one spelling.
+
+These files are the project's rules, and whether they go in the repository is the contributor's call.
+Keep them local unless the contributor says to share them:
+
+> "These rules stay on your machine by default.
+> Want to share them with the team instead?
+> Then they go in the repository, and CI and every contributor use them."
+
+Run `node ${CLAUDE_PLUGIN_ROOT}/hooks/journal.mjs rules local`, or `rules shared` on a yes.
+Local hides all of `.docs-assist/` from git; a project that already tracks files there is left as it is.
+Shared makes the rules visible to git, and committing them is still the contributor's to do; working material stays hidden either way.
 
 ## 2. Linting
 
@@ -56,6 +69,11 @@ Hold the first run to zero issues, or list exactly what is left and why.
 
 **Default off.
 Nothing is installed without an explicit choice per hook.**
+
+The plugin's own notice hooks are already running and need nothing from this stage: they check edited files for broken links and for docs that name them, and mention what is still true once, on the next prompt.
+Say so in one line when you open this stage, so the contributor knows what they already have before choosing more.
+If they want it off for this project, set `notices: false` in `.docs-assist/config.yml`.
+See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/triggering.md`.
 
 - **Git pre-commit lint**: runs the configured linters on changed docs.
 - **In-session doc lint**: lints a doc after it is written, inside the conversation.
@@ -134,4 +152,5 @@ A field that never reaches the page is a field that costs maintenance and buys n
 ## Close
 
 Report what was written, what was skipped, and what the first lint run found.
+Note in the branch's journal each convention the contributor confirmed or corrected, and why, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/journal.md`.
 Then name the natural next step in plain words.

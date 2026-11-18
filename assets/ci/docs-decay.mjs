@@ -5,11 +5,11 @@
 // risk, the drift the per-PR docs-impact check cannot see because it built
 // up across many changes. Signals per doc:
 //   - age: days since the doc itself last changed
-//   - verification: days since it was last verified (or never)
+//   - verification: days since it was last verified, when the project
+//     records that in its docs and declares how (verified_body_pattern)
 //   - churn: commits that touched related source files since the doc last
 //     changed, where "related" means files that mention the identifiers the
 //     doc uses in inline code
-//   - attested: open entries in the doc's attested-claims ledger
 // Output is a ranked re-verification queue, worst first. It reports; it
 // never edits. /docs-assist:health runs it for the Freshness dimension, and
 // it works standalone.
@@ -29,13 +29,12 @@
 //   DOCS_ASSIST_REPORT_FILE    when set, the full report is written there too
 //   GITHUB_STEP_SUMMARY     when set, the report is appended there too
 //
-// "Never verified" is a frontmatter- and sidecar-only reading by default,
-// and a project that records verification some other way (a rendered
-// component, a footer, a build-time badge) will see every doc it verified
-// still called never-verified. That is a project's own established schema
-// the plugin should extend rather than fight (frontmatter-spec.md), so a
-// project can declare one pattern in config.yml instead of the plugin
-// guessing at every site generator's own verification convention.
+// Docs carry no plugin metadata: no frontmatter field, no sidecar file the
+// plugin writes. Site generators disagree on frontmatter, many docs have no
+// generator at all, and nothing the plugin works with is committed unasked.
+// A project that already records verification in its docs (a frontmatter
+// field, a rendered component, a footer) declares one pattern in config.yml,
+// and the verification signal reads that; without one, the signal is off.
 
 import { execSync } from 'node:child_process';
 import { readFileSync, existsSync, readdirSync, appendFileSync } from 'node:fs';
@@ -56,20 +55,56 @@ function docsDir() {
   return 'docs';
 }
 
+// One YAML scalar, as a person would write it: single-quoted (the form the
+// docs show, since a regex is full of backslashes), double-quoted, or bare
+// with an optional trailing comment. Not general YAML; just enough that the
+// ordinary ways of writing one value all read the same.
+function yamlScalar(v) {
+  v = v.trim();
+  if (v.startsWith("'")) {
+    // '' is an escaped quote; the first lone ' closes the string.
+    let out = '';
+    for (let i = 1; i < v.length; i++) {
+      if (v[i] !== "'") { out += v[i]; continue; }
+      if (v[i + 1] === "'") { out += "'"; i++; continue; }
+      return out;
+    }
+    return out;
+  }
+  if (v.startsWith('"')) {
+    const m = v.match(/^"((?:[^"\\]|\\.)*)"/);
+    if (m) { try { return JSON.parse(`"${m[1]}"`); } catch { return m[1]; } }
+    return v.slice(1);
+  }
+  return v.replace(/\s+#.*$/, '');
+}
+
+// Returns { pattern, problem }. A configured pattern that cannot work is
+// reported in the output rather than swallowed: silently degrading to "no
+// pattern" reproduces the exact symptom the setting exists to fix, every doc
+// called never-verified, with nothing saying why.
 function verifiedBodyPattern() {
-  const raw = process.env.DOCS_DECAY_VERIFIED_PATTERN || (() => {
+  let raw = process.env.DOCS_DECAY_VERIFIED_PATTERN;
+  let source = 'DOCS_DECAY_VERIFIED_PATTERN';
+  if (!raw) {
     try {
-      const m = readFileSync('.docs-assist/config.yml', 'utf8').match(/^verified_body_pattern:\s*(.+)$/m);
-      return m ? m[1].trim().replace(/^["']|["']$/g, '') : null;
-    } catch { return null; }
-  })();
-  if (!raw) return null;
-  try { return new RegExp(raw); }
-  catch { return null; } // a malformed project pattern degrades to "no pattern", not a crash
+      const m = readFileSync('.docs-assist/config.yml', 'utf8').match(/^verified_body_pattern:[ \t]*(.+)$/m);
+      if (m) { raw = yamlScalar(m[1]); source = 'verified_body_pattern in .docs-assist/config.yml'; }
+    } catch { /* no config */ }
+  }
+  if (!raw) return { pattern: null, problem: null };
+  let pattern;
+  try { pattern = new RegExp(raw); }
+  catch (e) { return { pattern: null, problem: `${source} is not a valid regular expression (${e.message}), so it was ignored.` }; }
+  if (new RegExp(`${raw}|`).exec('').length < 2) {
+    return { pattern: null, problem: `${source} has no capture group, so it cannot say which date a doc was verified on. Wrap the YYYY-MM-DD part in parentheses.` };
+  }
+  return { pattern, problem: null, source };
 }
 
 const DOCS = docsDir();
-const VERIFIED_BODY_PATTERN = verifiedBodyPattern();
+const { pattern: VERIFIED_BODY_PATTERN, problem: VERIFIED_PATTERN_PROBLEM, source: VERIFIED_PATTERN_SOURCE } = verifiedBodyPattern();
+let bodyPatternMatches = 0;
 const TOP = Number(process.env.DOCS_DECAY_TOP || 10);
 const THRESHOLD = Number(process.env.DOCS_DECAY_THRESHOLD || 10);
 const NOW = Date.now();
@@ -127,66 +162,22 @@ if (!docs.length) {
   process.exit(0);
 }
 
-// Per-document state lives in the plugin's own store, so the docs stay
-// portable plain markdown. Different site generators accept different
-// frontmatter schemas, and assuming a site generator at all is already too
-// much, so nothing the plugin depends on is written into the documents.
-//
-// Frontmatter is still read when a project keeps it. That is not a fallback
-// shim: a project whose generator renders `last-verified` into the page should
-// have that respected. The sidecar is where the plugin WRITES; frontmatter is
-// something the plugin READS when the project already has it. The sidecar wins
-// when both carry a value.
-const STATE_PATH = process.env.DOCS_ASSIST_STATE || '.docs-assist/state/docs.yml';
-
-function readState(path) {
-  if (!existsSync(path)) return {};
-  const state = {};
-  let currentDoc = null;
-  let currentList = null;
-  for (const raw of readFileSync(path, 'utf8').split('\n')) {
-    if (/^\s*#/.test(raw) || !raw.trim()) continue;
-    const doc = raw.match(/^([^\s#][^:]*):\s*$/);
-    if (doc) { currentDoc = doc[1].trim(); state[currentDoc] = { attested: 0 }; currentList = null; continue; }
-    if (!currentDoc) continue;
-    const field = raw.match(/^\s{2}([a-z-]+):\s*(.*)$/);
-    if (field) {
-      const [, key, value] = field;
-      if (!value.trim()) { currentList = key; continue; }
-      currentList = null;
-      if (key === 'last-verified') state[currentDoc][key] = value.trim().replace(/^["']|["']$/g, '');
-      continue;
-    }
-    if (currentList === 'attested' && /^\s{4}-\s/.test(raw)) state[currentDoc].attested += 1;
-  }
-  return state;
-}
-
-const docState = readState(STATE_PATH);
-
 const rows = [];
 for (const doc of docs) {
   const text = readFileSync(doc, 'utf8');
-  const stateKey = doc.replace(/^\.\//, '');
-  const sidecar = docState[stateKey] || {};
 
   // Age: days since the doc's last commit. Untracked or uncommitted docs
   // are brand new by definition.
   const lastCommit = sh(`git log -1 --format=%ct -- "${doc}"`);
   const ageDays = lastCommit ? Math.floor((NOW - Number(lastCommit) * 1000) / DAY) : 0;
 
-  // Verification: days since last verified, or null when nothing records it.
-  const fmVerified = text.match(/^last-verified:\s*["']?(\d{4}-\d{2}-\d{2})/m);
-  const bodyVerified = VERIFIED_BODY_PATTERN ? text.match(VERIFIED_BODY_PATTERN) : null;
-  const verifiedOn = sidecar['last-verified'] || (fmVerified ? fmVerified[1] : null) || (bodyVerified ? bodyVerified[1] : null);
+  // Verification: days since last verified, read with the project's own
+  // pattern; null when the project records none.
+  const bodyMatch = VERIFIED_BODY_PATTERN ? text.match(VERIFIED_BODY_PATTERN) : null;
+  const bodyVerified = bodyMatch && /^\d{4}-\d{2}-\d{2}/.test(bodyMatch[1] || '') ? bodyMatch[1].slice(0, 10) : null;
+  if (bodyVerified) bodyPatternMatches += 1;
+  const verifiedOn = bodyVerified;
   const verifiedDays = verifiedOn ? Math.floor((NOW - Date.parse(verifiedOn)) / DAY) : null;
-
-  // Attested: open ledger entries, from the store or from frontmatter.
-  const fmBlock = (text.match(/^---\n([\s\S]*?)\n---/) || [])[1] || '';
-  const fmAttested = fmBlock.includes('sme-attested:')
-    ? (fmBlock.match(/^\s+-\s+section:/gm) || []).length
-    : 0;
-  const attested = sidecar.attested || fmAttested;
 
   // Churn: commits touching related source files since the doc last changed.
   // Related = non-doc files that mention identifiers the doc uses in inline
@@ -215,20 +206,19 @@ for (const doc of docs) {
   }
 
   // Score: churn dominates (code moved under the doc), verification age and
-  // doc age accrue slowly, open attested claims add steady pressure. The
+  // doc age accrue slowly. A project that records no verification gets no
+  // verification term at all, rather than every doc marked never verified. The
   // weights are documented here so the ranking is explainable, not magic.
   const score =
     churn * 3 +
     Math.min(ageDays / 30, 12) +
-    (verifiedDays === null ? 2 : Math.min(verifiedDays / 30, 12)) +
-    attested * 2;
+    (!VERIFIED_BODY_PATTERN ? 0 : verifiedDays === null ? 2 : Math.min(verifiedDays / 30, 12));
 
   const reasons = [];
   if (churn) reasons.push(`${churn} commit${churn === 1 ? '' : 's'} to related source since last doc change`);
   if (ageDays > 90) reasons.push(`doc untouched for ${ageDays} days`);
-  if (verifiedDays === null) reasons.push('never verified');
+  if (VERIFIED_BODY_PATTERN && verifiedDays === null) reasons.push('never verified');
   else if (verifiedDays > 90) reasons.push(`last verified ${verifiedDays} days ago`);
-  if (attested) reasons.push(`${attested} open attested claim${attested === 1 ? '' : 's'}`);
 
   rows.push({ doc, score: Math.round(score * 10) / 10, reasons });
 }
@@ -243,7 +233,12 @@ out += `| Score | Doc | Why |\n| ---: | --- | --- |\n`;
 for (const r of shown) {
   out += `| ${r.score} | \`${r.doc}\` | ${r.reasons.join('; ') || 'no decay signals'} |\n`;
 }
-out += `\n**Suggested follow-up**: work the queue top-down with \`/docs-assist:update\` (when the related code changed) or \`/docs-assist:verify\` (for procedural docs, which it re-runs step by step, recording a fresh verification date on a clean pass).\n`;
+if (VERIFIED_PATTERN_PROBLEM) {
+  out += `\n**Verification pattern not used**: ${VERIFIED_PATTERN_PROBLEM}\n`;
+} else if (VERIFIED_BODY_PATTERN && !bodyPatternMatches) {
+  out += `\n**Verification pattern matched nothing**: ${VERIFIED_PATTERN_SOURCE} is set, but no doc contains a match with a YYYY-MM-DD date in its first capture group. If your docs do record verification in the body, the pattern does not match how they write it.\n`;
+}
+out += `\n**Suggested follow-up**: work the queue from the top. Ask Claude to bring a doc in line with the code that changed under it, or, for a procedural doc, to run its steps and confirm they still work.\n`;
 
 report(out);
 if (decayed.length && process.env.DOCS_DECAY_STRICT === '1') process.exit(1);

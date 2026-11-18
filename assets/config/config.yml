@@ -2,7 +2,7 @@
 #
 # Machine-readable settings shared by the plugin and the linters it scaffolds.
 # One source of truth: the agent reads these when drafting and reviewing, and
-# `/docs-assist:setup-lint` generates Vale and markdownlint config from the same values.
+# Docs Assist setup generates Vale and markdownlint config from the same values.
 #
 # Prose conventions (voice, terminology, banned phrases) live next to this file in style.md.
 
@@ -48,10 +48,38 @@ frontmatter:
   # Allowed content-type values. Defaults to the canonical Docs Assist set.
   content_types: [doc, guide, tutorial, concept, reference, troubleshooting]
 
-# Linting. Written by `/docs-assist:setup-lint`. Empty until configured.
+# Linting. Written by Docs Assist setup. Empty until configured.
 lint:
   # Which linters the project runs. A project can run several (for example
   # Vale for prose and markdownlint for structure).
   tools: []         # any of: vale, markdownlint, megalinter
   spelling: false   # cspell
   link_check: false
+
+# In-session notices. After Claude edits a file, Docs Assist checks it for
+# broken links and anchors, and notes which docs name a changed source file.
+# Anything still true is mentioned once, on your next prompt; most of the time
+# there is nothing to say and it says nothing. Set to false to turn it off.
+# notices: true
+
+# Working journal. While Claude works on docs, Docs Assist keeps notes: what
+# people said, the questions and their answers, the decisions and why, and
+# what ran, in .docs-assist/journal/<branch>.md, which git ignores. When the
+# branch is ready for review, it offers to write the pull request description
+# from those notes. Set to false to stop keeping them.
+# journal: true
+
+# Where this project already records that a doc was verified, in frontmatter
+# or the body: a regular expression with one capture group holding a
+# YYYY-MM-DD date, matched against the whole doc. The staleness report uses it
+# so a verified doc is not ranked as never verified. Single quotes keep the
+# backslashes intact.
+# verified_body_pattern: '<Verified date="(\d{4}-\d{2}-\d{2})"'
+
+# A hand-maintained concatenated bundle (an llms-full.txt, for instance) to
+# check for drift against its sources. Only for a project that keeps one; see
+# the comment block at the top of bundle-drift.mjs for every field.
+# bundle:
+#   file: public/llms-full.txt
+#   sources:
+#     - docs

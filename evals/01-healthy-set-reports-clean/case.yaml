@@ -1,0 +1,15 @@
+schema_version: "1.0"
+name: 01-healthy-set-reports-clean
+description: >
+  An audit of a genuinely healthy two-page docs set. Tests the rule that an
+  audit which finds nothing is a successful audit, rather than one that
+  manufactures findings to fill a report.
+tags: [audit, no-quota]
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: |
+    Audit the documentation in `docs/`.
+  max_turns: 30
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Bash]

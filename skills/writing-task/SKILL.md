@@ -23,13 +23,14 @@ This skill is the wider net.
 
 | The task                             | What to use                                                                                                     |
 | ------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
-| Write or revise a doc                | Load `docs-assist` and run the authoring loop. `reference/loop.md`.                                             |
+| Write a new doc                      | Three steps: `/docs-assist:draft`, then `/docs-assist:write`, then `/docs-assist:edit`. `reference/loop.md`.    |
+| Check and fix one existing doc       | `/docs-assist:edit`. Every claim checked against the code, every step run, then a copy edit.                    |
 | Review docs that already exist       | `/docs-assist:audit`. An audit is the loop pointed at a finished doc.                                           |
 | Check a procedure still works        | `/docs-assist:verify`. It executes the steps rather than reading them.                                          |
 | A pull request description           | `docs-assist`, `reference/pr-descriptions.md`. Includes when to structure by file or area instead of by commit. |
 | Release notes or a changelog entry   | `/docs-assist:release-notes`. Leads with breaking changes and upgrade steps.                                    |
-| A README                             | The authoring loop, cast as a procedure. Usually also the highest-leverage first doc for a bare repo.           |
-| A runbook or an incident procedure   | The authoring loop, then `/docs-assist:verify` to prove the steps run.                                          |
+| A README                             | The three steps, cast as a procedure. Usually also the highest-leverage first doc for a bare repo.              |
+| A runbook or an incident procedure   | The three steps; the edit step runs every step the runbook gives.                                               |
 | Docs the code change just broke      | `/docs-assist:update`.                                                                                          |
 | Getting a docs change ready to merge | `/docs-assist:merge-prep`.                                                                                      |
 | "Where do our docs even stand"       | `/docs-assist:health`.                                                                                          |

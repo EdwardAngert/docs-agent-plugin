@@ -47,9 +47,9 @@ The orchestrator passes paths, never content.
 If every artifact came back as a return value, the orchestrator would accumulate all of them in the main conversation, which defeats having isolated the work.
 Paths keep main-thread context flat regardless of document size, make the loop resumable across sessions, and make every intermediate step inspectable, which is most of how anyone debugs this.
 
-The packet is the durable artifact.
-Prose gets rewritten; steps, commands, and citations survive.
-Keep it after the document ships.
+The packet is the source until the write step places the document; from then on, the document is.
+A packet kept after that is a second copy of the facts, and the edit step's corrections never reach it.
+The edit step reads it only while its `status` is `written`, and merge-prep offers to clear it (`journal.mjs drafts` lists those whose doc is placed).
 
 ## The order of a run
 
@@ -70,6 +70,23 @@ Keep it after the document ships.
 1. Repeat until a stopping condition.
 
 Continuity acts at pass 0 and again at the preparation gate, not on every pass.
+
+## With a person: three steps
+
+When an expert is in the conversation, the loop runs as three separate steps, each its own workflow with its own job:
+
+| Step  | Workflow            | Loop work it does                                                             | Packet `status` after |
+| ----- | ------------------- | ----------------------------------------------------------------------------- | --------------------- |
+| Draft | `commands/draft.md` | Pass 0 authority, with the person in the chair; continuity's work, by talking | `drafted`             |
+| Write | `commands/write.md` | Pass 0 continuity and advocate, passes 1 to 3 until it stops, the cold read   | `written`             |
+| Edit  | `commands/edit.md`  | Every claim re-checked against the code, the steps run, then the copy edit    | `edited`              |
+
+The separation is the same one this file argues for between chairs, applied to the workflow: the interviewer does not shape, the writer does not check facts but is questioned by the authority chair until it holds up, and the editor checks everything again, including what the interview and the questioning already settled.
+Each step reads the previous one's files, so they can run in one sitting, across sessions, or by different people.
+With nobody to ask, `chair-authority` fills the packet and the three steps run back to back.
+
+To the contributor these are the draft, the write-up, and the edit.
+Packet, ledger, chair, and pass are this file's words, not theirs: never use them in what the contributor reads.
 
 ## Escalation is rulebook selection
 
@@ -108,7 +125,7 @@ Oscillation is not a bug.
 It is the loop correctly detecting a judgment call neither chair can settle, which is exactly where a person's scarce attention belongs.
 Apply a materiality threshold so a word swapped back and forth does not trigger it.
 
-Report what the run cost and let the contributor halt it at any pass boundary.
+Report how many passes ran and let the contributor halt it at any pass boundary.
 
 ## Cold read, before the contributor sees it
 
@@ -137,7 +154,8 @@ It is the only tool in the set that experiences a document the way an actual fir
 Not the polished document.
 **A short list of what genuinely needs the human.**
 
-`questions.md` accumulates the unknowables, the oscillations, and the relation questions the chairs could not settle.
+`questions.md` accumulates the unknowables, the oscillations, and the relation questions the chairs could not settle, as the chairs' working list.
+The ones that need a person go to them, and wait in the branch's journal (`journal.md`) until they're answered.
 That is the deliverable: it turns "please review this draft" into "please answer these four questions," and the second is a ten-minute task an expert will actually do.
 
 ## Cost

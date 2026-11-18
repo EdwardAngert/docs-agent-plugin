@@ -1,0 +1,17 @@
+schema_version: "1.0"
+name: 07-pr-from-journal
+description: >
+  A branch whose docs work left notes behind. Tests that the pull request
+  description is built from what is true now: corrections reported, a note
+  whose code changed since never presented as verified, a claim on an expert's
+  word marked as such, the open question carried, and nothing about docs the
+  branch does not change.
+tags: [fire, writing-task, journal, accuracy]
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: |
+    Write the PR description for this branch and save it as PR_BODY.md.
+  max_turns: 30
+  timeout_seconds: 600
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Write, Edit, Bash]

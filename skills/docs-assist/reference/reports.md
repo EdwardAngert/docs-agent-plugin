@@ -104,9 +104,8 @@ Do not renumber across runs to make them line up; a report is a record of one ru
 
 `.docs-assist/reports/<what>-<date>.md`, so a later run can compare against an earlier one.
 
-They are working material.
-Commit them for a shared record, or add `.docs-assist/reports/` to `.gitignore` to keep them local.
-Either is correct; the plugin offers and does not decide.
+They are working material, and git ignores them (see "Nothing is committed unasked" in `journal.md`).
+A report worth sharing moves into the docs tree, or gets committed, only when the contributor asks.
 
 Never write one without offering first.
 

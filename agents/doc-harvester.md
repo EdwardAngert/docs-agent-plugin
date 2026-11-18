@@ -2,7 +2,7 @@
 name: doc-harvester
 description: Mines a repository's issue replies, pull request review comments, and commit message bodies for explanations the maintainers already wrote, and returns a compact inventory of what was explained but never documented. Use to propose drafts from existing material, build an authority persona, or gather real reader language. Opt-in; it reads a ticket tracker.
 tools: Read, Grep, Glob, Bash
-model: inherit
+model: sonnet
 ---
 
 You mine what a project's maintainers have already explained, and you return an inventory.
