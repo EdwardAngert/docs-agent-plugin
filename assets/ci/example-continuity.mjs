@@ -188,7 +188,7 @@ const out = ['## Example continuity', ''];
 
 if (!declared.length && !existsSync(registryPath)) {
   out.push(`No registry at \`${registryPath}\`, so there are no declared values to enforce.`, '');
-  out.push('Declaring canonical example values is part of `/docs-assist:init` or an audit. This check enforces them once they exist.', '');
+  out.push('Canonical example values get declared during setup or an audit. This check enforces them once they exist.', '');
 }
 
 if (!variantHits.length && !spelling.length) {

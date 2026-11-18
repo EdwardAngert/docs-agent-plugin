@@ -35,7 +35,7 @@ Later sources win:
 1. **Project config**: `.docs-assist/config.yml` and `.docs-assist/style.md` when present.
    These are explicit and authoritative.
 
-If `.docs-assist/` is absent, run on defaults plus inferred conventions, and offer to scaffold config with `/docs-assist:setup` when it would help (for example, before a team adopts the plugin).
+If `.docs-assist/` is absent, run on defaults plus inferred conventions, and offer to set up config (the setup workflow, which you run yourself) when it would help (for example, before a team adopts the plugin).
 
 ## How settings map to behavior
 
@@ -51,6 +51,15 @@ When `config.yml` is present, apply it directly:
 - `lint.*`: which linter the project uses, so you can recommend running it and avoid re-flagging what the linter already covers.
 - `verify.tool`: `auto` (default), `doc-detective`, or `docs-assist`.
   Controls which engine `/docs-assist:verify` uses; see that command's step 1.5.
+- `notices`: `true` (default) or `false`.
+  Turns the in-session notice hooks on or off; see `triggering.md`.
+- `journal`: `true` (default) or `false`.
+  Turns the per-branch working journal on or off; see `journal.md`.
+  Working material stays out of git either way.
+- `verified_body_pattern`: a regex with one capture group holding a `YYYY-MM-DD` date, for a project that already records verification dates in its docs, in frontmatter or the body.
+  `docs-decay.mjs` reads it; see `frontmatter-spec.md`.
+- `bundle`: a hand-maintained concatenated bundle and its sources, for `bundle-drift.mjs` to check.
+  Only for a project that keeps one; the field list is at the top of that script.
 
 `style.md` is prose: read it and follow it the way you would a team style guide.
 When it conflicts with a plugin default, `style.md` wins.
@@ -59,7 +68,7 @@ When it conflicts with a plugin default, `style.md` wins.
 
 `config.yml` is also what `/docs-assist:setup` reads to generate Vale and markdownlint configuration.
 That means a change to `heading_case` or `no_em_dashes` updates both how you write and how the linter checks.
-When you edit config for a project, note that the linter config may need regenerating, and point the user to `/docs-assist:setup`.
+When you edit config for a project, note that the linter config may need regenerating, and offer to regenerate it (the setup workflow, which you run yourself).
 
 `reference.yml`'s `term` entries feed the same generation step: `/docs-assist:setup` compiles them into a Vale substitution rule, so a term added to the registry updates both how you write and how the linter checks, the same as `config.yml`.
 The other three entry kinds (`example-variable`, `fact`, `pointer`) stay agent-only; Vale has no way to check inside code blocks or follow a link.

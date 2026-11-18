@@ -1,6 +1,6 @@
 # Docs Assist claim check.
 #
-# Installed by /docs-assist:setup-hooks (ci). Runs the deterministic
+# Installed by Docs Assist setup (the Hooks and CI stage). Runs the deterministic
 # check-claims detector on every pull request: extracts checkable claims
 # (CLI flags, config/env keys, function or class names, file paths, version
 # requirements) from every doc under docs_dir plus README/AGENTS/CLAUDE.md,

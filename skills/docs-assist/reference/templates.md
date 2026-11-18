@@ -105,27 +105,18 @@ Tell the contributor what happened and offer the choice:
 If no template fits the contribution, say so and draft from the built-in content type instead.
 A missing template is never a reason to stop.
 
-## Record the template in frontmatter
+## Leave no trace in the doc
 
-`content-type` stays canonical: one of the six values in `content-types.md`.
-When a doc was seeded from a template, also set the optional `template` field to the catalog `id`, so the origin is traceable.
+A doc written on a template is the project's doc, and nothing in it records where its skeleton came from.
+`content-type` and any other frontmatter follow the project's own fields, per `frontmatter-spec.md`, and the plugin adds no field of its own.
 
-```yaml
-content-type: troubleshooting
-template: troubleshooting
-```
-
-See `frontmatter-spec.md` for the field definition.
-
-## Attribute the source
-
-Add the `attribution` line from `templates.yml` to a doc seeded from a fetched template.
-The default source, The Good Docs Project, is MIT-0 and requires no attribution; the line acknowledges it as good practice.
-The repository-level notice lives in `THIRD-PARTY-NOTICES.md`.
+Add an attribution line only when the template source's license requires one, or when the team set `attribution` in `templates.yml`, which is the team asking for it.
+The default source, The Good Docs Project, is MIT-0 and requires none.
+The plugin's own repository-level notice lives in `THIRD-PARTY-NOTICES.md`.
 
 ## Where this plugs in
 
-- `/docs-assist:draft`: after the content type is chosen, suggest a template and, if accepted, draft on its skeleton.
-  Scaffolding a chosen template on demand happens here too; 1.0 folded the standalone template command into drafting.
+- `/docs-assist:write`: after the content type is chosen, suggest a template and, if accepted, write on its skeleton.
+  Scaffolding a chosen template on demand happens here too; 1.0 folded the standalone template command into drafting, and the write step is where shaping now lives.
 - `/docs-assist:plan`: note the suggested template for each planned doc, so the plan and the eventual drafts line up.
 - `/docs-assist:setup`: turn the feature on for a project.

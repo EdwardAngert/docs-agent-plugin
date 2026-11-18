@@ -23,6 +23,11 @@ jobs:
           node-version: "24"
       - name: Validate manifests, references, and frontmatter
         run: node scripts/validate.mjs
+      # Regression tests for the scripts and hooks that run without a model.
+      # Model behavior is the eval suite's job (evals/), which costs tokens
+      # and runs on a maintainer's machine rather than on every push.
+      - name: Test deterministic scripts and hooks
+        run: node --test scripts/test.mjs
 
   dogfood:
     name: Lint own docs with shipped config

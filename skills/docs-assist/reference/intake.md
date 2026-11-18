@@ -10,7 +10,7 @@ Load this whenever someone asks to document something new, whether it is one top
 
 ## The intake loop
 
-The same eight moves serve one doc or a whole set.
+The same six moves serve one doc or a whole set, and they are the whole of the draft step (`commands/draft.md`).
 Later moves lean on earlier ones, so do not skip ahead.
 
 1. **Survey** what already exists, quietly.
@@ -20,8 +20,9 @@ Later moves lean on earlier ones, so do not skip ahead.
 1. **Reconcile**: offer to fact-check the dump against the code and the existing docs.
    This is the preflight checkpoint: the offer is always made before anything is shaped, and the contributor decides.
 1. **Dig** at the gaps the dump left.
-1. **Shape**: pick the content type, and notice when it is really several docs.
-1. **Draft**, review, finalize.
+
+Then the draft is handed on.
+Shaping it into a document is the write step (`commands/write.md`), and checking and running it is the edit step (`commands/edit.md`): separate steps with separate jobs, so the interview never turns into polishing sentences while the expert's knowledge is still coming out.
 
 The value is in gathering first.
 A narrow question asked too early gets a narrow answer and buries the good material.
@@ -93,18 +94,18 @@ Reconcile before you dig, so your questions build on what is true.
 
 The fact-check is the contributor's choice, offered before it starts.
 Make the offer once the dump is in hand ("want me to check this against the code before we go further?"), say what it costs (a short read of the relevant source), and respect a no. The preflight rule is about the offer, not the outcome: do not shape or draft until the contributor has accepted or declined.
-When they decline, proceed normally, note in the final review that the dump's claims were taken as given, and let the draft flow's verify step still confirm the specifics the doc states.
+When they decline, proceed normally, note in the draft that the dump's claims were taken as given, and let the edit step check every claim the doc ends up stating.
 
 Sort the dump's claims into three buckets, and treat each differently:
 
 - **Checkable against the code** (commands, flags, defaults, error text, behavior): check them.
-  The scope is tiered: every claim the eventual doc will state gets hard verification (the draft flow deepens this later); the rest of the dump gets a scan for contradictions, not an exhaustive audit.
-  Record what you confirm into the packet's provenance rows, typed as a code reference, so the verify step builds on it instead of re-reading the same source to re-derive it.
+  The scope is tiered: every claim the eventual doc will state gets checked (the edit step checks them all again, against the code as it is then); the rest of the dump gets a scan for contradictions, not an exhaustive audit.
+  Record what you confirm into the packet's provenance rows, typed as a code reference, so the edit step builds on it instead of re-reading the same source to re-derive it.
 - **Checkable against the existing docs**: flag where the dump contradicts something already published.
   One of them is wrong, and it matters which.
 - **Unverifiable** (intent, history, tribal knowledge, external systems): mark as SME-attested and move on.
   These are often the most valuable content.
-  Never demand proof for a gotcha; record who attested it instead (see the ledger below).
+  Never demand proof for a gotcha; record whose word it is instead (see below).
 
 Deliver the reconciliation as a short read-back, folded into the dig when that flows better:
 
@@ -112,13 +113,13 @@ Deliver the reconciliation as a short read-back, folded into the dig when that f
 > Which is right?"
 
 When the dump and the code disagree, ask, never assume.
+A value in the code that nothing reads (a setting no code path uses) settles nothing: say so, and ask what actually enforces the behavior.
 The contributor misremembering and the contributor having just found a bug look identical from here.
 If they say the code is wrong, offer to record it (a `gh issue` when the repo uses GitHub, a follow-up note otherwise), and write the doc to the intended behavior with the discrepancy flagged.
 
-Claims that survive into a doc on the expert's word alone are typed `SME experience` in the packet's provenance rows and recorded in `.docs-assist/state/docs.yml`, so a future reviewer verifies specific claims instead of re-reviewing everything.
-That is where the plugin writes, and it needs no one's permission because it touches nothing the project publishes.
-A project that also wants the list in its frontmatter can have it, on an explicit yes, since not every pipeline accepts unapproved fields and a strict schema can reject a build over one.
-See `frontmatter-spec.md`.
+Claims that survive into a doc on the expert's word alone are typed `SME experience` in the packet's provenance rows, so a future reviewer checks specific claims instead of re-reviewing everything.
+When the write step places the doc, it carries which claims rest on whose word into the branch's journal (`journal.md`), and the pull request description tells the reviewer.
+Nothing about it is written into the doc.
 
 This move guards every door, not only the conversational dump: `doc-intake` reports code conflicts in its inventory, so corpus piles and returned intake questionnaires arrive pre-reconciled, and the consolidator resolves what they flag.
 
@@ -140,15 +141,14 @@ Aim at the gaps, not the basics.
 Ask two or three at a time, conversationally.
 Never run down the list like a checklist.
 
-## 7. Shape: one doc, or several?
+## One doc, or several?
 
-Decide the structure using `content-types.md`, and check the scope honestly.
+Notice it, say it, and leave the shaping to the write step.
 
 - A dump often holds more than one doc.
   If it mixes a task, an explanation, and a set of failure modes, that is a how-to plus a concept plus troubleshooting, not one page.
-- When it is several, say so and propose the small set, in priority order.
-  Offer to draft the first now and keep the rest as a short backlog.
-- Offer a starting template where one fits (`templates.md`).
+- When it is several, say so and record it in the packet header.
+  The write step proposes the set in priority order and writes the first.
 
 Do not force a pile into a single page.
 Splitting early is cheaper than untangling later.
@@ -195,28 +195,24 @@ The two artifacts under `.docs-assist/intake/` are instruments rather than packe
 This matters beyond tidiness.
 A packet a human filled and a packet the `chair-authority` subagent emitted are interchangeable, so a doc can start conversationally and finish with the loop, or start automated and get corrected by hand, and nothing downstream needs to know which happened.
 
-Shape is the one move that does not belong to intake.
-Content type, structure, and outline are the advocate chair's decisions, and a packet that makes them has stopped being raw material.
-When Shape reveals several docs, record that as a note in the packet header and let the orchestrator propose the set.
+Shape does not belong to intake.
+Content type, structure, and outline are the advocate chair's decisions, made in the write step, and a packet that makes them has stopped being raw material.
+When the material is several docs, record that as a note in the packet header and let the write step propose the set.
 
-## Persist as you go (opt in)
+## Write it down as you go
 
-A short dump can live in conversation and go straight into a packet at the end.
-Some do not: a long or many-part dump, a contributor who says "let me check and get back to you," or material that clearly spans more than one sitting.
+The draft is what the contributor came for, so save it from the start: open the packet once the dump has landed, and keep it current after every move.
+A conversation can end without warning, and a draft that lived only in it is gone.
+Don't ask first or announce it, and never interrupt the dump to write: the dump's own rule holds, so let it all land, then write.
+It costs the contributor nothing, because the draft sits in a directory git ignores.
 
-**Offer, don't default, and never interrupt the dump to offer.** The dump's own rule holds: let it all land.
-Make the offer once at the next natural pause, usually the Reflect read-back ("Here's what I've got.
-This looks like it'll take a few sittings; want me to write it down as we go, so we can pick this back up without you re-explaining everything?"), or immediately when the contributor pauses themselves.
-A repo can set a standing preference in `.docs-assist/config.yml` (see `config-resolution.md`), but the per-session offer is what runs by default.
-
-When accepted, open the packet early and keep it current after every move.
 Add a progress header so a later session can resume without re-reading the whole file:
 
 ```markdown
 ---
 topic: "webhook retry configuration"
 cast: procedure          # procedure | concept
-status: in-progress      # in-progress | ready-to-shape | shaped
+status: in-progress      # in-progress | drafted | written | edited
 updated: 2026-07-17
 filled-by: human
 ---
@@ -241,6 +237,7 @@ filled-by: human
 ```
 
 The `status` field is what the Survey move's resume check reads, so keep it current: a glob over `.docs-assist/loop/*/packet.md` can then tell an unfinished packet from a ready one without opening every file.
+Each step moves it on: the draft step sets `drafted`, the write step `written`, and the edit step `edited`, which is how a later session, or a teammate, knows which step comes next.
 
 `filled-by` records whether a human or the authority chair produced it.
 Nothing downstream branches on it; it exists so a reviewer knows whether the gaps are an expert's blind spots or an agent's.
@@ -256,8 +253,8 @@ Keep what is reusable; do not hoard raw material.
 
 - **Persist the inventory or plan**, the synthesized artifact a team can resume from.
   Write it to `.docs-assist/intake/`, outside the published docs tree, so a static-site build never picks it up.
-  These are working artifacts: commit them if the team wants a shared, resumable record, or add `.docs-assist/intake/` to `.gitignore` to keep them local.
-- **Hold a single-doc dump in the conversation by default.** Persist it mid-loop only on the contributor's opt-in (see Persist as You Go, above) or once the dump turns out to hold more than one doc.
+  These are working artifacts, and git ignores them; committing one is the team's call, made by asking.
+- **Write a single-doc dump into one packet** as it lands (see Write It Down As You Go, above); once it turns out to hold more than one doc, note that in the packet header and let the write step propose the set.
 - **Do not persist raw dumps from sensitive sources** (support tickets, customer data, security details) without asking.
   Git history is permanent and shareable.
   When in doubt, ask before writing, and summarize rather than paste.

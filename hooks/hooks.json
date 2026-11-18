@@ -1,0 +1,28 @@
+{
+  "description": "Docs Assist notices: check edited files for broken links and for docs that describe them, then mention what is still true once, on the next prompt. Off with `notices: false` in .docs-assist/config.yml.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v node >/dev/null 2>&1 && node \"${CLAUDE_PLUGIN_ROOT}/hooks/notices.mjs\" record || true",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v node >/dev/null 2>&1 && node \"${CLAUDE_PLUGIN_ROOT}/hooks/notices.mjs\" surface || true",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

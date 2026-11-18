@@ -1,6 +1,6 @@
 ---
 title: "Docs Assist command reference"
-description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, plan, audit, verify, update, release-notes, setup, and merge-prep."
+description: "Every Docs Assist command in one place: what it does, its argument, and an example. Covers health, draft, write, edit, plan, audit, verify, update, release-notes, setup, and merge-prep."
 content-type: reference
 audience: users
 keywords:
@@ -8,6 +8,8 @@ keywords:
   - slash commands
   - docs-assist
   - draft
+  - write
+  - edit
   - plan
 ---
 
@@ -28,7 +30,9 @@ The rest of the documentation is indexed in [Docs Assist documentation](README.m
 | Command                      | What it does                                  | Argument                        |
 | ---------------------------- | --------------------------------------------- | ------------------------------- |
 | `/docs-assist:health`        | Fast docs health scorecard and first fix      | `[docs directory]`              |
-| `/docs-assist:draft`         | Write a document through the authoring loop   | `[topic or issue number]`       |
+| `/docs-assist:draft`         | Get what you know into a checked draft        | `[topic or issue number]`       |
+| `/docs-assist:write`         | Write a draft up as finished documentation    | `[topic or draft path]`         |
+| `/docs-assist:edit`          | Check every claim, run every step, then tidy  | `[doc path]`                    |
 | `/docs-assist:plan`          | Plan a documentation set, built to ship first | `[repo path or description]`    |
 | `/docs-assist:audit`         | Review existing docs by reconstructing claims | `[path]`                        |
 | `/docs-assist:verify`        | Execute a procedural doc's steps and report   | `[doc path or directory]`       |
@@ -37,19 +41,51 @@ The rest of the documentation is indexed in [Docs Assist documentation](README.m
 | `/docs-assist:setup`         | Conventions, linting, hooks, and navigation   | `[stage]`                       |
 | `/docs-assist:merge-prep`    | Ready a docs change to merge                  | `[branch or path]`              |
 
-## Write and plan
+## Write a doc, and plan a set
+
+A new doc takes three steps, each its own command, and each one offers the next when it finishes.
+They can run in one sitting, across days, or by different people: an expert drafts, and a teammate writes it up and edits it.
 
 ### /docs-assist:draft
 
 `/docs-assist:draft [topic or issue number]`
 
-Draft one document with guided help.
-It opens by asking you to share everything you know, reflects it back, connects it to your existing docs, checks the details against the code, confirms an outline, then writes.
-Use it when you want to document a single topic and would like a structured walkthrough.
-For a topic that will take more than one sitting, it can offer to keep a running notes file so you can pick back up later without re-explaining everything.
+Get what you know into a high-level draft.
+It asks you to share everything you know, reflects it back, connects it to your existing docs, and checks each fact against the code as it comes up.
+Then it steers: it asks for what a good doc of this kind needs and you haven't said yet, such as what to have before starting, what goes wrong, and what it can't do.
+The result is the facts in order, each marked as checked against the code or resting on your word, with no polishing yet.
+For a topic that takes more than one sitting, it can save the draft as you go so you can pick back up later.
 
 ```text
 /docs-assist:draft how to configure webhook retries
+```
+
+### /docs-assist:write
+
+`/docs-assist:write [topic or draft path]`
+
+Write a draft up as finished documentation.
+It picks the structure, writes the examples, and follows your project's conventions, in a separate pass that sees only the draft.
+It adds no facts: anything it needed that the draft didn't have becomes a question for the edit step.
+A first-time reader then reads it cold, and the writer fixes what that reader stumbled on.
+It places the doc in your repo with its frontmatter and links from related pages.
+
+```text
+/docs-assist:write webhook retries
+```
+
+### /docs-assist:edit
+
+`/docs-assist:edit [doc path]`
+
+Edit a doc in two passes.
+The technical edit checks every claim against the code and runs every step in an isolated workspace, telling you what's running as it goes.
+It fixes what the code and the run settle, and turns the rest into a short list of questions with the evidence attached.
+The copy edit then brings the wording, terms, and examples in line with your style.
+It works on any doc, not only one the write step produced, and tells you the doc runs clean only when every step that could run passed.
+
+```text
+/docs-assist:edit docs/webhook-retries.md
 ```
 
 ### /docs-assist:plan
@@ -110,7 +146,7 @@ Use it after a code change so the docs keep pace.
 Verify a procedural doc by executing it.
 It runs the doc's steps in order in an isolated workspace, compares actual output against what the doc shows, and reports every divergence, failure, and missing prerequisite.
 Steps needing credentials, privilege escalation, or real services are reported as unverified, never run.
-On a clean pass it offers to set `last-verified`, so the date means a machine ran the procedure.
+It tells you whether the doc runs clean, and writes nothing into the doc to record it.
 Use it on quickstarts and tutorials, the docs where a broken step costs the most trust.
 
 ```text

@@ -1,0 +1,18 @@
+schema_version: "1.0"
+name: 02-doc-from-code
+description: >
+  A contributor asks for a doc without saying the word "documentation" in a
+  way a keyword match would catch, and is unavailable for questions. Tests
+  that the doc gets written, that every value in it traces to the code, and
+  that nothing is invented to fill a section.
+tags: [fire, draft, accuracy]
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: |
+    New teammates keep asking how our HTTP client retries failed requests.
+    Can you write that up under docs/ so I can point them at it? Everything
+    is in src/. I'm about to head out, so go ahead without me.
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Write, Edit, Bash]

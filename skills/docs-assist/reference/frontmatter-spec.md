@@ -12,20 +12,12 @@ Three reasons, and they compound:
 - **A site generator cannot be assumed at all.** Plenty of documentation is plain markdown in a repository, read on the code host, with no build step to interpret anything.
 - **Frontmatter pays off late.** It helps once a reader has landed on the page, and by then the page itself is in view and more useful than its metadata.
 
-The plugin therefore keeps what it needs in its own store, `.docs-assist/state/docs.yml`, and the documents stay portable plain markdown.
-See `assets/config/state.yml` for that file's shape.
+The plugin follows one rule: it writes only the frontmatter fields a project's docs already use, in the shape they already use them.
+A doc in a project without frontmatter gets none.
+Nothing the plugin needs for itself goes in a doc, in frontmatter or anywhere else: its working notes stay in the journal, outside git (`journal.md`).
 
-The split is simple:
-
-- The plugin writes state to `.docs-assist/state/`.
-- The plugin reads frontmatter when a project already has it, and respects it.
-- Where both carry a value, the store wins.
-
-Reading a project's existing frontmatter is not a compatibility shim.
-A project whose generator renders `last-verified` into the page should have that honored, and a project with an established schema should have the plugin extend it rather than fight it.
-
-When a project has a site generator and wants frontmatter wired up, the plugin offers to do it and explains what each field buys.
-It is a service, not a convention imposed on files the plugin does not own.
+When a team asks to set frontmatter up, the plugin offers the schema below and explains what each field buys.
+It is a service the team asks for, not a convention imposed on files the plugin does not own.
 
 ## Why frontmatter still helps
 
@@ -41,8 +33,7 @@ When a project does keep it, good frontmatter serves three audiences at once:
 
 ### Recommended fields
 
-These are the fields worth having on every doc in a project that keeps frontmatter.
-When the plugin writes a doc and the project's convention includes frontmatter, it generates all of them.
+These are the fields worth having on every doc in a project that keeps frontmatter, and the ones the plugin offers when a team asks to set frontmatter up.
 
 ```yaml
 ---
@@ -65,7 +56,7 @@ These map to the content types defined in `content-types.md`.
 ### Fields worth adding
 
 These fields add significant value for AI tools, search, and docs teams.
-The plugin generates them when it has enough context to do so.
+The plugin offers them to a team setting frontmatter up, and fills them on new docs once the project uses them.
 
 ```yaml
 ---
@@ -104,12 +95,10 @@ These become cross-references in the doc and help the plugin maintain connective
 
 ### Optional fields
 
-Use these when they apply.
-The plugin adds them when relevant context is available.
+Use these when they apply, in a project that uses them.
 
 ```yaml
 ---
-last-verified: 2026-02-26
 sdk: nodejs
 languages:
   - javascript
@@ -117,53 +106,42 @@ languages:
 ---
 ```
 
-**`last-verified`** The date someone last confirmed the doc's technical accuracy.
-This is not the same as the file's last-modified date.
-A doc can be edited for formatting without being verified for accuracy.
-The strongest form: `/docs-assist:verify` executed the doc's procedure end to end and every runnable step passed, and the bump was offered on that evidence.
-A human read-through also earns a bump; the point is that someone, or something, checked the claims, not just the prose.
-The decay detector (`docs-decay.mjs`) reads this field, so verified docs drop down the re-verification queue.
-
-**`template`** The catalog id of the documentation template this doc was seeded from, when one was used.
-Set it alongside the canonical `content-type` so the origin is traceable.
-See `templates.md`.
-
-**`sme-attested`** The verification ledger: claims that entered the doc on a subject matter expert's word alone, because they could not be checked against the code or existing docs during the intake reconcile.
-
-**The ledger's home is `.docs-assist/state/docs.yml`, under the document's `attested` key.** That is where the plugin writes it, and it is the same shape shown below.
-The whole value of this ledger is surviving past one sitting and shrinking over several passes, which a chat transcript cannot do and a frontmatter field cannot do in a project whose pipeline rejects unknown fields.
-
-A project that wants the ledger in frontmatter as well can have it, on an explicit yes, and the plugin reads it there.
-Each entry names the section the claim lives in, the claim itself in a short line, and optionally who attested it.
-
-```yaml
-sme-attested:
-  - section: "Recover from a split brain"
-    claim: "Rejoining nodes replay from the last checkpoint, not from zero"
-    source: "j.doe, intake 2026-07-10"
-```
-
-The ledger exists to shrink: a reviewer (human or AI) verifies a claim and deletes its entry, and when the ledger empties, record a fresh verification date.
-Audits surface docs whose ledgers are large or old.
-This gives reviewers specific claims to check instead of a doc-wide request for review.
-
 **`sdk`** The SDK or tool this doc relates to.
 Use when a doc is specific to one SDK in a multi-SDK project.
 
 **`languages`** Programming languages covered in the doc's examples.
 Helps AI tools and search filter by language.
 
+### Verification dates
+
+The plugin writes no verification date into a doc.
+Site generators treat a field like `last-verified` differently or not at all, and the date would be the plugin's note left in the project's file.
+When the plugin runs a doc's steps, it tells the contributor whether the doc runs clean, and notes the run in the journal.
+
+A project that already records verification in its docs, its own way (a frontmatter field, a rendered component, a footer), keeps doing so: the plugin updates that record on the contributor's yes, in the project's format.
+To let the decay detector read it, the project declares a `verified_body_pattern` in `.docs-assist/config.yml`: a regex with one capture group holding a `YYYY-MM-DD` date, matched against the whole doc.
+
+```yaml
+# .docs-assist/config.yml
+verified_body_pattern: '<Verified date="(\d{4}-\d{2}-\d{2})"'
+```
+
+Single quotes are the safe form, since they keep the backslashes intact; a double-quoted or bare value with a trailing comment reads the same.
+When a pattern is set but cannot work (invalid, no capture group, or no match in any doc), the decay report says so in a line of its own, so a mistyped pattern does not pass for a set of unverified docs.
+
 ## How the plugin uses frontmatter
 
-### Write docs with `/draft`
+### Write docs
 
-In the finalize step, the plugin generates frontmatter for the new doc:
+When the write step places a new doc in a project whose docs carry frontmatter, it fills the fields those docs use:
 
-- `title` and `description` come from the content
-- `content-type` was determined in the shape step
-- `audience` comes from the intake conversation (the dump and the dig)
-- `keywords` are extracted from the doc's content, the terms the plugin identifies as significant
-- `prerequisites` and `related` come from the survey step: the plugin already knows what other docs exist
+- `title` and `description` come from the content.
+- A content-type field, under the project's own name for it, comes from the write step's choice of content type.
+- An audience field comes from the draft's "who it's for."
+- Keywords come from the terms the doc actually uses.
+- Prerequisite and related links come from the survey: the plugin already knows what other docs exist.
+
+It fills only the fields the project's docs already carry.
 
 ### Survey existing docs
 
@@ -182,8 +160,7 @@ Specifically, the plugin uses:
 
 The audit command checks frontmatter as part of its review:
 
-- Missing required fields are flagged
-- Stale `last-verified` dates are noted
+- Fields the project's docs consistently carry and one doc lacks are flagged
 - Broken `prerequisites` and `related` paths are reported
 - Inconsistent `content-type` usage is identified
 
@@ -221,7 +198,8 @@ This survey produces a mental model of the repo's frontmatter conventions that t
    - Hugo: `weight`, `layout`, `draft`
    - Jekyll: `layout`, `permalink`, `published`, `categories`
    - Astro: `draft`, `pubDate`, `heroImage`
-1. **Add missing fields alongside existing ones.** If a doc has `title` and `description` but no content type or keywords equivalent, the plugin adds those using the repo's naming convention (or its own defaults if no convention exists).
+1. **Add only fields the project already uses.** If the project's docs carry a field and a new doc needs it, the plugin fills it with the project's name for it.
+   A field no doc in the project uses is not added, however useful it would be; offer it to the team instead.
 1. **Don't duplicate semantics.** If the repo already has `tags` and the plugin would add `keywords`, it uses `tags`.
    One field per concept.
 

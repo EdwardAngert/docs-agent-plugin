@@ -13,27 +13,25 @@
     "**/package-lock.json",
     "**/pnpm-lock.yaml",
     "**/yarn.lock",
-    "reports/**",
-    ".docs-assist/loop/**",
-    ".docs-assist/session-log.md"
+    "reports/**"
   ],
   "ignoreRegExpList": [
     "Urls",
     "Email",
     "HexValues",
     "/`{3}[\\s\\S]*?`{3}/g",
-    "/`[^`\\n]+`/g"
+    "/`[^`\\n]+`/g",
+    "/\\b(antipattern|rulebook|workstream)s?\\b/gi"
   ],
   "words": [
     "Angert",
-    "antipattern",
-    "antipatterns",
     "Astro",
     "Benedetti",
     "bisectable",
     "blocklist",
     "bypassable",
     "contenttype",
+    "Cowork",
     "cspell",
     "debias",
     "debiased",
@@ -73,7 +71,6 @@
     "reformatters",
     "rescoped",
     "roleplay",
-    "rulebook",
     "scroller",
     "triaging",
     "unauditable",
@@ -88,8 +85,7 @@
     "unvalidated",
     "upserted",
     "upserts",
-    "venv",
-    "Workstream",
-    "workstreams"
-  ]
+    "venv"
+  ],
+  "useGitignore": true
 }

@@ -5,6 +5,8 @@ argument-hint: [git ref, PR number, or path]
 
 # Update docs for a change
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 Keep documentation in sync with the code.
 Given a change, find the docs it affects and update them.
 This is the workflow that most benefits from running inside Claude Code, where the diff and the docs are both at hand.
@@ -70,7 +72,6 @@ For every update:
 - Change only what the diff requires.
   Preserve the doc's structure and voice.
 - Update example commands, flags, config snippets, and version references.
-- Bump `last-verified` in frontmatter when you confirm the doc against the new behavior.
 - Where a change alters meaning and you cannot confirm intent from the diff, flag it for subject matter expert review instead of guessing.
 
 ### 6. Review and finalize
@@ -89,6 +90,8 @@ For every update:
 - List remaining follow-ups: docs that need an SME to confirm, screenshots that went stale, edges you did not follow, or new docs the change calls for that do not exist yet.
 - When the target was a PR, offer to post the what-changed summary as a comment on it (`gh pr comment`), so the docs update is visible where the change is reviewed.
   Start the comment with an HTML marker (`<!-- docs-assist:update -->`) and update the marked comment on a re-run rather than stacking a new one.
+- Note in the branch's journal, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/journal.md`: each value the docs had wrong and what the code says now, naming the code you read, and each item flagged for expert review, as a question.
+  When `doc-updater` subagents did the edits, note what their reports end with.
 - When the update opens its own new PR instead of commenting on an existing one, write its description per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/pr-descriptions.md`.
 
 ## Notes
@@ -97,4 +100,4 @@ For every update:
   A docs update that invents behavior is worse than one that flags uncertainty.
 - A passing mention of a term is not a reason to edit a doc.
   Tie every edit to something in the diff.
-- If the change needs a brand-new doc rather than an edit, say so and offer `/docs-assist:draft`.
+- If the change needs a brand-new doc rather than an edit, say so and offer to draft it (the draft workflow, which you run yourself).

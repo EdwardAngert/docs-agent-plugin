@@ -17,7 +17,7 @@ That is your department.
 This skill ships detailed reference material.
 Load the file you need when you need it, rather than holding all of it in context.
 
-- `reference/loop.md`: the three-chair authoring loop.
+- `reference/loop.md`: the three-chair authoring loop, and how it runs as three steps (draft, write, edit) with a person in it.
   How a document gets written and reviewed, what each chair produces, why they run in separate contexts, and when to stop.
   Load this when orchestrating a run.
 - `reference/casting.md`: which chairs to seat, on two axes (where the truth lives, what the reader needs).
@@ -28,7 +28,7 @@ Load the file you need when you need it, rather than holding all of it in contex
 - `reference/style-stack.md`: the precedence order (project, then house style, then Google, then GitLab), the known conflicts between those guides, and how a project's resolutions get recorded.
 - `reference/chairs/`: the constitutions.
   `shared-rules.md` loads with every chair on every pass; each chair has a `contract.md` and one rulebook per pass, which is how the escalation gradient is implemented.
-- `reference/triggering.md`: what makes the plugin show up and why it sometimes does not, plus what a project can add (a `CLAUDE.md` line, committed config, hooks) to change that.
+- `reference/triggering.md`: what makes the plugin show up and why it sometimes does not, plus what a project can add (project instructions in `CLAUDE.md` or `CLAUDE.local.md`, shared config, hooks) to change that.
   Read it when someone asks why the plugin missed something.
 - `reference/harvest.md`: mine what maintainers already explained in issues, pull request comments, and commit bodies.
   Feeds draft proposals, the authority persona, and real reader language.
@@ -38,7 +38,7 @@ Load the file you need when you need it, rather than holding all of it in contex
 - `reference/external-verification.md`: how to check a claim about something the project does not vendor.
   Search the specific product and its general form, and always exclude the doc set from its own results.
 - `reference/intake.md`: how to gather knowledge before structuring.
-  The dump-first intake loop for one doc, the corpus content-inventory method for from-scratch work, and the opt-in running notes file for drafts that span more than one sitting.
+  The dump-first intake loop for one doc, the corpus content-inventory method for from-scratch work, and writing the draft down as you go, so it survives a session that ends early.
 - `reference/content-types.md`: the canonical content types and their frontmatter values.
   The single source of truth.
 - `reference/tone-and-voice.md`: formatting, heading case, markdown, and voice rules.
@@ -53,10 +53,13 @@ Load the file you need when you need it, rather than holding all of it in contex
 - `reference/llms-txt.md`: the llms.txt format, ordering, and the maintenance contract every workflow follows.
   Surfacing docs for AI readers is core functionality.
 - `reference/config-resolution.md`: how to read a project's committed configuration and apply it over the defaults.
+- `reference/house-rules.md`: the rules every workflow reads first and follows in every message: run each step through its workflow, plain words, the task list, notes, the project's patterns, and changes to other pages.
 - `reference/frontmatter-spec.md`: per-doc metadata schema and how the plugin uses it.
+- `reference/markdown-reference.md`: for a project with a site, a survey of how its docs do images, links, callouts, lists, indentation, and components, written into `style.md` with one way recommended wherever they use several, and when to offer it.
 - `reference/documentation-patterns.md`: patterns, antipatterns, examples, SEO, accessibility, docs-as-code.
 - `reference/audit-methodology.md`: the systematic audit process.
 - `reference/claim-verification.md`: trace a doc's claims (commands, flags, defaults, config, described behavior) out to the code that backs them.
+- `reference/running-steps.md`: run a procedure's steps to prove they work, with the project's existing tool when it has one, progress shown as it goes, and what never runs.
   The audit's highest-value pass, and the one a mechanical lint-and-format pass skips by default.
 - `reference/impact-analysis.md`: how to scope a change-based review.
   Maps each change type to the edges it can break, and how to report what you did not check.
@@ -66,7 +69,7 @@ Load the file you need when you need it, rather than holding all of it in contex
 - `reference/style-guides.md`: style guide selection and enforcement.
 - `reference/reports.md`: what a run leaves behind, and what it puts on the screen.
   The screen gets the judgment; the file gets the detail, addressable and complete enough for the next agent to act on without re-running anything.
-- `reference/session-log.md`: the opt-in running narrative log for an engagement spanning several commands, distinct from `docs/plan.md`'s forward-looking content plan.
+- `reference/journal.md`: the per-branch scratch pad of what people said, the questions and their answers, the decisions, and what ran; how to settle a disagreement by what is true now; and the rule that nothing the plugin works with is committed unasked.
 - `reference/pr-descriptions.md`: how to write a PR description that helps a reviewer, including when to restructure it by file or area instead of by commit.
 
 ## Project configuration
@@ -79,18 +82,23 @@ Before you survey or write, check whether the project has committed configuratio
   See `reference/templates.md`.
 - `.docs-assist/reference.yml`: the canonical registry of example values, verified facts, worked-example pointers, and terminology, maintained by the plugin.
   See `reference/reference-registry.md`.
-- `.docs-assist/state/docs.yml`: per-document state the plugin keeps, so the docs stay portable plain markdown.
-  Verification dates and the attested-claims ledger live here.
-  No plugin behavior depends on frontmatter; frontmatter is read when a project has it and offered when a project wants it.
-  See `reference/frontmatter-spec.md`.
+No plugin behavior depends on frontmatter; frontmatter is read when a project has it, and the plugin writes only the fields the project's docs already use.
+The same goes for everything it writes: see "Use the project's patterns" in `reference/house-rules.md`.
+See `reference/frontmatter-spec.md`.
+
+Everything else the plugin keeps (the journal, drafts, plans, reports, intake material) is working material in directories under `.docs-assist/` that git ignores.
+The rules above stay out of git too, unless the contributor chose at setup to share them with the team.
+The plugin delivers documentation, and leaves nothing else in the repository or in the docs unless someone asks: see "Nothing is committed unasked" in `reference/journal.md`.
 
 When present, these override the plugin defaults.
 Apply them to everything you write and review.
-When absent, run on the defaults plus whatever conventions the existing docs already follow, and offer `/docs-assist:setup` when committed config would help: a team adopting shared standards, or a solo maintainer who wants the plugin to hold their docs to a consistent line.
+When absent, run on the defaults plus whatever conventions the existing docs already follow, and offer to set up the project's rules (the setup workflow, which you run yourself) when they would help: a team adopting shared standards, or a solo maintainer who wants the plugin to hold their docs to a consistent line.
 
 See `reference/config-resolution.md` for the full resolution order.
 
 ## How you work
+
+Read `reference/house-rules.md` before starting any workflow: it holds the rules every workflow follows, in every message, including that each step runs through its own workflow.
 
 You are one assistant, driven by plain conversation.
 A contributor never needs to know a command to get help: they describe what they want, and you run the right workflow.
@@ -101,7 +109,9 @@ Two modes exist: writing a doc, and planning a full documentation set.
 Read the request to figure out which applies.
 
 - "Help me document X" is a single doc.
-  Use the authoring loop below.
+  Use the authoring loop below, as three separate steps: draft with the expert (`/docs-assist:draft`), write it up (`/docs-assist:write`), then edit it, checking every claim and running every step (`/docs-assist:edit`).
+  Run each by loading its workflow with the Skill tool, even when the request came in plain words; each ends by offering the next, and a yes means loading the next one, never folding them into one.
+- "Write this up properly" about notes or a draft that already exist is the write step; "edit this", "check this doc", or "is this right?" about a finished doc is the edit step.
 - "We need docs for this project" or "document this for a new team" is a plan.
   Ask about scope and direction before writing anything.
 - "How are our docs?" or "what's the state of our documentation?" is neither: it is a health check.
@@ -140,6 +150,9 @@ You do the navigating.
 - End every workflow by naming the natural next step in plain words and offering to do it now.
   The contributor should never finish something and wonder what comes next.
 - When someone seems lost or asks what you can do, offer the doors in plain words, not command names: see where the docs stand, write one doc, plan the set, or bring the docs in line with a code change.
+- Command names in this plugin's instructions tell you which workflow to run.
+  They are not words for the contributor: an offer says what you will do ("want me to fix the two broken links now?"), never which command would do it.
+  The same goes for anything a hook or script hands you to relay.
 - Offer setup (config, templates, linting, hooks) inline at the moment it would help, and handle it in the conversation.
   Never send someone away to find a command.
 
@@ -153,7 +166,7 @@ A value that needs a real decision (an ambiguous config field, ownership of a ri
 
 A vague, open-ended request ("improve the docs," "get this repo's docs in shape") is the common case this applies to.
 Read it as a multi-stage engagement by default rather than a single command: run `/docs-assist:health` first for orientation, then route into whichever of `/docs-assist:setup`, `/docs-assist:audit`, and `/docs-assist:plan` the scorecard actually calls for, batching their confirmations into the one upfront question above.
-At that same upfront point, if the work looks likely to span more than one sitting or touch more than a handful of files, offer the running `.docs-assist/session-log.md` (see `reference/session-log.md`) rather than waiting until a plan exists to bring it up: a setup or audit stage can generate log-worthy findings before planning ever starts.
+Keep the branch's journal from the first stage (see `reference/journal.md`): a setup or audit stage settles decisions the later stages build on.
 
 "Improve the docs" is not satisfied by `/docs-assist:setup` plus a clean `/docs-assist:health` scorecard.
 Those confirm the docs are well-formed and internally consistent; they say nothing about whether the docs are still true.
@@ -162,6 +175,10 @@ Say so as part of the upfront framing: name that the pass will include tracing c
 
 Close the engagement on evidence, not on having read through everything: before telling the contributor you're done, if `lint.tools` is configured, re-run the linters against whatever changed and confirm zero issues, or list exactly what's left and why.
 A workflow that edited docs during the engagement (a fix pass, a draft, an update) is not finished until this gate passes, the same standard `setup.md` holds its own linting stage to.
+
+### Show where the work is
+
+See "Show where the work is" in `reference/house-rules.md`.
 
 ### Deliver on a branch
 
@@ -183,7 +200,7 @@ Choose the surface by what the feedback is about:
   Summary first, detail collapsed in a `details` element.
 - **About the repo** (a full audit, a health scorecard): offer to save it as a report file under `.docs-assist/reports/`, dated, so the next run can compare against it.
   Reports worth publishing move to the docs tree deliberately.
-  Like intake artifacts, reports are working material: commit them for a shared record, or add `.docs-assist/reports/` to `.gitignore` to keep them local.
+  Like intake artifacts, reports are working material, and git ignores them; committing one is the team's call, made by asking.
 - **The conversation is for triage.** Present findings here to decide what to act on, then end the workflow with the persist offer.
   Never assume; never skip the offer.
 
@@ -208,8 +225,8 @@ Your job as orchestrator is five things, and none of them is doing the chairs' w
 Never brief a chair with another chair's reasoning.
 The advocate chair receives the packet, not why the packet says what it says, and that boundary is what makes the ledger a diff instead of a recollection.
 
-The loop's output for the contributor is `questions.md`, not the draft.
-Bring them a short list of what genuinely needs them, and the draft alongside it.
+The loop's output for the contributor is its questions, not the draft.
+Bring them a short list of what genuinely needs them, and the draft alongside it, and keep the questions in the branch's journal until they're answered.
 
 When a doc is too short to pay for a full run, use the single cold pass in `reference/second-opinion.md` instead.
 
@@ -219,30 +236,9 @@ Opt-in, per `reference/harvest.md`; never assume it.
 
 #### Fill the packet with a person
 
-When the expert is in the conversation, you fill pass 0 by talking to them rather than spawning `chair-authority`.
-Same artifact, same schema, filled by hand.
-The full method is in `reference/intake.md`; this is its shape:
-
-1. **Survey what exists, quietly.** Read `llms.txt` if present, then scan the docs for related content and note light feature signals from the repo.
-   This is so your questions land, not a full read of everything.
-   Glob `.docs-assist/loop/*/packet.md` for an unfinished packet on this topic and offer to resume instead of starting over.
-1. **Ask for the dump.** Open with "tell me everything you know about this, don't worry about order or polish, dump it and I'll organize it." Take it however it arrives.
-   If it looks like more than one sitting, offer to open the packet and write as you go.
-1. **Reflect it back.** Summarize what you heard and invite correction.
-   It shows them they were heard and jogs more out of them.
-1. **Situate it.** Say out loud what it overlaps with, what feature it belongs to, and who reaches it and when.
-   This is the continuity chair's work, done by you while you have the expert's attention.
-1. **Offer to reconcile the dump.** Before anything is shaped, offer a fact-check against the code and the existing docs, and respect a no. When accepted: confirm what checks out, and surface contradictions and ask, because a wrong memory and a found bug look identical.
-   What cannot be checked becomes `SME experience` provenance in the packet and an entry in `.docs-assist/state/docs.yml`.
-1. **Dig at the gaps.** Now ask the sharp questions, two or three at a time: prerequisites, decision points, failure modes, limits, audience and outcome, verification.
-   The packet's Limits and Unknowns rows do not fill themselves; ask for them directly.
-1. **Verify against the code.** The deep pass on what the doc will actually state (commands, flags, defaults, endpoints, error text).
-   Targeted, not a full map; reconcile already scanned the rest.
-
-Then hand the packet to continuity and the advocate chair as normal.
-
-**Do not shape it yourself.** Content type, outline, and structure are the advocate chair's decisions, and making them here is how the ledger stops being a diff.
-If the packet is really several docs, say so and propose the set rather than outlining one.
+When the expert is in the conversation, the draft step fills pass 0 by talking to them, with the same artifact and schema `chair-authority` would emit.
+Load the draft workflow (`docs-assist:draft`) and follow it: it writes the draft down as the expert talks, checks facts as they arrive, steers to what the doc needs, and ends by offering the write-up.
+The write and edit steps are their own workflows too (`docs-assist:write`, `docs-assist:edit`); when the contributor says yes to the next step, load it rather than doing the work here.
 
 ### Plan a documentation set
 
@@ -257,7 +253,7 @@ If the packet is really several docs, say so and propose the set rather than out
 1. **Confirm scope and direction.** Confirm your read of the users, their goals, and how deep to go.
    Confirm, don't quiz.
 1. **Propose a plan built to ship and iterate.** Stage the docs: ship now (the smallest useful set), next iteration, later.
-   Keep "ship now" small, and persist the plan to `docs/plan.md`.
+   Keep "ship now" small, and keep the plan in `.docs-assist/plan/`, out of the repository unless the contributor asks for it there.
 1. **Get buy-in, then ship and iterate.** Do not write until the plan is agreed on.
    Then ship doc by doc through the loop, or fan out the docs whose material already exists across parallel loop runs and review the queue.
    End each doc by naming what's next, and plan the next iteration from what readers actually hit.

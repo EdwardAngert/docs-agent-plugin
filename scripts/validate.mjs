@@ -21,11 +21,15 @@
 //  13. Shell examples chain commands with `&& \\` and a line break, not inline.
 //  14. A script that enumerates documents consults the git index.
 //  15. A fact with a named owner is not restated outside it.
+//  16. Relative links and anchors in tracked markdown resolve.
+//  17. Every config.yml key a shipped script reads is in the config template
+//      and in config-resolution.md.
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { brokenLinks } from '../hooks/links.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const rel = (p) => join(root, p);
@@ -366,6 +370,8 @@ const SHIP_DIRS = [
   'assets/',
   'commands/',
   'docs/',
+  'evals/',
+  'hooks/',
   'scripts/',
   'skills/',
 ];
@@ -635,6 +641,64 @@ for (const f of tracked) {
           );
         }
       }
+    }
+  }
+}
+
+// 16. Relative links and anchors in tracked markdown resolve.
+// The 0.9.10 README rewrite dropped two headings without updating what pointed
+// at them, and the fix for those deleted a third heading another page still
+// linked to. Nothing here checked anchors, so each one shipped. The same
+// resolver runs in the in-session notice hook (hooks/links.mjs), so a heading
+// someone removes mid-session gets flagged on their next prompt, and CI is the
+// backstop rather than the first to notice.
+//
+// A target has to ship to count: a tracked doc that links to a file git
+// ignores resolves on the author's machine and nowhere else.
+{
+  const readTracked = (p) => (isTracked.has(p) ? readFileSync(rel(p), 'utf8') : null);
+  const ignored = (p) => {
+    try { execFileSync('git', ['check-ignore', '-q', '--', p], { cwd: root, stdio: 'ignore' }); return true; }
+    catch { return false; }
+  };
+  const ships = (p) => isTracked.has(p) || (existsSync(rel(p)) && !ignored(p));
+  for (const f of tracked) {
+    if (!/\.mdx?$/.test(f)) continue;
+    for (const b of brokenLinks(root, f, readFileSync(rel(f), 'utf8'), readTracked, ships)) {
+      check(false, `${b.doc}:${b.line} links to \`${b.target}\`, but ${b.reason}.`);
+    }
+    checks++;
+  }
+}
+
+// 17. Every config.yml key a shipped script reads is documented.
+// `verified_body_pattern` shipped read by docs-decay.mjs and named in one
+// reference file, absent from both the template setup writes and the page
+// that lists what each key does. A key nobody can find is a key nobody sets.
+{
+  const template = existsSync(rel('assets/config/config.yml')) ? readFileSync(rel('assets/config/config.yml'), 'utf8') : '';
+  const resolution = existsSync(rel('skills/docs-assist/reference/config-resolution.md'))
+    ? readFileSync(rel('skills/docs-assist/reference/config-resolution.md'), 'utf8')
+    : '';
+  const readers = tracked.filter((f) => /^(assets\/ci|hooks)\/.*\.mjs$/.test(f));
+  for (const f of readers) {
+    const src = readFileSync(rel(f), 'utf8');
+    if (!src.includes('config.yml')) continue;
+    // Matches the minimal-parse shape every script here uses: /^key:/m.
+    // A key read any other way (nested, like `bundle.file`, or through a real
+    // YAML parser) is invisible to this check; document it by hand, and widen
+    // this pattern if a script ever starts reading keys differently.
+    for (const m of src.matchAll(/\/\^([a-z][a-z0-9_]*):/g)) {
+      const key = m[1];
+      check(
+        new RegExp(`^#?\\s*${key}:`, 'm').test(template),
+        `${f} reads \`${key}\` from .docs-assist/config.yml, but assets/config/config.yml does not list it ` +
+          `(commented out is fine, for an optional key).`,
+      );
+      check(
+        resolution.includes(`\`${key}\``),
+        `${f} reads \`${key}\` from .docs-assist/config.yml, but skills/docs-assist/reference/config-resolution.md does not say what it does.`,
+      );
     }
   }
 }

@@ -5,6 +5,8 @@ argument-hint: [stage]
 
 # Set up the project
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 Four things used to be four commands: committing conventions, generating linters, installing hooks, and scaffolding site navigation.
 They are one job with one set of questions, and asking them four times is how a contributor ends up declining all four.
 
@@ -28,6 +30,8 @@ Read the existing docs for heading case, list markers, ordered-list style, front
 Read `README.md` and any `CONTRIBUTING.md` for stated conventions.
 Present what you found as a summary to correct, not a questionnaire.
 
+When the project has a site (a generator, MDX, or custom components), also offer the markdown reference, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/markdown-reference.md`: how the site does images, links, callouts, lists, indentation, and components, with one way recommended wherever it uses several.
+
 Write `.docs-assist/config.yml` from `${CLAUDE_PLUGIN_ROOT}/assets/config/config.yml`, with the detected values filled in and the rest left at defaults.
 Write `.docs-assist/style.md` from the assets copy for prose conventions the config cannot express.
 
@@ -35,6 +39,17 @@ If the repo has `example-variables.txt` or `terms.txt` from an older version, of
 See `reference/reference-registry.md`.
 
 Seed `reference.yml` from what the docs already use: the placeholder values that recur, and the product terms that appear under more than one spelling.
+
+These files are the project's rules, and whether they go in the repository is the contributor's call.
+Keep them local unless the contributor says to share them:
+
+> "These rules stay on your machine by default.
+> Want to share them with the team instead?
+> Then they go in the repository, and CI and every contributor use them."
+
+Run `node ${CLAUDE_PLUGIN_ROOT}/hooks/journal.mjs rules local`, or `rules shared` on a yes.
+Local hides all of `.docs-assist/` from git; a project that already tracks files there is left as it is.
+Shared makes the rules visible to git, and committing them is still the contributor's to do; working material stays hidden either way.
 
 ## 2. Linting
 
@@ -56,6 +71,11 @@ Hold the first run to zero issues, or list exactly what is left and why.
 
 **Default off.
 Nothing is installed without an explicit choice per hook.**
+
+The plugin's own notice hooks are already running and need nothing from this stage: they check edited files for broken links and for docs that name them, and mention what is still true once, on the next prompt.
+Say so in one line when you open this stage, so the contributor knows what they already have before choosing more.
+If they want it off for this project, set `notices: false` in `.docs-assist/config.yml`.
+See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/triggering.md`.
 
 - **Git pre-commit lint**: runs the configured linters on changed docs.
 - **In-session doc lint**: lints a doc after it is written, inside the conversation.
@@ -97,17 +117,25 @@ A persona a contributor corrects is the system working, and an edit there wins o
 The plugin only shows up when something asks it to.
 A skill matches what the contributor said, so work that never mentions documentation never reaches it.
 
-Offer the `CLAUDE.md` line, which is the highest-leverage fix and the cheapest.
-`CLAUDE.md` is always in context, where a skill description is only matched, so a standing instruction there outranks anything this plugin can say about itself.
+Offer the project instructions block, which is the highest-leverage fix and the cheapest.
+Claude Code loads `CLAUDE.md` and `CLAUDE.local.md` on every turn, where a skill description is only matched, so a standing instruction there outranks anything this plugin can say about itself.
+The block names the routes, not just the plugin: without it, a plain "write it up" gets a page written in the conversation, skipping the separate writer and the questioning.
 
 Propose this block, specific about where:
 
 ```markdown
 ## Documentation
 
-This repo uses the Docs Assist plugin. When work touches anything under `docs/`,
-the README, a release note, or a pull request description, use it rather than
-writing prose directly. Start with `/docs-assist:health` if the state is unclear.
+This repo uses the Docs Assist plugin for anything under `docs/`, the README,
+release notes, and pull request descriptions. Use it rather than writing prose directly:
+
+- A new doc goes through three steps: draft it with whoever knows the subject
+  (`/docs-assist:draft`), write it up (`/docs-assist:write`), then edit it
+  (`/docs-assist:edit`). Never write a doc directly.
+- To check or fix a doc that exists, use the edit step.
+- When a code change leaves docs out of date, use `/docs-assist:update`.
+- When the state of the docs is unclear, start with `/docs-assist:health`.
+
 If finishing it surfaces something else that blocks it, fix that first and say
 so, rather than stopping to ask.
 ```
@@ -117,7 +145,19 @@ The last line matters as much as the first three: it is the same "always in cont
 Adjust the paths to the repo's own layout, and keep it short.
 A vague instruction competes with everything else in that file and loses.
 
-If the repo has no `CLAUDE.md`, offer to create one with just this section rather than scaffolding a whole file it did not ask for.
+Where it goes is the contributor's call, and the default is just for them:
+
+> "I'd put these lines where only you get them.
+> Want the whole team to get them instead?"
+
+- **Just for you, the default**: append the block to `CLAUDE.local.md` at the project root, creating it with just this section if needed, then run `node ${CLAUDE_PLUGIN_ROOT}/hooks/journal.mjs exclude CLAUDE.local.md`.
+  That hides it through `.git/info/exclude`, so it stays out of git without changing the project's `.gitignore`.
+  It exists only in this clone: another worktree or machine needs it added again.
+- **For the team**: add the block to `CLAUDE.md`, creating it with just this section if needed, rather than scaffolding a whole file nobody asked for.
+  Committing it is the contributor's to do.
+
+One case changes the default: a repo with an `AGENTS.md` and no `CLAUDE.md`.
+Creating a `CLAUDE.local.md` there stops Claude Code reading `AGENTS.md` for this contributor, so say that, and offer the team option in `AGENTS.md` instead, or the local file together with the Project instructions setting in `/config` set to `claude-md-and-agents-md`.
 
 See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/triggering.md` for the full picture, including what hooks can and cannot do.
 
@@ -134,4 +174,5 @@ A field that never reaches the page is a field that costs maintenance and buys n
 ## Close
 
 Report what was written, what was skipped, and what the first lint run found.
+Note in the branch's journal each convention the contributor confirmed or corrected, and why, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/journal.md`.
 Then name the natural next step in plain words.

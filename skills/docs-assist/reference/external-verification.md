@@ -53,8 +53,8 @@ A pass is not the only acceptable one.
 
 That third outcome is the one a human author never remembers to write down by hand, and it is often the most useful of the three.
 
-Results go to `.docs-assist/state/docs.yml`, against the document.
-A contradicted or unverifiable claim is not a verification date; it is a finding, and in a loop run it belongs in the ledger review or `questions.md`.
+Note what each check found in the branch's journal (`journal.md`), with the source that settled it.
+A contradicted or unverifiable claim is a finding, and in a loop run it belongs in the ledger review or the questions for a person.
 
 ## What this cannot settle
 

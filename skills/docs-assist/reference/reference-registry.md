@@ -2,7 +2,7 @@
 
 `.docs-assist/reference.yml` is the single canonical registry Docs Assist checks against when drafting or auditing: example values, verified facts, pointers to existing worked examples, and product terminology, in one file instead of scattered across several.
 
-Load this whenever you read, write, or maintain the registry, from `/docs-assist:draft`, `/docs-assist:audit`, or `/docs-assist:setup`.
+Load this whenever you read, write, or maintain the registry, from `/docs-assist:draft`, `/docs-assist:write`, `/docs-assist:edit`, `/docs-assist:audit`, or `/docs-assist:setup`.
 
 ## Why one file
 

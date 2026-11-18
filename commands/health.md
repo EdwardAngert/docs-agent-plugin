@@ -5,6 +5,8 @@ argument-hint: [docs directory]
 
 # Check documentation health
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 Give the contributor a fast, honest read on the state of their documentation, and one clear place to start.
 
 This is the orientation command: the first thing to run after installing the plugin, and the periodic pulse check afterward.
@@ -42,9 +44,9 @@ Rate each `solid`, `needs work`, or `missing`, with one line of evidence.
   Opt-in, and skip it silently when declined.
   See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/harvest.md`.
 - **Freshness**: are the docs still true?
-  In a git repo, run the decay detector (`node ${CLAUDE_PLUGIN_ROOT}/assets/ci/docs-decay.mjs`) and read its ranked queue: it scores every doc on related-source churn since the doc last changed, `last-verified` age, doc age, and open `sme-attested` claims, deterministically and with the reasons shown.
+  In a git repo, run the decay detector (`node ${CLAUDE_PLUGIN_ROOT}/assets/ci/docs-decay.mjs`) and read its ranked queue: it scores every doc on related-source churn since the doc last changed, doc age, and, when the project records verification dates in its docs and declares how, verification age, deterministically and with the reasons shown.
   It costs about two git calls per doc; for a docs set large enough that a full scan would break the fast-scorecard promise (hundreds of files), pass it the highest-traffic subdirectory instead of the whole tree, and say that's what you scanned.
-  Outside a git repo, fall back to comparing doc modification dates and `last-verified` frontmatter against the code by hand.
+  Outside a git repo, fall back to comparing doc modification dates against the code by hand.
   Either way, a doc describing a heavily changed area, untouched since, is the signal.
   The decay detector ranks which docs are worth a real trace; it does not perform one.
   It scores churn, not correctness, so a "solid" rating here means "nothing looks stale," not "every claim was checked against the code" (see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/claim-verification.md`); if the ranking surfaces genuinely high-risk docs, that is itself a "needs work" finding pointing at the full audit, not something health resolves on its own.
@@ -62,7 +64,8 @@ With no committed config, the standard is the set's own internal consistency, pe
 Before writing it, check `.docs-assist/reports/` for a previous health scorecard.
 When one exists, note what moved: a dimension that improved or regressed since the last check is more useful than any absolute rating.
 
-Keep the scorecard small enough to read in thirty seconds:
+Keep the scorecard small enough to read in thirty seconds.
+The report is for the contributor, who never needs a command name: an offer in it says what you will do ("want me to set up linting?"), and names no slash command.
 
 ```markdown
 ## Docs health: <repo name>
@@ -80,13 +83,13 @@ Keep the scorecard small enough to read in thirty seconds:
 ### 4. Offer to fix the first thing now
 
 End with an offer, not homework.
-Match the offer to the finding:
+Match the offer to the finding, and make it in plain words: the workflow names below are for you, not for the contributor.
 
-- Coverage gap: offer to draft the missing doc now (`/docs-assist:draft` flow).
-- Freshness gap: offer to run the update pass against recent changes (`/docs-assist:update`); for the decay queue's worst procedural docs, offer `/docs-assist:verify` to run their steps and settle whether they still work; and when the queue flags real risk broadly rather than a handful of docs, that is the "broad problems" case below, not a fix this offer alone resolves.
-- Consistency gap: offer `/docs-assist:setup` to record the conventions, and the fix pass to apply them.
+- Coverage gap: offer to draft the missing doc now (the draft workflow, which you run yourself).
+- Freshness gap: offer to run the update pass against recent changes (the update workflow, which you run yourself); for the decay queue's worst procedural docs, offer to run their steps and settle (the verify workflow) whether they still work; and when the queue flags real risk broadly rather than a handful of docs, that is the "broad problems" case below, not a fix this offer alone resolves.
+- Consistency gap: offer to record the conventions (the setup workflow, which you run yourself), and the fix pass to apply them.
 - Findability gap: offer to generate or repair `llms.txt` and the missing cross-references.
-- Broad problems across dimensions: recommend the full `/docs-assist:audit` and offer to run it.
+- Broad problems across dimensions: offer to run the full audit (the audit workflow, which you run yourself).
 
 One offer, sized to ship in this session.
 Getting the first fix out the door is the point; the rest belongs in the next pulse check or the full audit.

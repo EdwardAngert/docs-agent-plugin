@@ -2,7 +2,7 @@
 #
 # One place for canonical example values, verified facts, pointers to
 # existing worked examples, and product terminology. Docs Assist reads this
-# when drafting or auditing, and `/docs-assist:setup-lint` compiles every
+# when drafting or auditing, and Docs Assist setup compiles every
 # `kind: term` entry into a generated Vale substitution rule.
 #
 # Four kinds:

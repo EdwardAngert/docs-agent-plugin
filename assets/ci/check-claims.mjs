@@ -32,6 +32,13 @@
 // tries to rule out before calling something missing (see checkFilePath and
 // checkConfigKey below); anything left over after that is worth a human or
 // agent second look, not an auto-fix.
+//
+// A path that will never resolve on purpose (a removed file cited in a
+// historical note, a placeholder illustrating a naming convention, a real
+// path in a sibling repo) is not drift either, and no heuristic can tell it
+// apart from real drift reliably. Mark it explicitly instead:
+// `` `old/path.js`<!-- docs-assist:not-a-claim --> ``, immediately after the
+// backtick-fenced claim, same line.
 
 import { readFileSync, existsSync, appendFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -61,6 +68,11 @@ function mdFiles(dir) {
 const DOCS_DIR = docsDir();
 const OUT_DIR = process.argv[3] || process.env.CHECK_CLAIMS_OUT || '.docs-assist/claims';
 mkdirSync(OUT_DIR, { recursive: true });
+// Its output is working material, never something to commit: a `.gitignore`
+// of `*` hides the directory, and itself, from git.
+if (!existsSync(`${OUT_DIR}/.gitignore`)) {
+  try { writeFileSync(`${OUT_DIR}/.gitignore`, '*\n'); } catch { /* read-only checkout */ }
+}
 
 const docs = mdFiles(DOCS_DIR);
 for (const extra of ['README.md', 'AGENTS.md', 'CLAUDE.md', 'llms.txt']) {
@@ -135,6 +147,17 @@ const PATTERNS = [
 // Categories a lookup can settle without judgment.
 const MECHANICAL = new Set(['file-path', 'bare-path', 'cli-flag', 'cli-command', 'identifier-call', 'env-or-config-key', 'yaml-key']);
 
+// An author-declared suppression, immediately after the claim it excuses, in
+// the same `docs-assist:` comment family as doc-verifier's `no-verify`
+// (agents/doc-verifier.md). It exists because some backtick-fenced paths in
+// prose are not claims about this repository's current state at all: a
+// removed script cited as "recoverable from git history," a placeholder
+// illustrating a naming convention, a real path in a sibling repo this
+// checkout cannot see. No heuristic can tell those apart from real drift
+// reliably enough to guess; the author already knows and says so explicitly,
+// the same way a fenced block opts out of doc-verifier.
+const SUPPRESS_MARKER = /^\s*<!--\s*docs-assist:not-a-claim\s*-->/;
+
 function extractFromDoc(doc) {
   const claims = [];
   const lines = readFileSync(doc, 'utf8').split('\n');
@@ -151,6 +174,7 @@ function extractFromDoc(doc) {
         const span = [m.index, m.index + m[0].length];
         if (spans.some(([s, e]) => span[0] < e && span[1] > s)) continue;
         spans.push(span);
+        if (SUPPRESS_MARKER.test(raw.slice(span[1]))) continue;
         claims.push({ doc, line: i + 1, category, matched: m[0], context: line });
       }
     }
@@ -246,8 +270,18 @@ function checkCliFlag(matched) {
   return ['missing', `${flag} not found as a literal or as parameter/field '${param}'`];
 }
 
+// Variables the operating system or shell defines. A doc naming one is
+// talking about the reader's environment, not this repository, so a repo
+// with no mention of it is not drift.
+const SYSTEM_VARS = new Set([
+  'PATH', 'HOME', 'USER', 'SHELL', 'PWD', 'TMPDIR', 'TEMP', 'TMP', 'LANG', 'TERM',
+  'EDITOR', 'VISUAL', 'PAGER', 'XDG_CONFIG_HOME', 'XDG_DATA_HOME', 'XDG_CACHE_HOME',
+  'HTTP_PROXY', 'HTTPS_PROXY', 'NO_PROXY', 'CI', 'APPDATA', 'USERPROFILE', 'LOCALAPPDATA',
+]);
+
 function checkConfigKey(matched) {
   const key = matched.replace(/`/g, '').split(':')[0].trim();
+  if (SYSTEM_VARS.has(key)) return ['confirmed', `'${key}' is an operating-system variable, not a repository key`];
   const hits = gitGrepHits(key);
   if (hits.length) return ['confirmed', `'${key}' found: ${hits[0]}`];
   // SCREAMING_SNAKE backtick tokens are also used as doc-only placeholders

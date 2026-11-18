@@ -5,6 +5,8 @@ argument-hint: [repo path or description]
 
 # Plan a documentation set
 
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
+
 Help someone plan what documentation a project needs, before writing any of it.
 
 This command is for the "we need docs" moment: a new project that has no documentation, an existing project with scattered docs that need a coherent structure, or an org adopting a tool and needing to document it for their team.
@@ -68,7 +70,7 @@ Don't hand them a questionnaire.
 - **Recommend one first doc.** Name the single highest-leverage doc to write now, usually a README or a quickstart, and say why.
   Offer to draft it immediately, before the full plan.
   A shipped doc in the first ten minutes beats a perfect roadmap.
-- **Offer to set conventions.** For a repo with few or no docs, offer `/docs-assist:setup` so every doc from the first is consistent (heading style, frontmatter, templates, example variables).
+- **Offer to set conventions.** For a repo with few or no docs, offer to set up shared conventions (the setup workflow, which you run yourself) so every doc from the first is consistent (heading style, frontmatter, templates, example variables).
   See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/config-resolution.md`.
 
 Getting one good doc out the door here is a feature, not a detour.
@@ -114,10 +116,10 @@ This is how the set-level journey stays connected to each doc's reader instead o
 
 ### 6. Propose a docs plan built to ship and iterate
 
-Write the plan to a file, `docs/plan.md` by default, or wherever the contributor prefers.
+Write the plan to `.docs-assist/plan/plan.md`, run `node ${CLAUDE_PLUGIN_ROOT}/hooks/journal.mjs path` first so git ignores it, and tell the contributor it stays out of the repository.
+A plan is working material, like a draft: put it in the docs or commit it only when the contributor asks.
 Keep it a content plan, forward-looking: what to write, for whom, in what order.
-If the engagement runs long enough to generate its own narrative worth keeping (findings, decisions, why a call went one way over another), that belongs in the separate `.docs-assist/session-log.md`, not folded into this file; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/session-log.md`.
-Offer it once, the same way the intake loop offers a running notes file, rather than letting narrative accumulate here by default.
+Decisions and findings along the way (why a call went one way over another) belong in the branch's journal, not folded into this file; see `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/journal.md`.
 Present it as a structured list of docs to write, staged so the useful ones ship first.
 For each doc, specify:
 
@@ -163,19 +165,19 @@ Rewriting docs is expensive.
 ### 8. Execute and iterate
 
 Once the plan is approved, ship doc by doc, or fan the stage out in parallel.
-Each doc follows the `/draft` workflow (survey, dump, reflect, situate, reconcile, dig, verify, shape, outline, draft, review, finalize).
+Each doc goes through the three steps: draft (`commands/draft.md`), write (`commands/write.md`), and edit (`commands/edit.md`).
 
 **Fan out the ship-now stage when the material already exists**, and when the stage crosses a concrete size, the same threshold `/docs-assist:audit` uses: more than 5 docs in the stage, or their combined draft length likely to exceed roughly 2,000 lines.
 Below that, draft in the conversation; a fan-out for two small docs costs more in coordination than it saves.
 Split the stage honestly:
 
-- Docs whose knowledge is already captured (in the intake inventory, the code, or existing docs) can be drafted in parallel: run the authoring loop once per doc, each briefed with its plan entry, the target path, the relevant inventory and code paths, and the resolved conventions (config, `style.md`, `reference.yml`).
+- Docs whose knowledge is already captured (in the intake inventory, the code, or existing docs) can be drafted in parallel: run the three steps once per doc, with the code filling the draft (see "When the expert isn't here" in `commands/draft.md`), each briefed with its plan entry, the target path, the relevant inventory and code paths, and the resolved conventions (config, `style.md`, `reference.yml`).
   The loop is sequential within a doc and parallel across them.
   This is multi-file work, so the branch delivery rule applies.
 - Docs that need fresh knowledge from a human stay conversational.
   Do not fan out a doc whose material does not exist; the drafter flags gaps, it does not invent.
 - Consolidate the fan-out: collect each drafter's report, add their proposed `llms.txt` entries yourself (subagents never edit shared files), apply the cross-references they suggest, then run the second-opinion pass batched across the set, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/second-opinion.md`.
-  Brief it with each drafter's SME-attested and verified-against-code lists; the batch is the one vantage point that sees drift between siblings that each drafted in isolation.
+  Brief it with what each drafter found resting on someone's word and what it checked against the code; the batch is the one vantage point that sees drift between siblings that each drafted in isolation.
   Fold judgment findings into the same list as the `needs-sme` flags, and present the contributor one review queue.
 
 The contributor's role in a fan-out is reviewer, not co-author: they work the queue for accuracy while you handle everything else.

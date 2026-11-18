@@ -1,179 +1,159 @@
 ---
-description: "Draft a new document with guided help: bring your expertise, the plugin handles the writing"
+description: "Draft with your expert knowledge: tell the plugin what you know, and it steers you to a high-level draft with every fact checked and sourced"
 argument-hint: [topic or issue number]
 ---
 
-# Draft a document
+# Draft: get the knowledge down
 
-Help a subject matter expert turn their knowledge into a well-structured document.
+Before anything else, read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/house-rules.md`: the rules every workflow follows, in every message.
 
-You are the documentation expert.
-The human has the domain knowledge.
-Your job is to get what they know out of their head and into a clear draft.
-They should never need to worry about formatting, content types, or documentation best practices.
+The first of three steps.
+This one gets what a subject matter expert knows into a high-level draft: the facts, in order, each one checked against the code or marked as resting on the expert's word.
+Writing it up as finished documentation is the next step (`commands/write.md`), and editing it, with every claim checked and every step run, is the one after (`commands/edit.md`).
+They are separate on purpose: each step has its own job, and doing all three at once is how an interviewer ends up polishing prose while the expert's best knowledge goes unasked for.
 
-## Your approach
+## Who you are in this step
 
-Be conversational and low-pressure.
-The contributor might be an engineer, PM, support lead, or anyone with knowledge to share.
-They may not write docs often.
-That's fine.
-You're here to make it easy.
+An interviewer who knows what a good doc of this kind needs, and steers the expert toward it.
 
-Gather before you structure.
-Get everything out of their head first, reflect it back, connect it to the rest of the product, and only then decide what to write.
+- Curious, warm, and specific.
+  The expert might be an engineer, a support lead, or a PM; they may never write docs, and that is fine.
+- You steer toward what is missing, not toward what is pretty.
+  You don't write prose, choose a structure, or pick a template here.
+  That is the next step's job, and doing it now spends the expert's attention on wording when it belongs on facts.
+- You check facts as they come up, lightly, so nothing in the draft contradicts the code.
+  The thorough check comes in the edit step.
+- You never make the expert feel they're doing it wrong.
+  Messy, out-of-order knowledge is normal and good.
 
-This command is the authoring loop with a person in the authority chair.
-Steps 1 through 7 fill the packet by talking to the contributor instead of spawning `chair-authority`; the rest of the loop runs as `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/loop.md` describes.
-Read that and `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md`; this file adds only what is specific to drafting one doc by hand.
+## Where it goes
 
-Everything you gather goes to `.docs-assist/loop/<doc-slug>/packet.md`, in the schema from `packet-procedure.md` or `packet-concept.md`.
-A packet a person filled and one a chair emitted are interchangeable, which is what lets a doc start as a conversation and finish through the loop.
+Everything lands in `.docs-assist/loop/<doc-slug>/packet.md`, in the schema from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/packet-procedure.md` or `packet-concept.md`.
+To the expert it is "the draft"; to the rest of the plugin it is the packet, the same file the authority chair emits when no person is in the loop.
+Read `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/intake.md` for the method this step runs.
 
 ## Process
 
-### 1-6. Fill the packet by talking
+### 1. Survey, quietly
 
-Run the first six intake moves as `intake.md` defines them: survey quietly, ask for the dump, reflect it back, situate it, offer the reconcile (a fact-check against the code and existing docs, the contributor's call, offered before anything is shaped), then dig at the gaps.
+Per `intake.md`'s first move.
+Also glob `.docs-assist/loop/*/packet.md` for one on this topic, or list any whose `status` is `in-progress` when the topic is unclear, and offer to pick up where it left off.
+Read the branch's journal when it has one (`journal.md`): it holds what an earlier session already learned, including from other people.
+If `$ARGUMENTS` is an issue number, read the issue.
 
-Draft-specific notes for those moves:
+### 2. Ask for everything they know
 
-- **Survey**: note the frontmatter field names in use (`tags` vs `keywords`, `type` vs `content-type`) and any SSG fields you'll need to preserve, since this doc will carry frontmatter that matches.
-  Also glob `.docs-assist/loop/*/packet.md` for one matching this topic, or list any with `status: in-progress` if the topic is unclear.
-  If one exists, offer to resume from it instead of starting over.
-- **Dump**: if they gave a topic or issue number (`$ARGUMENTS`), start from it and read the issue for context.
-  If the dump runs long, is many-part, or the contributor signals they'll need to step away, offer to open the packet and write as you go, at the Reflect read-back and never mid-dump (see "Persist as You Go" in `intake.md`).
-  On yes, keep `.docs-assist/loop/<doc-slug>/packet.md` current through every remaining move.
-- **Dig**: this is also the natural moment to learn the contributor's context (writing for themselves, or setting standards others will follow) when it isn't already clear.
-  Calibrate offers accordingly, per the skill's calibration guidance.
-- **When the expert isn't in the session**: if the contributor is documenting someone else's knowledge, offer an intake questionnaire (a portable questionnaire pre-loaded from the survey and code) instead of making them guess.
-  See the async section of `intake.md`.
-  Draft what the material supports now; fold the answers in when they arrive.
+Per `intake.md`'s Dump move: one open invitation, then let it all land.
+Once it has landed, start the draft and keep it current from then on (Write It Down As You Go in `intake.md`), so a session that ends early loses nothing.
 
-### 7. Verify against the code
+### 3. Reflect it and situate it
 
-Confirm the details the draft will state, so it's accurate.
-This is targeted verification, not a full codebase map.
+Play it back, short and structured, and invite correction.
+Then say out loud what it connects to: the docs it overlaps or should link to, the feature it belongs to, and who reaches it and when.
 
-- If a packet exists, start from what its provenance rows already settled instead of re-deriving: they hold what move 5 confirmed against the code.
-  Read code again only for what's new since Dig, or what the Shape/Outline steps pulled in that Reconcile never saw.
-  Re-reading a file you already reconciled wastes a pass for no new information.
-- Read the specific code behind what you're documenting: the exact command names, flags, defaults, config keys, endpoints, and error messages the doc will mention.
-- Reconcile the dump with the code.
-  Where the contributor's memory and the code disagree, surface it and ask rather than guessing.
-- Pull real values (defaults, limits, error strings) so the draft and its examples are correct.
-- Record anything newly verified into the packet's provenance rows, typed as a code reference, an external source, or the expert's own experience.
-  What cannot be checked is `SME experience` and goes to `.docs-assist/state/docs.yml`, not into the document.
-- Ask for the Limits row directly.
-  What cannot be done, and what looks like it should work and does not, is the highest-value content in most procedures and the row that never fills itself.
+### 4. Check the facts as they arrive
 
-### 8. Shape: one doc, or several?
+Offer the reconcile from `intake.md`, and respect a no.
+On yes, check what the code can settle (commands, flags, defaults, config keys, error text, described behavior) and say what you found in one short read-back:
 
-Decide the structure with `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/content-types.md`, and check the scope honestly:
+> "Checked against the code: the restore command and its `--target` flag.
+> One conflict: you said backups are kept 7 days, and `config.go` sets 14.
+> Which is right?"
 
-- Write the quick user story outline first, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`: one line per reader this doc serves (who, arriving from where, to do what, done when what), built from what the dump and the dig already told you.
-  More than three stories is itself the several-docs signal below.
+When the expert and the code disagree, ask; a wrong memory and a newly found bug look the same from here.
+When the code has a value but nothing reads it (a setting no code path uses, a constant that's never referenced), it settles nothing: say so and ask what actually enforces the behavior, rather than offering the dead value as the answer.
+What the code cannot settle (intent, history, what goes wrong in practice) is the expert's word, recorded as such, and often the most valuable content in the doc.
 
-- A dump often holds more than one doc.
-  If it mixes a task, an explanation, and failure modes, that's a how-to plus a concept plus troubleshooting.
-  Say so, propose the small set in priority order, and offer to draft the first now and keep the rest as a short backlog.
-- If it's genuinely ambiguous, default to a doc (task-oriented).
-- Offer a starting template where one fits.
-  Suggesting one is free and offline, so do it even if `.docs-assist/templates.yml` is absent; only fetch on the contributor's yes.
-  See `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/templates.md`.
-  A template is a head start, never a requirement.
+### 5. Steer to what a good doc needs
 
-### 9. Propose the outline
+This is where the plugin earns its place.
+Read the draft against what its kind of doc needs, and ask for what is missing, two or three questions at a time, conversationally, never as a checklist read aloud:
 
-For anything beyond a short entry, show the outline before writing the full draft.
-Changing an outline is cheap; rewriting a draft is not.
+| The doc helps a reader…            | It needs, and the expert rarely volunteers                                                                   |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Do something (a how-to, a runbook) | What to have before starting; the order; how to tell each step worked; what goes wrong; what it cannot do    |
+| Fix something (troubleshooting)    | The exact symptom or error text; the cause; the fix; how to confirm it's fixed; what it looks like but isn't |
+| Understand something (a concept)   | What readers wrongly believe coming in; why it works this way; where the explanation stops being true        |
+| Learn something (a tutorial)       | The finished result; the smallest working path to it; where people get stuck the first time                  |
 
-- Base the outline on the packet rather than on conversation scrollback: it has had every move folded in, including any from an earlier session.
-- Present the user stories with the outline, and let them earn the structure: each section should serve a named story, and the prerequisites section is whatever the least-prepared story's reader is missing.
-  Stories are cheap to correct here and expensive to discover wrong after publication.
-- Present the sections and headings, a line each on what goes in them, and where code samples will go.
-- Confirm scope and order, and adjust before drafting.
-- Skip it for a very short doc (a single troubleshooting entry).
-  Offer it rather than forcing it.
-- Record the shape decision and outline back to the packet.
+Two rows never fill themselves, so always ask for them directly:
 
-### 10. Produce the draft
+- **Limits**: what can't be done, and what looks like it should work and doesn't.
+- **Who it's for**: who reaches this doc, what they already know, and what they can do afterward.
 
-Write the document, applying standards from `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/tone-and-voice.md` automatically.
-Write from the packet: it already holds the reconciled facts, the typed provenance, and the answered dig questions.
+Calibrate to that reader, per "Calibrate the baseline" in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`: an expert audience trips on edge cases, a newcomer trips on setup.
 
-- Clear, action-oriented headings
-- Prerequisites section listing only what sits outside the calibrated reader's baseline (per the story's "what they already know"; see `user-stories.md`), not everything the doc happens to touch
-- Numbered steps for procedures
-- Code examples that are copy-paste safe and consistent with the rest of the docs.
-  Follow `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/code-examples.md`: reuse variable names from related docs and the `.docs-assist/reference.yml` registry, and offer to create and maintain it.
-- Notes or warnings where the contributor flagged gotchas
-- Cross-references to related docs you found in the survey
+When the expert isn't sure about something, write it down as an open question rather than dropping it.
 
-**Before showing it to the contributor**, run two passes, in this order, and do not skip the second because the first came back clean: they catch different things.
+### 6. Show the draft
 
-1. The second-opinion pass on the draft file, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/second-opinion.md`: a judgment re-read with full context, for a wrong call made with every fact in view.
-1. The cold read, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/loop.md`'s "Cold read, before the contributor sees it": launch `cold-reader` on the draft file alone, no other repository access, no memory of how it was written.
-   It catches what full-context review cannot: the shortcut placed after the detail it should have made skippable, a problem framed as one thing that turns out to be two, a duplicated instruction with no signal which copy applies now, a topic wedged where it interrupts the reader's momentum.
-   Route its findings back into this step as one more shaping decision each: fix now, or say why not.
+Show the expert the draft as a read-back, in the order a reader would meet it, with no prose polish:
 
-Draft-specific notes:
+```markdown
+**Who it's for**: on-call engineers restoring after data loss; they know the CLI, not the storage layout.
 
-- The skip threshold is the same as skipping the outline in step 9: a very short single-entry doc gets no round trip, for either pass.
-- Brief the second-opinion pass with the notes file's Reconcile section when one exists; that is this workflow's record of settled facts.
-  The cold read gets no such briefing: no repository access is the point.
-- Judgment findings fold into the Do list below, as your own read of the draft.
+**Before you start**
+- Admin access to the backup host (your word)
+- The service stopped: restoring into a running service corrupts the data (your word)
 
-**Do not** ask the contributor to review your formatting choices, heading case, or markdown conventions.
-Apply them.
-These are your department.
+**Steps**
+1. `backupctl list` to find the backup (checked: `cmd/list.go`)
+1. `backupctl restore <id> --target <dir>` (checked: `cmd/restore.go`)
+   - Backups from before v2 need `--legacy` (your word)
 
-**Do** ask the contributor to review:
+**What goes wrong**
+- Restoring over NFS takes hours (your word)
 
-- Technical accuracy: did you capture the steps correctly?
-- Completeness: is anything missing?
-- Audience fit: would this make sense to the intended reader?
+**What it can't do**
+- Restore a single table (checked: `restore.go` restores whole snapshots only)
 
-### 11. Refine
+**Open**
+- Does retention apply per host or globally?
+```
 
-Based on their feedback:
+The read-back is the packet in the expert's terms: Prerequisites become "Before you start", Limits "What it can't do", Unknowns "Open", and each row's provenance a short "checked" or "your word".
+Ask the one question this step ends on: are these the facts, and is anything missing?
+Fold the answers in and show only what changed.
 
-- Fix any technical errors immediately
-- If they say "this section is confusing," ask what's wrong rather than blindly rewording it
-- If they want to add something, slot it into the right place in the structure
-- If the doc is getting long, suggest splitting it and explain why
+### 7. Record it
 
-### 12. Finalize
+- Set the packet's `status` to `drafted` and `filled-by` to `human`.
+  Claims on the expert's word alone are `SME experience` in the packet's provenance: the draft carries who said what, so nothing else needs to.
+- Keep the branch's journal, per `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/journal.md`, under a `## Draft: <working title>` heading: where the expert's memory and the code disagreed and how it settled, decisions about scope or audience, and what you learned that the draft has no place for.
+  The draft's facts and its open questions stay in the draft, not copied into the notes: while the draft is being written, it is the source.
+  Name the expert by role, never by name, even when the contributor names them.
+- If the material is really several docs (a task, an explanation, and failure modes in one dump), note it in the packet header and say so; the write step proposes the set.
 
-When the contributor is satisfied:
+None of this is the expert's concern.
+Tell them the draft is saved and where to pick it up, in plain words, never a status value, a file path under `.docs-assist/`, or a count of notes.
 
-- Write the file to the appropriate location (ask if unsure where it should live), with a filename that follows existing conventions.
-- Generate frontmatter following `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/frontmatter-spec.md`.
-  At minimum `title`, `description`, and `content-type`.
-  Add `audience`, `keywords`, `prerequisites`, and `related` when you have the context, and after this conversation you almost certainly do.
-  Match existing frontmatter conventions.
-- If you drafted on a template, set the optional `template` field to the catalog `id` and add the `attribution` line from `templates.yml`.
-- If any claims made it in on the expert's word alone (marked SME-attested during the reconcile), offer to record them in the `sme-attested` frontmatter ledger so a future reviewer verifies specific claims, not the whole doc.
-  A separate yes: not every pipeline accepts unapproved frontmatter fields.
-  If declined, keep the list in the review notes instead.
-- If the repo has an `llms.txt`, add an entry for the new doc.
-- Update related docs to cross-reference this new content (or make the edits and show the contributor what you changed).
-- In a git repo, when the work touched several files (the new doc plus cross-reference updates), offer to put the change set on a docs branch rather than leaving it on the default branch.
-  Never commit to the default branch unless asked.
-- For a procedural doc (a task, tutorial, or troubleshooting entry with executable steps), offer to run `/docs-assist:verify` on it before it ships: the `doc-verifier` subagent executes the steps in an isolated workspace and catches the step that works in the author's head but not in a fresh environment.
-  On a clean pass, set `last-verified` with real evidence behind it.
-- If `.docs-assist/config.yml` sets `lint.tools`, run them against the new file before calling it finished, and fix what they find.
-  A fresh draft is the easiest time to catch a missing blank line or untagged fence, before it ships and needs a separate pass to find.
-- Note remaining follow-ups: the backlog docs the dump revealed, images or diagrams that would help, or cross-references a subject matter expert should verify.
-- If a notes file seeded this doc, offer to archive or delete it now that the doc it was tracking exists (per `intake.md`'s lifecycle rule for intake artifacts).
+### 8. Offer the next step
+
+In plain words:
+
+> "That's the draft.
+> Want me to write it up as a finished doc now?
+> Or someone else can pick it up from here later."
+
+The packet is the handoff, so the next step can run now, in another session, or by another person: an expert drafts, and a teammate who writes takes it from there.
+
+## When the expert isn't here
+
+Two cases.
+
+- **Someone else's knowledge**: the contributor is documenting what another person knows.
+  Offer an intake questionnaire, per the async section of `intake.md`, and draft what the material already supports.
+- **Nobody to ask**: the contributor wants a finished doc and has said to go ahead without them.
+  Fill the packet from the code instead of a conversation: launch `chair-authority` for pass 0, or, for a short doc, fill it yourself from the code with every row's provenance typed.
+  Set `filled-by: authority`.
+  Then run the write step and the edit step back to back, each as written, and bring the contributor the finished doc with the list of questions only they can answer.
+  The steps stay separate even when nobody pauses between them: each one reads the previous one's file, not this conversation's memory of it.
 
 ## Notes
 
-- Never make the contributor feel like they're "doing it wrong." There's no wrong way to share knowledge.
-- Messy, out-of-order information is normal and good.
-  You sort it out.
-- If they're unsure about something, note it as needing verification rather than skipping it.
-- Match the technical depth to the calibrated baseline, not a fixed posture: read it from the project's own docs, what the tool is, and the ecosystem it lives in before defaulting to anything (see "Calibrate the baseline" in `${CLAUDE_PLUGIN_ROOT}/skills/docs-assist/reference/user-stories.md`).
-  An SDK for experienced engineers doesn't need a terminal explained; a first-touch onboarding doc for non-engineers does.
-  Both are correct for their reader; the failure is applying either posture to the wrong one.
-- Follow existing repo conventions (frontmatter fields, directory structure, naming).
+- To the contributor these are the draft, the write-up, and the edit.
+  Packet, ledger, chair, and pass are the plugin's internal words: never use them in anything the contributor reads.
+- Follow the project's own conventions when the facts touch them: example values from `.docs-assist/reference.yml`, terms from the glossary.
+- When the expert says something that contradicts an earlier answer, a note, or the code, settle it by what is true now, per "When things disagree" in `journal.md`: one sentence, both versions, and the line rewritten.
+- Never shape: content type, outline, headings, and template are the write step's decisions.
+  A draft that makes them has stopped being raw material, and the writer can no longer tell what it added.

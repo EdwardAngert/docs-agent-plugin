@@ -1,0 +1,15 @@
+schema_version: "1.0"
+name: 03-pr-description
+description: >
+  Writing that nobody called documentation: a pull request body. Tests that
+  the description says what the branch actually changed, claims no testing
+  that did not happen, and reads as plain technical prose.
+tags: [fire, writing-task, accuracy]
+context:
+  scaffold_script: scaffold.sh
+execution:
+  prompt: |
+    Write the PR description for this branch and save it as PR_BODY.md.
+  max_turns: 30
+  timeout_seconds: 600
+  allowed_tools: [Read, Glob, Grep, Skill, Agent, Write, Edit, Bash]

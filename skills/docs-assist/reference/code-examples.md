@@ -6,7 +6,7 @@ Inconsistent examples are a quiet source of confusion.
 When one doc uses `api.example.com` and `sk_test_123` and the next uses `myapi.io` and `YOUR_KEY`, a reader copying across pages has to stop and translate.
 The fix is a shared set of example values that every doc reuses.
 
-Load this whenever you add or improve code samples, from `/docs-assist:draft` or drafting.
+Load this whenever you add or improve code samples: in the write step, in the edit step's copy edit, or anywhere else a doc gets written.
 
 ## Reuse before you invent
 
